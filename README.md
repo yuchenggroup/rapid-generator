@@ -1,5 +1,5 @@
 # rapid-generator
-半自动化Java代码生成器
+半自动化Java代码生成器[利用freemarker模板生成]
 
 
 项目最初来自于 [https://code.google.com/p/rapid-generator/](https://code.google.com/p/rapid-generator/)
