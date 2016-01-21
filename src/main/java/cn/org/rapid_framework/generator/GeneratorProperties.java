@@ -1,15 +1,15 @@
 package cn.org.rapid_framework.generator;
 
+import cn.org.rapid_framework.generator.util.GLogger;
+import cn.org.rapid_framework.generator.util.PropertiesHelper;
+import cn.org.rapid_framework.generator.util.PropertyPlaceholderHelper;
+import cn.org.rapid_framework.generator.util.PropertyPlaceholderHelper.PropertyPlaceholderConfigurerResolver;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-
-import cn.org.rapid_framework.generator.util.GLogger;
-import cn.org.rapid_framework.generator.util.PropertiesHelper;
-import cn.org.rapid_framework.generator.util.PropertyPlaceholderHelper;
-import cn.org.rapid_framework.generator.util.PropertyPlaceholderHelper.PropertyPlaceholderConfigurerResolver;
 
 
 /**

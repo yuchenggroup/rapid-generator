@@ -23,14 +23,14 @@ public class Main {
         facade.g.setIncludes(getIncludes(args,1));
         facade.generateByTable(args[0],getTemplateRootDir());
         if(SystemHelper.isWindowsOS) {
-            // renfufei ����Ŀ¼�����ڵ�����
+            // renfufei 处理目录不存在的问题
             String outRoot = GeneratorProperties.getRequiredProperty("outRoot").replace('/', '\\');
             //
             File outRootDir = new File(outRoot);
             if(!outRootDir.exists()){
                 outRootDir.mkdirs();
             }
-            // ��Ŀ¼
+            // 打开目录
             Runtime.getRuntime().exec("cmd.exe /c start "+ outRoot);
         }
     }

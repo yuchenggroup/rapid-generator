@@ -1,34 +1,17 @@
 package cn.org.rapid_framework.generator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
+import cn.org.rapid_framework.generator.util.*;
+import freemarker.ext.dom.NodeModel;
+import org.xml.sax.InputSource;
+
+import javax.swing.*;
+import java.io.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import javax.swing.JOptionPane;
-
-import org.xml.sax.InputSource;
-
-import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
-import cn.org.rapid_framework.generator.util.FileHelper;
-import cn.org.rapid_framework.generator.util.GLogger;
-import cn.org.rapid_framework.generator.util.IOHelper;
-import cn.org.rapid_framework.generator.util.SqlExecutorHelper;
-import cn.org.rapid_framework.generator.util.SystemHelper;
-import cn.org.rapid_framework.generator.util.XMLHelper;
-import freemarker.ext.dom.NodeModel;
 
 /**
  * 生成器模板控制器,用于模板中可以控制生成器执行相关控制操作

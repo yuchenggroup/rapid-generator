@@ -6,8 +6,6 @@
 package com.tangqian.generator;
 
 import cn.org.rapid_framework.generator.GeneratorFacade;
-import cn.org.rapid_framework.generator.provider.db.sql.SqlFactory;
-import cn.org.rapid_framework.generator.provider.db.sql.model.Sql;
 
 /**
  * <一句话功能简述>
