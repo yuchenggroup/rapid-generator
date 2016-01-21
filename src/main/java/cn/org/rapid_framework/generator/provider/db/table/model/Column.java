@@ -2,10 +2,7 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 
 
 
-import java.util.List;
-
 import cn.org.rapid_framework.generator.GeneratorProperties;
-import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignKey.ReferenceKey;
 import cn.org.rapid_framework.generator.provider.db.table.model.util.ColumnHelper;
 import cn.org.rapid_framework.generator.util.GLogger;
@@ -15,6 +12,8 @@ import cn.org.rapid_framework.generator.util.typemapping.ActionScriptDataTypesUt
 import cn.org.rapid_framework.generator.util.typemapping.DatabaseDataTypesUtils;
 import cn.org.rapid_framework.generator.util.typemapping.JavaPrimitiveTypeMapping;
 import cn.org.rapid_framework.generator.util.typemapping.JdbcType;
+
+import java.util.List;
 /**
  * 用于生成代码的Columb对象.对应数据库表column
  * @author badqiu
@@ -601,13 +600,30 @@ public class Column {
 	private void initOtherProperties() {
 		String normalJdbcJavaType = DatabaseDataTypesUtils.getPreferredJavaType(getSqlType(), getSize(), getDecimalDigits());
 		javaType = GeneratorProperties.getProperty("java_typemapping."+normalJdbcJavaType,normalJdbcJavaType).trim();
-		columnName = StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(getSqlName()));
+		//columnName = StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(getSqlName()));
+        // renfufei
+        String sqlName = getSqlName();
+        String removedPrefixColName = trimSkipPrefix(sqlName);
+        columnName = StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(removedPrefixColName));
 		enumClassName = getColumnName()+"Enum";		
 		asType = ActionScriptDataTypesUtils.getPreferredAsType(getJavaType());	
 		columnAlias = StringHelper.defaultIfEmpty(getRemarks(), getColumnNameFirstLower());
 		columnAlias = StringHelper.removeCrlf(columnAlias);
 		setHibernateValidatorExprssion(ColumnHelper.getHibernateValidatorExpression(this));
 	}
+
+    // renfufei
+    // 去除列名前缀
+    private String trimSkipPrefix(String sqlName){
+        String prefixs = GeneratorProperties.getProperty("rowRemovePrefixes", "").trim();
+        for(String prefix : prefixs.split(",")) {
+            String removedPrefixColName = StringHelper.removePrefix(sqlName, prefix,true);
+            if(!removedPrefixColName.equals(sqlName)) {
+                return removedPrefixColName;
+            }
+        }
+        return sqlName;
+    }
 	
 	private String enumString = "";
 	private String javaType;

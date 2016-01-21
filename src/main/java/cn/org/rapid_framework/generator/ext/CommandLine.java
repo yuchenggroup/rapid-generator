@@ -47,7 +47,15 @@ public class CommandLine {
 			facade.g.setIncludes(getIncludes(args,1));
 			facade.generateByTable(args[0],getTemplateRootDir());
 			if(SystemHelper.isWindowsOS) {
-			    Runtime.getRuntime().exec("cmd.exe /c start "+GeneratorProperties.getRequiredProperty("outRoot").replace('/', '\\'));
+                // renfufei 处理目录不存在的问题
+                String outRoot = GeneratorProperties.getRequiredProperty("outRoot").replace('/', '\\');
+                //
+                File outRootDir = new File(outRoot);
+                if(!outRootDir.exists()){
+                    outRootDir.mkdirs();
+                }
+                // 打开目录
+			    Runtime.getRuntime().exec("cmd.exe /c start "+ outRoot);
 			}
 		}else if("del".equals(cmd)) {
 			String[] args = nextArguments(sc);
