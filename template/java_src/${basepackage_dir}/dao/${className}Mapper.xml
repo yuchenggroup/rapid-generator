@@ -1,0 +1,96 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+<mapper namespace="${className}Mapper">
+	<cache flushInterval="60000" />
+	
+	<sql id="columns">
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	</sql>
+		
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="map">
+		insert into ${table.sqlName} (
+		<#list table.columns as column>
+			<#if !column.pk>
+			${column.sqlName}<#if column_has_next>,</#if>
+        	</#if>
+        </#list>
+		)values (
+	    <#list table.columns as column>
+	    	<#if !column.pk>
+			<@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
+	    	</#if>
+        </#list>
+		)
+	</insert>
+	
+	<update id="update" parameterType="map">
+		update ${table.sqlName} set
+			<#list table.notPkColumns as column>
+			<@generateBycondition column.sqlName>
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
+	        </@generateBycondition>
+	        </#list>
+	        modifier = <@mapperEl "modifier"/>,
+			modify_time = <@mapperEl "modifyTime"/>
+		where
+			id = <@mapperEl "id"/>
+	</update>
+	
+	<update id="delete" parameterType="map">
+		update ${table.sqlName} set
+			status = 'delete',
+			modifier = <@mapperEl "modifier"/>,
+			modify_time = <@mapperEl "modifyTime"/>
+		where
+			id = <@mapperEl "id"/>
+	</update>
+
+	<update id="batchDelete" parameterType="map">
+		update ${table.sqlName} set
+			status = 'delete',
+			modifier = <@mapperEl "modifier"/>,
+			modify_time = <@mapperEl "modifyTime"/>
+		where
+			id in (${r"${ids}"})
+	</update>
+	
+	<select id="get" parameterType="int" resultType="${className}">
+		select
+			<include refid="columns" />
+		from
+			${table.sqlName}
+		where
+			id = <@mapperEl "id"/>
+	</select>
+	
+	<select id="count" parameterType="map" resultType="int">
+		select
+			count(1)
+		from
+			${table.sqlName}
+		where
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like <@mapperEl "keyword"/>
+		</if>
+	</select>
+
+	<select id="list" resultType="${className}">
+		select
+			<include refid="columns" />
+		from 
+			${table.sqlName}
+		where 
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like <@mapperEl "keyword"/>
+		</if>
+		order by id desc limit <@mapperEl "start"/>,<@mapperEl "length"/>
+	</select>
+	
+</mapper>

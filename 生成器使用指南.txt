@@ -1,0 +1,33 @@
+简易上手指南，方便本人及他人快速使用此模板生成器快速生成代码。
+
+1.项目结构说明
+最上层分三层目录lib/src/template，分别代表引用jar库/源码目录/模板目录
+
+src目录下包括cn.org.rapid_framework.generator包、com.tangqian.generator包及generator.xml配置文件。
+cn.org.rapid_framework.generator包为rapid的源码，一般不需要做修改；主要关心com.tangqian.generator包下的启动类GeneratorMain及generator.xml文件。
+
+2.配置修改说明
+GeneratorMain文件中，一般只需要修改
+g.generateByTable("sys_menu","template");
+这一行，其中generateByTable方法第一个参数指表名称，第二个参数代表所选用的模板根目录（即指向最上层的template目录即可），将会根据该模板来自动生成代码。如果想对其它表生成代码，修改第一个参数即可。
+关于generator.xml，请参照该文件内的注释进行相应修改。
+
+3.关于template目录下的*.include文件说明
+包含一些公共的变量或模板，可引入到其它模板中。像java_copyright.include作为java源文件头的版权声明，java_imports.include作为公用的java源文件引入包申明，可被其它模板包含进去。
+
+重点说下macro.include文件，该文件中包含宏指令，可被其它模板引用。主要说下generateBycondition宏，这个宏是将某些表字段排除在外（即excludeColunmStr中指定的字段串），
+像表中id,status,creator,create_time等字段是不需要在新增或修改页做展示，因此需要排除这些字段。
+你也可以定义自己的宏指令（有点类似方法定义一样）
+
+4.关于模板中内置变量说明
+在模板中可以直接引用${table}，其逻辑上即代表要操作的表对象，通过该对象可以获取表名，表字段等信息。
+具体可以获取到哪些信息，可参照cn.org.rapid_framework.generator包下的provider.db.table.model.Table类，实际上${table}对象就是该类的实例对象。
+例如我修改了Table类的getShortName()方法如下
+	public String getShortName() {
+        return removeTableSqlNamePrefix(sqlName);
+    }
+此时可在模板中引用${shortName}变量
+根据实例项目需要，可修改Tabel类来满足特殊需求
+
+5.写在最后，也是最重要的。
+通过GeneratorMain入口类运行程序，然后就会自动生成代码文件到generator.xml中配置的outRoot下。

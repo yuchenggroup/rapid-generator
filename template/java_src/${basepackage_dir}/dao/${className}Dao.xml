@@ -1,0 +1,84 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+<mapper namespace="${basepackage}.dao.${className}Dao">
+
+	<resultMap id="${className}" type="${basepackage}.dao.${className}">
+        <#list table.columns as column>
+		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
+		</#list>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultMap="${className}">
+		select
+			<include refid="columns" />
+		from
+			${table.sqlName}
+		where
+			status != -1
+			and id = <@mapperEl "id"/>
+	</select>
+	
+	<select id="getPageList" resultMap="${className}">
+		select
+			<include refid="columns" />
+		from
+			${table.sqlName}
+		where
+			status != -1
+		<if test="dto.keyword != null">
+			and ${table.shortName}_name like concat('%',<@mapperEl "dto.keyword"/>,'%')
+		</if>
+		<if test="dto.orderField != null">
+			order by ${r"${dto.orderField}"} ${r"${dto.orderDirection}"}
+		</if>
+	</select>
+	
+	<update id="update" parameterType="${basepackage}.dao.${className}">
+		update ${table.sqlName} set
+			<#list table.notPkColumns as column>
+			<@generateBycondition column.sqlName>
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
+	        </@generateBycondition>
+	        </#list>
+			last_updated_by = <@mapperEl "lastUpdatedBy"/>,
+			last_updated_date = <@mapperEl "lastUpdatedDate"/>
+		where
+			id = <@mapperEl "id"/>
+	</update>
+	
+	<update id="delete" parameterType="java.util.Map">
+		update ${table.sqlName} set
+			status = -1,
+			last_updated_by = <@mapperEl "operator"/>,
+			last_updated_date = <@mapperEl "lastUpdatedDate"/>
+		where
+			id in (${r"${ids}"})
+	</update>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="${basepackage}.dao.${className}">
+		insert into ${table.sqlName} (
+		<#list table.columns as column>
+			<#if !column.pk>
+			${column.sqlName}<#if column_has_next>,</#if>
+        	</#if>
+        </#list>
+		)values (
+	    <#list table.columns as column>
+	    	<#if !column.pk>
+			<@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
+	    	</#if>
+        </#list>
+		)
+	</insert>
+	
+</mapper>

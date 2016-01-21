@@ -1,0 +1,2 @@
+rapid-generator.jar只依赖freemarker.jar
+其它jar包为数据库驱动
