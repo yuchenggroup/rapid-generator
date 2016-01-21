@@ -21,12 +21,3 @@
 	}
 
 </#macro>
-
-<#assign excludeColunmStr = ",id,status,creator,modifier,create_time,modify_time,">
-
-<#macro generateBycondition columnSqlName>
-	<#assign compareName = "," + columnSqlName + ",">
-	<#if excludeColunmStr?index_of(compareName) == -1>
-		<#nested>	
-	</#if>
-</#macro>

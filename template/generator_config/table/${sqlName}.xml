@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<#assign className = table.className>   
+<#assign classNameLower = className?uncap_first> 
 <!--******************************
 本文件用于table变量的属性自定义
  强烈提醒: 
@@ -17,3 +19,16 @@
 	/>
 </table>
  -->
+<table sqlName="${table.sqlName}" className="${className}" tableAlias="${table.tableAlias}" >
+<#list table.columns as c>
+
+	<column sqlName="${c.sqlName}" columnAlias="${c.columnAlias}" javaType="${c.simpleJavaType}" 
+		unique="${c.unique?string}" nullable="${c.nullable?string}" pk="${c.pk?string}"
+		updatable="${c.updatable?string}" insertable="${c.insertable?string}"
+		enumString="${c.enumString}" enumClassName="${c.enumClassName}"
+		hibernateValidatorExprssion="${c.hibernateValidatorExprssion}"
+		hasOne="${c.hasOne!?string}" hasMany="${c.hasMany!?string}"
+	/>
+</#list>
+
+</table>

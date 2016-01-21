@@ -1,0 +1,212 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+<#include "/macro.include"/>
+<#include "/java_copyright.include">
+
+/**
+ * Created by IntelliJ IDEA.
+ *
+ * @author <a href="mailto:zhdqCN@gmail.com">Richard Zhou</a>
+ * @version 1.0
+ * @CreationTime: <#if now??>- ${now?string('yyyy-MM-dd HH:mm:ss')}</#if>
+ * @Description:
+ */
+ -->
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+<#macro namespace>${className}</#macro>
+<mapper namespace="${basepackage}.${subpackage}.dao.${className}MybatisDao">
+	<resultMap id="RM_${className}" type="${basepackage}.${subpackage}.model.${className}">
+        <#list table.columns as column>
+        <result property="${column.columnNameLower}" column="${column.sqlName}"/>
+		</#list>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="<@namespace/>_columns">
+	    <![CDATA[
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="${table.idColumn.columnNameFirstLower}">
+        INSERT INTO ${table.sqlName} (
+        <#list table.columns as column>
+        	${column.sqlName} <#if column_has_next>,</#if>
+        </#list>
+        ) VALUES (
+        <#list table.columns as column>
+        	<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+        </#list>        
+        )
+
+		<!--	
+			oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL 
+			DB2: order="BEFORE"" values nextval for sequenceName
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
+			SELECT sequenceName.nextval AS ID FROM DUAL 
+        </selectKey>
+		-->
+	</insert>
+    
+    <insert id="saveSelective" useGeneratedKeys="true" keyProperty="${table.idColumn.columnNameFirstLower}">
+    	INSERT INTO ${table.sqlName} 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+    		<#list table.columns as column>
+        	<if test="${column.columnNameFirstLower} != null" >
+		    	${column.sqlName},
+		    </if>
+        	</#list>
+    	</trim>
+
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<#list table.columns as column>
+        	<if test="${column.columnNameFirstLower} != null" >
+		    	<@mapperEl column.columnNameFirstLower/>,
+		    </if>
+        	</#list>
+    	</trim>
+	</insert>
+
+	<update id="update" >
+        UPDATE ${table.sqlName} 
+		<set>
+	        <#list table.notPkColumns as column>	
+	        <#if '${column.sqlName}' != 'I_VERSION'>
+			<if test="@com.weijinsuo.core.utils.Ognl@isNotEmpty(${column.columnNameFirstLower})">${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
+			</if>
+			</#if>
+			
+	        </#list>
+
+			<#if table.columns?seq_contains("I_VERSION")>
+	        I_VERSION = I_VERSION + 1
+	        </#if>
+		</set>
+		
+        WHERE 
+        	<#list table.compositeIdColumns as column>
+	        ${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> and </#if>
+	        </#list>	         
+	        <#if table.columns?seq_contains("I_VERSION")> and I_VERSION = ${r"#{iVersion}"}
+			</#if>
+	       
+	</update>
+
+	<update id="updateAll" >
+    	UPDATE ${table.sqlName} 
+		<set>
+	        <#list table.notPkColumns as column>	
+	        <#if '${column.sqlName}' != 'I_VERSION' &&'${column.sqlName}' != 'DT_CREATE_TIME'>
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
+			</#if>
+	        </#list>
+			<#if table.columns?seq_contains("I_VERSION")>
+	        I_VERSION = I_VERSION + 1
+	        </#if>
+		</set>
+		
+        WHERE 
+        	<#list table.compositeIdColumns as column>
+	        ${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> and </#if>
+	        </#list>	         
+	        <#if table.columns?seq_contains("I_VERSION")> and I_VERSION = ${r"#{iVersion}"}
+			</#if>
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM ${table.sqlName} WHERE
+        <#list table.compositeIdColumns as column>
+        ${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next> and </#if>
+        </#list>	
+    ]]>
+    </delete>
+    
+    <select id="getByID" resultMap="RM_${className}">
+		SELECT <include refid="<@namespace/>_columns" />
+	    <![CDATA[
+		    FROM ${table.sqlName} 
+	        WHERE 
+				<#list table.compositeIdColumns as column>
+		        ${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next> and </#if>
+		        </#list>	  
+	    ]]>
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Long">
+        SELECT count(ID) FROM ${table.sqlName}
+    </select>
+	
+	<select id="findAll" resultMap="RM_${className}">
+        SELECT <include refid="<@namespace/>_columns" /> 
+		FROM ${table.sqlName}
+    </select>
+	
+	
+	<select id="findAllIds" resultType="list">
+        SELECT <@mapperEl 'id'/>
+		FROM ${table.sqlName}
+    </select>
+	
+	
+	<sql id="<@namespace/>_findPage_where">
+		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+		<where>	      				
+	       <#list table.columns as column>
+	       <#if column.isDateTimeColumn>
+	       <if test="@com.weijinsuo.core.utils.Ognl@isNotEmpty(${column.columnNameFirstLower}Begin)">
+				AND ${column.sqlName} >= <@mapperEl column.columnNameFirstLower+"Begin"/>
+		   </if>
+		   <if test="@com.weijinsuo.core.utils.Ognl@isNotEmpty(${column.columnNameFirstLower}End)">
+				AND ${column.sqlName} &lt;= <@mapperEl column.columnNameFirstLower+"End"/>
+		   </if>
+	       <#else>
+	       <if test="@com.weijinsuo.core.utils.Ognl@isNotEmpty(${column.columnNameFirstLower})">
+				AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+			</if>
+	       </#if>
+	       </#list>			
+		</where>
+	</sql>
+		
+    <select id="findNumberByCondition" resultType="long">
+        SELECT count(*) FROM ${table.sqlName} 
+		<include refid="<@namespace/>_findPage_where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPageBreakByCondition" resultMap="RM_${className}">
+    	SELECT <include refid="<@namespace/>_columns" />
+	    FROM ${table.sqlName} 
+		<include refid="<@namespace/>_findPage_where"/>
+		
+		<if test="@com.weijinsuo.core.utils.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY <@jspEl 'sortColumns'/>
+		</if>
+    </select>
+
+    <#list table.columns as column>
+    <#if column.unique && !column.pk>
+    <select id="getBy${column.columnName}" resultMap="RM_${className}" parameterType="${column.javaType}">
+	    SELECT <include refid="<@namespace/>_columns"/>
+	    <![CDATA[
+	        FROM ${table.sqlName} where ${column.sqlName} = <@mapperEl column.columnNameLower/>
+	    ]]>
+    </select>
+    
+    </#if>
+	</#list>
+	
+</mapper>
+
