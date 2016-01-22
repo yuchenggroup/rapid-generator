@@ -289,7 +289,8 @@ public class Generator {
 					return;
 				}
 			}
-			
+			// renfufei
+            // 此处决定是否覆盖
 			if(absoluteOutputFilePath.exists() && !gg.isOverride()) {
 				GLogger.println("[not generate]\t by gg.isOverride()=false and outputFile exist:"+outputFilepath);
 				return;

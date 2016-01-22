@@ -44,3 +44,4 @@ Thumbs.db
 
 /mvn_log*
 /scripts/*.cmd
+generator-output
