@@ -31,7 +31,7 @@ import java.util.Properties;
  *
  */
 public class GeneratorControl {
-	private boolean isOverride = Boolean.parseBoolean(System.getProperty("gg.isOverride","false")); 
+	private boolean isOverride = parse_gg_isOverride();
 	private boolean isAppend = false; //no pass
 	private boolean ignoreOutput = false; 
 	private boolean isMergeIfExists = true; //no pass
@@ -42,6 +42,18 @@ public class GeneratorControl {
 	private String sourceDir; 
 	private String sourceFileName; 
 	private String sourceEncoding; //no pass //? 难道process两次确定sourceEncoding
+
+    // renfufei
+    // 根据 entry 全局控制是否覆盖
+    private static boolean parse_gg_isOverride(){
+        //
+        boolean isOverride =  Boolean.parseBoolean(System.getProperty("gg.isOverride","false"));
+        //
+        String isOverride_Str = GeneratorProperties.getProperty("gg.isOverride", "").trim();
+        boolean isOverrideP =  Boolean.parseBoolean(isOverride_Str);
+        //
+        return isOverride || isOverrideP;
+    }
 	
 	/** load xml data */
 	public NodeModel loadXml(String file) {

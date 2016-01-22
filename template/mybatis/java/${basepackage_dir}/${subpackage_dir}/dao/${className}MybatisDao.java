@@ -1,5 +1,6 @@
 <#assign className = table.className>   
-<#assign classNameLower = className?uncap_first>   
+<#assign classNameLower = className?uncap_first>
+${gg.setOverride(false)}
 package ${basepackage}.${subpackage}.dao;
 
 

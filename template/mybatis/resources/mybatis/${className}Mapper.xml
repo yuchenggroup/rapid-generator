@@ -1,3 +1,4 @@
+${gg.setOverride(false)}
 <#include "/macro.include"/>
 <#assign className = table.className>   
 <#assign classNameFirstLower = table.classNameFirstLower>   

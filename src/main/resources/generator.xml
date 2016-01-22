@@ -21,7 +21,9 @@
 
 	<entry key="rowRemovePrefixes">S_,B_,I_,DT_,TS_,M_,F_,PK_I_N,PK_I_S</entry>
 
-	<entry key="skipTablePrefixes">ACT_</entry>
+    <entry key="skipTablePrefixes">ACT_</entry>
+
+    <entry key="gg.isOverride">true</entry>
 
 	<entry key="jdbc.username">wjs</entry>
 	<entry key="jdbc.password">wjs123</entry>
