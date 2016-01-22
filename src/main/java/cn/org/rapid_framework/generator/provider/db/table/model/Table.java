@@ -1,15 +1,15 @@
 package cn.org.rapid_framework.generator.provider.db.table.model;
 
 
+import cn.org.rapid_framework.generator.GeneratorProperties;
+import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
+import cn.org.rapid_framework.generator.util.StringHelper;
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-
-import cn.org.rapid_framework.generator.GeneratorProperties;
-import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
-import cn.org.rapid_framework.generator.util.StringHelper;
 /**
  * 用于生成代码的Table对象.对应数据库的table
  * @author badqiu

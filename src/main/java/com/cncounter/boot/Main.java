@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         test();
+        Thread.currentThread().getId();
     }
 
     public static void test() throws Exception {
