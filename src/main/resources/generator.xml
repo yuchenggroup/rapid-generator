@@ -7,30 +7,30 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">com.weijinsuo</entry>
+	<entry key="basepackage">com.cnc</entry>
 
-	<entry key="subpackage">wealth</entry>
+	<!-- 子包,只支持单个词 -->
+	<entry key="subpackage">common</entry>
 	
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">pages</entry>
 	
+	<!-- 输出目录,相对 cd 路径 -->
 	<entry key="outRoot">generator-output</entry>
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
 	<entry key="tableRemovePrefixes">T_AR,T_BD,T_CD,T_PD,T_CL,T_IP,T_LO,T_RI,T_EV</entry>
 
+	<!-- 需要移除的列名前缀,逗号分隔,示例: S_,I_ -->
 	<entry key="rowRemovePrefixes">S_,B_,I_,DT_,TS_,M_,F_,PK_I_N,PK_I_S</entry>
 
+	<!-- 需要忽略的表,逗号分隔,示例: ACT_,BATCH_ -->
     <entry key="skipTablePrefixes">ACT_</entry>
 
     <entry key="gg.isOverride">true</entry>
 
-	<entry key="jdbc.username">wjs</entry>
-	<entry key="jdbc.password">wjs123</entry>
-		
-	<!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
-	<entry key="jdbc.schema"></entry>
-	<entry key="jdbc.catalog"></entry>
+	<entry key="jdbc.username">root</entry>
+	<entry key="jdbc.password">root</entry>
 	
 	<!-- 数据库类型映射  -->
 	<entry key="java_typemapping.java.sql.Timestamp">Date</entry>
@@ -45,8 +45,8 @@
 	<entry key="java_typemapping.java.math.BigDecimal">java.math.BigDecimal</entry>
 
 		
-	<!-- Mysql -->
-	<entry key="jdbc.url">jdbc:mysql://192.168.0.7:3306/WJS_PLAT?useUnicode=true&amp;characterEncoding=utf8&amp;useInformationSchema=true</entry>
+	<!-- Mysql连接,useInformationSchema 取出表名注释 -->
+	<entry key="jdbc.url">jdbc:mysql://localhost:3306/WJS_PLAT?useUnicode=true&amp;characterEncoding=utf8&amp;useInformationSchema=true</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
 	
 	

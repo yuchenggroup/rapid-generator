@@ -6,12 +6,14 @@ import cn.org.rapid_framework.generator.util.ArrayHelper;
 import cn.org.rapid_framework.generator.util.SystemHelper;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         test();
         Thread.currentThread().getId();
+        HashMap<?,?> hashMap = null;
     }
 
     public static void test() throws Exception {
