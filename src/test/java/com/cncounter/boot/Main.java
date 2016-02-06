@@ -25,17 +25,24 @@ public class Main {
         if(args.length == 0) return;
         facade.g.setIncludes(getIncludes(args,1));
         facade.generateByTable(args[0],getTemplateRootDir());
+        //
+        checkAndMakeOutRootDirs();
         if(SystemHelper.isWindowsOS) {
             // renfufei 处理目录不存在的问题
-            String outRoot = GeneratorProperties.getRequiredProperty("outRoot").replace('/', '\\');
+            String outRoot = GeneratorProperties.getRequiredProperty("outRoot").replace('/', File.separatorChar);
+            // 打开目录
+            Runtime.getRuntime().exec("cmd.exe /c start "+ outRoot);
+        }
+    }
+
+    private static void checkAndMakeOutRootDirs(){
+            // renfufei 处理目录不存在的问题
+            String outRoot = GeneratorProperties.getRequiredProperty("outRoot").replace('/', File.separatorChar);
             //
             File outRootDir = new File(outRoot);
             if(!outRootDir.exists()){
                 outRootDir.mkdirs();
             }
-            // 打开目录
-            Runtime.getRuntime().exec("cmd.exe /c start "+ outRoot);
-        }
     }
 
     private static String getIncludes(String[] args, int i) {
