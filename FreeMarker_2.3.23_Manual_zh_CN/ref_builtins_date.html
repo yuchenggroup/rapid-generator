@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>日期内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="日期内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_date.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_date.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_date.html"><span itemprop="name">日期内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","日期内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_number.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_boolean.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_date" itemprop="headline">日期内建函数</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#ref_builtin_date_datetype" data-menu-target="ref_builtin_date_datetype">date, time, datetime (当用于日期/时间/日期-时间值时)</a></li><li><a class="page-menu-link" href="#ref_builtin_date_if_unknown" data-menu-target="ref_builtin_date_if_unknown">date_if_unknown, time_if_unknown, datetime_if_unknown</a></li><li><a class="page-menu-link" href="#ref_builtin_date_iso" data-menu-target="ref_builtin_date_iso">iso_...</a></li><li><a class="page-menu-link" href="#ref_builtin_string_for_date" data-menu-target="ref_builtin_string_for_date">string (当用于日期/时间/日期-时间值时)</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_date_datetype">date, time, datetime (当用于日期/时间/日期-时间值时)</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>这些内建函数用来指定日期变量中的哪些部分被使用：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">date</code>：仅日期部分，没有一天当中的时间部分。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">time</code>：仅一天当中的时间部分，没有日期部分。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">datetime</code>：日期和时间都在</p>
+            </li>
+          </ul>
+
+          <p>在最佳情况下，你不需要使用这些内建函数。不幸的是，
+		  由于Java平台上的技术限制，FreeMarker 有时不能发现日期中的哪一部分在使用；
+		  询问程序员哪些变量会有这个问题。如果 FreeMarker 不得不执行需要这些信息的操作
+		  --比如用文本显示日期--但是它不知道哪一部分在使用，它会以错误来中止运行。
+		  这就是你不得不使用这些内建函数的时候了。比如，假设 
+		  <code class="inline-code">openingTime</code> 是一个有这样问题的变量：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x = openingTime&gt; &lt;#-- no problem can occur here --&gt;
+${openingTime?time} &lt;#-- without ?time it would fail --&gt;
+&lt;#-- For the sake of better understanding, consider this: --&gt;
+&lt;#assign openingTime = openingTime?time&gt;
+${openingTime} &lt;#-- this will work now --&gt;</pre></div>
+
+          <p>这些内建函数也可以用来将日期-时间值转换成日期或时间。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">Last updated: ${lastUpdated} &lt;#-- assume that lastUpdated is a date-time value --&gt;
+Last updated date: ${lastUpdated?date}
+Last updated time: ${lastUpdated?time}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Last updated: 04/25/2003 08:00:54 PM
+Last updated date: 04/25/2003
+Last updated time: 08:00:54 PM</pre></div>
+
+          <p>如果 <code class="inline-code">?</code> 左边是字符串，那么这些内建函数
+          <a href="ref_builtins_string.html#ref_builtin_string_date">将字符串转换成日期/时间/日期时间</a>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_date_if_unknown">date_if_unknown, time_if_unknown, datetime_if_unknown</h2>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始存在</p>
+            </div>
+
+
+          <p><code class="inline-code">date_if_unknown</code>，
+          <code class="inline-code">time_if_unknown</code>，
+          <code class="inline-code">datetime_if_unknown</code> 
+		  内建函数使用一些子类型来标记日期类型的值：日期没有时间，时间，或日期-时间。
+		  如果变量值已经持有这些信息，那么内建函数就不会起作用。也就是说，
+		  它不会转换变量值的子类型，如果它是未知的，则会添加子类型。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_date_iso">iso_...</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p><em>这些内建函数从 FreeMarker 2.3.21 版本开始废弃</em>，
+			因为 <code class="inline-code">date_format</code>，<code class="inline-code">time_format</code> 和
+            <code class="inline-code">datetime_format</code> 设置理解
+            <code class="inline-code">&quot;iso&quot;</code> (ISO 8601:2004 格式) 和
+            <code class="inline-code">&quot;xs&quot;</code> (XML Schema 格式)，此外还有 
+            Java <code class="inline-code">SimpleDateFormat</code> 格式。因此默认格式可以设置为ISO 8601，
+			要使用一次ISO格式，可以使用 <code class="inline-code">myDate?string.iso</code>。 <a href="ref_directive_setting.html#topic.dateTimeFormatSettings">更多内容请参考...</a></p>
+            </div>
+
+
+          <p>这些内建函数转换日期，时间或日期-时间值为字符串，遵循 ISO 8601:2004 &quot;扩展&quot; 格式。</p>
+
+          <p>该内建函数有很多表现形式：
+          <code class="inline-code">iso_utc</code>， <code class="inline-code">iso_local</code>，
+          <code class="inline-code">iso_utc_nz</code>， <code class="inline-code">iso_local_nz</code>，
+          <code class="inline-code">iso_utc_m</code>， <code class="inline-code">iso_utc_m_nz</code>，等。
+		  名称的构成由下列单词顺序组成，每部分由一个 <code class="inline-code">_</code> 分隔开：</p>
+
+          <div class="orderedlist"><ol type="1">
+            <li>
+              <p><code class="inline-code">iso</code> (必须的)</p>
+            </li>
+
+            <li>
+              <p>是 <code class="inline-code">utc</code> 或 <code class="inline-code">local</code> 二者之一
+			  (必须的(除了给定一个参数，这个后面再来说))：
+			  来指定根据UTC或根据当前时区来打印日期/时间/日期-时间。
+			  当前时区是根据 FreeMarker 的设置项 <code class="inline-code">time_zone</code> 
+			  来确定的，它通常是由程序员在模板外配置的(当然它也可以在模板内设置，
+			  比如使用<code class="inline-code">&lt;#setting time_zone=&quot;America/New_York&quot;&gt;</code>)。
+			  请注意，如果 FreeMarker 设置项 <code class="inline-code">sql_date_and_time_time_zone</code> 
+			  已经设置并且非 <code class="inline-code">null</code>，那么对于 <code class="inline-code">java.sql.Date</code> 
+			  和 <code class="inline-code">java.sql.Time</code> 值(也就是通过SQL从数据中获得的仅日期值和仅时间值)
+			  <code class="inline-code">local</code> 的时区值将会替代 <code class="inline-code">time_zone</code> 设置的值。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">h</code>，<code class="inline-code">m</code> 或 
+			  <code class="inline-code">ms</code>(可选的)：时间部分的精度。
+			  当忽略的时候，就默认设置到秒的精度(比如<code class="inline-code">12:30:18</code>)。
+			  <code class="inline-code">h</code> 表示小时的精度(比如 <code class="inline-code">12</code>)，
+			  <code class="inline-code">m</code> 表示分钟的精度(比如 <code class="inline-code">12:30</code>)，
+			  <code class="inline-code">ms</code> 就表示毫秒的精度(<code class="inline-code">12:30:18.25</code>，这里表示250毫秒)。
+			  要注意当使用 <code class="inline-code">ms</code> 时，毫秒会显示为百分制的形式
+			  (遵循标准)而且不会去尾到 <code class="inline-code">0</code> 秒。因此，
+			  如果毫秒的部分变成 <code class="inline-code">0</code> 的话，整个的毫秒的部分就会被忽略掉了。
+			  同时也要注意毫秒的部分是由一个点来分隔的，而不是逗号
+			  (遵循Web约定和XML Schema的日期/时间格式)。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">nz</code> (可选的)： <code class="inline-code">nz</code>
+              (比如在 <code class="inline-code">${foo?utc_local_nz}</code> 中) 代表 
+              "没有时区"，也就意味着时区的偏移量
+              (比如 <code class="inline-code">+02:00</code> 或者 <code class="inline-code">-04:30</code>
+              或者 <code class="inline-code">Z</code>)不会显示出来。如果这部分被忽略了
+              (比如在 <code class="inline-code">${foo?utc_local}</code> 中) 那么时区就会显示出来，
+			  除了两种情况：</p>
+
+              <ul>
+                <li>
+                  <p>如果值是日期(没有时间部分)值(再说一次，ISO 8901 标准不允许)</p>
+                </li>
+
+                <li>
+                  <p>如果值是 <code class="inline-code">java.sql.Time</code> 而且 FreeMarker 配置设置项
+                  <code class="inline-code">incompatible_improvements</code> (通常通过
+                  Java代码 <code class="inline-code">Configuration</code> 的构造方法参数设置) 最小是2.3.21。
+				  存储时间值是不分时区的，只是存储小时，分钟，秒和小数秒值，
+				  所以显示时区就没什么意义。</p>
+                </li>
+              </ul>
+
+              <p>请注意，从 FreeMarker 2.3.19 版本开始，对于XML Schema 
+			  日期/时间/日期时间格式的兼容性，时区偏移量通常包含分钟。
+			  (如果主要生成XML Schema格式，就使用 xs 格式。)</p>
+            </li>
+          </ol></div>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign aDateTime = .now&gt;
+&lt;#assign aDate = aDateTime?date&gt;
+&lt;#assign aTime = aDateTime?time&gt;
+
+Basic formats:
+${aDate?iso_utc}
+${aTime?iso_utc}
+${aDateTime?iso_utc}
+
+Different accuracies:
+${aTime?iso_utc_ms}
+${aDateTime?iso_utc_m}
+
+Local time zone:
+${aDateTime?iso_local}</pre></div>
+
+          <p>可能的输出(基于当前时间和时区)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Basic formats:
+2011-05-16
+21:32:13Z
+2011-05-16T21:32:13Z
+
+Different accuracies:
+21:32:13.868Z
+2011-05-16T21:32Z
+
+Local time zone:
+2011-05-16T23:32:13+02:00</pre></div>
+
+          <p>还有另外一组 <code class="inline-code">iso_...</code> 内建函数形式，
+		  你可从名称中以忽略掉 <code class="inline-code">local</code> 或 <code class="inline-code">utc</code>，
+		  但是要指定时区作为内建函数的参数。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign aDateTime = .now&gt;
+${aDateTime?iso(&quot;UTC&quot;)}
+${aDateTime?iso(&quot;GMT-02:30&quot;)}
+${aDateTime?iso(&quot;Europe/Rome&quot;)}
+
+The usual variations are supported:
+${aDateTime?iso_m(&quot;GMT+02&quot;)}
+${aDateTime?iso_m_nz(&quot;GMT+02&quot;)}
+${aDateTime?iso_nz(&quot;GMT+02&quot;)}</pre></div>
+
+          <p>可能的输出(基于当前时间和时区)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">2011-05-16T21:43:58Z
+2011-05-16T19:13:58-02:30
+2011-05-16T23:43:58+02:00
+
+The usual variations are supported:
+2011-05-16T23:43+02:00
+2011-05-16T23:43
+2011-05-16T23:43:58</pre></div>
+
+          <p>如果时区参数不能被解释，模板处理就会终止并发生错误。</p>
+
+          <p class="programmers-note">参数可以是
+          <code class="inline-code">java.util.TimeZone</code> 对象(可能是Java方法的返回值，
+		  或者在数据模型中)，而不能只是字符串。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_string_for_date">string (当用于日期/时间/日期-时间值时)</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>这个内建函数以指定的格式转换日期类型到字符串类型。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>应该很少使用这个内建函数，因为日期/时间/日期-时间值的默认格式可以全局指定 
+			FreeMarker 的  <a href="ref_directive_setting.html#topic.dateTimeFormatSettings">
+            <code>date_format</code>，<code>time_format</code> 和
+            <code>datetime_format</code> 设置</a>。
+			该内建函数只在期望格式和常用格式不同的地方使用。在其它地方，
+			默认格式应该由程序员在模板之外合理地设置。</p>
+            </div>
+
+
+          <p>期望的格式可以由 
+          <code class="inline-code">?string.<em class="code-color">format</em></code> 或
+          <code class="inline-code">?string[&quot;<em class="code-color">format</em>&quot;]</code>
+		  (或历史上等同的，
+          <code class="inline-code">?string(&quot;<em class="code-color">format</em>&quot;)</code>)
+		  来指定。这些都是等同的，除了使用引号格式的，它可以在 
+		  <code class="inline-code"><em class="code-color">format</em></code> 中包含任意字符，
+		  比如空格。<code class="inline-code"><em class="code-color">format</em></code> 的语法和配置设置项
+		  <code class="inline-code">date_format</code>，<code class="inline-code">time_format</code> 和 
+		  <code class="inline-code">datetime_format</code> 是一样的； <a href="ref_directive_setting.html#topic.dateTimeFormatSettings">请参考这些可能值的文档</a>。</p>
+
+          <p>例如：如果输出的本地化设置是美国英语，时区是美国太平洋时区，并且
+          <code class="inline-code">openingTime</code> 是
+          <code class="inline-code">java.sql.Time</code>， <code class="inline-code">nextDiscountDay</code>
+          是 <code class="inline-code">java.sql.Date</code> 而
+          <code class="inline-code">lastUpdated</code> 是
+          <code class="inline-code">java.sql.Timestamp</code> 或
+          <code class="inline-code">java.util.Date</code> 那么：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${openingTime?string.short}
+${openingTime?string.medium}
+${openingTime?string.long}
+${openingTime?string.full}
+${openingTime?string.xs}
+${openingTime?string.iso}
+
+${nextDiscountDay?string.short}
+${nextDiscountDay?string.medium}
+${nextDiscountDay?string.long}
+${nextDiscountDay?string.full}
+${nextDiscountDay?string.xs}
+${nextDiscountDay?string.iso}
+
+${lastUpdated?string.short}
+${lastUpdated?string.medium}
+${lastUpdated?string.long}
+${lastUpdated?string.full}
+${lastUpdated?string.medium_short} &lt;#-- medium date, short time --&gt;
+${lastUpdated?string.xs}
+${lastUpdated?string.iso}
+
+&lt;#-- SimpleDateFormat patterns: --&gt;
+${lastUpdated?string[&quot;dd.MM.yyyy, HH:mm&quot;]}
+${lastUpdated?string[&quot;EEEE, MMMM dd, yyyy, hh:mm a &#39;(&#39;zzz&#39;)&#39;&quot;]}
+${lastUpdated?string[&quot;EEE, MMM d, &#39;&#39;yy&quot;]}
+${lastUpdated?string.yyyy} &lt;#-- Same as ${lastUpdated?string[&quot;yyyy&quot;]} --&gt;
+
+&lt;#-- Advanced ISO 8601-related formats: --&gt;
+${lastUpdated?string.iso_m_u}
+${lastUpdated?string.xs_ms_nz}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">01:45 PM
+01:45:09 PM
+01:45:09 PM PST
+01:45:09 PM PST
+13:45:09-08:00
+13:45:09-08:00
+
+2/20/07
+Apr 20, 2007
+April 20, 2007
+Friday, April 20, 2007
+2007-02-20-08:00
+2007-02-20
+
+2/20/07 01:45 PM
+Feb 20, 2007 01:45:09 PM
+February 20, 2007 01:45:09 PM PST
+Friday, February 20, 2007 01:45:09 PM PST
+Feb 8, 2003 9:24 PM
+2007-02-20T13:45:09-08:00
+2007-02-20T13:45:09-08:00
+
+08.04.2003 21:24
+Tuesday, April 08, 2003, 09:24 PM (PDT)
+Tue, Apr 8, &#39;03
+2003
+
+2007-02-20T21:45Z
+2007-02-20T13:45:09.000</pre></div>
+
+            <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+            <p>不幸的是，由于Java平台的限制，在数据模型中可以有日期变量，
+			那里 FreeMarker 不能决定变量是否是日期(年，月，日)，还是时间
+			(时，分，秒，毫秒)，或者是日期-时间值。这种情况下，当你编写如
+			<code class="inline-code">${lastUpdated?string.short}</code> 或
+			<code class="inline-code">${lastUpdated?string.xs}</code> 时，FreeMarker 
+			不知道如何来显示日期，也就是说，格式不指定精确的字段去显示，
+			或者如果只是简单使用 <code class="inline-code">${lastUpdated}</code>，
+			那么模板会中止执行并抛出错误。要阻止这些发生，可以使用 <a href="#ref_builtin_date_datetype"><code>?date</code>，
+            <code>?time</code> 和 <code>?datetime</code>
+            内建函数</a> 来帮助 FreeMarker。例如：
+            <code class="inline-code">${lastUpdated?datetime?string.short}</code>。
+			要询问程序员数据模型中确定的变量是否有这个问题，
+			或通常使用内建函数 <code class="inline-code">?date</code>，<code class="inline-code">?time</code> 
+			和 <code class="inline-code">?datetime</code> 来安全处理。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>不需和格式模式使用 <code class="inline-code">?date</code>,
+            <code class="inline-code">?time</code> 或 <code class="inline-code">?datetime</code>，
+			比如 <code class="inline-code">&quot;yyyy.MM.dd HH:mm&quot;</code>，因为使用这些模式，
+			就告诉 FreeMarker 来显示哪部分日期。那么，FreeMarker 将盲目地相信你，
+			如果你显示的部分不存在于变量中，则可以显示&quot;干扰&quot;。例如，
+			<code class="inline-code">${openingTime?string[&quot;yyyy-MM-dd hh:mm:ss a&quot;]}</code>,
+			而 <code class="inline-code">openingTime</code> 中只存储了时间，将会显示
+			<code class="inline-code">1970-01-01 09:24:44 PM</code>。</p>
+            </div>
+
+
+          <p>要避免误解，需要的格式不是字符串，它可以是变量或任意表达式，比如 
+		  <code class="inline-code">&quot;<em class="code-color">...</em>&quot;?string[myFormat]</code>。</p>
+
+          <p>请参考： <a href="dgui_template_valueinsertion.html#dgui_template_valueinserion_universal_date">日期的插入</a></p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_number.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_boolean.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

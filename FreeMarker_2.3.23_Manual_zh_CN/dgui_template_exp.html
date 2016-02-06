@@ -1,0 +1,2090 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>表达式 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="表达式">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_template_exp.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_template_exp.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_template.html"><span itemprop="name">模板</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_template_exp.html"><span itemprop="name">表达式</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","模板","表达式"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_template_directives.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_template_valueinsertion.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_template_exp" itemprop="headline">表达式</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#exp_cheatsheet" data-menu-target="exp_cheatsheet">快速浏览(备忘单)</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct" data-menu-target="dgui_template_exp_direct">直接确定值</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_direct_string" data-menu-target="dgui_template_exp_direct_string">字符串</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct_number" data-menu-target="dgui_template_exp_direct_number">数字</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct_boolean" data-menu-target="dgui_template_exp_direct_boolean">布尔值</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct_seuqence" data-menu-target="dgui_template_exp_direct_seuqence">序列</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct_ranges" data-menu-target="dgui_template_exp_direct_ranges">值域</a></li><li><a class="page-menu-link" href="#dgui_template_exp_direct_hash" data-menu-target="dgui_template_exp_direct_hash">哈希表</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_var" data-menu-target="dgui_template_exp_var">检索变量</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_var_toplevel" data-menu-target="dgui_template_exp_var_toplevel">顶层变量</a></li><li><a class="page-menu-link" href="#dgui_template_exp_var_hash" data-menu-target="dgui_template_exp_var_hash">从哈希表中检索数据</a></li><li><a class="page-menu-link" href="#dgui_template_exp_var_sequence" data-menu-target="dgui_template_exp_var_sequence">从序列中检索数据</a></li><li><a class="page-menu-link" href="#dgui_template_exp_var_special" data-menu-target="dgui_template_exp_var_special">特殊变量</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_stringop" data-menu-target="dgui_template_exp_stringop">字符串操作</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_stringop_interpolation" data-menu-target="dgui_template_exp_stringop_interpolation">插值 (或连接)</a></li><li><a class="page-menu-link" href="#dgui_template_exp_get_character" data-menu-target="dgui_template_exp_get_character">获取字符</a></li><li><a class="page-menu-link" href="#dgui_template_exp_stringop_slice" data-menu-target="dgui_template_exp_stringop_slice">字符串切分 (子串)</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_sequenceop" data-menu-target="dgui_template_exp_sequenceop">序列操作</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_sequenceop_cat" data-menu-target="dgui_template_exp_sequenceop_cat">连接</a></li><li><a class="page-menu-link" href="#dgui_template_exp_seqenceop_slice" data-menu-target="dgui_template_exp_seqenceop_slice">序列切分</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_hashop" data-menu-target="dgui_template_exp_hashop">哈希表操作</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_hashop_cat" data-menu-target="dgui_template_exp_hashop_cat">连接</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_arit" data-menu-target="dgui_template_exp_arit">算数运算</a></li><li><a class="page-menu-link" href="#dgui_template_exp_comparison" data-menu-target="dgui_template_exp_comparison">比较运算</a></li><li><a class="page-menu-link" href="#dgui_template_exp_logicalop" data-menu-target="dgui_template_exp_logicalop">逻辑操作</a></li><li><a class="page-menu-link" href="#dgui_template_exp_builtin" data-menu-target="dgui_template_exp_builtin">内建函数</a></li><li><a class="page-menu-link" href="#dgui_template_exp_methodcall" data-menu-target="dgui_template_exp_methodcall">方法调用</a></li><li><a class="page-menu-link" href="#dgui_template_exp_missing" data-menu-target="dgui_template_exp_missing">处理不存在的值</a><ul><li><a class="page-menu-link" href="#dgui_template_exp_missing_default" data-menu-target="dgui_template_exp_missing_default">默认值操作符</a></li><li><a class="page-menu-link" href="#dgui_template_exp_missing_test" data-menu-target="dgui_template_exp_missing_test">不存在值检测操作符</a></li></ul></li><li><a class="page-menu-link" href="#dgui_template_exp_assignment" data-menu-target="dgui_template_exp_assignment">赋值操作符</a></li><li><a class="page-menu-link" href="#dgui_template_exp_parentheses" data-menu-target="dgui_template_exp_parentheses">括号</a></li><li><a class="page-menu-link" href="#dgui_template_exp_whitespace" data-menu-target="dgui_template_exp_whitespace">表达式中的空格</a></li><li><a class="page-menu-link" href="#dgui_template_exp_precedence" data-menu-target="dgui_template_exp_precedence">操作符的优先级</a></li></ul> </div><p>当需要给插值或者指令参数提供值时，可以使用变量或其他复杂的表达式。
+		  例如，我们设x为8，y为5，那么 <code class="inline-code">(x + y)/2</code> 
+		  的值就会被处理成数字类型的值6.5。</p><p>在我们展开细节之前，先来看一些具体的例子：</p><ul>
+          <li>
+            <p>当给插值提供值时：插值的使用方式为 
+			<code class="inline-code">${<em class="code-color">expression</em>}</code>，
+			把它放到你想输出文本的位置上，然后给值就可以打印出来了。
+			即 <code class="inline-code">${(5 + 8)/2}</code> 会打印出 &#39;&#39;6.5&#39;&#39; 来
+			(如果输出的语言不是美国英语，也可能打印出&#39;&#39;6,5&#39;&#39;来)。</p>
+          </li>
+
+          <li>
+            <p>当给指令参数提供值时：在入门章节我们已经看到 
+			<code class="inline-code">if</code> 指令的使用了。这个指令的语法是：<code class="inline-code">&lt;#if 
+			<em class="code-color">expression</em>&gt;<em class="code-color">...</em>&lt;/#if&gt;</code>。
+            这里的表达式计算结果必须是布尔类型的。比如 
+			<code class="inline-code">&lt;#if 2 &lt; 3&gt;</code> 中的 <code class="inline-code">2 
+			&lt;3</code> (2小于3)是结果为 <code class="inline-code">true</code> 的布尔表达式。</p>
+          </li>
+        </ul>
+          
+
+
+
+<h2 class="content-header header-section2" id="exp_cheatsheet">快速浏览(备忘单)</h2>
+
+
+          <p>这里给已经了解 FreeMarker 的人或有经验的程序员的提个醒：</p>
+
+          <ul>
+            <li>
+              <a href="#dgui_template_exp_direct">直接指定值</a>
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_direct_string">字符串</a>：
+                  <code class="inline-code">&quot;Foo&quot;</code> 或者 <code class="inline-code">&#39;Foo&#39;</code> 或者
+                  <code class="inline-code">&quot;It&#39;s \&quot;quoted\&quot;&quot;</code> 或者 <code class="inline-code">&#39;It\&#39;s
+                  &quot;quoted&quot;&#39;</code> 或者
+                  <code class="inline-code">r&quot;C:\raw\string&quot;</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_direct_number">数字</a>：
+                  <code class="inline-code">123.45</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_direct_boolean">布尔值</a>：
+                  <code class="inline-code">true</code>， <code class="inline-code">false</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_direct_seuqence">序列</a>：
+                  <code class="inline-code">[&quot;foo&quot;, &quot;bar&quot;, 123.45]</code>； 值域：
+                  <code class="inline-code">0..9</code>, <code class="inline-code">0..&lt;10</code> (或
+                  <code class="inline-code">0..!10</code>), <code class="inline-code">0..</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_direct_hash">哈希表</a>：
+                  <code class="inline-code">{&quot;name&quot;:&quot;green mouse&quot;,
+                  &quot;price&quot;:150}</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_var">检索变量</a>
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_var_toplevel">顶层变量</a>：
+				  <code class="inline-code">user</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_var_hash">从哈希表中检索数据</a>： <code class="inline-code">user.name</code>，
+                  <code class="inline-code">user[&quot;name&quot;]</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_var_sequence">从序列中检索数据</a>：
+                  <code class="inline-code">products[5]</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_var_special">特殊变量</a>： <code class="inline-code">.main</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_stringop">字符串操作</a>
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_stringop_interpolation">插值(或连接)</a>：
+                  <code class="inline-code">&quot;Hello ${user}!&quot;</code> (或 <code class="inline-code">&quot;Hello
+                  &quot; + user + &quot;!&quot;</code>)
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_get_character">获取一个字符</a>：
+				  <code class="inline-code">name[0]</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_stringop_slice">字符串切分：</a> 包含结尾：
+				  <code class="inline-code">name[0..4]</code>，不包含结尾：
+				  <code class="inline-code">name[0..&lt;5]</code>，基于长度(宽容处理)：
+				  <code class="inline-code">name[0..*5]</code>，去除开头：
+                  <code class="inline-code">name[5..]</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_sequenceop">序列操作</a>
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_sequenceop_cat">连接</a>：
+                  <code class="inline-code">users + [&quot;guest&quot;]</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_seqenceop_slice">序列切分</a>：包含结尾：
+                  <code class="inline-code">products[20..29]</code>， 不包含结尾：
+                  <code class="inline-code">products[20..&lt;30]</code>，基于长度(宽容处理)：
+                  <code class="inline-code">products[20..*10]</code>，去除开头：
+                  <code class="inline-code">products[20..]</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_hashop">哈希表操作</a>
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_hashop_cat">连接</a>：
+                  <code class="inline-code">passwords + { &quot;joe&quot;: &quot;secret42&quot; }</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_arit">算术运算</a>：
+			  <code class="inline-code">(x * 1.5 + 10) / 2 - y %
+              100</code>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_comparison">比较运算</a>：
+              <code class="inline-code">x == y</code>， <code class="inline-code">x != y</code>，
+              <code class="inline-code">x &lt; y</code>， <code class="inline-code">x &gt; y</code>，
+              <code class="inline-code">x &gt;= y</code>， <code class="inline-code">x &lt;= y</code>，
+              <code class="inline-code">x lt y</code>， <code class="inline-code">x lte y</code>，
+              <code class="inline-code">x gt y</code>， <code class="inline-code">x gte y</code>，
+              等等。。。。。。
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_logicalop">逻辑操作</a>：
+			  <code class="inline-code">!registered &amp;&amp; (firstVisit
+              || fromEurope)</code>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_builtin">内建函数</a>：
+              <code class="inline-code">name?upper_case</code>,
+              <code class="inline-code">path?ensure_starts_with(&#39;/&#39;)</code>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_methodcall">方法调用</a>：
+			  <code class="inline-code">repeat(&quot;What&quot;, 3)</code>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_missing">处理不存在的值</a>：
+
+              <ul>
+                <li>
+                  <a href="#dgui_template_exp_missing_default">默认值</a>：
+				  <code class="inline-code">name!&quot;unknown&quot;</code> 或者
+                  <code class="inline-code">(user.name)!&quot;unknown&quot;</code> 或者
+                  <code class="inline-code">name!</code> 或者
+                  <code class="inline-code">(user.name)!</code>
+                </li>
+
+                <li>
+                  <a href="#dgui_template_exp_missing_test">检测不存在的值</a>： <code class="inline-code">name??</code> 或者
+                  <code class="inline-code">(user.name)??</code>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#dgui_template_exp_assignment">赋值操作</a>：
+			  <code class="inline-code">=</code>, <code class="inline-code">+=</code>,
+              <code class="inline-code">-=</code>, <code class="inline-code">*=</code>,
+              <code class="inline-code">/=</code>, <code class="inline-code">%=</code>,
+              <code class="inline-code">++</code>, <code class="inline-code">--</code>
+            </li>
+          </ul>
+
+          <p>请参考： <a href="#dgui_template_exp_precedence">运算符优先级</a></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_direct">直接确定值</h2>
+
+
+          
+
+          
+
+          <p>通常我们喜欢是使用直接确定的值而不是计算的结果。</p>
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_string">字符串</h3>
+
+
+            
+
+            <p>在文本中确定字符串值的方法是看双引号，比如：
+			<code class="inline-code">&quot;some text&quot;</code>，或单引号，比如：
+			<code class="inline-code">&#39;some text&#39;</code>。这两种形式是等同的。
+			如果文本自身包含用于字符引用的引号
+			( <code class="inline-code">&quot;</code> 或 <code class="inline-code">&#39;</code>)或反斜杠时，
+			应该在它们的前面再加一个反斜杠；这就是转义。
+			转义允许直接在文本中输入任何字符，
+			也包括<a href="gloss.html#gloss.lineBreak">换行</a>。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;It&#39;s \&quot;quoted\&quot; and
+this is a backslash: \\&quot;}
+
+${&#39;It\&#39;s &quot;quoted&quot; and
+this is a backslash: \\&#39;}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">It&#39;s &quot;quoted&quot; and
+this is a backslash: \
+
+It&#39;s &quot;quoted&quot; and
+this is a backslash: \</pre></div>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>这里当然可以直接在模板中输入文本而不需要 
+			  <code class="inline-code">${<em class="code-color">...</em>}</code>。
+			  但是我们在这里用它只是为了示例来说明表达式的使用。</p>
+              </div>
+
+
+            <a name="topic.escapeSequence"></a>
+
+            
+
+            <p>下面的表格是FreeMarker支持的所有转义字符。
+			在字符串使用反斜杠的其他所有情况都是错误的，运行这样的模板都会失败。</p>
+
+              <div class="table-responsive">
+    <table class="table">
+
+              <thead>
+                <tr>
+                  <th>转义序列</th>
+
+
+                  <th>含义</th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+                <tr>
+                  <td><code class="inline-code">\&quot;</code></td>
+
+
+                  <td>引号 (u0022)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\&#39;</code></td>
+
+
+                  <td>单引号(又称为撇号) (u0027)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\{</code></td>
+
+
+                  <td>起始花括号：<code class="inline-code">{</code></td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\\</code></td>
+
+
+                  <td>反斜杠 (u005C)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\n</code></td>
+
+
+                  <td>换行符 (u000A)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\r</code></td>
+
+
+                  <td>回车 (u000D)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\t</code></td>
+
+
+                  <td>水平制表符(又称为tab) (u0009)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\b</code></td>
+
+
+                  <td>退格 (u0008)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\f</code></td>
+
+
+                  <td>换页 (u000C)</td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\l</code></td>
+
+
+                  <td>小于号：<code class="inline-code">&lt;</code></td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\g</code></td>
+
+
+                  <td>大于号：<code class="inline-code">&gt;</code></td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\a</code></td>
+
+
+                  <td>&amp;符：<code class="inline-code">&amp;</code></td>
+
+                </tr>
+
+
+                <tr>
+                  <td><code class="inline-code">\x<em class="code-color">Code</em></code></td>
+
+
+                  <td>字符的16进制 <a href="gloss.html#gloss.unicode">Unicode</a> 码 (<a href="gloss.html#gloss.UCS">UCS</a> 码)</td>
+
+                </tr>
+
+              </tbody>
+
+                </table>
+  </div>
+
+
+            <p>在 <code class="inline-code">\x</code> 之后的 
+			<code class="inline-code"><em class="code-color">Code</em></code> 
+			是1-4位的16进制码。下面这个示例中都是在字符串中放置版权符号：
+            <code class="inline-code">&quot;\xA9 1999-2001&quot;</code>，
+            <code class="inline-code">&quot;\x0A9 1999-2001&quot;</code>，
+            <code class="inline-code">&quot;\x00A9 1999-2001&quot;</code>。
+			如果紧跟16进制码后一位的字符也能解释成16进制码时，
+			就必须把4位补全，否则FreeMarker就会误解你的意图。</p>
+
+            <p>请注意，字符序列 <code class="inline-code">${</code> (和 <code class="inline-code">#{</code>) 
+			有特殊的含义，它们被用做插入表达式的数值(典型的应用是变量的值：
+			<code class="inline-code">&quot;Hello ${user}!&quot;</code>)。这将在 <a href="#dgui_template_exp_stringop_interpolation">后续章节</a>中解释。
+			如果想要打印 <code class="inline-code">${</code> 或 <code class="inline-code">#{</code>，
+			就要使用下面所说的原生字符串，或者进行转义。就像 
+			<code class="inline-code">&quot;foo $\{bar}&quot;</code>中的 <code class="inline-code">{</code>。</p>
+
+            
+
+            <p>原生字符串是一种特殊的字符串。在原生字符串中，
+			反斜杠和 <code class="inline-code">${</code> 没有特殊含义，
+			它们被视为普通的字符。为了表明字符串是原生字符串，
+			在开始的引号或单引号之前放置字母<code class="inline-code">r</code>，例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">${r&quot;${foo}&quot;}
+${r&quot;C:\foo\bar&quot;}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">${foo}
+C:\foo\bar</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_number">数字</h3>
+
+
+            
+
+            <p>输入不带引号的数字就可以直接指定一个数字，
+			必须使用点作为小数的分隔符而不能是其他的分组分隔符。
+			可以使用 <code class="inline-code">-</code> 或 <code class="inline-code">+</code> 
+			来表明符号 (<code class="inline-code">+</code> 是多余的)。
+			科学记数法暂不支持使用 (<code class="inline-code">1E3</code> 就是错误的)，
+			而且也不能在小数点之前不写0(<code class="inline-code">.5</code> 也是错误的)。</p>
+
+            <p>下面的数字都是合法的：<code class="inline-code">0.08</code>，
+            <code class="inline-code">-5.013</code>，<code class="inline-code">8</code>，
+            <code class="inline-code">008</code>，<code class="inline-code">11</code>，
+            <code class="inline-code">+11</code></p>
+
+            <p>请注意，像 <code class="inline-code">08</code>、
+            <code class="inline-code">+8</code>、 <code class="inline-code">8.00</code> 和
+            <code class="inline-code">8</code> 这样的数值是完全等同的，它们都是数字8。
+			所以， <code class="inline-code">${08}</code>、<code class="inline-code">${+8}</code>、 
+			<code class="inline-code">${8.00}</code> 和 <code class="inline-code">${8}</code> 
+			的输出都是一样的。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_boolean">布尔值</h3>
+
+
+            
+
+            
+
+            <p>直接写 <code class="inline-code">true</code> 或者 
+			<code class="inline-code">false</code> 就表示一个布尔值了，不需使用引号。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_seuqence">序列</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            <p>指定一个文字的序列，使用逗号来分隔其中的每个 <a href="dgui_quickstart_datamodel.html#topic.dataModel.subVar">子变量</a>，
+			然后把整个列表放到方括号中。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list <strong>[&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;]</strong> as x&gt;
+${x}
+&lt;/#list&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">foo
+bar
+baz
+ </pre></div>
+
+            <p>列表中的项目是表达式，那么也可以这样做： 
+			<code class="inline-code">[2 + 2, [1, 2, 3, 4], &quot;foo&quot;]</code>。
+			其中第一个子变量是数字4，第二个子变量是一个序列，
+			第三个子变量是字符串&quot;foo&quot;。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_ranges">值域</h3>
+
+
+            <p>值域也是序列，但它们由指定包含的数字范围所创建，
+			而不需指定序列中每一项。比如：
+            <code class="inline-code">0..&lt;m</code>，这里假定 <code class="inline-code">m</code> 
+			变量的值是5，那么这个序列就包含  
+			<code class="inline-code">[0, 1, 2, 3, 4]</code>。值域的主要作用有：使用
+			<code class="inline-code">&lt;#list<em class="code-color">...</em>&gt;</code>
+			来迭代一定范围内的数字，<a href="#dgui_template_exp_seqenceop_slice">序列切分</a> 和 
+			<a href="#dgui_template_exp_stringop_slice">字符串切分</a>。</p>
+
+            <p>值域表达式的通用形式是(
+            <code class="inline-code"><em class="code-color">start</em></code> 和
+            <code class="inline-code"><em class="code-color">end</em></code> 
+			可以是任意的结果为数字表达式)：</p>
+
+            <ul>
+              <li>
+                <p><code class="inline-code"><em class="code-color">start</em>..<em class="code-color">end</em></code>：
+                包含结尾的值域。比如 <code class="inline-code">1..4</code> 就是 
+				<code class="inline-code">[1, 2, 3, 4]</code>， 而 <code class="inline-code">4..1</code> 
+				就是 <code class="inline-code">[4, 3, 2, 1]</code>。当心一点，
+				包含结尾的值域不会是一个空序列，所以 <code class="inline-code">0..length-1</code> 
+				就是 <em>错误的</em>，因为当长度是 <code class="inline-code">0</code> 时，
+				序列就成了 <code class="inline-code">[0, -1]</code>。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code"><em class="code-color">start</em>..&lt;<em class="code-color">end</em></code>
+                或
+                <code class="inline-code"><em class="code-color">start</em>..!<em class="code-color">end</em></code>：
+				不包含结尾的值域。比如 <code class="inline-code">1..&lt;4</code> 就是 
+				<code class="inline-code">[1, 2, 3]</code>，<code class="inline-code">4..&lt;1</code> 
+				就是 <code class="inline-code">[4, 3, 2]</code>, 而 <code class="inline-code">1..&lt;1</code> 
+				表示 <code class="inline-code">[]</code>。请注意最后一个示例；
+				结果可以是空序列，和  <code class="inline-code">..&lt;</code> 
+				和 <code class="inline-code">..!</code> 没有区别; 最后这种形式在应用程序中使用了 
+				<code class="inline-code">&lt;</code> 字符而引发问题(如HTML编辑器等)。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code"><em class="code-color">start</em>..*<em class="code-color">length</em></code>：
+                限定长度的值域，比如 <code class="inline-code">10..*4</code> 就是 
+				<code class="inline-code">[10, 11, 12, 13]</code>，<code class="inline-code">10..*-4</code> 
+				就是 <code class="inline-code">[10, 9, 8, 7]</code>，而 <code class="inline-code">10..*0</code> 
+				表示 <code class="inline-code">[]</code>。当这些值域被用来切分时，
+				如果切分后的序列或者字符串结尾在指定值域长度之前，则切分不会有问题；请参考 
+				<a href="#dgui_template_exp_seqenceop_slice">序列切分</a> 来获取更多信息。</p>
+
+                  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+                  <p>限定长度的值域是在 FreeMarker 2.3.21版本中引入的。</p>
+                  </div>
+
+              </li>
+
+              <li>
+                <p><code class="inline-code"><em class="code-color">start</em>..</code>：
+				无右边界值域。这和限制长度的值域很像，只是长度是无限的。
+				比如 <code class="inline-code">1..</code> 就是
+                <code class="inline-code">[1, 2, 3, 4, 5, 6, ... ]</code>，直到无穷大。
+				但是处理(比如列表显示)这种值域时要万分小心，处理所有项时，
+				会花费很长时间，直到内存溢出应用程序崩溃。
+				和限定长度的值域一样，当它们被切分时，
+				遇到切分后的序列或字符串结尾时，切分就结束了。</p>
+
+                  <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+                  <p>无右边界值域在 FreeMarker 2.3.21 版本以前只能用于切分，
+				  若用于其它用途，它就像空序列一样了。要使用新的特性，
+				  使用 FreeMarker 2.3.21 版本是不够的，程序员要设置 
+				  <code class="inline-code">incompatible_improvements</code> 至少到2.3.21版本。</p>
+                  </div>
+
+              </li>
+            </ul>
+
+            <p>值域的进一步注意事项：</p>
+
+            <ul>
+              <li>
+                <p>值域表达式本身并没有方括号，比如这样编写代码 
+				<code class="inline-code">&lt;#assign myRange = 0..&lt;x&gt;</code>，
+				而不是 <code class="inline-code">&lt;#assign myRange = [0..&lt;x]&gt;</code>。
+				后者会创建一个包含值域的序列。方括号是切分语法的一部分，就像 
+                <code class="inline-code"><em class="code-color">seq</em>[<em class="code-color">myRange</em>]</code>。</p>
+              </li>
+
+              <li>
+                <p>可以在 <code class="inline-code">..</code> 的两侧编写算术表达式而不需要圆括号，
+				就像 <code class="inline-code">n + 1 ..&lt; m / 2 - 1</code>。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">..</code>，<code class="inline-code">..&lt;</code>，
+                <code class="inline-code">..!</code> 和 <code class="inline-code">..*</code> 是运算符，
+				所以它们中间不能有空格。就像 <code class="inline-code">n .. &lt;m</code> 
+				这样是错误的，但是 <code class="inline-code">n ..&lt; m</code> 这样就可以。</p>
+              </li>
+
+              <li>
+                <p>无右边界值域的定义大小是2147483647 (如果
+                <code class="inline-code">incompatible_improvements</code> 低于2.3.21版本，那么就是0)，
+				这是由于技术上的限制(32位)。但当列表显示它们的时候，实际的长度是无穷大。</p>
+              </li>
+
+              <li>
+                <p>值域并不存储它们包含的数字，那么对于 <code class="inline-code">0..1</code> 和
+                <code class="inline-code">0..100000000</code> 来说，创建速度都是一样的，
+				并且占用的内存也是一样的。</p>
+              </li>
+            </ul>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_direct_hash">哈希表</h3>
+
+
+            
+
+            
+
+            <p>在模板中指定一个哈希表，就可以遍历用逗号分隔开的&quot;键/值&quot;对，
+			把列表放到花括号内即可。键和值成对出现并以冒号分隔。比如：
+			<code class="inline-code">{ &quot;name&quot;: &quot;green mouse&quot;, &quot;price&quot;: 150 }</code>。
+			请注意名和值都是表达式，但是用来检索的名称就必须是字符串类型，
+			而值可以是任意类型。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_var">检索变量</h2>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_var_toplevel">顶层变量</h3>
+
+
+            
+
+            <p>访问顶层的变量，可以简单地使用变量名。例如，
+			用表达式 <code class="inline-code">user</code> 就可以在根上获取以 
+			"user" 为名存储的变量值。然后打印出存储在里面的内容：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">${user}</pre></div>
+
+            <p>如果没有顶层变量，那么 FreeMarker 在处理表达式时就会发生错误，
+			进而终止模板的执行(除非程序员事先配置了 FreeMarker)。</p>
+
+            <p>在这种表达式中，变量名只可以包含字母(也可以是非拉丁文)，
+			数字(也可以是非拉丁数字)，下划线 (<code class="inline-code">_</code>)，
+			美元符号 (<code class="inline-code">$</code>)，at符号 (<code class="inline-code">@</code>)。
+			此外，第一个字符不可以是ASCII码数字(<code class="inline-code">0</code>-<code class="inline-code">9</code>)。
+			从 FreeMarker 2.3.22 版本开始，变量名在任何位置也可以包含负号
+			(<code class="inline-code">-</code>)，点(<code class="inline-code">.</code>)和冒号(<code class="inline-code">:</code>)，
+			但这些必须使用前置的反斜杠(<code class="inline-code">\</code>)来转义，
+			否则它们将被解释成操作符。比如，读取名为"data-id"的变量，
+			表达式为 <code class="inline-code">data\-id</code>，因为 <code class="inline-code">data-id</code> 
+			将被解释成 "data minus id"。
+			(请注意，这些转义仅在标识符中起作用，而不是字符串中。)</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_var_hash">从哈希表中检索数据</h3>
+
+
+            
+
+            
+
+            <p>如果有一个表达式的结果是哈希表，
+			那么我们可以使用点和子变量的名字得到它的值，
+			假设我们有如下的数据模型：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-data-model">(root)
+ |
+ +- book
+ |   |
+ |   +- title = &quot;Breeding green mouses&quot;
+ |   |
+ |   +- author
+ |       |
+ |       +- name = &quot;Julia Smith&quot;
+ |       |
+ |       +- info = &quot;Biologist, 1923-1985, Canada&quot;
+ |
+ +- test = &quot;title&quot;</pre></div>
+
+            <p>现在，就可以通过<code class="inline-code">book.title</code> 
+			来读取 <code class="inline-code">title</code>，book表达式将返回一个哈希表
+			(就像上一章中解释的那样)。按这种逻辑进一步来说，我们可以使用表达式
+			<code class="inline-code">book.author.name</code> 来读取到auther的name。</p>
+
+            <p>如果我们想指定同一个表达式的子变量，那么还有另外一种语法格式：
+            <code class="inline-code">book[&quot;title&quot;]</code>。在方括号中可以给出任意长度字符串的表达式。
+			在上面这个数据模型示例中还可以这么来获取title： <code class="inline-code">book[test]</code>。
+			下面这些示例它们含义都是相等的： <code class="inline-code">book.author.name</code>，
+            <code class="inline-code">book[&quot;author&quot;].name</code>，
+            <code class="inline-code">book.author.[&quot;name&quot;]</code>，
+            <code class="inline-code">book[&quot;author&quot;][&quot;name&quot;]</code>。</p>
+
+            <p>当使用点式语法时，顶层变量名的命名也有相同的限制
+			(命名时只能使用字母，数字，<code class="inline-code">_</code>，<code class="inline-code">$</code>，
+			<code class="inline-code">@</code>，但是不能使用 <code class="inline-code">0</code>-<code class="inline-code">9</code>开头，
+			同时，从2.3.22版本开始，也可以使用 <code class="inline-code">\-</code>，<code class="inline-code">\.</code> 
+			和 <code class="inline-code">\:</code>)。当使用方括号语法时，则没有这样的限制，
+			因为名称可以是任意表达式的结果。(请注意，对于FreeMarker的XML支持来说，
+			如果子变量名称是 <code class="inline-code">*</code> (星号) 
+			或者 <code class="inline-code">**</code>，那么就不要使用方括号语法。)</p>
+
+            <p>对于顶层变量来说，如果尝试访问一个不存在的变量也会引起错误导致解析执行模板中断
+			(除非程序员事先配置过FreeMarker)。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_var_sequence">从序列中检索数据</h3>
+
+
+            
+
+            
+
+            <p>这和从哈希表中检索是相同的，但是只能使用方括号语法形式来进行，
+			而且方括号内的表达式最终必须是一个数字而不是字符串。比如，要从 
+			<a href="dgui_datamodel_basics.html#example.stdDataModel">示例数据模型</a> 中获取第一个动物的名字
+			(记住第一项数字索引是0而不是1)，可以这么来写: <code class="inline-code">animals[0].name</code></p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_var_special">特殊变量</h3>
+
+
+            
+
+            <p>特殊变量是由FreeMarker引擎本身定义的。
+			使用它们，可以按照如下语法形式来进行：
+            <code class="inline-code">.<em class="code-color">variable_name</em></code>。.</p>
+
+            <p>通常情况下是不需使用特殊变量，而对专业用户来说可能用到。
+			所有特殊变量的说明可以参见 <a href="ref_specvar.html">参考手册</a>。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_stringop">字符串操作</h2>
+
+
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_stringop_interpolation">插值 (或连接)</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            <p>如果要在字符串中插入表达式的值，可以在字符串的文字中使用 
+			<code class="inline-code">${<em class="code-color">...</em>}</code> 
+			(已经废弃的 <code class="inline-code">#{<em class="code-color">...</em>}</code>)。
+            <code class="inline-code">${<em class="code-color">...</em>}</code> 在字符串中的作用和在 
+			<a href="dgui_template_valueinsertion.html"> <span class="marked-text">文本</span> 
+			区是相同的</a> (它遵守相同的 <em>本地化敏感</em> 的数字和日期/时间格式)，
+			而不是 <a href="ref_directive_escape.html#ref.directive.escape">自动转义</a>。</p>
+
+            <p>示例 (假设user是 &#39;&#39;Big Joe&#39;&#39;)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign s = &quot;Hello ${user}!&quot;&gt;
+${s} &lt;#-- Just to see what the value of s is --&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">Hello Big Joe!</pre></div>
+
+              <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+              <p>用户所犯的一个常见错误是将插值放在了不需要/不应该使用的地方。
+			  插值 <em>仅</em> 在 <a href="dgui_template_overallstructure.html"><span class="marked-text">文本</span> 区</a> 中有效。(比如， 
+			  <code class="inline-code">&lt;h1&gt;Hello ${name}!&lt;/h1&gt;</code>) 还有在字符串值中 
+			  (比如， <code class="inline-code">&lt;#include &quot;/footer/${company}.html&quot;&gt;</code>)。
+			  典型的 <em>错误</em> 使用是 
+			  <code class="inline-code">&lt;#if ${big}&gt;...&lt;/#if&gt;</code>，
+			  这会导致语法错误。简单写为  
+			  <code class="inline-code">&lt;#if big&gt;...&lt;/#if&gt;</code>即可。
+			  而且， <code class="inline-code">&lt;#if &quot;${big}&quot;&gt;...&lt;/#if&gt;</code> 
+			  也是 <em>错误的</em>，
+			  因为它将参数值转换为字符串，但是  <code class="inline-code">if</code> 指令只接受布尔值，
+			  那么这将导致运行时错误。</p>
+              </div>
+
+
+            <p>另外，也可以使用 <code class="inline-code">+</code> 号来达到类似的效果：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign s = &quot;Hello &quot; + user + &quot;!&quot;&gt;</pre></div>
+
+            <p>这样的效果和使用 <code class="inline-code">${<em class="code-color">...</em>}</code> 是一样的。</p>
+
+              <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+              <p>因为 <code class="inline-code">+</code> 和使用 
+			  <code class="inline-code">${<em class="code-color">...</em>}</code> 
+			  的规则相同，附加的字符串受到 <code class="inline-code">locale</code>，
+              <code class="inline-code">number_format</code>，<code class="inline-code">date_format</code>， 
+			  <code class="inline-code">time_format</code>，<code class="inline-code">datetime_format</code> 和
+              <code class="inline-code">boolean_format</code> 等等设置的影响，
+			  这是对人来说的，而不是通常机器的解析。默认情况下，这会导致数字出问题，
+			  因为很多地区使用分组(千分位分隔符)，那么 
+			  <code class="inline-code">&quot;someUrl?id=&quot; + id</code> 就可能会是 
+			  <code class="inline-code">&quot;someUrl?id=1 234&quot;</code>。
+			  要预防这种事情的发生，请使用 <code class="inline-code">?c</code> 
+			  (对计算机来说)内建函数，那么在 <code class="inline-code">&quot;someUrl?id=&quot; + id?c</code> 或
+              <code class="inline-code">&quot;someUrl?id=${id?c}&quot;</code>中，
+			  就会得到如 <code class="inline-code">&quot;someUrl?id=1234&quot;</code> 
+			  这样的输出， 而不管本地化和格式的设置是什么。</p>
+              </div>
+
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_get_character">获取字符</h3>
+
+
+            
+
+            
+
+            <p>在给定索引值时可以获取字符串中的一个字符，这和 <a href="#dgui_template_exp_var_sequence">序列的子变量</a>是相似的，
+			比如 <code class="inline-code">user[0]</code>。这个操作执行的结果是一个长度为1的字符串，
+			FTL并没有独立的字符类型。和序列中的子变量一样，这个索引也必须是数字，
+			范围是从0到字符串的长度，否则模板的执行将会发生错误并终止。</p>
+
+            <p>由于序列的子变量语法和字符的getter语法冲突，
+			那么只能在变量不是序列时使用字符的getter语法(因为FTL支持多类型值，所以它是可能的)，
+			这种情况下使用序列方式就比较多。(为了变通，可以使用 <a href="ref_builtins_string.html#ref_builtin_string_for_string"> 
+			内建函数 <code>string</code> </a>，比如
+            <code class="inline-code">user?string[0]</code>。不必担心你不理解这是什么意思，
+			内建函数将会在后续章节中讨论。)</p>
+
+            <p>示例(假设 user 是 "Big Joe"):</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">${user[0]}
+${user[4]}</pre></div>
+
+            <p>将会输出(请注意第一个字符的索引是0)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">B
+J</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_stringop_slice">字符串切分 (子串)</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            <p>可以按照 <a href="#dgui_template_exp_seqenceop_slice">切分序列</a> 
+			(请参看)的相同方式来切分字符串，这就是使用字符来代替序列。不同的是：</p>
+
+            <ul>
+              <li>
+                <p>降序域不允许进行字符串切分。
+				(因为不像序列那样，很少情况下会想反转字符串。
+				如果真要这样做了，那就是疏忽。)</p>
+              </li>
+
+              <li>
+                <p>如果变量的值既是字符串又是序列(多类型值)，
+				那么切分将会对序列进行，而不是字符串。当处理XML时，
+				这样的值就是普通的了。此时，可以使用
+                <code class="inline-code"><em class="code-color">someXMLnode</em>?string[<em class="code-color">range</em>]</code>。</p>
+              </li>
+
+              <li>
+                <p>一个遗留的bug：值域 <em>包含</em> 结尾时，
+				结尾小于开始索引并且是是非负的(就像在 <code class="inline-code">&quot;abc&quot;[1..0]</code> 中)，
+				会返回空字符串而不是错误。(在降序域中这应该是个错误。) 
+				现在这个bug已经向后兼容，但是不应该使用它，否在就会埋下一个错误。</p>
+              </li>
+            </ul>
+
+            <p>示例：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign s = &quot;ABCDEF&quot;&gt;
+${s[2..3]}
+${s[2..&lt;4]}
+${s[2..*3]}
+${s[2..*100]}
+${s[2..]}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">CD
+CD
+CDE
+CDEF
+CDEF</pre></div>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>下面包括了一些使用内建函数来方便字符串切分的典型用例： <a href="ref_builtins_string.html#ref_builtin_remove_beginning"><code>remove_beginning</code></a>，
+              <a href="ref_builtins_string.html#ref_builtin_remove_ending"><code>remove_ending</code></a>，
+              <a href="ref_builtins_string.html#ref_builtin_keep_before"><code>keep_before</code></a>，
+              <a href="ref_builtins_string.html#ref_builtin_keep_after"><code>keep_after</code></a>，
+              <a href="ref_builtins_string.html#ref_builtin_keep_before_last"><code>keep_before_last</code></a>，
+              <a href="ref_builtins_string.html#ref_builtin_keep_after_last"><code>keep_after_last</code></a></p>
+              </div>
+
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_sequenceop">序列操作</h2>
+
+
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_sequenceop_cat">连接</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            <p>序列的连接可以按照字符串那样使用 <code class="inline-code">+</code> 
+			号来进行，例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&quot;Joe&quot;, &quot;Fred&quot;] + [&quot;Julia&quot;, &quot;Kate&quot;] as user&gt;
+- ${user}
+&lt;/#list&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">- Joe
+- Fred
+- Julia
+- Kate
+ </pre></div>
+
+            <p>请注意，不要在很多重复连接时使用序列连接操作，
+			比如在循环中往序列上追加项目，而这样的使用是可以的：
+			<code class="inline-code">&lt;#list users + admins as person&gt;</code>。
+			尽管序列连接的速度很快，而且速度是和被连接序列的大小相独立的，
+			但是最终的结果序列的读取却比原先的两个序列慢那么一点。
+			通过这种方式进行的许多重复连接最终产生的序列读取的速度会慢。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_seqenceop_slice">序列切分</h3>
+
+
+            
+
+            
+
+            
+
+            <p>使用
+            <code class="inline-code"><em class="code-color">seq</em>[<em class="code-color">range</em>]</code>，
+            这里 <code class="inline-code"><em class="code-color">range</em></code> 是一个值域
+			<a href="#dgui_template_exp_direct_ranges">此处有说明</a>，
+			就可以得到序列的一个切分。结果序列会包含原序列
+			(<code class="inline-code"><em class="code-color">seq</em></code>)中的项，
+			而且索引在值域中。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assert seq = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;]&gt;
+&lt;#list seq[1..3] as i&gt;${i}&lt;/#list&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">BCD </pre></div>
+
+            <p>此外，切分后序列中的项会和值域的顺序相同。
+			那么上面的示例中，如果值域是 <code class="inline-code">3..1</code> 将会输出
+            <code class="inline-code">DCB</code>。</p>
+
+            <p>值域中的数字必须是序列可使用的合法索引，
+			否则模板的处理将会终止并报错。像上面的示例那样，
+            <code class="inline-code">seq[-1..0]</code> 就会出错，
+			而 <code class="inline-code">seq[-1]</code> 就是合法的。
+            <code class="inline-code">seq[1..5]</code> 也不对，
+			因为 <code class="inline-code">seq[5]</code> 是非法的。
+			(请注意，尽管100已经越界，但是 
+			<code class="inline-code">seq[100..&lt;100]</code> 或 
+			<code class="inline-code">seq[100..*0]</code> 是合法的，因为那些值域都是空。)</p>
+
+            <p>限制长度的值域
+            (<code class="inline-code"><em class="code-color">start</em>..*<em class="code-color">length</em></code>)
+            和无右边界值域 (<code class="inline-code"><em class="code-color">start</em>..</code>) 
+			适用于切分后序列的长度。它们会切分可用项中尽可能多的部分：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign seq = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]&gt;
+
+Slicing with length limited ranges:
+- &lt;#list seq[0..*2] as i&gt;${i}&lt;/#list&gt;
+- &lt;#list seq[1..*2] as i&gt;${i}&lt;/#list&gt;
+- &lt;#list seq[2..*2] as i&gt;${i}&lt;/#list&gt; &lt;#-- Not an error --&gt;
+- &lt;#list seq[3..*2] as i&gt;${i}&lt;/#list&gt; &lt;#-- Not an error --&gt;
+
+Slicing with right-unlimited ranges:
+- &lt;#list seq[0..] as i&gt;${i}&lt;/#list&gt;
+- &lt;#list seq[1..] as i&gt;${i}&lt;/#list&gt;
+- &lt;#list seq[2..] as i&gt;${i}&lt;/#list&gt;
+- &lt;#list seq[3..] as i&gt;${i}&lt;/#list&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">Slicing with length limited ranges:
+- AB
+- BC
+- C
+-
+
+Slicing with right-unlimited ranges:
+- ABC
+- BC
+- C
+-</pre></div>
+
+            <p>请注意，上面的有限长度切分和无右边界切分都允许开始索引超过最后项
+            <em>一个</em> (但不能再多了)。</p>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>要对序列进行给定大小的切分，就应该使用内建函数 <a href="ref_builtins_sequence.html#ref_builtin_chunk"><code>chunk</code></a>。</p>
+              </div>
+
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_hashop">哈希表操作</h2>
+
+
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_hashop_cat">连接</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            <p>像连接字符串那样，也可以使用 <code class="inline-code">+</code> 
+			号的方式来连接哈希表。如果两个哈希表含有键相同的项，那么在 
+			<code class="inline-code">+</code> 号右侧的哈希表中的项优先。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign ages = {&quot;Joe&quot;:23, &quot;Fred&quot;:25} + {&quot;Joe&quot;:30, &quot;Julia&quot;:18}&gt;
+- Joe is ${ages.Joe}
+- Fred is ${ages.Fred}
+- Julia is ${ages.Julia}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">- Joe is 30
+- Fred is 25
+- Julia is 18</pre></div>
+
+            <p>请注意，很多项连接时不要使用哈希表连接，
+			比如在循环时往哈希表中添加新项。这和<a href="#dgui_template_exp_sequenceop_cat">序列连接</a> 
+			的情况是一致的。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_arit">算数运算</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>算数运算包含基本的四则运算和求模运算，运算符有：</p>
+
+          <ul>
+            <li>
+              加法： <code class="inline-code">+</code>
+            </li>
+
+            <li>
+              减法： <code class="inline-code">-</code>
+            </li>
+
+            <li>
+              乘法： <code class="inline-code">*</code>
+            </li>
+
+            <li>
+              除法： <code class="inline-code">/</code>
+            </li>
+
+            <li>
+              求模 (求余)： <code class="inline-code">%</code>
+            </li>
+          </ul>
+
+          
+
+          <p>示例：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${100 - x * x}
+${x / 2}
+${12 % 10}</pre></div>
+
+          <p>假设 <code class="inline-code">x</code> 是 5，将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">75
+2.5
+2</pre></div>
+
+          <p>要保证两个操作数都是结果为数字的表达式。
+		  下面的这个例子在运行时，FreeMarker就会发生错误，
+		  因为是字符串 <code class="inline-code">&quot;5&quot;</code> 而不是数字5：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${3 * &quot;5&quot;} &lt;#-- WRONG! --&gt;</pre></div>
+
+          <p>但这种情况也有一个例外，就是 <code class="inline-code">+</code> 号，它是用来 <a href="#dgui_template_exp_stringop_interpolation">连接字符串</a>的。
+		  如果 <code class="inline-code">+</code> 号的一端是字符串，<code class="inline-code">+</code> 
+		  号的另外一端是数字，那么数字就会自动转换为字符串类型(使用当前页面语言的适当格式)，
+		  之后使用 <code class="inline-code">+</code> 号作为字符串连接操作符。示例如下：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${3 + &quot;5&quot;}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">35</pre></div>
+
+          <p>通常来说，FreeMarker不会自动将字符串转换为数字，反之会自动进行。</p>
+
+          <p>有时我们只想获取除法计算(或其它运算)的整数部分，
+			这可以使用内建函数 <code class="inline-code">int</code> 来解决。(关于内建函数
+			<a href="#dgui_template_exp_builtin">后续章节</a>会来解释)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${(x/2)?int}
+${1.1?int}
+${1.999?int}
+${-1.1?int}
+${-1.999?int}</pre></div>
+
+          <p>假设 <code class="inline-code">x</code> 是 5，将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">2
+1
+1
+-1
+-1</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_comparison">比较运算</h2>
+
+
+          
+
+          <p>有时我们需要知道两个值是否相等，或者哪个值更大一点。</p>
+
+          <p>为了演示具体的例子，我们在这里使用 <code class="inline-code">if</code> 指令。
+		  <code class="inline-code">if</code>  指令的用法是： <code class="inline-code">&lt;#if 
+		  <em class="code-color">expression</em>&gt;...&lt;/#if&gt;</code>，
+		  其中的表达式的值必须是布尔类型，否则将会出错，模板执行中断。
+		  如果表达式的结果是 <code class="inline-code">true</code> ，
+		  那么在开始和结束标记内的内容将会被执行，否则就会被跳过。</p>
+
+          <p>测试两个值相等使用 <code class="inline-code">=</code>
+          (或者采用Java和C语言中的 <code class="inline-code">==</code> ；二者是完全等同的。) 
+		  测试两个值不等使用 <code class="inline-code">!=</code>。比如，
+		  假设 <code class="inline-code">user</code> 是 &#39;&#39;Big Joe&#39;&#39;：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if <strong>user == &quot;Big Joe&quot;</strong>&gt;
+  It is Big Joe
+&lt;/#if&gt;
+&lt;#if <strong>user != &quot;Big Joe&quot;</strong>&gt;
+  It is not Big Joe
+&lt;/#if&gt;</pre></div>
+
+          <p> <code class="inline-code">&lt;#if ...&gt;</code> 中的表达式 
+		  <code class="inline-code">user = &quot;Big Joe&quot;</code> 就是布尔值
+          <code class="inline-code">true</code>，面的代码将会输出 &#39;&#39;It is Big Joe&#39;&#39;。</p>
+
+          <p> <code class="inline-code">=</code> 或 <code class="inline-code">!=</code> 
+		  两边的表达式的结果都必须是标量，而且两个标量都必须是相同类型
+		  (也就是说字符串只能和字符串来比较，数字只能和数字来比较等)否则将会出错，
+		  模板执行中断。例如  <code class="inline-code">&lt;#if 1 = &quot;1&quot;&gt;</code> 就会导致错误。
+		  请注意FreeMarker进行的是精确的比较，所以字符串在比较时要注意大小写和空格：
+		  <code class="inline-code">&quot;x&quot;</code> 和 <code class="inline-code">&quot;x &quot;</code> 
+		  和 <code class="inline-code">&quot;X&quot;</code> 是不同的值。</p>
+
+          <p>对数字和日期类型的比较，也可以使用 <code class="inline-code">&lt;</code>，
+		  <code class="inline-code">&lt;=</code>，<code class="inline-code">&gt;=</code> 和 
+		  <code class="inline-code">&gt;</code>。不能把它们当作字符串来比较。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if x <strong>&lt;=</strong> 12&gt;
+  x is less or equivalent with 12
+&lt;/#if&gt;</pre></div>
+
+          <p>使用 <code class="inline-code">&gt;=</code> 和 <code class="inline-code">&gt;</code> 
+		  的时候有一点小问题。FreeMarker解释 <code class="inline-code">&gt;</code> 
+		  的时候可以把它当作FTL标签的结束符。为了避免这种问题，可以使用
+		  <code class="inline-code">lt</code> 代替 <code class="inline-code">&lt;</code>，
+		  <code class="inline-code">lte</code> 代替 <code class="inline-code">&lt;=</code>，
+		  <code class="inline-code">gt</code> 代替 <code class="inline-code">&gt;</code> 还有
+		  <code class="inline-code">gte</code> 代替 <code class="inline-code">&gt;=</code>，
+		  例如 <code class="inline-code">&lt;#if x gt y&gt;</code>。另外一个技巧是将表达式放到 <a href="#dgui_template_exp_parentheses">圆括号</a> 中，
+		  尽管这么写并不优雅，例如 <code class="inline-code">&lt;#if (x &gt; y)&gt;</code>。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>FreeMarker 也支持一些其它的选择，但是这些已经废弃了：</p>
+
+            <ul>
+              <li>
+                <p>在可能出问题的关系标记处使用 <code class="inline-code">&amp;gt;</code> 和
+                <code class="inline-code">&amp;lt;</code> ，就像： <code class="inline-code">&lt;#if x &amp;gt;
+                y&gt;</code> 或 <code class="inline-code">&lt;#if x &amp;gt;=
+                y&gt;</code>。 请注意通常FTL不支持标签中的实体引用(如
+                <code class="inline-code">&amp;<em class="code-color">...</em>；</code> 这些东西)；
+				做算术比较时就会有异常。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">\lt</code>， <code class="inline-code">\lte</code>，
+                <code class="inline-code">\gt</code> 和 <code class="inline-code">\gte</code> 使用他们时，
+				不带反斜杠的效果一样。</p>
+              </li>
+            </ul>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_logicalop">逻辑操作</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>常用的逻辑操作符：</p>
+
+          <ul>
+            <li>
+              逻辑 或： <code class="inline-code">||</code>
+            </li>
+
+            <li>
+              逻辑 与： <code class="inline-code">&amp;&amp;</code>
+            </li>
+
+            <li>
+              逻辑 非： <code class="inline-code">!</code>
+            </li>
+          </ul>
+
+          <p>逻辑操作符仅仅在布尔值之间有效，若用在其他类型将会产生错误导致模板执行中止。</p>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if x &lt; 12 <strong>&amp;&amp;</strong> color == &quot;green&quot;&gt;
+  We have less than 12 things, and they are green.
+&lt;/#if&gt;
+&lt;#if <strong>!</strong>hot&gt; &lt;#-- here hot must be a boolean --&gt;
+  It&#39;s not hot.
+&lt;/#if&gt;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_builtin">内建函数</h2>
+
+
+          
+
+          <p>内建函数就像FreeMarker在对象中添加的方法一样。
+		  要防止和实际方法和其它子变量的命名冲突，则不能使用点
+		  (<code class="inline-code">.</code>)，这里使用问号
+		  (<code class="inline-code">?</code>)来和父对象分隔开。
+		  比如，想要保证 <code class="inline-code">path</code> 有起始的 
+		  <code class="inline-code">/</code> ，那么可以这么来写：
+		  <code class="inline-code">path?ensure_starts_with(&#39;/&#39;)</code>。 
+		  <code class="inline-code">path</code> 后的Java对象(通常就是 <code class="inline-code">String</code>)
+		  并没有这样的方法，这是FreeMarker添加的。为了简洁，如果方法没有参数，
+		  那么就可以忽略 <code class="inline-code">()</code>，比如想要获取 
+		  <code class="inline-code">path</code> 的长度，就可以写作：<code class="inline-code">path?length</code>，
+		  <em>而不是</em> <code class="inline-code">path?length()</code>。</p>
+
+          <p>内建函数关键性的另外一个原因是常见的(尽管它依赖于配置的设置)，
+		  FreeMarker不会暴露对象的Java API。那么尽管Java的 <code class="inline-code">String</code> 
+		  类有 <code class="inline-code">length()</code> 方法，但在模板中却是不可见的，
+		  就 <em>不得不</em> 使用 <code class="inline-code">path?length</code> 来代替。
+		  这里的优点是模板不依赖下层Java对象的精确类型。(比如某些场景中，
+		  <code class="inline-code">path</code> 也可能是 <code class="inline-code">java.nio.Path</code> 类型，
+		  如果程序员配置了FreeMarker去暴露 <code class="inline-code">Path</code> 
+		  对象作为FTL字符串类型，那么模板就不会在意了，使用 
+		  <code class="inline-code">?length</code> 也是可以的，
+		  即便 <code class="inline-code">java.nio.Path</code> 没有类似的方法。)</p>
+
+          <p>可以找到一些 <a href="dgui_quickstart_template.html#topic.commonlyUsedBuiltIns">此处提及的常用内建函数</a>，还有
+		  <a href="ref_builtins.html">完整的内建函数参考</a>。
+		  现在，我们只需了解一些重要的内建函数就行了：</p>
+
+          <p>比如：</p>
+
+         
+
+<div class="code-wrapper"><pre class="code-block code-template">${testString?upper_case}
+${testString?html}
+${testString?upper_case?html}
+
+${testSequence?size}
+${testSequence?join(&quot;, &quot;)}</pre></div>
+
+          <p>假设 <code class="inline-code">testString</code> 中存储了字符串
+          &#39;&#39;Tom &amp; Jerry&#39;&#39;, 而testSequnce中存储了字符串
+          "foo"， "bar" 和 "baz"，
+		  将会输出：</p>
+ 
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">TOM &amp; JERRY
+Tom &amp;amp; Jerry
+TOM &amp;amp; JERRY
+
+3
+foo, bar, baz</pre></div>
+
+          <p>请注意：上面的 <code class="inline-code">testString?upper_case?html</code>。因为
+          <code class="inline-code">test?upper_case</code> 的结果是字符串，那么就可以在它的上面
+		  使用内建函数 <code class="inline-code">html</code>。</p>
+
+          <p>很自然可以看到，内建函数的左侧可以是任意的表达式，而不仅仅是变量名：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${testSeqence[1]?cap_first}
+${&quot;horse&quot;?cap_first}
+${(testString + &quot; &amp; Duck&quot;)?html}</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Bar
+Horse
+Tom &amp;amp; Jerry &amp;amp; Duck</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_methodcall">方法调用</h2>
+
+
+          
+
+          
+
+          <p>如果有一个方法，那么可以使用方法调用操作。
+		  方法调用操作是使用逗号来分割在括号内的表达式而形成参数列表，这些值就是参数。
+		  方法调用操作将这些值传递给方法，然后返回一个结果。
+		  这个结果就是整个方法调用表达式的值。</p>
+
+          <p>假设程序员定义了一个可供调用的方法 <code class="inline-code">repeat</code>。
+		  第一个参数是字符串类型，第二个参数是数字类型。方法的返回值是字符串类型，
+		  而方法要完成的操作是将第一个参数重复显示，显示的次数是第二个参数设定的值。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${repeat(&quot;Foo&quot;, 3)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">FooFooFoo</pre></div>
+
+          <p>这里的 <code class="inline-code">repeat</code> 就是方法变量(根据如何 <a href="#dgui_template_exp_var_toplevel">访问顶层变量</a>)，
+		  <code class="inline-code">(&quot;What&quot;, 3)</code> 就调用了该方法。</p>
+
+          <p>这里需要强调方法调用也是普通表达式，和其它都是一样的，所以：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${repeat(repeat(&quot;x&quot;, 2), 3) + repeat(&quot;Foo&quot;, 4)?upper_case}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">xxxxxxFOOFOOFOOFOO</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_missing">处理不存在的值</h2>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>这些操作符是从 FreeMarker 2.3.7 版本开始引入的(用来代替内建函数
+            <code class="inline-code">default</code>， <code class="inline-code">exists</code> 和
+            <code class="inline-code">if_exists</code> )。</p>
+            </div>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>正如我们前面解释的那样，当试图访问一个不存在的变量时，
+		  FreeMarker 将会报错而导致模板执行中断。
+		  通常我们可以使用两个特殊操作符来压制这个错误，控制这种错误情况。
+		  被控制的变量可以是顶层变量，哈希表或序列的子变量。
+		  此外这些操作符还能处理方法调用的返回值不存在的情况 
+		  <span class="marked-for-programmers">(这点对Java程序员来说：
+		  返回值是 <code class="inline-code">null</code> 或者返回值为 <code class="inline-code">void</code> 
+		  类型)</span>，通常来说，我们应该使用这些操作符来控制可能不存在的值，
+		  而不仅仅是不存在的变量。</p>
+
+          <p><span class="marked-for-programmers">对于知道Java中 
+		  <code class="inline-code">null</code> 的人来说，FreeMarker 2.3.<em>x</em> 
+		  版本把它们视为不存在的变量。单地说，模板语言中没有 <code class="inline-code">null</code> 
+		  这个概念。比如有一个bean，bean中有一个 <code class="inline-code">maidenName</code> 属性，
+		  对于模板而言(假设没有配置FreeMarker来使用一些极端的对象包装)，
+		  该属性的值是 <code class="inline-code">null</code>，和不存在这个属性的情况是一致的。
+		  调用方法的返回值如果是  <code class="inline-code">null</code> 
+		  的话 FreeMarker 也会把它当作不存在的变量来处理
+		  (假定只使用了普通的对象包装)。可以在 <a href="app_faq.html#faq_null">FAQ</a> 
+		  中了解更多内容。</span></p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果想知道为什么 FreeMarker 对不存在的变量如此挑剔，
+			请阅读 <a href="app_faq.html#faq_picky_about_missing_vars">FAQ</a> 部分。</p>
+            </div>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_missing_default">默认值操作符</h3>
+
+
+            
+
+            <p>使用形式：
+            <code class="inline-code"><em class="code-color">unsafe_expr</em>!<em class="code-color">default_expr</em></code>
+            或 <code class="inline-code"><em class="code-color">unsafe_expr</em>!</code> or
+            <code class="inline-code">(<em class="code-color">unsafe_expr</em>)!<em class="code-color">default_expr</em></code>
+            或
+            <code class="inline-code">(<em class="code-color">unsafe_expr</em>)!</code></p>
+
+            <p>这个操作符允许你为可能不存在的变量指定一个默认值。</p>
+
+            <p>例如，假设下面展示的代码中没有名为 <code class="inline-code">mouse</code> 的变量：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">${mouse!&quot;No mouse.&quot;}
+&lt;#assign mouse=&quot;Jerry&quot;&gt;
+${mouse!&quot;No mouse.&quot;}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">No mouse.
+Jerry</pre></div>
+
+            <p>默认值可以是任何类型的表达式，也可以不必是字符串。
+			也可以这么写：<code class="inline-code">hits!0</code> 或 
+			<code class="inline-code">colors![&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]</code>。
+			默认值表达式的复杂程度没有严格限制，还可以这么来写：
+			<code class="inline-code">cargo.weight!(item.weight * itemCount + 10)</code>。</p>
+
+              <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+              <p>如果在 <code class="inline-code">!</code>后面有复合表达式，
+			  如 <code class="inline-code">1 + x</code>，<em>通常</em> 
+			  使用括号，如 <code class="inline-code">${x!(1 + y)}</code> 或 
+			  <code class="inline-code">${(x!1) + y)}</code>，这样就根据你的意图来确定优先级。
+			  由于FreeMarker 2.3.x 版本的源码中的小失误所以必须这么来做。 
+			  <code class="inline-code">!</code> (作为默认值操作) 右侧的优先级非常低。 
+			  这就意味着 <code class="inline-code">${x!1 + y}</code> 会被 FreeMarker 
+			  误解为 <code class="inline-code">${x!(1 + y)}</code>，而真实的意义是 
+			  <code class="inline-code">${(x!1) + y}</code>。 这个源码错误在FreeMarker 2.4中会得到修正。
+			  在编程中注意这个错误，要么就使用FreeMarker 2.4！</p>
+              </div>
+
+
+            <p>如果默认值被省略了，那么结果将会是空串，空序列或空哈希表。
+			(这是 FreeMarker 允许多类型值的体现)请注意，如果想让默认值为 
+			<code class="inline-code">0</code> 或 <code class="inline-code">false</code>，则不能省略它。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">(${mouse!})
+&lt;#assign mouse = &quot;Jerry&quot;&gt;
+(${mouse!})</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">()
+(Jerry)</pre></div>
+
+              <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+              <p>因为语法的含糊 <code class="inline-code">&lt;@something a=x! b=y /&gt;</code> 
+			  将会解释为 <code class="inline-code">&lt;@something a=x!(b=y) /&gt;</code>，那就是说
+              <code class="inline-code">b=y</code> 将会被视为是比较运算，然后结果作为 
+			  <code class="inline-code">x</code>的默认值，而不是想要的参数  <code class="inline-code">b</code>。
+			  为了避免这种情况，如下编写代码即可： <code class="inline-code">&lt;@something a=(x!) b=y
+              /&gt;</code></p>
+              </div>
+
+
+            <p>用于非顶层变量时，默认值操作符可以有两种使用方式：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">product.color!&quot;red&quot;</pre></div>
+
+            <p>如果是这样的写法，那么在 <code class="inline-code">product</code> 中，
+			当 <code class="inline-code">color</code> 不存在时(返回 <code class="inline-code">&quot;red&quot;</code> )，
+			将会被处理，但是如果连 <code class="inline-code">product</code> 都不存在时将不会处理。
+			也就是说这样写时变量 <code class="inline-code">product</code> 必须存在，否则模板就会报错。</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">(product.color)!&quot;red&quot;</pre></div>
+
+            <p>这时，如果当 <code class="inline-code">product.color</code> 不存在时也会被处理，
+			那就是说，如果 <code class="inline-code">product</code> 不存在或者 
+			<code class="inline-code">product</code> 存在而 <code class="inline-code">color</code> 
+			不存在，都能显示默认值 <code class="inline-code">&quot;red&quot;</code> 而不会报错。
+			本例和上例写法的重要区别在于用括号时，
+			就允许其中表达式的任意部分可以未定义。而没有括号时，
+			仅允许表达式的最后部分可以不被定义。</p>
+
+            <p>当然，默认值操作也可以作用于序列子变量，比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign seq = [&#39;a&#39;, &#39;b&#39;]&gt;
+${seq[0]!&#39;-&#39;}
+${seq[1]!&#39;-&#39;}
+${seq[2]!&#39;-&#39;}
+${seq[3]!&#39;-&#39;}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">a
+b
+-
+-</pre></div>
+
+            <p>如果序列索引是负数(比如 <code class="inline-code">seq[-1]!&#39;-&#39;</code>)
+			也会发生错误，不能使用该运算符或者其它运算符去压制它。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_template_exp_missing_test">不存在值检测操作符</h3>
+
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            <p>使用形式：
+            <code class="inline-code"><em class="code-color">unsafe_expr</em>??</code> 或
+            <code class="inline-code">(<em class="code-color">unsafe_expr</em>)??</code></p>
+
+            <p>这个操作符告诉我们一个值是否存在。基于这种情况，
+			结果是 <code class="inline-code">true</code> 或 <code class="inline-code">false</code>。</p>
+
+            <p>示例如下，假设并没有名为 <code class="inline-code">mouse</code> 的变量：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if mouse??&gt;
+  Mouse found
+&lt;#else&gt;
+  No mouse found
+&lt;/#if&gt;
+Creating mouse...
+&lt;#assign mouse = &quot;Jerry&quot;&gt;
+&lt;#if mouse??&gt;
+  Mouse found
+&lt;#else&gt;
+  No mouse found
+&lt;/#if&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  No mouse found
+Creating mouse...
+  Mouse found</pre></div>
+
+            <p>访问非顶层变量的使用规则和默认值操作符也是一样的，
+			也就是说，可以写 <code class="inline-code">product.color??</code> 
+			和 <code class="inline-code">(product.color)??</code>。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_assignment">赋值操作符</h2>
+
+
+          <p>这些并不是表达式，只是复制指令语法的一部分，比如 <a href="ref_directive_assign.html"><code>assign</code></a>,
+          <a href="ref_directive_local.html"><code>local</code></a>
+          和 <a href="ref_directive_global.html"><code>global</code></a>。
+		  照这样，它们不能任意被使用。</p>
+
+          <p><code class="inline-code">&lt;#assign x += y&gt;</code> 是
+          <code class="inline-code">&lt;#assign x = x + y&gt;</code> 的简写，<code class="inline-code">&lt;#assign x
+          *= y&gt;</code> 是 <code class="inline-code">&lt;#assign x = x *
+          y&gt;</code>的简写等等。。。</p>
+
+          <p><code class="inline-code">&lt;#assign x++&gt;</code> 和
+          <code class="inline-code">&lt;#assign x += 1&gt;</code> (或 <code class="inline-code">&lt;#assign x
+          = x + 1&gt;</code>)不同，它只做算术加法运算
+          (如果变量不是数字的话就会失败)，而其它的是进行字符串，序列连接和哈希表连接的重载。
+		  <code class="inline-code">&lt;#assign x--&gt;</code> 是
+          <code class="inline-code">&lt;#assign x -= 1&gt;</code> 的简写。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_parentheses">括号</h2>
+
+
+          
+
+          <p>括号可以用来给任意表达式分组。示例如下：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">                               &lt;#-- Output will be: --&gt;
+${3 * 2 + 2}                   &lt;#-- 8 --&gt;
+${3 * (2 + 2)}                 &lt;#-- 12 --&gt;
+${3 * ((2 + 2) * (1 / 2))}     &lt;#-- 6 --&gt;
+${&quot;green &quot; + &quot;mouse&quot;?upper_case}    &lt;#-- green MOUSE --&gt;
+${(&quot;green &quot; + &quot;mouse&quot;)?upper_case}  &lt;#-- GREEN MOUSE --&gt;
+&lt;#if !(color == &quot;red&quot; || color == &quot;green&quot;)&gt;
+  The color is nor red nor green
+&lt;/#if&gt;</pre></div>
+
+          <p>请注意，<a href="#dgui_template_exp_methodcall">方法调用表达式</a> 
+		  使用的括号和给表达式分组的括号含义是完全不同的。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_whitespace">表达式中的空格</h2>
+
+
+          <p>FTL 忽略表达式中的多余的 <a href="gloss.html#gloss.whiteSpace">空格</a>。下面的表示是相同的：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${x + &quot;:&quot; + book.title?upper_case}</pre></div>
+
+          <p>和</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${x+&quot;:&quot;+book.title?upper_case}</pre></div>
+
+          <p>和</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${
+   x
+ + &quot;:&quot;   +  book   .   title
+   ?   upper_case
+      }</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_exp_precedence">操作符的优先级</h2>
+
+
+          
+
+          
+
+          <p>下面的表格显示了已定义操作符的优先级。
+		  表格中的运算符按照优先程度降序排列：上面的操作符优先级高于它下面的。
+		  高优先级的运算符执行要先于优先级比它低的。表格同一行上的两个操作符优先级相同。
+		  当有相同优先级的二元运算符(运算符有两个&#39;&#39;参数&#39;&#39;，比如
+		  <code class="inline-code">+</code>和<code class="inline-code">-</code>)挨着出现时，它们按照从左到右的原则运算。</p>
+
+            <div class="table-responsive">
+    <table class="table">
+
+            <thead>
+              <tr>
+                <th>运算符组</th>
+
+
+                <th>运算符</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+              <tr>
+                <td>最高优先级运算符</td>
+
+
+                <td><code class="inline-code">[<em class="code-color">subvarName</em>]
+                [<em class="code-color">subStringRange</em>] . ?
+                (<em class="code-color">methodParams</em>)
+                <em class="code-color">expr</em>!
+                <em class="code-color">expr</em>??</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>一元前缀运算符</td>
+
+
+                <td><code class="inline-code">+<em class="code-color">expr</em>
+                -<em class="code-color">expr</em> !expr</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>乘除法，求模运算符</td>
+
+
+                <td><code class="inline-code">* / %</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>加减法运算符</td>
+
+
+                <td><code class="inline-code">+ -</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>数字值域</td>
+
+
+                <td><code class="inline-code">..</code> <code class="inline-code">..&lt;</code>
+                <code class="inline-code">..!</code> <code class="inline-code">..*</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>关系运算符</td>
+
+
+                <td><code class="inline-code">&lt; &gt; &lt;= &gt;=</code> (and equivalents:
+                <code class="inline-code">gt</code>, <code class="inline-code">lt</code>, etc.)</td>
+
+              </tr>
+
+
+              <tr>
+                <td>相等，不等运算符</td>
+
+
+                <td><code class="inline-code">== !=</code> (and equivalents:
+                <code class="inline-code">=</code>)</td>
+
+              </tr>
+
+
+              <tr>
+                <td>逻辑 "与" 运算符</td>
+
+
+                <td><code class="inline-code">&amp;&amp;</code></td>
+
+              </tr>
+
+
+              <tr>
+                <td>逻辑 "或" 运算符</td>
+
+
+                <td><code class="inline-code">||</code></td>
+
+              </tr>
+
+            </tbody>
+
+              </table>
+  </div>
+
+
+          <p>如果你熟悉C语言，Java语言或JavaScript语言，
+		  请注意 FreeMarker 中的优先级规则和它们是相同的，
+		  除了那些只有FTL本身含有的操作符。</p>
+
+          <p>因为编程的失误，默认值操作符
+          (<code class="inline-code"><em class="code-color">exp</em>!<em class="code-color">exp</em></code>)
+          不在上面的表格中，按照向后兼容的原则，在 FreeMarker 2.4 版本中将会修正它。
+		  而且它将是最高优先级的运算符，但是在 FreeMarker 2.3.x 
+		  版本中它右边的优先级由于失误就非常低。
+		  所以在默认值操作符的右边中使用复杂表达式时可以使用括号，
+		  可以是 <code class="inline-code">x!(y + 1)</code> 或者是 <code class="inline-code">(x!y) + 1</code>。
+		  而不能是 <code class="inline-code">x!y + 1</code>。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_template_directives.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_template_valueinsertion.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

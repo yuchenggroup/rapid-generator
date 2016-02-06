@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>自定义指令 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="自定义指令">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_misc_userdefdir.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_misc_userdefdir.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc_userdefdir.html"><span itemprop="name">自定义指令</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","其它","自定义指令"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_misc.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_var.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_misc_userdefdir" itemprop="headline">自定义指令</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_19" data-menu-target="autoid_19">基本内容</a></li><li><a class="page-menu-link" href="#autoid_20" data-menu-target="autoid_20">参数</a></li><li><a class="page-menu-link" href="#autoid_21" data-menu-target="autoid_21">嵌套内容</a></li><li><a class="page-menu-link" href="#dgui_misc_userdefdir_loopvar" data-menu-target="dgui_misc_userdefdir_loopvar">宏和循环变量</a></li><li><a class="page-menu-link" href="#autoid_22" data-menu-target="autoid_22">自定义指令和宏进阶</a></li></ul> </div><p>自定义指令可以使用 <code class="inline-code">macro</code> 指令来定义，
+		这是模板设计者所关心的内容。<span class="marked-for-programmers">
+		Java程序员若不想在模板中实现定义指令，而是在Java语言中实现指令的定义，
+		这时可以使用 <code class="inline-code">freemarker.template.TemplateDirectiveModel</code> 类来扩展
+		(请参考 <a href="pgui_datamodel_directive.html">后续章节</a>)。</span></p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_19">基本内容</h2>
+
+
+          
+
+          <p>宏是有一个变量名的模板片段。可以在模板中使用宏作为自定义指令，
+		  这样就能进行重复性的工作。例如，创建一个宏变量来输出大字号的&#39;&#39;Hello Joe!&#39;&#39;：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template"><strong>&lt;#macro greet&gt;</strong>
+  &lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;
+<strong>&lt;/#macro&gt;</strong></pre></div>
+
+          <p><code class="inline-code">macro</code> 指令自身不输出任何内容，
+		  它只是用来创建宏变量，所以就会有一个名为 <code class="inline-code">greet</code> 
+		  的变量。在 <code class="inline-code">&lt;#macro greet&gt;</code> 和
+          <code class="inline-code">&lt;/#macro&gt;</code> 之间的内容
+		  (称为 <strong>宏定义体</strong>)
+		  将会在使用该变量作为指令时执行。可以在FTL标记中通过 
+		  <code class="inline-code">@</code>代替<code class="inline-code">#</code>来使用自定义指令。
+		  使用变量名作为指令名。而且，自定义指令的 <a href="gloss.html#gloss.endTag">结束标记</a> 也是需要的。那么，
+		  就可以这样来使用 <code class="inline-code">greet</code>：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet&gt;&lt;/@greet&gt;</pre></div>
+
+          <p>因为
+          <code class="inline-code">&lt;<em class="code-color">anything</em>&gt;&lt;/<em class="code-color">anything</em>&gt;</code> 和
+          <code class="inline-code">&lt;<em class="code-color">anything</em>/&gt;</code> 是相同的，
+		  也可以使用单标记形式(如果你了解 <a href="gloss.html#gloss.XML">XML</a>，那么就应该很熟悉了)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet/&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;
+  </pre></div>
+
+          <p>宏能做的事情还有很多，因为在 
+		  <code class="inline-code">&lt;#macro <em class="code-color">...</em>&gt;</code> 
+		  和 <code class="inline-code">&lt;/#macro&gt;</code> 之间的东西是模板片段，也就是说它可以包含插值
+          (<code class="inline-code">${<em class="code-color">...</em>}</code>) 和FTL标签
+          (如 <code class="inline-code">&lt;#if
+          <em class="code-color">...</em>&gt;<em class="code-color">...</em>&lt;/#if&gt;</code>)。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>程序员通常将使用 
+			<code class="inline-code">&lt;@<em class="code-color">...</em>&gt;</code> 这称为
+            宏 <strong>调用</strong>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_20">参数</h2>
+
+
+          <p>我们来改进 <code class="inline-code">greet</code> 宏使之可以使用任意的名字，
+		  而不仅仅是&#39;&#39;Joe&#39;&#39;。为了实现这个目的，就要使用到 
+		  <strong>参数</strong>。在 <code class="inline-code">macro</code> 
+		  指令中，宏名称的后面位置是用来定义参数的。这里我们仅在 
+		  <code class="inline-code">greet</code> 宏中定义一个参数，<code class="inline-code">person</code>：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro greet <strong>person</strong>&gt;
+  &lt;font size=&quot;+2&quot;&gt;Hello <strong>${person}</strong>!&lt;/font&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p>那么就可以这样来使用这个宏：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet <strong>person=&quot;Fred&quot;</strong>/&gt; and &lt;@greet <strong>person=&quot;Batman&quot;</strong>/&gt;</pre></div>
+
+          <p>这和HTML的语法是很相似的，将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;font size=&quot;+2&quot;&gt;Hello <strong>Fred</strong>!&lt;/font&gt;
+ and   &lt;font size=&quot;+2&quot;&gt;Hello <strong>Batman</strong>!&lt;/font&gt;
+ </pre></div>
+
+          <p>那么我们就看到了，宏参数的真实值是可以作为变量
+          (<code class="inline-code">person</code>)放在宏定义体中的。使用 <a href="gloss.html#gloss.predefinedDirective">预定义指令</a>时，参数的值
+          (<code class="inline-code">=</code>号后边的值)可以是 <a href="dgui_template_exp.html">FTL 表达式</a>。
+		  那么，不像HTML，<code class="inline-code">&quot;Fred&quot;</code> 
+		  和 <code class="inline-code">&quot;Batman&quot;</code> 引号就可以不用要了。
+		  <code class="inline-code">&lt;@greet person=Fred/&gt;</code> 也意味着使用变量的值 
+		  <code class="inline-code">Fred</code> 作为 <code class="inline-code">person</code> 参数，
+		  而不是字符串<code class="inline-code">&quot;Fred&quot;</code>。当然参数值并不一定是字符串类型，
+		  也可以是数字，布尔值，哈希表，序列等。也可以在 <code class="inline-code">=</code> 
+		  号左边使用复杂表达式(比如 <code class="inline-code">someParam=(price + 50)*1.25</code>)。</p>
+
+          <p>自定义指令可以有多个参数。如下所示，再添加一个新的参数 <code class="inline-code">color</code>：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro greet person <strong>color</strong>&gt;
+  &lt;font size=&quot;+2&quot; color=&quot;${color}&quot;&gt;Hello ${person}!&lt;/font&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p>那么，这个宏就可以这样来使用：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet person=&quot;Fred&quot; color=&quot;black&quot;/&gt;</pre></div>
+
+          <p>参数的顺序不重要，下面的这个和上面的含义也是相同的：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet color=&quot;black&quot; person=&quot;Fred&quot;/&gt;</pre></div>
+
+          <p>当调用这个宏的时候，只能使用在 <code class="inline-code">macro</code> 
+		  指令中定义的参数(本例中是：<code class="inline-code">person</code> 和 <code class="inline-code">color</code>)。
+		  那么当你尝试 <code class="inline-code">&lt;@greet person=&quot;Fred&quot; color=&quot;black&quot; background=&quot;green&quot;/&gt;</code> 
+		  的时候就会发生错误，因为并没有在 <code class="inline-code">&lt;#macro<em class="code-color">...</em>&gt;</code> 
+		  中提及参数 <code class="inline-code">background</code>。</p>
+
+          <p>同时也必须给出在宏中定义所有参数的值。如果尝试 
+		  <code class="inline-code">&lt;@greet person=&quot;Fred&quot;/&gt;</code> 时也会发生错误，
+		  因为忘记指定 <code class="inline-code">color</code>的值了。
+		  很多情况下需要给一个参数指定一个相同的值，所以我们仅仅想在这个值发生变化后重新赋给变量。
+		  那么要达到这个目的，在<code class="inline-code">macro</code>指令中必须这么来指定变量：
+		  <code class="inline-code"><em class="code-color">param_name</em>=<em class="code-color">usual_value</em></code>。
+		  例如，当没有特定值的时候，我们想要给 <code class="inline-code">color</code> 
+		  赋值为 <code class="inline-code">&quot;black&quot;</code>，那么 <code class="inline-code">greet</code> 
+		  指令就要这么来写：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro greet person color<strong>=&quot;black&quot;</strong>&gt;
+  &lt;font size=&quot;+2&quot; color=&quot;${color}&quot;&gt;Hello ${person}!&lt;/font&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p>现在，我们这么使用宏就可以了：
+		  <code class="inline-code">&lt;@greet person=&quot;Fred&quot;/&gt;</code>，因为它和
+		  <code class="inline-code">&lt;@greet person=&quot;Fred&quot; color=&quot;black&quot;/&gt;</code> 是相等的，
+		  这样参数 <code class="inline-code">color</code> 的值就是已知的了。
+		  如果想给 <code class="inline-code">color</code> 设置为 <code class="inline-code">&quot;red&quot;</code>，
+		  那么就写成： <code class="inline-code">&lt;@greet person=&quot;Fred&quot; color=&quot;red&quot;/&gt;</code>，
+		  这时 <code class="inline-code">macro</code> 指令就会使用这个值来覆盖之前设置的通用值，
+		  参数 <code class="inline-code">color</code> 的值就会是 <code class="inline-code">&quot;red&quot;</code> 了。</p>
+
+          <p>根据已知的 <a href="dgui_template_exp.html">FTL 表达式规则</a>，
+		  明白下面这一点是至关重要的。<code class="inline-code">someParam=foo</code>
+		  和 <code class="inline-code">someParam=&quot;${foo}&quot;</code> 是不同的。第一种情况，
+		  是把变量 <code class="inline-code">foo</code> 的值作为参数的值来使用。第二种情况则是使用 <a href="dgui_template_exp.html#dgui_template_exp_stringop_interpolation">插值形式的字符串</a>，
+		  那么参数值就是字符串了，这个时候， <code class="inline-code">foo</code> 的值呈现为文本，
+		  而不管 <code class="inline-code">foo</code> 是什么类型的(数字，日期等)。看下面这个例子：
+          <code class="inline-code">someParam=3/4</code> 和 <code class="inline-code">someParam=&quot;${3/4}&quot;</code> 是不同的。
+		  如果指令需要 <code class="inline-code">someParam</code> 是一个数字值，
+		  那么就不要用第二种方式。切记不要改变这些。</p>
+
+          <p>宏参数的另外一个重要的方面是它们是局部变量。
+		  更多局部变量的信息可以阅读：<a href="dgui_misc_var.html">在模板中定义变量</a></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_21">嵌套内容</h2>
+
+
+          <p>自定义指令可以嵌套内容，和预定义指令相似：<code class="inline-code">&lt;#if
+          <em class="code-color">...</em>&gt;<em class="code-color">nested
+          content</em>&lt;/#if&gt;</code>。
+		  例如，下面这个例子中是创建了一个可以为嵌套的内容画出边框的宏：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro border&gt;
+  &lt;table border=4 cellspacing=0 cellpadding=4&gt;&lt;tr&gt;&lt;td&gt;
+    <strong>&lt;#nested&gt;</strong>
+  &lt;/tr&gt;&lt;/td&gt;&lt;/table&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p><code class="inline-code">&lt;#nested&gt;</code>
+		  指令执行位于开始和结束标记指令之间的模板代码段。
+		  如果这样写：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@border&gt;The bordered text&lt;/@border&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;table border=4 cellspacing=0 cellpadding=4&gt;&lt;tr&gt;&lt;td&gt;
+    The bordered text
+  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+ </pre></div>
+
+          <p><code class="inline-code">nested</code> 指令也可以多次被调用，例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro do_thrice&gt;<strong>
+  &lt;#nested&gt;
+  &lt;#nested&gt;
+  &lt;#nested&gt;</strong>
+&lt;/#macro&gt;
+&lt;@do_thrice&gt;
+  Anything.
+&lt;/@do_thrice&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  Anything.
+  Anything.
+  Anything.</pre></div>
+
+          <p>如果不使用 <code class="inline-code">nested</code> 指令，
+		  那么嵌套的内容就不会被执行，如果不小心将
+		  <code class="inline-code">greet</code> 指令写成了这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@greet person=&quot;Joe&quot;&gt;
+  Anything.
+&lt;/@greet&gt;</pre></div>
+
+          <p>FreeMarker 不会把它视为错误，只是输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;</pre></div>
+
+          <p>嵌套的内容被忽略了，因为 <code class="inline-code">greet</code> 
+		  宏没有使用 <code class="inline-code">nested</code> 指令。</p>
+
+          <p>嵌套的内容可以是任意有效的FTL，包含其他的用户自定义指令，这样也是对的：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@border&gt;
+  &lt;ul&gt;
+  &lt;@do_thrice&gt;
+    &lt;li&gt;&lt;@greet person=&quot;Joe&quot;/&gt;
+  &lt;/@do_thrice&gt;
+  &lt;/ul&gt;
+&lt;/@border&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;table border=4 cellspacing=0 cellpadding=4&gt;&lt;tr&gt;&lt;td&gt;
+      &lt;ul&gt;
+    &lt;li&gt;&lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;
+
+    &lt;li&gt;&lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;
+
+    &lt;li&gt;&lt;font size=&quot;+2&quot;&gt;Hello Joe!&lt;/font&gt;
+
+  &lt;/ul&gt;
+
+  &lt;/tr&gt;&lt;/td&gt;&lt;/table&gt;</pre></div>
+
+          <p>在嵌套的内容中，宏的 <a href="dgui_misc_var.html">局部变量</a>
+		  是不可见的。为了说明这点，我们来看：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro repeat count&gt;
+  &lt;#local y = &quot;test&quot;&gt;
+  &lt;#list 1..count as x&gt;
+    ${y} ${count}/${x}: &lt;#nested&gt;
+  &lt;/#list&gt;
+&lt;/#macro&gt;
+&lt;@repeat count=3&gt;${y!&quot;?&quot;} ${x!&quot;?&quot;} ${count!&quot;?&quot;}&lt;/@repeat&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">    test 3/1: ? ? ?
+    test 3/2: ? ? ?
+    test 3/3: ? ? ?</pre></div>
+
+          <p>因为 <code class="inline-code">y</code>， <code class="inline-code">x</code> 
+		  和 <code class="inline-code">count</code> 是宏的局部(私有)变量，从宏外部定义是不可见的。
+		  此外不同的局部变量的设置是为每个宏自己调用的，所以不会导致混乱：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro test foo&gt;${foo} (&lt;#nested&gt;) ${foo}&lt;/#macro&gt;
+&lt;@test foo=&quot;A&quot;&gt;&lt;@test foo=&quot;B&quot;&gt;&lt;@test foo=&quot;C&quot;/&gt;&lt;/@test&gt;&lt;/@test&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">A (B (C () C) B) A</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_misc_userdefdir_loopvar">宏和循环变量</h2>
+
+
+          
+
+          <p>像 <code class="inline-code">list</code>这样的预定义指令可以使用循环变量；
+		  可以阅读 <a href="dgui_misc_var.html">在模板中定义变量</a> 来理解循环变量。</p>
+
+          <p>自定义指令也可以有循环变量。比如我们来扩展先前例子中的 
+		  <code class="inline-code">do_thrice</code> 指令，就可以拿到当前的循环变量的值。
+		  而对于预定义指令(如<code class="inline-code">list</code>)，当调用指令时，循环变量的
+		  <em>name</em>是给定的(比如 <code class="inline-code">&lt;#list foos as
+          foo&gt;<em class="code-color">...</em>&lt;/#list&gt;</code> 
+		  中的 <code class="inline-code">foo</code>)，变量 <em>value</em> 
+		  的设置是由指令本身完成的。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro do_thrice&gt;
+  &lt;#nested <strong>1</strong>&gt;
+  &lt;#nested <strong>2</strong>&gt;
+  &lt;#nested <strong>3</strong>&gt;
+&lt;/#macro&gt;
+&lt;@do_thrice <strong>; x</strong>&gt; &lt;#-- user-defined directive uses &quot;;&quot; instead of &quot;as&quot; --&gt;
+  ${<strong>x</strong>} Anything.
+&lt;/@do_thrice&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  1 Anything.
+  2 Anything.
+  3 Anything.
+ </pre></div>
+
+          <p>语法规则是给确定&quot;循环&quot;的循环变量传递真实值(比如重复嵌套内容)来作为 
+		  <code class="inline-code">nested</code> 指令的参数(当然参数可以是任意的表达式)。
+		  循环变量的名称是在自定义指令的开始标记(<code class="inline-code">&lt;@...&gt;</code>)
+		  的参数后面通过分号确定的。</p>
+
+          <p>一个宏可以使用多个循环变量(变量的顺序是很重要的)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro repeat count&gt;
+  &lt;#list 1..count as x&gt;
+    &lt;#nested <strong>x, x/2, x==count</strong>&gt;
+  &lt;/#list&gt;
+&lt;/#macro&gt;
+&lt;@repeat count=4 ; <strong>c, halfc, last</strong>&gt;
+  ${<strong>c</strong>}. ${<strong>halfc</strong>}&lt;#if <strong>last</strong>&gt; Last!&lt;/#if&gt;
+&lt;/@repeat&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  1. 0.5
+  2. 1
+  3. 1.5
+  4. 2 Last!
+ </pre></div>
+
+          <p>在自定义指令的开始标签(分号之后)为循环变量指定不同的数字是没有问题的，
+		  而不能在 <code class="inline-code">nested</code> 指令上使用。如果在分号之后指定的循环变量少，
+		  那么就看不到 <code class="inline-code">nested</code>指令提供的最后的值，
+		  因为没有循环变量来存储这些值，下面的这些都是可以的：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@repeat count=4 ; <strong>c, halfc, last</strong>&gt;
+  ${c}. ${halfc}&lt;#if last&gt; Last!&lt;/#if&gt;
+&lt;/@repeat&gt;
+&lt;@repeat count=4 ; <strong>c, halfc</strong>&gt;
+  ${c}. ${halfc}
+&lt;/@repeat&gt;
+&lt;@repeat count=4&gt;
+  Just repeat it...
+&lt;/@repeat&gt;</pre></div>
+
+          <p>如果在分号后面指定了比 <code class="inline-code">nested</code> 指令还多的变量，
+		  那么最后的循环变量将不会被创建(在嵌套内容中不会被定义)。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_22">自定义指令和宏进阶</h2>
+
+
+          <p>现在你也许已经阅读过 FreeMarker 参考手册的相关部分了：</p>
+
+          <ul>
+            <li>
+              <a href="ref_directive_userDefined.html#ref.directive.userDefined">调用自定义指令</a>
+            </li>
+
+            <li>
+              <a href="ref_directive_macro.html#ref.directive.macro"><code>macro</code>
+              指令</a>
+            </li>
+          </ul>
+
+          <p>也可以在FTL中定义方法，参见 <a href="ref_directive_function.html#ref.directive.function"> <code>function</code> 指令</a>。</p>
+
+          <p>也许你对命名空间感兴趣： <a href="dgui_misc_namespace.html">命名空间</a>。
+		  命名空间可以帮助你组织和重用经常使用的宏。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_misc.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_var.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

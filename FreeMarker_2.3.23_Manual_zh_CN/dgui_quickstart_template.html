@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>模板一览 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="模板一览">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_quickstart_template.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_quickstart_template.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_quickstart.html"><span itemprop="name">入门</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_quickstart_template.html"><span itemprop="name">模板一览</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","入门","模板一览"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_quickstart_datamodel.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_datamodel.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_quickstart_template" itemprop="headline">模板一览</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_2" data-menu-target="autoid_2">基本指令</a><ul><li><a class="page-menu-link" href="#autoid_3" data-menu-target="autoid_3">if 指令</a></li><li><a class="page-menu-link" href="#autoid_4" data-menu-target="autoid_4">list 指令</a></li><li><a class="page-menu-link" href="#autoid_5" data-menu-target="autoid_5">include 指令</a></li></ul></li><li><a class="page-menu-link" href="#autoid_6" data-menu-target="autoid_6">联合使用指令</a></li><li><a class="page-menu-link" href="#autoid_7" data-menu-target="autoid_7">使用内建函数</a></li><li><a class="page-menu-link" href="#autoid_8" data-menu-target="autoid_8">处理不存在的变量</a></li></ul> </div><p>最简单的模板通常是普通的HTML文件(或者是其他任何文本文件；
+		FreeMarker本身不属于HTML)。当客户端访问某个页面时，
+		FreeMarker要发送HTML代码至客户端浏览器中去显示。如果想要页面动起来
+		(这里指动态网页技术，译者注)，那么就要在HTML中放置能被FreeMarker所解析的特殊代码片段：</p><ul>
+          <li>
+            <p><code class="inline-code">${<em class="code-color">...</em>}</code>：
+            FreeMarker将会输出真实的值来替换大括号内的表达式，这样的表达式被称为 <strong>interpolation</strong>(插值，译者注)。</p>
+          </li>
+
+          <li>
+            <p><strong>FTL 标签</strong> (FreeMarker模板的语言标签)：
+			FTL标签和HTML标签有一些相似之处，但是它们是FreeMarker的指令，是不会在输出中打印的。
+			这些标签的名字以 <code class="inline-code">#</code> 开头。(用户自定义的FTL标签则需要使用
+            <code class="inline-code">@</code> 来代替 <code class="inline-code">#</code>，但这属于更高级的话题了。)</p>
+          </li>
+
+          <li>
+            <p><strong>注释：</strong> 注释和HTML的注释也很相似，
+			但是它们使用 <code class="inline-code">&lt;#--</code> and <code class="inline-code">--&gt;</code> 来标识。
+			不像HTML注释那样，FTL注释不会出现在输出中(不出现在访问者的页面中)，
+			因为 FreeMarker会跳过它们。</p>
+          </li>
+        </ul><p>其他任何不是FTL标签，插值或注释的内容将被视为静态文本，
+		这些东西不会被FreeMarker所解析；会被按照原样输出出来。</p><p>FTL标签也被称为 <strong>指令</strong>。
+		这些指令在HTML的标签 (比如： <code class="inline-code">&lt;table&gt;</code> 和
+        <code class="inline-code">&lt;/table&gt;</code>) 和HTML元素 (比如：
+        <code class="inline-code">table</code> 元素) 中的关系是相同的。(如果现在还没有感觉到它们的不同，
+		那么把“FTL标签”和“指令”看做是同义词即可。)</p>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+          <p>可以在 <a href="http://freemarker-online.kenshoo.com/">http://freemarker-online.kenshoo.com/</a>
+		  上很方便的尝试编写模板</p>
+          </div>
+
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_2">基本指令</h2>
+
+
+          <p>这里我们仅仅来看一些非常常用的指令，当然
+          (<a href="ref_directives.html">指令还有很多</a>)。</p>
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_3">if 指令</h3>
+
+
+            <p>使用 <code class="inline-code">if</code> 指令可以有条件地跳过模板的一些片段。
+			比如，假设在 <a href="dgui_quickstart_basics.html#example.first">最初的示例</a> 中，
+			想向你的老板Big Joe特别地问好，可其他人不同：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Welcome!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;
+    Welcome ${user}<strong>&lt;#if user == &quot;Big Joe&quot;&gt;</strong>, our beloved leader<strong>&lt;/#if&gt;</strong>!
+  &lt;/h1&gt;
+  &lt;p&gt;Our latest product:
+  &lt;a href=&quot;${latestProduct.url}&quot;&gt;${latestProduct.name}&lt;/a&gt;!
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+            <p>此时，告诉 FreeMarker，当和 <code class="inline-code">&quot;Big Joe&quot;</code> 相同时
+			", our beloved leader" (我们最尊敬的领导，译者注) 
+			才是if条件中那唯一的 <code class="inline-code">user</code> 变量的值。
+			通常来讲，如果 <code class="inline-code"><em class="code-color">condition</em></code> 
+			是false(布尔值)，那么介于 <code class="inline-code">&lt;#if
+            <em class="code-color">condition</em>&gt;</code> 和
+            <code class="inline-code">&lt;/#if&gt;</code> 标签中的内容会被略过。</p>
+
+            <p>我们来详细说说
+            <code class="inline-code"><em class="code-color">condition</em></code> 的使用：
+			<code class="inline-code">==</code> 是用来判断它两侧的值是否相等的操作符，
+			比较的结果是布尔值，也就是true或者false。在 <code class="inline-code">==</code> 
+			的左侧，是 <a href="dgui_quickstart_datamodel.html#topic.qStart.accessVariables">被引用的变量</a>，
+			我们很熟悉这样的语法结构；最终它会被变量的值所替代。通常来说，
+			在指令或插值中没有被引号标注的内容都被视为变量的引用。右侧则是指定的字符串，
+			在模板中的字符串 <em>只能</em> 放在引号内。</p>
+
+            <p>当价格为0时，就会打印出 "Pythons are free today!"：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if animals.python.price == <strong>0</strong>&gt;
+  Pythons are free today!
+&lt;/#if&gt;</pre></div>
+
+            <p>和之前示例中，字符串被直接指定相似，
+			但这里则是数字(<code class="inline-code">0</code>)被直接指定了。
+			请注意，这里的数字 <em>没有</em> 放在引号内。
+			如果将(<code class="inline-code">&quot;0&quot;</code>)放在引号中，
+			那么FreeMarker就会将其误判为字符串了(也就是字符串0，译者注)。</p>
+
+            <p>当价格不为0时，则会打印出&quot;Pythons are not free today!&quot;：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if animals.python.price <strong>!=</strong> 0&gt;
+  Pythons are not free today!
+&lt;/#if&gt;</pre></div>
+
+            <p>你也许就会猜测了， <code class="inline-code">!=</code> 就是"不等于"。</p>
+
+            <p>同时，也可以这样编来写代码(使用 <a href="dgui_quickstart_datamodel.html#example.qStart.dataModelWithHashes">数据模型来描述哈希表</a>)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if <strong>animals.python.price &lt; animals.elephant.price</strong>&gt;
+  Pythons are cheaper than elephants today.
+&lt;/#if&gt;</pre></div>
+
+            <p>使用 <code class="inline-code">&lt;#else&gt;</code> 
+			标签可以指定当条件为false时程序所要执行的内容。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if animals.python.price &lt; animals.elephant.price&gt;
+  Pythons are cheaper than elephants today.
+<strong>&lt;#else&gt;</strong>
+  Pythons are not cheaper than elephants today.
+&lt;/#if&gt;</pre></div>
+
+            <p>这个示例中，如果蟒蛇的价格比大象的价格低的话，
+			程序将会打印出 "Pythons are cheaper than elephants today."。
+			否则会打印 "Pythons are not cheaper than elephants today."。
+			后面也可以使用 <code class="inline-code">elseif</code> 来完善它：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if animals.python.price &lt; animals.elephant.price&gt;
+  Pythons are cheaper than elephants today.
+<strong>&lt;#elseif animals.elephant.price &lt; animals.python.price&gt;</strong>
+  Elephants are cheaper than pythons today.
+&lt;#else&gt;
+  Elephants and pythons cost the same today.
+&lt;/#if&gt;</pre></div>
+
+            <p>如果变量本身就是布尔值(true/false)，则可以直接让其作为 
+			<code class="inline-code">if</code> 的 <code class="inline-code"><em class="code-color">condition</em></code>
+			(判断条件，译者注)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if animals.python.protected&gt;
+  Pythons are protected animals!
+&lt;/#if&gt;</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_4">list 指令</h3>
+
+
+            <a name="topic.tutorial.list"></a>
+
+            <p>当需要列表显示内容时，list指令是必须的。比如：
+			如果合并该模板到 <a href="dgui_quickstart_datamodel.html#example.qStart.dataModelWithSequences">前面描述序列的数据模型</a> 
+			中:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;p&gt;We have these animals:
+&lt;table border=1&gt;
+  <strong>&lt;#list animals as animal&gt;</strong>
+    &lt;tr&gt;&lt;td&gt;${<strong>animal</strong>.name}&lt;td&gt;${<strong>animal</strong>.price} Euros
+  <strong>&lt;/#list&gt;</strong>
+&lt;/table&gt;</pre></div>
+
+            <p>那么输出结果将会是这样的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;p&gt;We have these animals:
+&lt;table border=1&gt;
+    <strong>&lt;tr&gt;&lt;td&gt;mouse&lt;td&gt;50 Euros
+    &lt;tr&gt;&lt;td&gt;elephant&lt;td&gt;5000 Euros
+    &lt;tr&gt;&lt;td&gt;python&lt;td&gt;4999 Euros</strong>
+&lt;/table&gt;</pre></div>
+
+            <p> <code class="inline-code">list</code> 指令的一般格式为：
+            <code class="inline-code"> &lt;#list <em class="code-color">sequence</em> as
+            <em class="code-color">loopVariable</em>&gt;<em class="code-color">repeatThis</em>&lt;/#list&gt;</code>。
+            <code class="inline-code"><em class="code-color">repeatThis</em></code> 部分将会在给定的
+            <code class="inline-code"><em class="code-color">sequence</em></code> 遍历时在每一项中重复，
+			从第一项开始，一个接着一个。在所有的重复中，
+            <code class="inline-code"><em class="code-color">loopVariable</em></code> 将持有当前遍历项的值。
+			这个变量仅存在于 <code class="inline-code">&lt;#list
+            <em class="code-color">...</em>&gt;</code> 和
+            <code class="inline-code">&lt;/#list&gt;</code> 标签内。</p>
+
+            <p><code class="inline-code"><em class="code-color">sequence</em></code> 可以是任意表达式，
+			比如我们可以列表显示示例数据模型中的水果，就像这样：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;ul&gt;
+<strong>&lt;#list misc.fruits as fruit&gt;</strong>
+  &lt;li&gt;${fruit}
+<strong>&lt;/#list&gt;</strong>
+&lt;/ul&gt;</pre></div>
+
+            <p>你应该很熟悉表达式 <code class="inline-code">misc.fruits</code> 了； 它 <a href="dgui_quickstart_datamodel.html#topic.qStart.accessVariables">引用了数据模型中的变量</a>。</p>
+
+            <p>上面示例中的一个问题是如果我们有0个水果，它仍然会输出一个空的
+            <code class="inline-code">&lt;ul&gt;&lt;/ul&gt;</code>，而不是什么都没有。
+			要避免这样的情况，可以这么来使用 <code class="inline-code">list</code>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list misc.fruits&gt;
+  &lt;ul&gt;
+   <strong> &lt;#items as fruit&gt;</strong>
+      &lt;li&gt;${fruit}
+ <strong>   &lt;/#items&gt;</strong>
+  &lt;/ul&gt;
+&lt;/#list&gt;</pre></div>
+
+            <p>此时， <code class="inline-code">list</code> 指令将列表视为一个整体，
+			在 <code class="inline-code">items</code> 指令中的部分才会为每个水果重复。
+			如果我们有0个水果，那么在 <code class="inline-code">list</code> 中的所有东西都被略过了，
+			因此就不会有 <code class="inline-code">ul</code> 标签了。</p>
+
+            <p>另一个列表相关的常见任务是：使用一些分隔符来列出水果，比如逗号：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;p&gt;Fruits: &lt;#list misc.fruits as fruit&gt;${fruit}<strong>&lt;#sep&gt;, </strong>&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;p&gt;Fruits: orange, banana</pre></div>
+
+            <p>被 <code class="inline-code">sep</code> 覆盖的部分(我们也可以这么来写：
+            <code class="inline-code"><em class="code-color">...</em>&lt;#sep&gt;,
+            &lt;/#sep&gt;&lt;/#list&gt;</code>) 只有当还有下一项时才会被执行。
+			因此最后一个水果后面不会有逗号。</p>
+
+            <p>再次回到这个话题，如果我们有0个水果，会怎么样？只是打印 
+            "Fruits:" 也没有什么不方便。
+            <code class="inline-code">list</code> 指令，也像 <code class="inline-code">if</code> 指令那样，可以有 
+            <code class="inline-code">else</code> 部分，如果列表中有0个元素时就会被执行：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;p&gt;Fruits: &lt;#list misc.fruits as fruit&gt;${fruit}&lt;#sep&gt;, <strong>&lt;#else&gt;None</strong>&lt;/#list&gt;</pre></div>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>事实上，这个过于简单的示例可以这么来写，
+			  但是它使用了本主题中没有介绍的语言特性：</p>
+
+              
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;p&gt;Fruits: ${fruits?join(&quot;, &quot;, &quot;None&quot;)}</pre></div>
+              </div>
+
+
+            <p>所有的这些指令(<code class="inline-code">list</code>,
+            <code class="inline-code">items</code>, <code class="inline-code">sep</code>,
+            <code class="inline-code">else</code>)可以联合起来使用：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list misc.fruits&gt;
+  &lt;p&gt;Fruits:
+  &lt;ul&gt;
+    &lt;#items as fruit&gt;
+      &lt;li&gt;${fruit}&lt;#sep&gt; and&lt;/#sep&gt;
+    &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;#else&gt;
+  &lt;p&gt;We have no fruits.
+&lt;/#list&gt;</pre></div>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>在 <a href="ref_directive_list.html">指令参考</a> 中，
+			  可以获取到更多关于这些指令的内容。</p>
+              </div>
+
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_5">include 指令</h3>
+
+
+            <p>使用 <code class="inline-code">include</code> 指令，
+			我们可以在模板中插入其他文件的内容。</p>
+
+            <p>假设要在一些页面中显示版权声明的信息。那么可以创建一个文件来单独包含这些版权声明，
+			之后在需要它的地方插入即可。比方说，我们可以将版权信息单独存放在页面文件
+            <code class="inline-code">copyright_footer.html</code> 中：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;hr&gt;
+&lt;i&gt;
+Copyright (c) 2000 &lt;a href=&quot;http://www.acmee.com&quot;&gt;Acmee Inc&lt;/a&gt;,
+&lt;br&gt;
+All Rights Reserved.
+&lt;/i&gt;</pre></div>
+
+            <p>当需要用到这个文件时，可以使用 <code class="inline-code">include</code> 指令来插入：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Test page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Test page&lt;/h1&gt;
+  &lt;p&gt;Blah blah...
+<strong>  &lt;#include &quot;/copyright_footer.html&quot;&gt;</strong>
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+            <p>此时，输出的内容为：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Test page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Test page&lt;/h1&gt;
+  &lt;p&gt;Blah blah...
+<strong>&lt;hr&gt;
+&lt;i&gt;
+Copyright (c) 2000 &lt;a href=&quot;http://www.acmee.com&quot;&gt;Acmee Inc&lt;/a&gt;,
+&lt;br&gt;
+All Rights Reserved.
+&lt;/i&gt;</strong>
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+            <p>当修改了 <code class="inline-code">copyright_footer.html</code> 文件，
+            那么访问者在所有页面都会看到版权声明的新内容。</p>
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>重用代码片段的一个更有力的方式是使用宏，但是只是更为高级的话题了，
+			  将会在 <a href="dgui_misc_userdefdir.html">后续讨论</a>。</p>
+              </div>
+
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_6">联合使用指令</h2>
+
+
+          <p>在页面上也可以多次使用指令，而且指令间也可以很容易地相互嵌套。
+		  比如，在 <code class="inline-code">list</code> 指令中嵌套 <code class="inline-code">if</code> 指令：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template"><strong>&lt;#list animals as animal&gt;</strong>
+      &lt;div<strong>&lt;#if animal.protected&gt;</strong><strong> </strong>class=&quot;protected&quot;<strong>&lt;/#if&gt;</strong>&gt;
+        ${animal.name} for ${animal.price} Euros
+      &lt;/div&gt;
+<strong>&lt;/#list&gt;</strong></pre></div>
+
+          <p>请注意，FreeMarker并不解析FTL标签以外的文本、插值和注释，
+		  上面示例在HTML属性中使用FTL标签也不会有问题。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_7">使用内建函数</h2>
+
+
+          <p>内建函数很像子变量(如果了解Java术语的话，也可以说像方法)，
+		  它们并不是数据模型中的东西，是 FreeMarker 在数值上添加的。
+		  为了清晰子变量是哪部分，使用 <code class="inline-code">?</code>(问号)代替 
+		  <code class="inline-code">.</code>(点)来访问它们。<a name="topic.commonlyUsedBuiltIns"></a>常用内建函数的示例：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">user?html</code> 给出 <code class="inline-code">user</code> 的HTML转义版本，
+			  比如 <code class="inline-code">&amp;</code> 会由 <code class="inline-code">&amp;amp;</code> 来代替。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">user?upper_case</code> 给出 <code class="inline-code">user</code> 值的大写版本
+			  (比如 "JOHN DOE" 来替代 "John
+			  Doe")</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">animal.name?cap_first</code> 给出 <code class="inline-code">animal.name</code> 
+			  的首字母大写版本(比如 "Mouse" 来替代 "mouse")</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">user?length</code> 给出 <code class="inline-code">user</code> 值中 
+			  <em>字符</em>的数量(对于 "John Doe" 来说就是8)</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">animals?size</code> 给出 <code class="inline-code">animals</code> 序列中
+			  <em>项目</em> 的个数(我们示例数据模型中是3个)</p>
+            </li>
+
+            <li>
+              <p>如果在 <code class="inline-code">&lt;#list animals as animal&gt;</code> 和对应的
+              <code class="inline-code">&lt;/#list&gt;</code> 标签中：</p>
+
+              <ul>
+                <li>
+                  <p><code class="inline-code">animal?index</code> 给出了在 <code class="inline-code">animals</code> 
+				  中基于0开始的 <code class="inline-code">animal</code>的索引值</p>
+                </li>
+
+                <li>
+                  <p><code class="inline-code">animal?counter</code> 也像 <code class="inline-code">index</code>，
+				  但是给出的是基于1的索引值</p>
+                </li>
+
+                <li>
+                  <p><code class="inline-code">animal?item_parity</code> 基于当前计数的奇偶性，给出字符串
+                  "odd" 或 "even"。在给不同行着色时非常有用，比如在
+                  <code class="inline-code">&lt;td class=&quot;${animal?item_parity}Row&quot;&gt;</code>中。</p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <p>一些内建函数需要参数来指定行为，比如：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">animal.protected?string(&quot;Y&quot;, &quot;N&quot;)</code> 基于 
+			  <code class="inline-code">animal.protected</code> 的布尔值来返回字符串
+              "Y" 或 "N"。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">animal?item_cycle(&#39;lightRow&#39;,&#39;darkRow&#39;)</code> 是之前介绍的 
+			  <code class="inline-code">item_parity</code> 更为常用的变体形式。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">fruits?join(&quot;, &quot;)</code> 通过连接所有项，将列表转换为字符串，
+			  在每个项之间插入参数分隔符(比如 "orange,banana")</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">user?starts_with(&quot;J&quot;)</code> 根据 <code class="inline-code">user</code> 
+			  的首字母是否是 "J" 返回布尔值true或false。</p>
+            </li>
+          </ul>
+
+          <p>内建函数应用可以链式操作，比如<code class="inline-code">user?upper_case?html</code> 
+		  会先转换用户名到大写形式，之后再进行HTML转义。(这就像可以链式使用
+		  <code class="inline-code">.</code>(点)一样)</p>
+
+          <p>可以阅读 <a href="ref_builtins.html">全部内建函数参考</a>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_8">处理不存在的变量</h2>
+
+
+          <p>数据模型中经常会有可选的变量(也就是说有时并不存在)。
+		  除了一些典型的人为原因导致失误外，FreeMarker 绝不能容忍引用不存在的变量，
+		  除非明确地告诉它当变量不存在时如何处理。这里来介绍两种典型的处理方法。</p>
+
+          <p><span class="marked-for-programmers">这部分对程序员而言: 
+		  一个不存在的变量和一个是 <code class="inline-code">null</code> 值的变量，
+		  对于FreeMarker来说是一样的，所以这里所指的&quot;丢失&quot;包含这两种情况。</span></p>
+
+          <p>不论在哪里引用变量，都可以指定一个默认值来避免变量丢失这种情况，
+		  通过在变量名后面跟着一个 <code class="inline-code">!</code>(叹号，译者注)和默认值。
+		  就像下面的这个例子，当 <code class="inline-code">user</code> 不存在于数据模型时,
+		  模板将会将 <code class="inline-code">user</code> 的值表示为字符串 
+		  <code class="inline-code">&quot;visitor&quot;</code>。(当 <code class="inline-code">user</code> 存在时，
+		  模板就会表现出 <code class="inline-code">${user}</code> 的值)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;h1&gt;Welcome ${user<strong>!&quot;visitor&quot;</strong>}!&lt;/h1&gt;</pre></div>
+
+          <p>也可以在变量名后面通过放置 <code class="inline-code">??</code> 
+		  来询问一个变量是否存在。将它和 <code class="inline-code">if</code> 指令合并，
+		  那么如果 <code class="inline-code">user</code> 变量不存在的话将会忽略整个问候的代码段：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if <strong>user??</strong>&gt;&lt;h1&gt;Welcome ${user}!&lt;/h1&gt;&lt;/#if&gt;</pre></div>
+
+          <p>关于多级访问的变量，比如 <code class="inline-code">animals.python.price</code>，
+		  书写代码：<code class="inline-code">animals.python.price!0</code> 
+		  当且仅当 <code class="inline-code">animals.python</code> 永远存在，
+		  而仅仅最后一个子变量 <code class="inline-code">price</code> 可能不存在时是正确的
+		  (这种情况下我们假设价格是 <code class="inline-code">0</code>)。
+		  如果 <code class="inline-code">animals</code> 或 <code class="inline-code">python</code> 不存在，
+		  那么模板处理过程将会以&quot;未定义的变量&quot;错误而停止。为了防止这种情况的发生，
+		  可以如下这样来编写代码 <code class="inline-code">(animals.python.price)!0</code>。
+		  这种情况就是说 <code class="inline-code">animals</code> 或 <code class="inline-code">python</code> 不存在时，
+		  表达式的结果是 <code class="inline-code">0</code>。对于 <code class="inline-code">??</code> 
+		  也是同样用来的处理这种逻辑的; 将 <code class="inline-code">animals.python.price??</code> 对比 
+		  <code class="inline-code">(animals.python.price)??</code>来看。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_quickstart_datamodel.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_datamodel.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

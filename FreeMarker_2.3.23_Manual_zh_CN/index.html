@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" class="page-type-preface">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>什么是 FreeMarker? - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="什么是 FreeMarker?">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/index.html">
+<link rel="canoical" href="http://freemarker.org/docs/index.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="index.html"><span itemprop="name">什么是 FreeMarker?</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","什么是 FreeMarker?"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="toc.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-part" id="preface" itemprop="headline">什么是 FreeMarker?</h1>
+</div></div><p>FreeMarker 是一款 <em>模板引擎</em>： 即一种基于模板和要改变的数据，
+	并用来生成输出文本(HTML网页，电子邮件，配置文件，源代码等)的通用工具。
+	它不是面向最终用户的，而是一个Java类库，是一款程序员可以嵌入他们所开发产品的组件。</p><p>模板编写为FreeMarker Template Language (FTL)。它是简单的，专用的语言，
+    <em>不是</em> 像PHP那样成熟的编程语言。
+	那就意味着要准备数据在真实编程语言中来显示，比如数据库查询和业务运算，
+	之后模板显示已经准备好的数据。在模板中，你可以专注于如何展现数据，
+	而在模板之外可以专注于要展示什么数据。</p><p class="center-img">            <img src="figures/overview.png" alt="Figure">          </p>
+<p>这种方式通常被称为 <a href="gloss.html#gloss.MVC">MVC (模型 视图 控制器) 模式</a>，对于动态网页来说，是一种特别流行的模式。
+    它帮助从开发人员(Java 程序员)中分离出网页设计师(HTML设计师)。设计师无需面对模板中的复杂逻辑，
+	在没有程序员来修改或重新编译代码时，也可以修改页面的样式。</p><p>而FreeMarker最初的设计，是被用来在MVC模式的Web开发框架中生成HTML页面的，它没有被绑定到
+	Servlet或HTML或任意Web相关的东西上。它也可以用于非Web应用环境中。</p><p>FreeMarker 是 <a href="http://www.fsf.org/philosophy/free-sw.html">免费的</a>，
+    基于Apache许可证2.0版本发布。</p><p>如果你发现 <em>任何错误</em> (包括
+    <em>语法错误</em>, <em>错别字</em>,
+    排版错误) 或者是在文档中找到 <em>误导或混淆</em> ，或有其他建议，请联系原作者! 
+	Email: ddekany at users.sourceforge.net</p><p>文档翻译的任何问题（包括语法错误，错别字）或中文技术交流，可以联系译者：nanlei1987 at gmail.com，
+    或在FreeMarker的Github上Fork一份，修改之后提交Pull Request。我们共同研究，共同进步。</p><p>英文版文档的作者(也是FreeMarker项目的维护者)是匈牙利人，其母语非英语，那么在这种情况下，
+	翻译过程难免会有错误存在，译者结合自身多年对FreeMarker的实践力争精准，译文力求信达雅。
+	但因个人才疏学浅，水平有限，恳请广大读者批评指正。最好的方式就是使用Github了</p><p>手册的更新根据原作者更新，大家的反馈随时进行。但只在有阶段性成果时才会提交发布修正版本。</p><p>本翻译是免费的，您可以自由下载和传播，但不可用于任何商业行为。文档版权归译者本人所有，
+	原版归FreeMarker项目组所有，您可以引用其中的描述，但必须指明出处。如需用于商业行为，
+	您必须和原作者取得联系。</p><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="toc.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

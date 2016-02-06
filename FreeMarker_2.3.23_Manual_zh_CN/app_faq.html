@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en" class="page-type-appendix">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>FAQ - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="FAQ">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/app_faq.html">
+<link rel="canoical" href="http://freemarker.org/docs/app_faq.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="app.html"><span itemprop="name">附录</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="app_faq.html"><span itemprop="name">FAQ</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li>FAQ</li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","附录","FAQ"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="app.html"><span>Previous</span></a><a class="paging-arrow next" href="app_versions.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-chapter" id="app_faq" itemprop="headline">FAQ</h1>
+</div></div>  <div class="qandaset">
+
+  <ol>
+    <li>
+      <a href="#faq_jsp_vs_freemarker">
+
+            JSP 和 FreeMarker ?
+
+            
+                </a>
+    </li>
+    <li>
+      <a href="#faq_picky_about_missing_vars">
+
+            为什么 FreeMarker 对 <code class="inline-code">null</code> 
+            和不存在的变量很敏感，如何来处理它？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_number_grouping">
+
+            为什么 FreeMarker 打印奇怪的数字格式
+			(比如 1,000,000 或 1 000 000 而不是 1000000)？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_number_decimal_point">
+
+            为什么 FreeMarker 会不好打印的小数/分组分隔符号
+			(比如3.14而不是3,14) ?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_number_boolean_formatting">
+
+            为什么当我想用如 <code class="inline-code">${aBoolean}</code> 格式打印布尔值时，
+			FreeMarker 会抛出错误，又如何来修正呢 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_template_not_found">
+
+            FreeMarker 没有找到我的模板
+            (<code class="inline-code">TemplateNotFoundException</code> 或
+            <code class="inline-code">FileNotFoundException</code>， "Template not
+            found" 错误消息)
+                </a>
+    </li>
+    <li>
+      <a href="#faq_check_version">
+
+            文档中编写了关于特性 <em>X</em>，
+			但是好像 FreeMarker 并不知道它，或者行为和文档中的不同，
+			或者据称已经修复的bug仍然存在。
+                </a>
+    </li>
+    <li>
+      <a href="#faq_alternative_syntax">
+
+            FreeMarker标签中的 <code class="inline-code">&lt;</code> 和 <code class="inline-code">&gt;</code> 
+            混淆了编辑器或XML处理器，应该怎么做 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_legal_variable_names">
+
+            什么是合法的变量名 ？
+
+            
+                </a>
+    </li>
+    <li>
+      <a href="#faq_strange_variable_name">
+
+            如何使用包含负号(<code class="inline-code">-</code>)，冒号
+			(<code class="inline-code">:</code>)，点(<code class="inline-code">.</code>)，或其它特殊字符的
+			变量名(宏名，参数名) ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_jsp_custom_tag_syntax">
+
+            为什么当我尝试使用 <em>X</em> JSP 自定义标签时，
+			得到了 &quot;java.lang.IllegalArgumentException: argument
+            type mismatch&quot; ?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_servlet_include">
+
+            如何像 <code class="inline-code">jsp:include</code> 一样的方式引入其它的资源 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_parameter_unwrapping">
+
+            如何给普通Java-method/<code class="inline-code">TemplateMethodModelEx</code>/<code class="inline-code">TemplateTransformModel</code>/<code class="inline-code">TemplateDirectiveModel</code> 的实现传递普通 
+            <code class="inline-code">java.lang.*</code>/<code class="inline-code">java.util.*</code>
+            对象 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_nonstring_keys">
+
+            为什么在 <code class="inline-code">myMap[myKey]</code> 
+			表达式中不能使用非字符串的键？那现在应该怎么做 ？
+
+            
+                </a>
+    </li>
+    <li>
+      <a href="#faq_simple_map">
+
+            当使用 <code class="inline-code">?keys</code>/<code class="inline-code">?values</code> 
+			遍历Map(哈希表)的内容时，得到了混合真正map条目的 
+			<code class="inline-code">java.util.Map</code> 的方法。当然，只是想获取map的条目。
+                </a>
+    </li>
+    <li>
+      <a href="#faq_modify_seq_and_map">
+
+            在 FreeMarker 模板中如何修改序列(list)和哈希表(maps) ？
+
+            
+
+            
+
+            
+
+            
+                </a>
+    </li>
+    <li>
+      <a href="#faq_null">
+
+            关于 null 在 FreeMarker 模板语言是什么样的？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_capture">
+
+            我该怎么在表达式(作为另外一个指令参数)中使用指令(宏)的输出 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_questionmark">
+
+            在输出中为什么用&quot;?&quot;来代替字符 <em>X</em> ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_retrieve_calculated_values">
+
+            在模板执行完成后，怎么在模板中获取计算过的值 ？
+                </a>
+    </li>
+    <li>
+      <a href="#faq_assign_to_dynamic_variable_name">
+
+            How to assign to (or <code class="inline-code">#import</code> into) a
+            dynamically constructed variable name (like to name that&#39;s stored
+            in another variable)?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_template_uploading_security">
+
+            
+
+            Can I allow users to upload templates and what are the
+            security implications?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_implement_function_or_macro_in_java">
+
+            How to implement a function or macro in Java Language
+            instead of in the template language?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_nice_error_page">
+
+             In my Servlet
+            based application, how do I show a nice error page instead of a
+            stack trace when error occurs during template processing?
+                </a>
+    </li>
+    <li>
+      <a href="#faq_html_editor_mangles">
+
+            I&#39;m using a visual HTML editor that mangles template tags.
+            Will you change the template language syntax to accommodate my
+            editor?
+                </a>
+    </li>
+  </ol>
+  <dl>
+
+        
+          
+  <dt class="question" id="faq_jsp_vs_freemarker">
+    1.&nbsp; 
+            JSP 和 FreeMarker ?
+
+            
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>我们比较 FreeMarker 和 JSP 2.0 + JSTL 的组合。</p>
+
+            <p>FreeMarker 的优点：</p>
+
+            <ul>
+              <li>
+                <p>FreeMarker 不绑定Servlet，网络/Web环境；它仅仅是通过合并模板和Java对象
+				(数据模型)来生成文本输出的类库。你可以在任意地方任意时间来执行模板；
+				不需要HTTP的请求转发或类似的手段，也不需要Servlet环境。
+				出于这些特点你可以轻松的将它整合到任何系统中去。</p>
+              </li>
+
+              <li>
+                <p>更简洁的语法。看下这个JSP(假设 
+                <code class="inline-code">&lt;%@ taglib prefix=&quot;c&quot;
+                uri=&quot;http://java.sun.com/jsp/jstl/core&quot;
+                %&gt;</code>)：</p>
+
+                
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;c:if test=&quot;${t}&quot;&gt;
+  True
+&lt;/c:if&gt;
+
+&lt;c:choose&gt;
+  &lt;c:when test=&quot;${n == 123}&quot;&gt;
+      Do this
+  &lt;/c:when&gt;
+  &lt;c:otherwise&gt;
+      Do that
+  &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+
+&lt;c:forEach var=&quot;i&quot; items=&quot;${ls}&quot;&gt;
+- ${i}
+&lt;/c:forEach&gt;</pre></div>
+
+                <p>相等的 FTL：</p>
+
+                
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if t&gt;
+  True
+&lt;/#if&gt;
+
+&lt;#if n == 123&gt;
+  Do this
+&lt;#else&gt;
+  Do that
+&lt;/#if&gt;
+
+&lt;#list ls as i&gt;
+- ${i}
+&lt;/#list&gt;</pre></div>
+              </li>
+
+              <li>
+                <p>在模板中没有servlet特定的范围和其它高级技术
+				(除非，当然，你可以故意地将它们放入数据模型中)。
+				一开始就是为MVC设计的，它仅仅专注于展示。</p>
+              </li>
+
+              <li>
+                <p>可以从任意位置加载模板；从类路径下，从数据库中等。</p>
+              </li>
+
+              <li>
+                <p>默认情况下，数字和日期格式是本地化敏感的。
+				因为我们对用户输出，你所做的仅仅是书写 <code class="inline-code">${x}</code>，
+				而不是 <code class="inline-code">&lt;fmt:formatNumber value=&quot;${x}&quot;
+                /&gt;</code>。</p>
+              </li>
+
+              <li>
+                <p>易于定义特设的宏和函数。</p>
+              </li>
+
+              <li>
+                <p>隐藏错误并假装它不存在。丢失的变量和 <code class="inline-code">null</code> 
+				也不会默认视为 <code class="inline-code">0</code>/<code class="inline-code">false</code>/空字符串，
+				但会引发错误。<a href="#faq_picky_about_missing_vars">在这里参考更多内容...</a></p>
+              </li>
+
+              <li>
+                <p>&quot;对象包装&quot;。允许你在模板中以自定义，面向表现的方式来展示对象。
+				(比如：<a href="xgui_imperative_learn.html">参看这里</a>，
+				来看看使用这种技术时W3C的DOM结点是如何通过模板展现出来的。)</p>
+              </li>
+
+              <li>
+                <p>宏和函数仅仅是变量，所以它们可以很容易的作为参数值来传递，
+				放置到数据模型中等，就像其它任意值。</p>
+              </li>
+
+              <li>
+                <p>第一次访问一个页面时几乎察觉不到的延迟
+				(或在它改变之后)，因为没有更高级的编译发生。</p>
+              </li>
+            </ul>
+
+            <p>FreeMarker 的缺点：</p>
+
+            <ul>
+              <li>
+                <p>不是一种标准。很少的工具和IDE来集成它，少数的开发者知道它，
+				很少的工业化的支持。(然而，使用合适的设置，
+				大部分JSP标签库可以在 FreeMarker 模板中运行，除非它们基于 
+				<code class="inline-code">.tag</code> 文件。)</p>
+              </li>
+
+              <li>
+                <p>除了一些视觉上的相似性，它的语法不同于HTML/XML语法规则，
+				这会使得新用户感到混乱(这就是简洁的价值所在)。JSP也不遵循它，
+				只是接近。</p>
+              </li>
+
+              <li>
+                <p>因为宏和函数仅仅是变量，不正确的指令，
+				参数名和丢失的必须变量仅仅在运行时会被检测到。</p>
+              </li>
+
+              <li>
+                <p>不能和JSF一起使用。(这在技术上可行，但是没有人来实现它)</p>
+              </li>
+            </ul>
+
+            <p>如果你认为可以用 FreeMarker 在应用程序或遗留的仅支持JSP的框架中来代替JSP，
+			你可以阅读这部分内容：<a href="pgui_misc_servlet.html#pgui_misc_servlet_model2">程序开发指南/其它/在Servlet中使用FreeMarker/在&quot;Model 2&quot;中使用FreeMarker</a></p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_picky_about_missing_vars">
+    2.&nbsp; 
+            为什么 FreeMarker 对 <code class="inline-code">null</code> 
+            和不存在的变量很敏感，如何来处理它？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>概括一下这点是关于什么的：默认情况下，FreeMarker 
+			将试图访问一个不存在的变量或 <code class="inline-code">null</code> 值
+			(<a href="#faq_null">这两点是一样的</a>)视为一个错误，
+			这会中断模板的执行。</p>
+
+            <p>首先，你应该理解敏感的原因。很多脚本语言和模板语言都能容忍不存在的变量
+			(还有 <code class="inline-code">null</code>)，通常它们将这些变量视为空字符串和/或0，
+			还有逻辑false。这些行为主要有以下几点问题：</p>
+
+            <ul>
+              <li>
+                <p>它潜在隐藏了一些可能偶然发生的错误，就像变量名中的一个错字，
+				或者当模板编写者引用程序员没有放到数据模型中的变量时，
+				或程序员使用了一个不同的名字。人们是容易犯下这种偶然的错误的，
+				而计算机则不会，所以失去这些机会，模板引擎可以显示这些错误则是一个很糟糕的运行方式。
+				尽管你很小心地检查了开发期间模板输出的内容，那也很容易就忽略了如 
+				<code class="inline-code">&lt;#if hasWarnigs&gt;<em class="code-color">print warnings
+                here...</em>&lt;/#if&gt;</code> 这样的错误，可能永远不会打印警告信息，
+				因为你已经搞乱了变量名(注意到了吗？)。也考虑一下后期的维护，当你以后修改你的应用时，
+				你可能不会每次都重新来仔细检查模板(很多应用程序都有数以百计的模板)。
+				单元测试也不会很好的覆盖到web页面内容(如果设置了它们...)；
+				它们最多只会检查web页面中的某些手动设置模式，所以它们通常会光滑地通过，
+				但那些修改实际是有bug的。如果页面执行失败，那么测试人员将会注意，
+				单元测试也会注意(比如整个页面失败)，在生产环境中，维护人员会注意
+				(假设一些人员检查错误日志)。</p>
+              </li>
+
+              <li>
+                <p>做了危险的假设。脚本语言或模板引擎对应用程序领域是一无所知的，
+				所以当它决定一些它不知道是 0/false 值时，这是一个相当不负责而且很武断的事情。
+				仅仅因为它不知道你当前银行账户的余额，我们能说是0么？
+				仅仅因为不知道一个病人是否对青霉素过敏，我们就能说他/她不对青霉素过敏？
+				想一想这样错误的暗示信息。展示一个错误提示页面通常要比直接显示错误信息好很多，
+				导致用户端的错误决定。</p>
+              </li>
+            </ul>
+
+            <p>这种情况下(不面对这种问题)，不对其敏感那就是隐藏错误假装它不存在了，
+			这样很多用户会觉得方便，但是我们仍然相信在大多数情况下严格对待这个问题，
+			从长远考虑会节省你更多时间并提高软件的质量。</p>
+
+            <p>另外一方面，我们意识到你有更好的原因在有些地方不想 FreeMarker 对错误敏感，
+			那么对于这种情况的解决方案如下：</p>
+
+            <ul>
+              <li>
+                <p>通常数据模型中含有 <code class="inline-code">null</code> 或可选变量。
+				这种情况下使用 <a href="dgui_template_exp.html#dgui_template_exp_missing">这些操作符</a>。
+				如果你使用它们很频繁的话，那么就要重新考虑一下你的数据模型了，
+				因为过分依赖它们并不是那些难以使用的详细模板的结果，
+				但是会增加隐藏错误和打印任意不正确输出(原因前面已经说过了)的可能性。</p>
+              </li>
+
+              <li>
+                <p>在一些应用程序中，你也许想显示不完整/损坏的页面，而不是错误页面。
+				这种情况下，你可以 <a href="pgui_config_errorhandling.html">使用另一种错误控制器</a> 
+				而不是默认的。自定义的错误控制器可以略过有问题的部分，或者在那儿显示错误指示，
+				而不会中止整个页面的呈现。请注意，尽管错误控制器没有给出变量任意的默认值，
+				显示危急信息的页面也可能会好过显示错误页面。</p>
+              </li>
+
+              <li>
+                <p>如果页面包含的信息不是至关重要的(比如一些侧栏)，
+				另外一个你可能感兴趣的特性是 <a href="ref_directive_attempt.html">
+                <code>attempt</code>/<code>recover</code>
+                指令</a>。</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_number_grouping">
+    3.&nbsp; 
+            为什么 FreeMarker 打印奇怪的数字格式
+			(比如 1,000,000 或 1 000 000 而不是 1000000)？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>FreeMarker 使用Java平台的本地化敏感的数字格式信息。
+			默认的本地化数字格式可能是分组或其他不想要的格式。
+			为了避免这种情况，你不得不使用 <a href="pgui_config_settings.html">FreeMarker 设置</a> 中的 
+			<code class="inline-code">number_format</code> 来重写Java平台建议的数字格式，比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">cfg.setNumberFormat(&quot;0.######&quot;);  // now it will print 1000000
+// where cfg is a freemarker.template.Configuration object</pre></div>
+
+            <p>请注意，人们通常在没有分组分隔符时阅读大数是有些困难的。
+			所以通常建议保留分隔符，而在对&quot;计算机&quot;处理时的情况(分组分隔符会使其混乱)，
+			就要使用 <a href="ref_builtins_number.html#ref_builtin_c"><code>c</code> 内建函数</a> 了。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;a href=&quot;/shop/productdetails?id=${<strong>product.id?c</strong>}&quot;&gt;Details...&lt;/a&gt;</pre></div>
+
+            <p>对于计算机，你需要 <code class="inline-code">?c</code>，而根据本地化设置，
+			小数分隔符还是要担心。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_number_decimal_point">
+    4.&nbsp; 
+            为什么 FreeMarker 会不好打印的小数/分组分隔符号
+			(比如3.14而不是3,14) ?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>不同的国家使用不同的小数/分组分隔符号。
+			如果你看到不正确的符号，那么可能你的本地化设置不太合适。
+			设置Java虚拟机的默认本地化或使用 <a href="pgui_config_settings.html">FreeMarker 设置</a> 中的 
+			<code class="inline-code">locale</code> 来重写默认本地化。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">cfg.setLocale(java.util.Locale.ITALY);
+// where cfg is a freemarker.template.Configuration object</pre></div>
+
+            <p>然而有时你想输出一个数字，这个数字不是对用户的，
+			而是对&quot;计算机&quot;的(比如你想在CSS中打印大小)，
+			不管页面的本地化(语言)是怎么样的，这种情况你必须使用点来作为小数分隔符。
+			这样就可以使用 <a href="ref_builtins_number.html#ref_builtin_c"><code>c</code>
+            内建函数</a>，比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">font-size: ${<strong>fontSize?c</strong>}pt;</pre></div>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_number_boolean_formatting">
+    5.&nbsp; 
+            为什么当我想用如 <code class="inline-code">${aBoolean}</code> 格式打印布尔值时，
+			FreeMarker 会抛出错误，又如何来修正呢 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>不像是数字，布尔值没有通用的可接受的格式，
+			在相同页面中也没有一个通用的格式。就像当你在HTML页面中展示一件产品是可洗的，
+			你可能不会想给访问者看&quot;Washable：true&quot;，而是&quot;Washable:yes&quot;。
+			所以我们强制模板作者(由 <code class="inline-code">${washable}</code> 引起错误)去探索用户的感知，
+			在确定的地方布尔值应该来显示成什么。通常我们格式化布尔值的做法是：
+			<code class="inline-code">${washable?string(&quot;yes&quot;, &quot;no&quot;)}</code>，
+			<code class="inline-code">${caching?string(&quot;Enabled&quot;, &quot;Disabled&quot;)}</code>，
+			<code class="inline-code">${heating?string(&quot;on&quot;, &quot;off&quot;)}</code>等。</p>
+
+            <p>但有两种情形这里是无用的：</p>
+
+            <ul>
+              <li>
+                <p>当打印布尔值来生成计算机语言输出，那么就想要 
+                <code class="inline-code">true</code>/<code class="inline-code">false</code>，使用 
+                <code class="inline-code">${<em class="code-color">someBoolean</em>?c}</code>。
+                (这至少需要 FreeMarker 2.3.20 版本。在那之前，通用的做法是编写 
+                <code class="inline-code">${<em class="code-color">someBoolean</em>?string}</code>，
+				但这是很危险的，因为它的输出基于当前的布尔值格式设置，默认的是 
+                <code class="inline-code">&quot;true&quot;</code>/<code class="inline-code">&quot;false&quot;</code>。)</p>
+              </li>
+
+              <li>
+                <p>当对很多布尔值进行同一方式的格式化时。这种情形可以设置 
+                <code class="inline-code">boolean_format</code> 设置项
+                (<code class="inline-code">Configuration.setBooleanFormat</code>) 来影响，
+				从 FreeMarker 2.3.20 版本开始，你可以仅仅编写
+                <code class="inline-code">${<em class="code-color">someBoolean</em>}</code>。
+                (请注意，这对 <code class="inline-code">true</code>/<code class="inline-code">false</code> 
+				无效 - 你还必须在那儿使用 <code class="inline-code">?c</code>。)</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_template_not_found">
+    6.&nbsp; 
+            FreeMarker 没有找到我的模板
+            (<code class="inline-code">TemplateNotFoundException</code> 或
+            <code class="inline-code">FileNotFoundException</code>， "Template not
+            found" 错误消息)
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>首先，你应该知道 FreeMarker 是不从文件系统路径直接加载模板的。
+			它使用一个简单虚拟的文件系统可以读取非文件系统资源
+			(在jar内部的模板，从数据库表中读取模板等...)。虚拟文件由配置设置项来决定，
+			<code class="inline-code">Configuration.setTemplateLoader(TemplateLoader)</code>。
+			即便你使用的 <code class="inline-code">TemplateLoader</code> 映射到了文件系统，
+			它会有一个包含所有模板的基路径，那就是你不能伸到的虚拟文件系统的根
+			(也就是说，绝对路径仍然是相对于虚拟文件系统的)。</p>
+
+            <p>解决问题的小窍门：</p>
+
+            <ul>
+              <li>
+                <p>如果你是配置 FreeMarker 的人，请确认你设置了合适的 
+                <code class="inline-code">TemplateLoader</code>。</p>
+              </li>
+
+              <li>
+                <p>否则，请看未找到模板的错误消息是否包含所使用的 
+				<code class="inline-code">TemplateLoader</code> 的描述。如果没有，
+				那么你使用的是老版本的 FreeMarker，那么请更新版本。得到 
+                <code class="inline-code">FileNotFoundException</code> 而不是 
+                <code class="inline-code">TemplateNotFoundException</code> 也是版本太老，
+				所以你不会得到更多的错误消息。(如果 
+                <code class="inline-code">TemplateLoader</code> 在错误消息中是形如 
+                <code class="inline-code">foo.SomeTemplateLoader@64f6106c</code> 这样的内容，
+				而没有显示相关的参数，你可以请作者定义一个更好的 
+                <code class="inline-code">toString()</code>。)</p>
+              </li>
+
+              <li>
+                <p>常犯的错误是对基于Servlet的web应用程序使用了
+                <code class="inline-code">FileTemplateLoader</code> 而不是 
+                <code class="inline-code">WebappTemplateLoader</code>。 它会在一种环境中可用，
+				但是不会作用于在另一种，因为Servlet规范没有承诺资源可以作为普通文本来访问，
+				甚至当 <code class="inline-code">war</code> 文件被提取时。</p>
+              </li>
+
+              <li>
+                <p>要知道当你从其它模板中包含/引入模板时，如果没有以 
+				<code class="inline-code">/</code> 来开始模板名称，那么它就会被解释为相对于包含模板的路径。
+				错误消息会包含全(分解后的)名，所以应该注意这里。</p>
+              </li>
+
+              <li>
+                <p>检查你是否正在使用 <code class="inline-code">\</code>
+                (反斜杠) 来代替 <code class="inline-code">/</code> (斜杠)。
+                (FreeMarker 2.3.22 和之后的版本会在错误消息中警告这点。)</p>
+              </li>
+
+              <li>
+                <p>作为最后的补救办法，对 <code class="inline-code">freemarker.cache</code> 
+				类别开启debug级别的日志(在你使用的日志框架中)，然后来看还会有什么。</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_check_version">
+    7.&nbsp; 
+            文档中编写了关于特性 <em>X</em>，
+			但是好像 FreeMarker 并不知道它，或者行为和文档中的不同，
+			或者据称已经修复的bug仍然存在。
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>你确定你正在使用的文档和正在使用的 FreeMarker 版本号相同？
+			特别要注意，在线文档是对最新稳定的FreeMarker发布版。你可能使用的是老版本；
+			请更新它。</p>
+
+            <p>你确定Java类加载器发现了你期望使用的相同版本的 
+			<code class="inline-code">freemarker.jar</code>？也许 <code class="inline-code">freemarker.jar</code> 
+			是老版本的。要检查这点，尝试使用 <code class="inline-code">${.version}</code> 
+			在模板中打印版本号。(如果以&quot;Unknown built-in variable: version&quot; 错误消息结束，
+			那么你使用的是相当相当老的版本。)</p>
+
+            <p>如果你怀疑该问题是有多个 <code class="inline-code">freemarker.jar</code>，
+			典型的罪魁祸首就是某些模块有Maven或Ivy依赖使用了老的 
+            <code class="inline-code">freemarker</code> group ID， 而不是更为现代的 
+            <code class="inline-code">org.freemarker</code> group ID。因为不同的group ID，
+			不会被Maven或Ivy视为构件冲突，而是把两个版本都引入。这种情况下，
+			不得不去掉 <code class="inline-code">freemarker</code> 依赖。</p>
+
+            <p>如果你认为文档或 FreeMarker 有错误，请在bug跟踪器或邮件列表中中报告。
+			谢谢你！</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_alternative_syntax">
+    8.&nbsp; 
+            FreeMarker标签中的 <code class="inline-code">&lt;</code> 和 <code class="inline-code">&gt;</code> 
+            混淆了编辑器或XML处理器，应该怎么做 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>从 FreeMarker 2.3.4 版本开始，你可以使用 
+            <code class="inline-code">[</code> 和 <code class="inline-code">]</code> 来代替 
+            <code class="inline-code">&lt;</code> 和 <code class="inline-code">&gt;</code>。要获取更多细节，
+            <a href="dgui_misc_alternativesyntax.html">阅读这里...</a></p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_legal_variable_names">
+    9.&nbsp; 
+            什么是合法的变量名 ？
+
+            
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>关于在变量名中使用的字符和变量名的长度，FreeMarker 没有限制，
+			但是为了你的方便，在选择变量名时最好是简单变量引用表达式(参见 <a href="dgui_template_exp.html#dgui_template_exp_var_toplevel">这里</a>）。
+			如果你不得不选择一个非常极端的变量名，那也不是一个问题：<a href="#faq_strange_variable_name">参加这里</a>。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_strange_variable_name">
+    10.&nbsp; 
+            如何使用包含负号(<code class="inline-code">-</code>)，冒号
+			(<code class="inline-code">:</code>)，点(<code class="inline-code">.</code>)，或其它特殊字符的
+			变量名(宏名，参数名) ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>如果你的变量名很奇怪，比如 "foo-bar"，
+			当你编写如 <code class="inline-code">${foo-bar}</code> 的形式时，
+			FreeMarker 会曲解你想要的东西。在这种确定的情况下，
+			它会相信你想从 <code class="inline-code">foo</code> 中减去 <code class="inline-code">bar</code> 的值，
+			这个FAQ例子解释了如何控制这样的情况。</p>
+
+            <p>首先，应该清理这些句法问题。关于变量名中使用的字符和变量名的长度，
+			FreeMarker没有限制。</p>
+
+            <p>如果特殊字符是负号
+            (<code class="inline-code">-</code>, UCS 0x2D) 或点 (<code class="inline-code">.</code>, UCS
+            0x2E) 或冒号 (<code class="inline-code">:</code>, UCS 0x3A)中的一种，
+			那么你所要做的就是在这些字符前面放置反斜杠(<code class="inline-code">\</code>)，
+			比如在 <code class="inline-code">foo\-bar</code> (从 FreeMarker 2.3.22 版本开始)。
+			之后 FreeMarker 就会知道你不是想要相同符号的操作符。
+			在你指定未被引号表示的标识符时，这都起作用，比如对宏和函数名称，
+			参数名称，所有种类的变量引用。(请注意，这些转义仅在标识符中起作用，
+			而不是在字符串中。)</p>
+
+            <p>当特殊字符不是负号，点，或冒号中的一种时，那就很微妙了。
+			我们来看看有问题的变量，名称为 "a+b"。那么：</p>
+
+            <ul>
+              <li>
+                <p>如果你像读取变量：如果它是子变量或其它，可以编写 
+                <code class="inline-code">something[&quot;a+b&quot;]</code> (请记住，
+                <code class="inline-code">something.x</code> 和 
+                <code class="inline-code">something[&quot;x&quot;])</code> 是相等的。如果它是顶级变量，
+				它们可以通过特殊哈希变量来访问，<code class="inline-code">.vars</code>，
+				所以你可以编写 <code class="inline-code">.vars[&quot;a+b&quot;]</code>。很自然地，
+				这个技巧对宏和函数调用有有效：
+                <code class="inline-code">&lt;@.vars[&quot;a+b&quot;]/&gt;</code>，
+                <code class="inline-code">.vars[&quot;a+b&quot;](1, 2)</code>。</p>
+              </li>
+
+              <li>
+                <p>如果你想创建或修改变量：所有允许你来创建或修改变量的指令
+				(比如 <code class="inline-code">assign</code>， <code class="inline-code">local</code>，
+                <code class="inline-code">global</code>， <code class="inline-code">macro</code>，
+                <code class="inline-code">function</code>，等等)允许对目的变量名的引用。
+				比如， <code class="inline-code">&lt;#assign
+                foo = 1&gt;</code> 和 <code class="inline-code">&lt;#assign
+                &quot;foo&quot; = 1&gt;</code> 是相同的。所以你可以编写如 
+                <code class="inline-code">&lt;#assign &quot;a+b&quot; = 1&gt;</code> 和
+                <code class="inline-code">&lt;#macro &quot;a+b&quot;&gt;</code>。</p>
+              </li>
+
+              <li>
+                <p>不幸的是，你不能使用这样的变量名(包含不是 
+				<code class="inline-code">-</code>，<code class="inline-code">.</code> 和 
+				<code class="inline-code">:</code> 的特殊字符)来作为宏参数名。</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_jsp_custom_tag_syntax">
+    11.&nbsp; 
+            为什么当我尝试使用 <em>X</em> JSP 自定义标签时，
+			得到了 &quot;java.lang.IllegalArgumentException: argument
+            type mismatch&quot; ?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>首先，请更新 FreeMarker，因为 2.3.22 和之后的版本给出了更多有用的错误消息，
+			会给出该问题更好的答案。不管怎样，原因如下。在JSP页面，你对所有参数(属性)值使用引号，
+			如果参数的类型是字符串或布尔值或数字，它不会起作用。
+			但是因为自定义标签在FTL模板中是作为普通用户自定义FTL指令来访问的，
+			你不得不在自定义标签内使用FTL语法规则，而不是JSP规则。因此，根据FTL规则，
+			必须不能对布尔值和数字参数值使用引号，否则它们会被解释成字符串值，
+			当 FreeMarker 尝试传递这些值给自定义标签，而它们需要非字符串值时，
+			这会引起类型不匹配错误。</p>
+
+            <p>比如，Struts Tiles的 <code class="inline-code">insert</code> 标签参数 
+			<code class="inline-code">flush</code> 是布尔值。在JSP中，正确的语法是：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;tiles:insert page=&quot;/layout.jsp&quot; <strong>flush=&quot;true&quot;</strong>/&gt;
+<em>...</em></pre></div>
+
+            <p>但是在FTL中，你应该编写：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@tiles.insert page=&quot;/layout.ftl&quot; <strong>flush=true</strong>/&gt;
+<em>...</em></pre></div>
+
+            <p>而且，出于相似的原因，这是错误的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;tiles:insert page=&quot;/layout.jsp&quot; <strong>flush=&quot;${needFlushing}&quot;</strong>/&gt;
+<em>...</em></pre></div>
+
+            <p>你应该编写：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;tiles:insert page=&quot;/layout.jsp&quot; <strong>flush=needFlushing</strong>/&gt;
+<em>...</em></pre></div>
+
+            <p>(不是 <code class="inline-code">flush=${needFlushing}</code>！)</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_servlet_include">
+    12.&nbsp; 
+            如何像 <code class="inline-code">jsp:include</code> 一样的方式引入其它的资源 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>不是使用 <code class="inline-code">&lt;#include ...&gt;</code>，
+			那仅仅是包含另外一个 FreeMarker 模板而不涉及Servlet容器。</p>
+
+            <p>因为你要的包含方法是和Servlet相关的，
+			而纯 FreeMarker 是不知道Servlet和HTTP的存在，
+			那是Web应用框架来决定你是否可以这样做和如何来做。
+			比如，在Struts2中，你可以这么来做：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@s.include value=&quot;/WEB-INF/just-an-example.jspf&quot; /&gt;</pre></div>
+
+            <p>如果Web应用框架对 FreeMarker 的支持是基于 
+			<code class="inline-code">freemarker.ext.servlet.FreemarkerServlet</code> 的，
+			那么你可以这样来做(从 FreeMarker 2.3.15 版本之后)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@include_page path=&quot;/WEB-INF/just-an-example.jspf&quot; /&gt;</pre></div>
+
+            <p>但是如果Web应用框架提供它自己的解决方案，
+			那么你就可以参考，毕竟它可能会做一些特殊的处理。</p>
+
+            <p>更多关于 <code class="inline-code">include_page</code> 的信息，可以
+            <a href="pgui_misc_servlet.html#pgui_misc_servlet_include">阅读这里...</a></p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_parameter_unwrapping">
+    13.&nbsp; 
+            如何给普通Java-method/<code class="inline-code">TemplateMethodModelEx</code>/<code class="inline-code">TemplateTransformModel</code>/<code class="inline-code">TemplateDirectiveModel</code> 的实现传递普通 
+            <code class="inline-code">java.lang.*</code>/<code class="inline-code">java.util.*</code>
+            对象 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>不幸的是，对于这个问题没有简单的通用解决方案。
+			问题在于 FreeMarker 的对象包装是很灵活的，当从模板中访问变量时是很棒的，
+			但是会使得在Java端解包时变成一个棘手的问题。比如，
+			很可能将一个非 <code class="inline-code">java.util.Map</code> 对象包装称为 
+			<code class="inline-code">TemplateHashModel</code>(FTL哈希表变量)。
+			但是它就不能被解包成 <code class="inline-code">java.util.Map</code>，
+			因为没有包装过的 <code class="inline-code">java.util.Map</code>。</p>
+
+            <p>所以该怎么做呢？基本上有下面两种情况：</p>
+
+            <ul>
+              <li>
+                <p>对于展示目的(比如一种&quot;工具&quot;用来帮助 FreeMarker 模板)
+				指令和方法应该声明它们的形式参数为 <code class="inline-code">TemplateModel</code> 
+				类型和它的更确切的子接口类型。毕竟，对象包装是对于表面转换数据模型，
+				并服务于展示层的，而这些方法是展示层的一部分。如果你仍然需要普通Java类型，
+				那么可以你可以转向当前 <code class="inline-code">ObjectWrapper</code> 的 
+				<code class="inline-code">ObjectWrapperAndUnwrapper</code> 接口
+				(可以使用 <code class="inline-code">Environment.getObjectWrapper()</code>)。</p>
+              </li>
+
+              <li>
+                <p>和展示任务(比如，对于业务逻辑层)不相关的方法应该被实现成普通的Java方法，
+				而且不能使用任何 FreeMarker 特定的类，因为根据MVC范例，
+				它们必须独立于展示技术(FreeMarker)。如果这样的方法是从模板中调用的，那么 <a href="pgui_datamodel_objectWrapper.html">对象包装</a> 
+				的责任就是要保证参数转换到合适的类型。如果你使用了 <a href="pgui_datamodel_objectWrapper.html#pgui_datamodel_defaultObjectWrapper"><code>DefaultObjectWrapper</code></a> 
+				或 <a href="pgui_misc_beanwrapper.html"><code>BeansWrapper</code></a>，
+				那么这就会自动发生。对于 <code class="inline-code">DefaultObjectWrapper</code>，如果你 <a href="pgui_datamodel_objectWrapper.html#topic.defaultObjectWrapperIcI">设置它的
+                <code>incompatibleImprovements</code> 为 2.3.22</a>，
+				该机制运行得更好。</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_nonstring_keys">
+    14.&nbsp; 
+            为什么在 <code class="inline-code">myMap[myKey]</code> 
+			表达式中不能使用非字符串的键？那现在应该怎么做 ？
+
+            
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>FreeMarker模板语言(FTL)的 "哈希表" 类型和Java的 
+			<code class="inline-code">Map</code> 是不同的。FTL的哈希表也是一个关联数组，
+			但是它仅仅使用字符串的键。这是因为它是为子变量而引入的
+			(比如 <code class="inline-code">user.password</code> 中的 <code class="inline-code">password</code>，
+			它和 <code class="inline-code">user[&quot;password&quot;]</code> 是相同的)，而变量名是字符串。</p>
+
+            <p>所以，在FTL有支持非字符串键的类型之前，你还是不得不转向Java的 
+			<code class="inline-code">Map</code> API。你可以这么来做：
+            <code class="inline-code">myMap?api.get(nonStringKey)</code>。然而，对于运行 
+            <code class="inline-code">?api</code>，你可能需要配置一下 FreeMarker；
+			<a href="ref_builtins_expert.html#ref_buitin_api_and_has_api">在这里参考更多...</a></p>
+
+            <p>请注意，Java的 <code class="inline-code">Map</code>对键的确切类非常专注，
+			所以对于在模板中计算的数字类型的键，你不得不将它们转换成合适的Java类型，
+			否则其中的项就不能被发现。比如，如果你在Map中使用 <code class="inline-code">Integer</code> 
+			类型的键，那么你应该编写 <code class="inline-code">${myMap.get(numKey?int)}</code>。
+			这是由FTL的有意简化的仅有单独数字类型的类型系统导致的非常丑陋的写法，
+			而Java区分很多数字类型。请注意，当键值直接从数据模型
+			(也就是说，你不用在模板中使用算数运算来改变它的值)中获取时是不需要转换的，
+			包含当它是方法返回值的情况，而且在包装之前要是合适的类，
+			因为这样解包的结果将会是原始的类型。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_simple_map">
+    15.&nbsp; 
+            当使用 <code class="inline-code">?keys</code>/<code class="inline-code">?values</code> 
+			遍历Map(哈希表)的内容时，得到了混合真正map条目的 
+			<code class="inline-code">java.util.Map</code> 的方法。当然，只是想获取map的条目。
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>当然是使用了 <code class="inline-code">BeansWrapper</code> 或者你自己的对象包装器，
+			或者是它的自定义子类，而它的 <code class="inline-code">simpleMapWrapper</code> 
+			属性将会置成 <code class="inline-code">false</code>。不幸的是，这是默认(出于向下兼容的考虑)的情况，
+			所以在你创建对象包装器的地方，你不得不明确地设置它为 <code class="inline-code">true</code>。
+			而且，至少从 2.3.22 版本开始，应用程序应该使用 
+			<code class="inline-code">DefaultObjectWrapper</code> (将 <a href="pgui_datamodel_objectWrapper.html#topic.defaultObjectWrapperIcI">它的
+            <code>incompatibleImprovements</code> 设置为 2.3.22</a> - 这很重要)，
+			那就不会有这个问题。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_modify_seq_and_map">
+    16.&nbsp; 
+            在 FreeMarker 模板中如何修改序列(list)和哈希表(maps) ？
+
+            
+
+            
+
+            
+
+            
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>首先，你也许不想修改序列/哈希表，仅仅是连接(增加)它们中的两个或多个，
+			这就会生成一个新的序列/哈希表，而不是修改已经存在的那个。这种情况下使用 <a href="dgui_template_exp.html#dgui_template_exp_sequenceop_cat">序列连接</a> 和 <a href="dgui_template_exp.html#dgui_template_exp_hashop_cat">哈希表连接符</a>。而且，你也可以使用 <a href="dgui_template_exp.html#dgui_template_exp_seqenceop_slice">子序列操作符</a> 来代替移除序列项。
+			然而，要注意性能的影响：这些操作很快，但是这些哈希表/序列都是后续操作的结果
+			(也就是说，当你使用操作的结果作为另外一个操作的输入等情况时)，
+			而这些结果的读取是比较慢的。</p>
+
+            <p>现在，如果你仍然想修改序列/哈希表，那么继续阅读...</p>
+
+            <p>FreeMarker 模板语言并不支持序列/哈希表的修改。它是用来展示已经计算好的东西的，
+			而不是用来计算数据的。要保持模板简洁。但是不要放弃，下面你会看到一些建议和技巧。</p>
+
+            <p>如果你能在数据模型构建器的程序和模板之间分离这些工作是最好的，
+			那么模板就不需要来改变序列/哈希表。也许你想重新构思一下你的数据模型了，你会明白这是可能的。
+			但是，很少有对一些复杂但都是和纯展示相关的算法进行需要修改序列/哈希表的这种情况。
+			它很少发生，所以要三思那些计算(或它们其中的部分)是属于数据模型领域的而不是展示领域的。
+			我们假设它们确实是输入展示领域的。比如，你想以一些非常精妙的方式展示一个关键词的索引，
+			这些算法需要你来创建，还有编写一些序列变量。那么你应该做这样的一些事情
+			(糟糕的情况包含糟糕的方案)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign caculatedResults =
+    &#39;com.example.foo.SmartKeywordIndexHelper&#39;?new().calculate(keywords)&gt;
+&lt;#-- some simple algorithms comes here, like: --&gt;
+&lt;ul&gt;
+  &lt;#list caculatedResults as kw&gt;
+    &lt;li&gt;&lt;a href=&quot;${kw.link}&quot;&gt;${kw.word}&lt;/a&gt;
+  &lt;/#list&gt;
+&lt;/ul&gt;</pre></div>
+
+            <p>也就是说，你从模板中去除了展示任务中的复杂部分，
+			而把它们放到了Java代码中。请注意，它不会影响数据模型，
+			所以展示层仍然会和其它的应用逻辑相分离。
+			当然这种处理问题的缺陷就是模板设计者会需要Java程序员的帮助，
+			但是对于复杂的算法这可能也是需要的。</p>
+
+            <p>现在，如果你仍然坚持说你需要直接使用 FreeMarker 模板来改变序列/哈希表，
+			这里有两种解决方案，但是请阅读它们之后的警告：</p>
+
+            <ul>
+              <li>
+                <p>你可以通过编写 <code class="inline-code">TemplateMethodModelEx</code> 和 
+				<code class="inline-code">TemplateDirectiveModel</code> 的实现类来修改特定类型的序列/哈希表。
+				仅仅只是特定的类型，因为 <code class="inline-code">TemplateSequenceModel</code> 和 
+				<code class="inline-code">TemplateHashModel</code> 没有用来修改的方法，
+				所以你需要序列或哈希表来实现一些额外的方法。这个解决方案的一个示例可以在FMPP
+				(FMPP 是 FreeMarker-based text file PreProcessor，即基于FreeMarker的文本文件与处理器，
+				用于生成文本文件。可以参考FMPP项目的主页获取更多信息http://fmpp.sourceforge.net ，译者注)
+				中看到。它允许你这样来进行操作(<code class="inline-code">pp</code> 存储由FMPP为模板提供的服务)：</p>
+
+                
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign a = pp.newWritableSequence()&gt;
+&lt;@pp.add seq=a value=&quot;red&quot; /&gt;</pre></div>
+
+                <p><code class="inline-code">pp.add</code> 指令仅仅作用于由 
+				<code class="inline-code">pp.newWritableSequence()</code> 方法创建的序列。
+				因此，模板设计者不能修改一个来自于数据模型的序列。</p>
+              </li>
+
+              <li>
+                <p>如果你使用了定制的包装器(你可以使用 <code class="inline-code">&lt;@myList.append foo
+                /&gt;</code>)，那么序列可以有一些方法/指令。
+				(而且，如果你使用来配置它，那么它就会暴露出公有的方法，
+				你可以对变量来使用作用于 <code class="inline-code">java.util.Map</code> 和 
+				<code class="inline-code">java.util.List</code> 对象的Java API。就像Apache的Velocity一样。)</p>
+              </li>
+            </ul>
+
+            <p>但是要小心，这些解决方案有一个问题：<a href="dgui_template_exp.html#dgui_template_exp_sequenceop_cat">序列连接</a>， <a href="dgui_template_exp.html#dgui_template_exp_seqenceop_slice">序列切分</a> 操作符
+			(比如 <code class="inline-code">seq[5..10]</code>) 和 <code class="inline-code">?reverse</code> 
+			不会复制原来的序列，仅仅只是包装了一下(为了效率)，所以，
+			如果源序列后期(一种不正常的混叠效应)改变了，那么结果序列将也会改变。
+			相同的问题也存在于 <a href="dgui_template_exp.html#dgui_template_exp_hashop_cat">哈希表连接</a> 
+			的结果；它只是包装了两个哈希表，所以，如果你之前修改了要添加的哈希表，
+			那么结果哈希表将会神奇地改变。作为一种变通方式，在你执行了上述有问题的操作之后，
+			要保证你没有修改作为输入的对象，或者没有使用由上述两点
+			(比如，在FMPP中，你可以这样来做：<code class="inline-code">&lt;#assign b =
+            pp.newWritableSequence(a[5..10])&gt;</code> 和 
+			<code class="inline-code">&lt;#assign c = pp.newWritableHash(hashA +
+            hashB)&gt;</code>)描述的解决方案提供的方法创建结果的拷贝。
+			当然这很容易丢失，所以再次重申，宁可创建数据模型而不用去修改集合，
+			也不要使用上面展示的显示层的任务助手类。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_null">
+    17.&nbsp; 
+            关于 null 在 FreeMarker 模板语言是什么样的？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>FreeMarker 模板语言并不知道Java语言中的 <code class="inline-code">null</code>。
+			它也没有关键字 <code class="inline-code">null</code>，而且它也不能测试变量是否是 
+			<code class="inline-code">null</code>。当在技术上面对 <code class="inline-code">null</code> 时，
+			那么它会将其视作是不存在的变量。比如，如果 <code class="inline-code">x</code> 
+			在数据模型中是 <code class="inline-code">null</code>，而且不会被呈现出来，那么 
+			<code class="inline-code">${x!&#39;missing&#39;}</code> 将会打印出 &quot;missing&quot;，你无法辨别其中的不同。
+			而且，比如你想测试是否Java代码中的一个方法返回了 <code class="inline-code">null</code>，
+			仅仅像 <code class="inline-code">&lt;#if foo.bar()??&gt;</code> 这样来写即可。</p>
+
+            <p>你也许对这后面实现的理由感兴趣，出于展示层的观点，<code class="inline-code">null</code> 
+			和不存在的东西通常是一样的。这二者之间的不同仅仅是技术上的细节，
+			是实现细节的结果而不是应用逻辑。你也不能将 <code class="inline-code">null</code> 
+			和其它东西来比较(不像Java语言)；在模板中，<code class="inline-code">null</code> 
+			和其它东西来比较是没有意义的，因为模板语言不进行标识比较
+			(当你想比较两个对象时，像Java中的 <code class="inline-code">==</code> 操作符)，
+			但更常见的是内容的比较(像Java语言中的 <code class="inline-code">Object.equals(Object)</code>；
+			它也不会对 <code class="inline-code">null</code> 起作用)。
+			而 FreeMarker 如何来别变一些具体的东西和不存在的或未知的东西来比较？
+			或两个不存在(未知的)东西是相等的？当然这些问题无法来回答。</p>
+
+            <p>这个不了解 <code class="inline-code">null</code> 的方法至少有一个问题。
+			当你从模板中调用Java代码的方法时，你也许想传递 <code class="inline-code">null</code> 
+			值作为参数(因为方法是设计用于Java语言的，那里是有 <code class="inline-code">null</code> 这个概念的)。
+			这种情况下你可以利用 FreeMarker 的一个bug(在我们提供一个传递 <code class="inline-code">null</code> 
+			值给方法正确的方案前，这个bug我们是不会修复的)：如果你指定一个不存在的值作为参数，
+			那么它不会引发错误，但是 <code class="inline-code">null</code> 就会被传递给这个方法。就像 
+			<code class="inline-code">foo.bar(nullArg)</code> 将会使用 <code class="inline-code">null</code> 作为参数调用 
+			<code class="inline-code">bar</code> 方法，假设没有名为&quot;nullArg&quot;的参数存在。</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_capture">
+    18.&nbsp; 
+            我该怎么在表达式(作为另外一个指令参数)中使用指令(宏)的输出 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>使用 <code class="inline-code">assign</code> 或 
+			<code class="inline-code">local</code> 指令捕捉输出到变量中。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign capturedOutput&gt;&lt;@outputSomething /&gt;&lt;/#assign&gt;
+&lt;@otherDirective someParam=capturedOutput /&gt;</pre></div>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_questionmark">
+    19.&nbsp; 
+            在输出中为什么用&quot;?&quot;来代替字符 <em>X</em> ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>这是因为你想打印的字符不能用输出流的 <a href="gloss.html#gloss.charset">字符集</a> (编码) 来表现，所以Java平台
+			(而不是FreeMarker)用问号来代替了会有问题的字符。通常情况，对于输出和模板
+			(使用模板对象的 <code class="inline-code">getEncoding()</code> 方法)应该使用相同的字符集，
+			或者是更安全的，你通常对输出应该使用UTF-8字符集。
+			对输出流使用的字符集不是由FreeMarker决定的，而是你决定的，当你创建 
+			<code class="inline-code">Writer</code> 对象时，传递了模板的 <code class="inline-code">process</code> 方法。</p>
+
+            <p>示例：这里在Servlet中使用了UTF-8字符集：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">...        
+resp.setContentType(&quot;text/html; charset=utf-8&quot;);
+Writer out = resp.getWriter();
+...
+t.process(root, out);
+...</pre></div>
+
+            <p>请注意，问号(或其他替代符号)可能在 FreeMarker 环境之外产生，
+			这种情况上面的做法都没有用了。
+			比如一种糟糕的/错误配置的数据库连接或者JDBC驱动可能带来已经替代过的字符文本。
+			HTML形式是另外一种编码问题的潜在来源。
+			在很多地方打印字符串中字符的数字编码是个很好的想法，
+			首先来看看问题是在哪里发生的。</p>
+
+            <p>你可以阅读有关字符集和 FreeMarker 的更多信息：<a href="pgui_misc_charset.html">在这里...</a></p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_retrieve_calculated_values">
+    20.&nbsp; 
+            在模板执行完成后，怎么在模板中获取计算过的值 ？
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>首先，要确定你的应用程序设计得很好：模板应该展示数据，
+			而不是来计算数据。如果你仍确定你想这么做，请继续阅读...</p>
+
+            <p>当你使用 <code class="inline-code">&lt;#assign x = &quot;foo&quot;&gt;</code>时，
+			那么你不会真正修改数据模型(因为它是只读的，参考：
+			<a href="pgui_misc_multithreading.html">程序开发指南/其它/多线程</a>)，但是在处理
+			(参考 <a href="pgui_misc_var.html">程序开发指南/其它/变量，范围</a>)运行时环境
+			(参考<a href="gloss.html#gloss.environment">environment</a>)创建 
+			<code class="inline-code">x</code> 变量。这个问题就是当 <code class="inline-code">Template.process</code> 
+			返回时，运行时环境将会被丢弃，因为它是为单独 <code class="inline-code">Template.process</code> 
+			调用创建的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">// internally an Environment will be created, and then discarded
+myTemplate.process(root, out);</pre></div>
+
+            <p>要阻止这个，你可以做下面的事情，是和上面相同的，
+			除了你有机会返回在模板中创建的变量：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">Environment env = myTemplate.createProcessingEnvironment(root, out);
+env.process();  // process the template
+TemplateModel x = env.getVariable(&quot;x&quot;);  // get variable x</pre></div>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_assign_to_dynamic_variable_name">
+    21.&nbsp; 
+            How to assign to (or <code class="inline-code">#import</code> into) a
+            dynamically constructed variable name (like to name that&#39;s stored
+            in another variable)?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>If you really can&#39;t avoid doing that (you should, as it&#39;s
+            confusing), you can solve that with constructing the appropriate
+            FTL source code dynamically in a string, then using the <a href="ref_builtins_expert.html#ref_builtin_interpret"><code>interpret</code>
+            built-in</a>. For example, if you want to assign to the
+            variable whose name is stored in the <code class="inline-code">varName</code>
+            variable:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@&quot;&lt;#assign ${varName}=&#39;example&#39;&gt;&quot;?interpret /&gt;</pre></div>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_template_uploading_security">
+    22.&nbsp; 
+            
+
+            Can I allow users to upload templates and what are the
+            security implications?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>In general you shouldn&#39;t allow that, unless those users are
+            system administrators or other trusted personnel. Consider
+            templates as part of the source code just like
+            <code class="inline-code">*.java</code> files are. If you still want to allow
+            users to upload templates, here are what to consider:</p>
+
+            <ul>
+              <li>
+                <p>Denial-of-Service (DoS) attacks: It&#39;s trivial to create
+                templates that run practically forever (with a loop), or
+                exhaust memory (by concatenating to a string in a loop).
+                FreeMarker can&#39;t enforce CPU or memory usage limits, so this
+                is something that has no solution on the
+                FreeMarker-level.</p>
+              </li>
+
+              <li>
+                <p>Data-model and wrapping
+                (<code class="inline-code">Configuration.setObjectWrapper</code>): The
+                data-model might gives access to the public Java API of some
+                objects that you have put into the data-model. By default, for
+                objects that aren&#39;t instances of a the bunch of specially
+                handler types (<code class="inline-code">String</code>,
+                <code class="inline-code">Number</code>, <code class="inline-code">Boolean</code>,
+                <code class="inline-code">Date</code>, <code class="inline-code">Map</code>,
+                <code class="inline-code">List</code>, array, and a few others), their
+                public Java API will be exposed. To avoid that, you have to
+                construct the data-model so that it only exposes the things
+                that are really necessary for the template. For that, you may
+                want to use <code class="inline-code">SimpleObjectWrapper</code> (via
+                <code class="inline-code">Configuration.setObjectWrapper</code> or the
+                <code class="inline-code">object_wrapper</code> setting) and then create the
+                data-model purely from <code class="inline-code">Map</code>-s,
+                <code class="inline-code">List</code>-s, <code class="inline-code">Array</code>-s,
+                <code class="inline-code">String</code>-s, <code class="inline-code">Number</code>-s,
+                <code class="inline-code">Boolean</code>-s and <code class="inline-code">Date</code>-s.
+                Or, you can implement your own extremely restrictive
+                <code class="inline-code">ObjectWrapper</code>, which for example could
+                expose your POJO-s safely.</p>
+              </li>
+
+              <li>
+                <p>Template-loader
+                (<code class="inline-code">Configuration.setTemplateLoader</code>):
+                Templates may load other templates by name (by path), like
+                <code class="inline-code">&lt;#include &quot;../secret.txt&quot;&gt;</code>. To avoid
+                loading sensitive data, you have to use a
+                <code class="inline-code">TemplateLoader</code> that double-checks that the
+                file to load is something that should be exposed. FreeMarker
+                tries to prevent the loading of files outside the template
+                root directory regardless of template loader, but depending on
+                the underlying storage mechanism, exploits may exist that
+                FreeMarker can&#39;t consider (like, just as an example,
+                <code class="inline-code">~</code> jumps to the current user&#39;s home
+                directory). Note that
+                <code class="inline-code">freemarker.cache.FileTemplateLoader</code> checks
+                the canonical paths, so that&#39;s maybe a good candidate for this
+                task, yet, adding a file extension check (file must be
+                <code class="inline-code">*.ftl</code>) is maybe a good idea.</p>
+              </li>
+
+              <li>
+                <p>The <code class="inline-code">new</code> built-in
+                (<code class="inline-code">Configuration.setNewBuiltinClassResolver</code>,
+                <code class="inline-code">Environment.setNewBuiltinClassResolver</code>):
+                It&#39;s used in templates like
+                <code class="inline-code">&quot;com.example.SomeClass&quot;?new()</code>, and is
+                important for FTL libraries that are partially implemented in
+                Java, but shouldn&#39;t be needed in normal templates. While
+                <code class="inline-code">new</code> will not instantiate classes that are
+                not <code class="inline-code">TemplateModel</code>-s, FreeMarker contains a
+                <code class="inline-code">TemplateModel</code> class that can be used to
+                create arbitrary Java objects. Other &quot;dangerous&quot;
+                <code class="inline-code">TemplateModel</code>-s can exist in you
+                class-path. Plus, even if a class doesn&#39;t implement
+                <code class="inline-code">TemplateModel</code>, its static initialization
+                will be run. To avoid these, you should use a
+                <code class="inline-code">TemplateClassResolver</code> that restricts the
+                accessible classes (possibly based on which template asks for
+                them), such as
+                <code class="inline-code">TemplateClassResolver.ALLOWS_NOTHING_RESOLVER</code>.</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_implement_function_or_macro_in_java">
+    23.&nbsp; 
+            How to implement a function or macro in Java Language
+            instead of in the template language?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>It&#39;s not possible (yet), but something very similar is
+            possible if you write a class that implements
+            <code class="inline-code">freemarker.template.TemplateMethodModelEx</code> or
+            <code class="inline-code">freemarker.template.TemplateDirectiveModel</code>
+            respectively, and then where you were write <code class="inline-code">&lt;#function
+            my
+            <em class="code-color">...</em>&gt;<em class="code-color">...</em>&lt;/#function&gt;</code>
+            or <code class="inline-code">&lt;#macro my
+            <em class="code-color">...</em>&gt;<em class="code-color">...</em>&lt;/#macro&gt;</code>
+            you write <code class="inline-code">&lt;#assign my = &quot;your.package.YourClass
+            &quot;?</code><a href="ref_builtins_expert.html#ref_builtin_new"><code>new</code></a><code class="inline-code">()&gt;</code>
+            instead. Note that using the <code class="inline-code">assign</code> directive
+            for this works because functions (and methods) and macros are just
+            plain variables in FreeMarker. (For the same reason you could also
+            put <code class="inline-code">TemplateMethodModelEx</code> or
+            <code class="inline-code">TemplateDirectiveModel</code> instances into the
+            data-model before calling the template, or into the shared
+            variable map (see:
+            <code class="inline-code">freemarker.template.Configuration.setSharedVariable(String,
+            TemplateModel)</code>) when you initialize the
+            application.)</p>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_nice_error_page">
+    24.&nbsp; 
+            <a name="misc.faq.niceErrorPage"></a> In my Servlet
+            based application, how do I show a nice error page instead of a
+            stack trace when error occurs during template processing?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>First of all, use <code class="inline-code">RETHROW_HANDLER</code> instead
+            of the default <code class="inline-code">DEBUG_HANDLER</code> (for more
+            information about template exception handlers <a href="pgui_config_errorhandling.html">read this...</a>). Now
+            FreeMarker will not print anything to the output when an error
+            occurs, so the control is in your hands. After you have caught the
+            exception of
+            <code class="inline-code">Template.process(<em class="code-color">...</em>)</code>
+            basically you can follow two strategies:</p>
+
+            <ul>
+              <li>
+                <p>Call <code class="inline-code">httpResp.isCommitted()</code>, and if
+                that returns <code class="inline-code">false</code>, then you call
+                <code class="inline-code">httpResp.reset()</code> and print a ``nice error
+                page&#39;&#39; for the visitor. If the return value was
+                <code class="inline-code">true</code>, then try to finish the page be
+                printing something that makes clear for the visitor that the
+                page generation was abruptly interrupted because of an error
+                on the Web server. You may have to print a lot of redundant
+                HTML end-tags and set colors and font size to ensure that the
+                error message will be actually readable in the browser window
+                (check the source code of the
+                <code class="inline-code">HTML_DEBUG_HANDLER</code> in
+                <code class="inline-code">src\freemarker\template\TemplateException.java</code>
+                to see an example).</p>
+              </li>
+
+              <li>
+                <p>Use full page buffering. This means that the
+                <code class="inline-code">Writer</code> doesn&#39;t send the output to the
+                client progressively, but buffers the whole page in the
+                memory. Since you provide the <code class="inline-code">Writer</code>
+                instance for the
+                <code class="inline-code">Template.process(<em class="code-color">...</em>)</code>
+                method, this is your responsibility, FreeMarker has nothing to
+                do with it. For example, you may use a
+                <code class="inline-code">StringWriter</code>, and if
+                <code class="inline-code">Template.process(<em class="code-color">...</em>)</code>
+                returns by throwing an exception, then ignore the content
+                accumulated by the <code class="inline-code">StringWriter</code>, and send
+                an error page instead, otherwise you print the content of
+                <code class="inline-code">StringWriter</code> to the output. With this
+                method you surely don&#39;t have to deal with partially sent
+                pages, but it can have negative performance implications
+                depending on the characteristic of the pages (for example, the
+                user will experience more response delay for a long page that
+                is generated slowly, also the server will consume more RAM).
+                Note that using a <code class="inline-code">StringWriter</code> is surely
+                not the most efficient solution, as it often reallocates its
+                buffer as the accumulated content grows.</p>
+              </li>
+            </ul>
+          </dd>
+
+        
+
+        
+          
+  <dt class="question" id="faq_html_editor_mangles">
+    25.&nbsp; 
+            I&#39;m using a visual HTML editor that mangles template tags.
+            Will you change the template language syntax to accommodate my
+            editor?
+          
+  </dt>
+
+
+          <dd class="answer">
+
+            <p>We won&#39;t change the standard version, because a lot of
+            templates depend on it.</p>
+
+            <p>Our view is that the editors that break template code are
+            themselves broken. A good editor should ignore, not mangle, what
+            it doesn&#39;t understand.</p>
+
+            <p>You maybe interested in that starting from FreeMarker 2.3.4
+            you can use <code class="inline-code">[</code> and <code class="inline-code">]</code> instead
+            of <code class="inline-code">&lt;</code> and <code class="inline-code">&gt;</code>. For more
+            details <a href="dgui_misc_alternativesyntax.html">read
+            this...</a></p>
+          </dd>
+
+        
+        </dl>
+
+  </div>
+<div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="app.html"><span>Previous</span></a><a class="paging-arrow next" href="app_versions.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

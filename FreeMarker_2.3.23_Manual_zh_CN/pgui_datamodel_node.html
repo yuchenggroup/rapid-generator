@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>结点变量 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="结点变量">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_datamodel_node.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_datamodel_node.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel.html"><span itemprop="name">数据模型</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel_node.html"><span itemprop="name">结点变量</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","数据模型","结点变量"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_datamodel_directive.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_datamodel_objectWrapper.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_datamodel_node" itemprop="headline">结点变量</h1>
+</div></div><p>结点变量体现了树形结构中的结点。结点变量的引入是为了帮助用户 <a href="xgui.html">在数据模型中处理XML文档</a>，
+		但是它们也可以用于构建树状模型。如需要有关从模板语言角度考虑的结点信息，
+		那么可以 <a href="dgui_datamodel_types.html#dgui_datamodel_node">阅读之前章节</a>。</p><p>结点变量有下列属性，它们都由 
+		<code class="inline-code">TemplateNodeModel</code> 接口的方法提供：</p><ul>
+          <li>
+            <p>基本属性：</p>
+
+            <ul>
+              <li>
+                <p><code class="inline-code">TemplateSequenceModel getChildNodes()</code>：
+				一个结点的子结点序列(除非这个结点是叶子结点，这时方法返回一个空序列或者是null)。
+				子结点本身应该也是结点变量。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">TemplateNodeModel getParentNode()</code>：
+				一个结点只有一个父结点(除非这个结点是结点树的根结点，
+				这时方法返回<code class="inline-code">null</code>)。</p>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <p>可选属性。如果一个属性在具体的使用中没有意义，
+			那对应的方法应该返回<code class="inline-code">null</code>：</p>
+
+            <ul>
+              <li>
+                <p><code class="inline-code">String getNodeName()</code>：
+				结点名称也是宏的名称，当使用 <a href="ref_directive_visit.html#ref.directive.recurse"><code>recurse</code></a> 和 <a href="ref_directive_visit.html#ref.directive.visit"><code>visit</code></a>指令时，
+				它用来控制结点。因此，如果想通过结点使用这些指令，
+				那么结点的名称是 <em>必须的</em>。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">String getNodeType()</code>：在XML中：
+				<code class="inline-code">&quot;element&quot;</code>，<code class="inline-code">&quot;text&quot;</code>，
+				<code class="inline-code">&quot;comment&quot;</code>等。如果这些信息可用，
+				就是通过 <code class="inline-code">recurse</code> 和 <code class="inline-code">visit</code> 
+				指令来查找结点的默认处理宏。而且，它对其他有具体用途的应用程序也是有用的。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">String getNamespaceURI()</code>：
+				这个结点所属的命名空间(和用于库的FTL命名空间无关)。例如，在XML中，
+				这就是元素和属性所属XML命名空间的URI。这个信息如果可用，就是通过 
+				<code class="inline-code">recurse</code> 和 <code class="inline-code">visit</code> 
+				指令来查找存储控制宏的FTL命名空间。</p>
+              </li>
+            </ul>
+          </li>
+        </ul><p>在FTL里，结点属性的直接使用可以通过 <a href="ref_builtins_node.html">内建函数 node</a>完成，
+		还有 <code class="inline-code">visit</code> 和 <code class="inline-code">recurse</code> 宏。</p><p>在很多用例中，实现了 <code class="inline-code">TemplateNodeModel</code> 
+		接口和其它接口的变量，因为结点变量属性仅仅提供基本的结点间导航的方法。
+		需要具体的例子，请参考 <a href="xgui.html">FreeMarker如何处理XML</a> 部分。</p><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_datamodel_directive.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_datamodel_objectWrapper.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

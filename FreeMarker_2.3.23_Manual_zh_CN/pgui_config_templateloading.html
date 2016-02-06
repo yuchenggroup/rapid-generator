@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>模板加载 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="模板加载">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_config_templateloading.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_config_templateloading.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config.html"><span itemprop="name">配置(Configuration)</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config_templateloading.html"><span itemprop="name">模板加载</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","配置(Configuration)","模板加载"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_config_settings.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config_errorhandling.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_config_templateloading" itemprop="headline">模板加载</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_36" data-menu-target="autoid_36">模板加载器</a><ul><li><a class="page-menu-link" href="#autoid_37" data-menu-target="autoid_37">内建模板加载器</a></li><li><a class="page-menu-link" href="#autoid_38" data-menu-target="autoid_38">从多个位置加载模板</a></li><li><a class="page-menu-link" href="#autoid_39" data-menu-target="autoid_39">从其他资源加载模板</a></li><li><a class="page-menu-link" href="#autoid_40" data-menu-target="autoid_40">模板名称(模板路径)</a></li></ul></li><li><a class="page-menu-link" href="#pgui_config_templateloading_caching" data-menu-target="pgui_config_templateloading_caching">模板缓存</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_36">模板加载器</h2>
+
+
+          
+
+          <p>模板加载器是加载基于抽象模板路径下，比如 
+		  <code class="inline-code">&quot;index.ftl&quot;</code>  或 
+		  <code class="inline-code">&quot;products/catalog.ftl&quot;</code> 的原生文本数据对象。
+		  这由具体的模板加载器对象来确定它们取得请求数据时使用了什么样的数据来源
+		  (文件夹中的文件，数据等等)。当调用 <code class="inline-code">cfg.getTemplate</code> 
+		  (这里的 <code class="inline-code">cfg</code> 就是 <code class="inline-code">Configuration</code> 实例)时，
+		  FreeMarker询问模板加载器是否已经为 <code class="inline-code">cfg</code> 
+		  建立返回给定模板路径的文本，之后 FreeMarker 解析文本生成模板。</p>
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_37">内建模板加载器</h3>
+
+
+            <p>在 <code class="inline-code">Configuration</code> 
+			中可以使用下面的方法来方便建立三种模板加载。
+			(每种方法都会在其内部新建一个模板加载器对象，然后创建 
+			<code class="inline-code">Configuration</code> 实例来使用它。)</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">void setDirectoryForTemplateLoading(File dir);</pre></div>
+
+            <p>或</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">void setClassForTemplateLoading(Class cl, String prefix);</pre></div>
+
+            <p>或</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">void setServletContextForTemplateLoading(Object servletContext, String path);</pre></div>
+
+            <p>上述的第一种方法在磁盘的文件系统上设置了一个明确的目录，
+			它确定了从哪里加载模板。不要说可能，<code class="inline-code">File</code> 
+			参数肯定是一个存在的目录。否则，将会抛出异常。</p>
+
+            <p>第二种调用方法使用了一个 <code class="inline-code">Class</code> 
+			类型的参数和一个前缀。这是让你来指定什么时候通过相同的机制来加载模板，
+			不过是用Java的 <code class="inline-code">ClassLoader</code> 来加载类。
+			这就意味着传入的class参数会被 <code class="inline-code">Class.getResource()</code> 
+			用来调用方法来找到模板。参数 <code class="inline-code">prefix</code> 
+			是给模板的名称来加前缀的。在实际运行的环境中，
+			类加载机制是首选用来加载模板的方法，通常情况下，从类路径下加载文件的这种机制，
+			要比从文件系统的特定目录位置加载安全而且简单。在最终的应用程序中，
+			所有代码都使用 <code class="inline-code">.jar</code> 文件打包也是不错的，
+			这样用户就可以直接执行包含所有资源的 <code class="inline-code">.jar</code> 文件了。</p>
+
+            <p>第三种调用方式需要Web应用的上下文和一个基路径作为参数，
+			这个基路径是Web应用根路径(<code class="inline-code">WEB-INF</code>目录的上级目录)的相对路径。
+			那么加载器将会从Web应用目录开始加载模板。尽管加载方法对没有打包的 
+			<code class="inline-code">.war</code> 文件起作用，因为它使用了 
+			<code class="inline-code">ServletContext.getResource()</code> 方法来访问模板，
+			注意这里我们指的是“目录”。如果忽略了第二个参数（或使用了<code class="inline-code">&quot;&quot;</code>），
+			那么就可以混合存储静态文件（<code class="inline-code">.html</code>，<code class="inline-code">.jpg</code>等）
+			和 <code class="inline-code">.ftl</code> 文件，只是 <code class="inline-code">.ftl</code> 文件可以被送到客户端执行。
+			当然必须在 <code class="inline-code">WEB-INF/web.xml</code> 中配置一个Servlet来处理URI格式为
+			<code class="inline-code">*.ftl</code> 的用户请求，否则客户端无法获取到模板，
+			因此你将会看到Web服务器给出的秘密提示内容。在站点中不能使用空路径，这是一个问题，
+			你应该在 <code class="inline-code">WEB-INF</code> 目录下的某个位置存储模板文件，
+			这样模板源文件就不会偶然地被执行到，这种机制对servlet应用程序来加载模板来说，
+			是非常好用的方式，而且模板可以自动更新而不需重启Web应用程序，
+			但是对于类加载机制，这样就行不通了。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_38">从多个位置加载模板</h3>
+
+
+            <p>如果需要从多个位置加载模板，那就不得不为每个位置都实例化模板加载器对象，
+			将它们包装到一个称为 <code class="inline-code">MultiTemplateLoader</code> 的特殊模板加载器，
+			最终将这个加载器传递给 <code class="inline-code">Configuration</code> 对象的
+			<code class="inline-code">setTemplateLoader(TemplateLoader loader)</code>方法。
+			下面给出一个使用类加载器从两个不同位置加载模板的示例：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">import freemarker.cache.*; // template loaders live in this package
+
+<em>...</em>
+
+FileTemplateLoader ftl1 = new FileTemplateLoader(new File(&quot;/tmp/templates&quot;));
+FileTemplateLoader ftl2 = new FileTemplateLoader(new File(&quot;/usr/data/templates&quot;));
+ClassTemplateLoader ctl = new ClassTemplateLoader(getClass(), &quot;&quot;);
+TemplateLoader[] loaders = new TemplateLoader[] { ftl1, ftl2, ctl };
+MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
+
+cfg.setTemplateLoader(mtl);</pre></div>
+
+            <p>现在，FreeMarker将会尝试从 <code class="inline-code">/tmp/templates</code> 
+			目录加载模板，如果在这个目录下没有发现请求的模板，它就会继续尝试从 
+			<code class="inline-code">/usr/data/templates</code> 目录下加载，如果还是没有发现请求的模板，
+			那么它就会使用类加载器来加载模板。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_39">从其他资源加载模板</h3>
+
+
+            <p>如果内建的类加载器都不适合使用，那么就需要来编写自己的类加载器了，
+			这个类需要实现 <code class="inline-code">freemarker.cache.TemplateLoader</code> 接口，
+			然后将它传递给 <code class="inline-code">Configuration</code> 对象的 
+			<code class="inline-code">setTemplateLoader(TemplateLoader loader)</code>方法。
+			可以阅读API JavaDoc文档获取更多信息。</p>
+
+            <p>如果模板需要通过URL访问其他模板，那么就不需要实现 
+			<code class="inline-code">TemplateLoader</code> 接口了，可以选择子接口 
+			<code class="inline-code">freemarker.cache.URLTemplateLoader</code> 来替代，
+			只需实现 <code class="inline-code">URL getURL(String templateName)</code> 方法即可。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_40">模板名称(模板路径)</h3>
+
+
+            
+
+            
+
+            
+
+            <p>解析模板的名称(也就是模板路径)是由模板解析器来决定的。
+			但是要和其它对路径的格式要求很严格的组件一起使用。通常来说，
+			强烈建议模板加载器使用URL风格的路径。
+			在URL路径(或在UN*X路径)中符号有其它含义时，那么路径中不要使用 
+			<code class="inline-code">/</code>(路径分隔符)字符，<code class="inline-code">.</code>
+			(同目录符号)和<code class="inline-code">..</code>(父目录符号)。字符 
+			<code class="inline-code">*</code>(星号)是被保留的，
+			它用于FreeMarker的 "模板获取" 特性。</p>
+
+            <p><code class="inline-code">://</code>(或者使用 
+			<code class="inline-code">template_name_format</code> 配置设置到
+            <code class="inline-code">DEFAULT_2_4_0</code>，<code class="inline-code">:</code> (冒号)
+            字符)是被保留用来指定体系部分的，和URI中的相似。比如 
+			<code class="inline-code">someModule://foo/bar.ftl</code> 使用 
+			<code class="inline-code">someModule</code>，或者假定 <code class="inline-code">DEFAULT_2_4_0</code> 
+			格式，<code class="inline-code">classpath:foo/bar.ftl</code> 使用
+			<code class="inline-code">classpath</code> 体系。解释体系部分完全由 
+			<code class="inline-code">TemplateLoader</code> 决定。
+			(FreeMarker核心仅仅知道体系的想法，否则它不能正常处理相对模板名称。)</p>
+
+            <p>FreeMarker通常在将路径传递到 <code class="inline-code">TemplateLoader</code> 
+			之前把它们正常化，所以路径中不会包含 <code class="inline-code">/../</code> 这样的内容，
+			路径会相对于虚构的模板根路径(也就是它们不会以 <code class="inline-code">/</code> 开头)。
+			其中也不会包含 <code class="inline-code">*</code>，因为模板获取发生在很早的阶段。
+			此外，将 <code class="inline-code">template_name_format</code> 设置为 
+			<code class="inline-code">DEFAULT_2_4_0</code>，多个连续的 <code class="inline-code">/</code> 
+			将会被处理成单独的 <code class="inline-code">/</code> 
+			(除非它们是 <code class="inline-code">://</code> 模式分隔符的一部分)。</p>
+
+            <p>请注意，不管主机运行的操作系统是什么，
+			FreeMarker 模板加载时经常使用斜线(而不是反斜线)。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_config_templateloading_caching">模板缓存</h2>
+
+
+          
+
+          
+
+          <p>FreeMarker 是会缓存模板的(假设使用 <code class="inline-code">Configuration</code> 
+		  对象的方法来创建 <code class="inline-code">Template</code> 对象)。这就是说当调用 
+		  <code class="inline-code">getTemplate</code>方法时，FreeMarker不但返回了 
+		  <code class="inline-code">Template</code> 对象，而且还会将它存储在缓存中，
+		  当下一次再以相同(或相等)路径调用 <code class="inline-code">getTemplate</code> 方法时，
+		  那么它只返回缓存的 <code class="inline-code">Template</code> 实例，
+		  而不会再次加载和解析模板文件了。</p>
+
+          <p>如果更改了模板文件，当下次调用模板时，FreeMarker 将会自动重新载入和解析模板。
+		  然而，要检查模板文件是否改变内容了是需要时间的，有一个 
+		  <code class="inline-code">Configuration</code> 级别的设置被称作&quot;更新延迟&quot;，它可以用来配置这个时间。
+		  这个时间就是从上次对某个模板检查更新后，FreeMarker再次检查模板所要间隔的时间。
+		  其默认值是5秒。如果想要看到模板立即更新的效果，那么就要把它设置为0。
+		  要注意某些模板加载器也许在模板更新时可能会有问题。
+		  例如，典型的例子就是在基于类加载器的模板加载器就不会注意到模板文件内容的改变。</p>
+
+          <p>当调用了 <code class="inline-code">getTemplate</code> 方法时，
+		  与此同时FreeMarker意识到这个模板文件已经被移除了，所以这个模板也会从缓存中移除。
+		  如果Java虚拟机认为会有内存溢出时，默认情况它会从缓存中移除任意模板。
+		  此外，你还可以使用 <code class="inline-code">Configuration</code> 对象的
+		  <code class="inline-code">clearTemplateCache</code> 方法手动清空缓存。</p>
+
+          <p>何时将一个被缓存了的模板清除的实际应用策略是由配置的属性
+		  <code class="inline-code">cache_storage</code> 来确定的，通过这个属性可以配置任何
+		  <code class="inline-code">CacheStorage</code> 的实现。对于大多数用户来说，
+		  使用 <code class="inline-code">freemarker.cache.MruCacheStorage</code> 就足够了。
+		  这个缓存存储实现了二级最近使用的缓存。在第一级缓存中，
+		  组件都被强烈引用到特定的最大数目(引用次数最多的组件不会被Java虚拟机抛弃，
+		  而引用次数很少的组件则相反)。当超过最大数量时，
+		  最近最少使用的组件将被送至二级缓存中，在那里它们被很少引用，
+		  直到达到另一个最大的数目。引用强度的大小可以由构造方法来指定。
+		  例如，设置强烈部分为20，轻微部分为250：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">cfg.setCacheStorage(new freemarker.cache.MruCacheStorage(20, 250))</pre></div>
+
+          <p>或者，使用 <code class="inline-code">MruCacheStorage</code> 缓存，
+		  它是默认的缓存存储实现：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">cfg.setSetting(Configuration.CACHE_STORAGE_KEY, &quot;strong:20, soft:250&quot;);</pre></div>
+
+          <p>当创建了一个新的 <code class="inline-code">Configuration</code> 对象时，
+		  它使用一个 <code class="inline-code">strongSizeLimit</code> 值为0的 
+		  <code class="inline-code">MruCacheStorage</code> 缓存来初始化，
+		  <code class="inline-code">softSizeLimit</code> 的值是 <code class="inline-code">Integer.MAX_VALUE</code> 
+		  (也就是在实际中，是无限大的)。但是使用非0的 <code class="inline-code">strongSizeLimit</code> 
+		  对于高负载的服务器来说也许是一个更好的策略，对于少量引用的组件来说，
+		  如果资源消耗已经很高的话，Java虚拟机往往会引发更高的资源消耗，
+		  因为它不断从缓存中抛出经常使用的模板，这些模板还不得不再次加载和解析。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_config_settings.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config_errorhandling.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

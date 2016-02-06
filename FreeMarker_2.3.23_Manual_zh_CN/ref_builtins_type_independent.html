@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>独立类型内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="独立类型内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_type_independent.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_type_independent.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_type_independent.html"><span itemprop="name">独立类型内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","独立类型内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_loop_var.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_expert.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_type_independent" itemprop="headline">独立类型内建函数</h1>
+</div></div><p>这些内建函数不(更多)关心它们左侧参数的类型。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_switch">switch</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>这是 
+          <a href="ref_directive_switch.html"><code>switch</code>-<code>case</code>-<code>default</code>
+          指令</a> 的基本内联(表达式)版本。它的通用版本就像 
+          <code class="inline-code"><em class="code-color">matchedValue</em>?switch(<em class="code-color">case1</em>,
+          <em class="code-color">result1</em>,
+          <em class="code-color">case2</em>,
+          <em class="code-color">result2</em>, ...
+          <em class="code-color">caseN</em>,
+          <em class="code-color">resultN</em>,
+          <em class="code-color">defaultResult</em>)</code>，这里的 
+          <code class="inline-code"><em class="code-color">defaultResult</em></code> 
+		  可以被忽略。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;r&#39;, &#39;w&#39;, &#39;x&#39;, &#39;s&#39;] as flag&gt;
+  ${flag<strong>?switch(&#39;r&#39;, &#39;readable&#39;, &#39;w&#39; &#39;writable&#39;, &#39;x&#39;, &#39;executable&#39;, &#39;unknown flag: &#39; + flag)</strong>}
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  readable
+  writable
+  executable
+  unknown flag: s</pre></div>
+
+          <p>也就是说， <code class="inline-code">switch</code> 会找到第一个
+          <code class="inline-code"><em class="code-color">case</em></code> 和参数
+		  (从左到右)值 
+          <code class="inline-code"><em class="code-color">matchedValue</em></code> 相等，
+		  之后返回直接在
+		  <code class="inline-code"><em class="code-color">case</em></code>
+		  参数后的
+          <code class="inline-code"><em class="code-color">result</em></code> 参数的值，
+          如果它没有找到一个相等的
+          <code class="inline-code"><em class="code-color">case</em></code>，那么就返回 
+          <code class="inline-code"><em class="code-color">defaultResult</em></code> 的值，如果没有
+          <code class="inline-code"><em class="code-color">defaultResult</em></code> 参数
+          (换言之，参数的个数是基数)，那么就发生错误中止模板处理。</p>
+
+          <p>更多细节：</p>
+
+          <ul>
+            <li>
+              <p>The comparison of
+              <code class="inline-code"><em class="code-color">matchedValue</em></code> 和
+              <code class="inline-code"><em class="code-color">case</em></code> 参数值的比较，
+			  就像 <a href="dgui_template_exp.html#dgui_template_exp_comparison"> <code>==</code> 
+              操作符</a>。那就只比较标量并且是相同类型的值。因此，诸如 
+			  <code class="inline-code">x?switch(1, &quot;r1&quot;, &quot;c2&quot;, &quot;r2&quot;)</code> 就没有意思。就像
+              <code class="inline-code">x</code> 是非数字值，那么第一个case就会引发错误，
+			  若 <code class="inline-code">x</code> 是数字值，那么第二个case就会引发错误
+			  (除非 <code class="inline-code">x</code> 是 <code class="inline-code">1</code>，
+			  那么就不会在第一个参数之后做更多的比较)。</p>
+            </li>
+
+            <li>
+              <p>不像普通的方法调用，
+              <code class="inline-code">switch(<em class="code-color">...</em>)</code> 
+			  的那些参数被评估为确实需要的。比如，在
+              <code class="inline-code">two()?switch(c1(), r1(), c2(), r2(), c3(),
+              r3())</code> 中，如果 <code class="inline-code">two()</code> 返回
+              <code class="inline-code">2</code>， <code class="inline-code">c1()</code> 返回
+              <code class="inline-code">1</code>， 且 <code class="inline-code">c2()</code> 返回
+              <code class="inline-code">2</code>，那么只有下面的函数会被调用，而且顺序是这样：
+			  <code class="inline-code">m()</code>，
+              <code class="inline-code">c1()</code>，<code class="inline-code">c2()</code>，
+              <code class="inline-code">r2()</code>。(很自然地，
+			  参数不被评估可以指向不存在的变量而不会引发错误。) 
+			  它保证了
+              <code class="inline-code"><em class="code-color">case</em></code> 
+			  参数表达式被从左到右进行评估，直到第一个匹配项被找到。
+			  它也保证了只有属于第一个匹配
+			  <code class="inline-code"><em class="code-color">case</em></code> 的
+              <code class="inline-code"><em class="code-color">result</em></code> 
+			  表达式会被评估。它还保证了如果没有匹配的
+			  <code class="inline-code"><em class="code-color">case</em></code> 
+			  参数，那么
+              <code class="inline-code"><em class="code-color">defaultResult</em></code> 
+			  表达式会被评估。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code"><em class="code-color">case</em></code> 
+			  参数表达式不需要是常量值，它们可以是任意复杂的表达式。
+			  当然，逻辑在 
+			  <code class="inline-code"><em class="code-color">result</em></code>，
+              <code class="inline-code"><em class="code-color">defaultResult</em></code> 和
+              <code class="inline-code"><em class="code-color">matchedValue</em></code> 
+			  中也是相同的。</p>
+            </li>
+
+            <li>
+              <p>对 <code class="inline-code"><em class="code-color">case</em></code> 
+			  参数值的类型没有任何限制，比如它们可以是字符串，或数字，或日期等...
+			  但因为 <code class="inline-code">==</code> 操作符的特性，那么在 
+			  <em>相同的</em>
+              <code class="inline-code">switch</code> 中使用不同类型的
+              <code class="inline-code"><em class="code-color">case</em></code> 参数是没有意义的
+			  (请参考之前的解释)。</p>
+            </li>
+
+            <li>
+              <p>不像使用 <a href="ref_directive_switch.html"><code>case</code>
+              指令</a>，那里没有向下通过的行为，也就是说，不需要相等的 
+              <code class="inline-code">break</code> 指令。</p>
+            </li>
+          </ul>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要对布尔值进行switch操作，那么应该使用
+            <a href="ref_builtins_boolean.html#ref_builtin_then"><code>then</code>
+            内建函数</a> 来代替，比如 
+            <code class="inline-code"><em class="code-color">matchedBoolean</em>?then(<em class="code-color">whenTrue</em>,
+            <em class="code-color">whenFalse</em>)</code>。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要在 <code class="inline-code"><em class="code-color">case</em></code> 
+			参数中进行任意的逻辑测试来代替简单的相等比较，那么可以这么来做
+			(这里我们测试范围)：
+            <code class="inline-code">true?switch(priority &lt;= 1, &quot;low&quot;, priority == 2,
+            &quot;medium&quot;, priority &gt;= 3, &quot;high&quot;)</code></p>
+            </div>
+
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_loop_var.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_expert.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

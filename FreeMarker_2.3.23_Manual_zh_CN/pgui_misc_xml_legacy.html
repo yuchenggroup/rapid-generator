@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>遗留的XML包装实现 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="遗留的XML包装实现">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_misc_xml_legacy.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_misc_xml_legacy.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc_xml_legacy.html"><span itemprop="name">遗留的XML包装实现</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","其它","遗留的XML包装实现"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_misc_secureenv.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_ant.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_misc_xml_legacy" itemprop="headline">遗留的XML包装实现</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_58" data-menu-target="autoid_58">模板标量模型(TemplateScalarModel)</a></li><li><a class="page-menu-link" href="#autoid_59" data-menu-target="autoid_59">模板集合模型(TemplateCollectionModel)</a></li><li><a class="page-menu-link" href="#autoid_60" data-menu-target="autoid_60">模板序列模型(TemplateSequenceModel)</a></li><li><a class="page-menu-link" href="#autoid_61" data-menu-target="autoid_61">模板哈希表模型(TemplateHashModel)</a></li><li><a class="page-menu-link" href="#autoid_62" data-menu-target="autoid_62">模板方法模型(TemplateMethodModel)</a></li><li><a class="page-menu-link" href="#autoid_63" data-menu-target="autoid_63">命名空间处理</a></li></ul> </div>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+          <p><em>遗留的XML包装已经废弃了。</em>
+          FreeMarker 2.3 已经引入了对新的XML处理模型的支持。要支持它，
+		  新的XML包装包已经引入了，就是 <code class="inline-code">freemarker.ext.dom</code>。
+		  对于新用法，我们鼓励你使用。它会在<a href="xgui.html">XML处理指南</a>中来说明。</p>
+          </div>
+<p><code class="inline-code">freemarker.ext.xml.NodeListModel</code> 
+		类提供了来包装XML文档展示为结点树模板模型。
+		每个结点列表可以包含零个或多个XML结点
+		(文档类型，元素类型，文本类型，处理指令，注释，实体引用，CDATA段等)。
+		结点列表实现了下面模板的语义模型接口：</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_58">模板标量模型(TemplateScalarModel)</h2>
+
+
+          <p>当使用一个标量时，结点列表将会呈现XML片段，表示其包含的结点。
+		  这使得使用XML到XML转换模板很方便。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_59">模板集合模型(TemplateCollectionModel)</h2>
+
+
+          <p>当用 <code class="inline-code">list</code> 指令来使用一个集合时，
+		  它会简单枚举它的结点。每个结点将会被当作一个新的单一结点组的结点列表返回。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_60">模板序列模型(TemplateSequenceModel)</h2>
+
+
+          <p>当被用作是序列时，它会返回第i个结点作为一个新的结点列表，
+		  包含单独的被请求的结点。也就是说，要返回 <code class="inline-code">&lt;book&gt;</code> 
+		  元素的第三个 <code class="inline-code">&lt;chapter&gt;</code> 元素，你可以使用下面的代码
+		  (结点索引是从零开始的)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign thirdChapter = xmldoc.book.chapter[2]&gt;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_61">模板哈希表模型(TemplateHashModel)</h2>
+
+
+          <p>当被用作是哈希表时，它基本上是用来遍历子结点。也就是说，
+		  如果你有个名为 <code class="inline-code">book</code> 的结点列表，
+		  并包装了一个有很多chapter的元素结点，那么 <code class="inline-code">book.chapter</code> 
+		  将会产生一个book元素的所有chapter元素的结点列表。@符号常被用来指代属性：
+		  <code class="inline-code">book.@title</code> 产生一个有单独属性的结点列表，
+		  也就是book元素的title属性。</p>
+
+          <p>意识到下面这样的结果是很重要的，比如，如果 <code class="inline-code">book</code> 
+		  没有 <code class="inline-code">chapter</code>-s，那么 <code class="inline-code">book.chapter</code> 
+		  就是一个空序列，所以 <code class="inline-code">xmldoc.book.chapter??</code> 就 
+		  <em>不会</em> 是 <code class="inline-code">false</code>，它会一直是 
+		  <code class="inline-code">true</code>！相似地，
+		  <code class="inline-code">xmldoc.book.somethingTotallyNonsense??</code> 
+		  也不会是<code class="inline-code">false</code>。为了检查是否发现子结点，可以使用 
+		  <code class="inline-code">xmldoc.book.chapter?size == 0</code>。</p>
+
+          <p>哈希表定义了一些&quot;魔力键&quot;。所有的这些键以下划线开头。
+		  最值得注意的是<code class="inline-code">_text</code>，可以得到结点的文本内容：
+		  <code class="inline-code">${book.@title._text}</code> 将会给模板交出属性的值。
+		  相似地，<code class="inline-code">_name</code>将会取得元素或属性的名字。
+		  <code class="inline-code">*</code> 或 <code class="inline-code">_allChildren</code> 
+		  返回所有结点列表元素中的直接子元素，而 <code class="inline-code">@*</code> 
+		  或 <code class="inline-code">_allAttributes</code> 返回结点列表中元素的所有属性。
+		  还有很多这样的键；下面给出哈希表键的详细总结：</p>
+
+            <div class="table-responsive">
+    <table class="table">
+
+            <thead>
+              <tr>
+                <th>键名</th>
+
+
+                <th>结果为</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+              <tr>
+                <td><code class="inline-code">*</code> 或 <code class="inline-code">_children</code></td>
+
+
+                <td>所有当前结点(非递归)的直接子元素。适用于元素和文档结点。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">@*</code> 或
+                <code class="inline-code">_attributes</code></td>
+
+
+                <td>当前结点的所有属性。仅适用于元素。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">@<em class="code-color">attributeName</em></code></td>
+
+
+                <td>当前结点的命名属性。适用于元素，声明和处理指令。
+				在声明中它支持属性 <code class="inline-code">publicId</code>，<code class="inline-code">systemId</code> 
+				和 <code class="inline-code">elementName</code>。在处理指令中，它支持属性 
+				<code class="inline-code">target</code> 和 <code class="inline-code">data</code>，还有数据中以 
+				<code class="inline-code">name=&quot;value&quot;</code> 对出现的其他属性名。
+				对于声明和处理指令的属性结点是合成的，因此它们没有父结点。
+				要注意，<code class="inline-code">@*</code> 不能在声明或处理指令上进行操作。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_ancestor</code></td>
+
+
+                <td>当前结点的所有祖先，直到根元素(递归)。
+				适用于类型和 <code class="inline-code">_parent</code> 相同的结点类型。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_ancestorOrSelf</code></td>
+
+
+                <td>当前结点和它的所有祖先结点。
+				适用于和 <code class="inline-code">_parent</code> 相同的结点类型。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_cname</code></td>
+
+
+                <td>当前结点(命名空间URI+本地名称)的标准名称，
+				每个结点(非递归)一个字符串值。适用于元素和属性。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_content</code></td>
+
+
+                <td>当前结点的全部内容，包括子元素，文本，
+				实体引用和处理指令(非递归)。适用于元素和文档。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_descendant</code></td>
+
+
+                <td>当前结点的所有递归的子孙元素。适用于文档和元素结点。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_descendantOrSelf</code></td>
+
+
+                <td>当前结点和它的所有递归的子孙元素。适用于文档和元素结点。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_document</code></td>
+
+
+                <td>当前结点所属的所有文档类型。适用于所有除文本的结点。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_doctype</code></td>
+
+
+                <td>当前结点的声明。仅仅适用于文档类型结点。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_filterType</code></td>
+
+
+                <td>这是一种按类型过滤的模板方法模型。当被调用时，
+				它会产生一个结点列表，仅仅包含它们当前结点，
+				这些结点的类型和传递给它们参数的一种类型相匹配。
+				你应该传递任意数量的字符串给这个方法，
+				其中包含来保持类型的名字。合法的类型名称是：&quot;attribute&quot;，
+				&quot;cdata&quot;，&quot;comment&quot;，&quot;document&quot;，&quot;documentType&quot;，
+				&quot;element&quot;，&quot;entity&quot;，&quot;entityReference&quot;，
+				&quot;processingInstruction&quot;，&quot;text&quot;。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_name</code></td>
+
+
+                <td>当前结点的名称。每个结点(非递归)一个字符串值。
+				适用于元素和属性(返回它们的本地名称)，实体，
+				处理指令(返回它的目标)，声明(返回它的public ID)。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_nsprefix</code></td>
+
+
+                <td>当前结点的命名空间前缀，每个结点(非递归)一个字符串值。
+				适用于元素和属性。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_nsuri</code></td>
+
+
+                <td>当前结点的命名空间URI，每个结点(非递归)一个字符串值。
+				适用于元素和属性。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_parent</code></td>
+
+
+                <td>当前结点的父结点。适用于元素，属性，注释，实体，处理指令。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_qname</code></td>
+
+
+                <td>当前结点在 <code class="inline-code">[namespacePrefix:]localName</code> 
+				形式的限定名，每个结点(非递归)一个字符串值。适用于元素和属性。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_registerNamespace(prefix, uri)</code></td>
+
+
+                <td>注册一个对当前结点列表和从当前结点列表派生出的所有结点列表有指定前缀和URI的XML命名空间。
+				注册之后，你可以使用<code class="inline-code">nodelist[&quot;prefix:localname&quot;]</code> 或 
+				<code class="inline-code">nodelist[&quot;@prefix:localname&quot;]</code> 语法来访问元素和属性，
+				它们的名字是命名空间范围内的。
+				注意命名空间的前缀需要不能和当前XML文档它自己使用的前缀相匹配，
+				因为命名空间纯粹是由URI来比较的。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_text</code></td>
+
+
+                <td>当前结点的文本内容，每个结点(非递归)一个字符串值。
+				适用于元素，属性，注释，处理指令(返回它的数据)和CDATA段。
+				保留的XML字符(&#39;&lt;&#39;和&#39;&amp;&#39;)不能被转义。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_type</code></td>
+
+
+                <td>返回描述结点类型的结点列表，每个结点包含一个字符串值。
+				可能的结点名称是：合法的结点名称是：&quot;attribute&quot;，&quot;cdata&quot;，&quot;comment&quot;，
+				&quot;document&quot;，&quot;documentType&quot;，&quot;element&quot;，&quot;entity&quot;，&quot;entityReference&quot;，
+				&quot;processingInstruction&quot;，&quot;text&quot;。如果结点类型是未知的，就返回&quot;unknown&quot;。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">_unique</code></td>
+
+
+                <td>当前结点的一个拷贝，仅仅保留每个结点第一次的出现，消除重复。
+				重复可以通过应用对树的向上遍历出现在结点列表中，如<code class="inline-code">_parent</code>，
+				<code class="inline-code">_ancestor</code>，<code class="inline-code">_ancestorOrSelf</code> 和 
+				<code class="inline-code">_document</code>，也就是说，<code class="inline-code">foo._children._parent</code> 
+				会返回一个结点列表，它包含foo中重复的结点，每个结点会包含出现的次数，
+				和它子结点数目相等。这些情况下，使用 <code class="inline-code">foo._children._parent._unique</code> 
+				来消除重复。适用于所有结点类型。</td>
+
+              </tr>
+
+
+              <tr>
+                <td>其它键</td>
+
+
+                <td>当前结点的子元素的名称和键相匹配。这允许以 
+				<code class="inline-code">book.chapter.title</code> 这种风格语法进行方便的子元素遍历。
+				请注意，在技术上 <code class="inline-code">nodeset.childname</code> 和 
+				<code class="inline-code">nodeset(&quot;childname&quot;)</code> 相同，但是两者写法都很短，
+				处理也很迅速。适用于文档和元素结点。</td>
+
+              </tr>
+
+            </tbody>
+
+              </table>
+  </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_62">模板方法模型(TemplateMethodModel)</h2>
+
+
+          <p>当被用作方法模型，它返回一个结点列表，
+		  这个列表是处理结点列表中当前内容的XPath表达式的结果。
+		  为了使这种特性能够工作，你必须将 <code class="inline-code">Jaxen</code> 
+		  类库放到类路径下。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign firstChapter=xmldoc(&quot;//chapter[first()]&quot;)&gt;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_63">命名空间处理</h2>
+
+
+          <p>为了遍历有命名空间范围内名称的子元素这个目的，
+		  你可以使用结点列表注册命名空间前缀。
+		  你可以在Java代码中来做，调用：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">public void registerNamespace(String prefix, String uri);</pre></div>
+
+          <p>方法，或者在模板中使用</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${<em>nodelist</em>._registerNamespace(<em>prefix</em>, <em>uri</em>)}</pre></div>
+
+          <p>语法。从那里开始，
+		  你可以在命名空间通过特定的URI来标记引用子元素，用这种语法</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code"><em class="code-color">nodelist</em>[&quot;<em class="code-color">prefix</em>:<em class="code-color">localName</em>&quot;]</code></pre>
+
+
+          <p>和</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code"><em class="code-color">nodelist</em>[&quot;@<em class="code-color">prefix</em>:<em class="code-color">localName</em>&quot;]</code></pre>
+
+
+          <p>和在 XPath 表达式中使用这些命名空间前缀一样。
+		  命名空间使用一个结点列表来注册并传播到所有结点列表，
+		  这些结点列表来自于原来的结点列表。要注意命名空间只可使用URI来进行匹配，
+		  所以你可以在你的模板中安全地使用命名空间的前缀，这和在实际XML中的不同，
+		  在模板和XML文档中，一个前缀只是一个对URI的本地别名。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_misc_secureenv.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_ant.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

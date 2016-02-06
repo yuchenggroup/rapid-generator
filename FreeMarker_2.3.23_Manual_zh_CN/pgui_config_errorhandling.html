@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>错误控制 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="错误控制">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_config_errorhandling.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_config_errorhandling.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config.html"><span itemprop="name">配置(Configuration)</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config_errorhandling.html"><span itemprop="name">错误控制</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","配置(Configuration)","错误控制"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_config_templateloading.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config_incompatible_improvements.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_config_errorhandling" itemprop="headline">错误控制</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_41" data-menu-target="autoid_41">可能的异常</a></li><li><a class="page-menu-link" href="#autoid_42" data-menu-target="autoid_42">根据TemplateException来自定义处理方式</a></li><li><a class="page-menu-link" href="#autoid_43" data-menu-target="autoid_43">在模板中明确地处理错误</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_41">可能的异常</h2>
+
+
+          <p>关于 FreeMarker 发生的异常，可以分为如下几类：</p>
+
+          <ul>
+            <li>
+              <p>当配置 FreeMarker 时发生异常：典型地情况，就是在应用程序初始化时，
+			  仅仅配置了一次 FreeMarker。在这个过程中，异常就会发生，
+			  从 FreeMarker 的API中，我们可以很清楚的看到这一点...</p>
+            </li>
+
+            <li>
+              <p>当加载和解析模板时发生异常：调用了 
+			  <code class="inline-code">Configuration.getTemplate(<em class="code-color">...</em>)</code> 方法，
+			  FreeMarker就要把模板文件加载到内存中然后来解析它
+			  (除非模板已经在 <code class="inline-code">Configuration</code> 对象中被 <a href="pgui_config_templateloading.html#pgui_config_templateloading_caching">缓存</a> 了)。
+			  在这期间，有两种异常可能发生：</p>
+
+              <ul>
+                <li>
+                  <p>因模板文件没有找到而发生的 <code class="inline-code">IOException</code> 异常，
+				  或在读取文件时发生其他的I/O问题。比如没有读取文件的权限，或者是磁盘错误。
+				  这些错误的发出者是<a href="pgui_config_templateloading.html">
+				  <code>TemplateLoader</code> 对象</a>，可以将它作为插件设置到
+				  <code class="inline-code">Configuration</code>对象中。(为了正确起见：这里所说的”文件”，
+				  是简化形式。例如，模板也可以存储在关系型数据库的表中。这是 
+				  <code class="inline-code">TemplateLoader</code>所要做的事。)</p>
+                </li>
+
+                <li>
+                  <p>根据FTL语言的规则，模板文件发生语法错误时会导致 
+				  <code class="inline-code">freemarker.core.ParseException</code>异常。当获得 
+				  <code class="inline-code">Template</code>对象 
+				  (<code class="inline-code">Configuration.getTemplate(<em class="code-color">...</em>)</code>)时，
+				  这种错误就会发生，而不是当执行 
+				  (<code class="inline-code">Template.process(<em class="code-color">...</em>)</code>)模板的时候。
+				  这种异常是 <code class="inline-code">IOException</code> 的一个子类。</p>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <p>当执行(处理)模板时发生的异常，也就是当调用了 
+			  <code class="inline-code">Template.process(<em class="code-color">...</em>)</code> 方法时会发生的两种异常：
+			  </p>
+
+              <ul>
+                <li>
+                  <p>当试图写入输出对象时发生错误而导致的 <code class="inline-code">IOException</code> 异常。</p>
+                </li>
+
+                <li>
+                  <p>当执行模板时发生的其它问题而导致的 
+				  <code class="inline-code">freemarker.template.TemplatException</code> 异常。
+				  比如，一个频繁发生的错误，就是当模板引用一个不存在的变量。
+				  默认情况下，当 <code class="inline-code">TemplatException</code> 异常发生时，
+				  FreeMarker会用普通文本格式在输出中打印出FTL的错误信息和堆栈跟踪信息，
+				  然后再次抛出 <code class="inline-code">TemplatException</code> 异常而中止模板的执行，
+				  就可以捕捉到 <code class="inline-code">Template.process(<em class="code-color">...</em>)</code> 
+				  方法抛出的异常了。而这种行为是可以定制的。FreeMarker也会经常写 
+				  <code class="inline-code">TemplatException</code> 异常的 
+				  <a href="pgui_misc_logging.html">日志</a>。</p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_42">根据TemplateException来自定义处理方式</h2>
+
+
+          <p><code class="inline-code">TemplateException</code> 异常在模板处理期间的抛出是由 
+		  <code class="inline-code">freemarker.template.TemplateExceptionHandler</code> 
+		  对象控制的，这个对象可以使用 
+		  <code class="inline-code">setTemplateExceptionHandler(<em class="code-color">...</em>)</code> 
+		  方法配置到 <code class="inline-code">Configuration</code> 对象中。
+		  <code class="inline-code">TemplateExceptionHandler</code> 对象只包含一个方法：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">void handleTemplateException(TemplateException te, Environment env, Writer out) 
+        throws TemplateException;</pre></div>
+
+          <p>无论 <code class="inline-code">TemplateException</code> 
+		  异常什么时候发生，这个方法都会被调用。
+		  异常处理是传递的 <code class="inline-code">te</code> 参数控制的，
+		  模板处理的运行时(Runtime，译者注)环境可以访问 <code class="inline-code">env</code> 变量，
+		  处理器可以使用 <code class="inline-code">out</code> 变量来打印输出信息。
+		  如果方法抛出异常(通常是重复抛出 <code class="inline-code">te</code>)，那么模板的执行就会中止，
+		  而且 <code class="inline-code">Template.process(<em class="code-color">...</em>)</code> 
+		  方法也会抛出同样的异常。如果 <code class="inline-code">handleTemplateException</code> 
+		  对象不抛出异常，那么模板将会继续执行，就好像什么也没有发生过一样，
+		  但是引发异常的语句将会被跳过(后面会详细说)。
+		  当然，控制器仍然可以在输出中打印错误提示信息。</p>
+
+          <p>任何一种情况下，当 <code class="inline-code">TemplateExceptionHandler</code> 被调用前，
+		  FreeMarker 将会记录异常<a href="pgui_misc_logging.html">日志</a>。</p>
+
+          <p>我们用实例来看一下，当错误控制器不抛出异常时，
+		  FreeMarker是如何跳过出错&#39;&#39;语句&#39;&#39;的。假设我们已经使用了如下模板异常控制器：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">class MyTemplateExceptionHandler implements TemplateExceptionHandler {
+    public void handleTemplateException(TemplateException te, Environment env, java.io.Writer out)
+            throws TemplateException {
+        try {
+            out.write(&quot;[ERROR: &quot; + te.getMessage() + &quot;]&quot;);
+        } catch (IOException e) {
+            throw new TemplateException(&quot;Failed to print error message. Cause: &quot; + e, env);
+        }
+    }
+}
+
+<em>...</em>
+
+cfg.setTemplateExceptionHandler(new MyTemplateExceptionHandler());</pre></div>
+
+          <p>如果错误发生在非FTL标记(没有被包含在 
+		  <code class="inline-code">&lt;#<em class="code-color">...</em>&gt;</code> 或 
+		  <code class="inline-code">&lt;@<em class="code-color">...</em>&gt;</code>之间)的插值中，
+		  那么整个插值将会被跳过。那么下面这个模板
+		  (假设 <code class="inline-code">badVar</code> 在数据模型中不存在)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a${badVar}b</pre></div>
+
+          <p>如果我们使用了 <code class="inline-code">MyTemplateExceptionHandler</code>，就会打印：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">a[ERROR: Expression badVar is undefined on line 1, column 4 in test.ftl.]b</pre></div>
+
+          <p>而下面这个模板也会打印相同信息(除了报错的列数位置会不同...)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a${&quot;moo&quot; + badVar}b</pre></div>
+
+          <p>因为像这样来写时，只要插值内发生任何错误，整个插值都会被跳过。</p>
+
+          <p>如果错误发生在指令调用中参数的计算时，或者是指令参数列表发生问题时，
+		  或在<code class="inline-code">&lt;@<em class="code-color">exp</em>
+		  <em class="code-color">...</em>&gt;</code>中计算 
+		  <code class="inline-code"><em class="code-color">exp</em></code>时发生错误，或者 
+		  <code class="inline-code"><em class="code-color">exp</em></code>不是用户自定义的指令，
+		  那么整个指令调用都会被跳过。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a&lt;#if badVar&gt;Foo&lt;/#if&gt;b</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">a[ERROR: Expression badVar is undefined on line 1, column 7 in test.ftl.]b</pre></div>
+
+          <p>请注意，错误发生在 <code class="inline-code">if</code> 指令的开始标签
+		  (<code class="inline-code">&lt;#if badVar&gt;</code>)中，但是整个指令的调用都被跳过了。
+		  从逻辑上说，嵌套的内容(<code class="inline-code">Foo</code>)也被跳过了，
+		  因为嵌套的内容是受被包含的指令(<code class="inline-code">if</code>)控制(打印)的。</p>
+
+          <p>下面这个的输出也是相同的（除了报错的列数会不同...)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a&lt;#if &quot;foo${badVar}&quot; == &quot;foobar&quot;&gt;Foo&lt;/#if&gt;b</pre></div>
+
+          <p>因为，正如这样来写，在参数处理时发生任何一个错误，
+		  整个指令的调用都将会被跳过。</p>
+
+          <p>如果错误发生在已经开始执行的指令之后，那么指令调用将不会被跳过。
+		  也就是说，如果在嵌套的内容中发生任何错误：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a
+&lt;#if true&gt;
+  Foo
+  ${badVar}
+  Bar
+&lt;/#if&gt;
+c</pre></div>
+
+          <p>或者在一个宏定义体内：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">a
+&lt;@test /&gt;
+b
+&lt;#macro test&gt;
+  Foo
+  ${badVar}
+  Bar
+&lt;/#macro&gt;</pre></div>
+
+          <p>那么输出将会是：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">a
+  Foo
+  [ERROR: Expression badVar is undefined on line 4, column 5 in test.ftl.]
+  Bar
+c</pre></div>
+
+          <p>FreeMarker 本身带有这些预先编写的错误控制器：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">TemplateExceptionHandler.DEBUG_HANDLER</code>：
+			  打印堆栈跟踪信息(包括FTL错误信息和FTL堆栈跟踪信息)和重新抛出的异常。
+			  这是默认的异常控制器(也就是说，在所有新的 <code class="inline-code">Configuration</code> 
+			  对象中，它是初始化好的)。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">TemplateExceptionHandler.HTML_DEBUG_HANDLER</code>：
+			  和 <code class="inline-code">DEBUG_HANDLER</code> 相同，但是它可以格式化堆栈跟踪信息，
+			  那么就可以在Web浏览器中来阅读错误信息。
+			  当你在制作HTML页面时，建议使用它而不是 <code class="inline-code">DEBUG_HANDLER</code>。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">TemplateExceptionHandler.IGNORE_HANDLER</code>：
+			  简单地压制所有异常(但是要记住，FreeMarker 仍然会写日志)。
+			  它对处理异常没有任何作用，也不会重新抛出异常。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">TemplateExceptionHandler.RETHROW_HANDLER</code>：
+			  简单重新抛出所有异常而不会做其它的事情。
+			  这个控制器对Web应用程序(假设你在发生异常之后不想继续执行模板)来说非常好，
+			  因为它在生成的页面发生错误的情况下，给了你很多对Web应用程序的控制权
+			  (因为FreeMarker不向输出中打印任何关于该错误的信息)。
+			  要获得更多在Web应用程序中处理错误的信息，可以
+			  <a href="app_faq.html#misc.faq.niceErrorPage">参见FAQ</a>。</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_43">在模板中明确地处理错误</h2>
+
+
+          <p>尽管它和 FreeMarker 的配置(本章的主题)无关，但是为了说明的完整性，
+		  在这里提及一下，你可以在模板中直接控制错误。
+		  通常这不是一个好习惯(尽量保持模板简单，技术含量不要太高)，但有时仍然需要：</p>
+
+          <ul>
+            <li>
+              <p>处理不存在/为空的变量： <a href="dgui_template_exp.html#dgui_template_exp_missing">模板开发指南/模板/表达式/处理不存在的值</a></p>
+            </li>
+
+            <li>
+              <p>在发生障碍的&quot;porlets&quot;中留存下来，还可以扩展参考： <a href="ref_directive_attempt.html">模板语言参考 /指令参考/attempt, recover</a></p>
+            </li>
+          </ul>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_config_templateloading.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config_incompatible_improvements.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

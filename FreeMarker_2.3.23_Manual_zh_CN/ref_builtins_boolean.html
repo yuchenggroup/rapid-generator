@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>布尔值内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="布尔值内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_boolean.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_boolean.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_boolean.html"><span itemprop="name">布尔值内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","布尔值内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_date.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_sequence.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_boolean" itemprop="headline">布尔值内建函数</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#ref_builtin_c_boolean" data-menu-target="ref_builtin_c_boolean">c (当用于布尔值时)</a></li><li><a class="page-menu-link" href="#ref_builtin_string_for_boolean" data-menu-target="ref_builtin_string_for_boolean">string (当用于布尔值时)</a></li><li><a class="page-menu-link" href="#ref_builtin_then" data-menu-target="ref_builtin_then">then</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_c_boolean">c (当用于布尔值时)</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.20 版本开始存在</p>
+            </div>
+
+
+          <p>该内建函数将布尔值转换为字符串，针对 
+		  "计算机语言" 而不是用户。不管 
+		  <code class="inline-code">boolean_format</code> 的设置是什么，
+		  结果是 <code class="inline-code">&quot;true&quot;</code> 或 <code class="inline-code">&quot;false&quot;</code>。
+		  当生成JavaScript的时候，应该会用到它，否则修改 
+		  <code class="inline-code">boolean_format</code> 的话可以打断生成的计算机语言输出。</p>
+
+          <p>请注意，该内建函数 <a href="ref_builtins_number.html#ref_builtin_c">对字符串也起作用</a>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_string_for_boolean">string (当用于布尔值时)</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p><em>该内建函数的所有用法都已经废弃了；请继续阅读下面内容。</em></p>
+
+          <p>将布尔值转换为字符串。可以两种方式来使用：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">foo?string(&quot;yes&quot;, &quot;no&quot;)</code>：
+              <em>从 FreeMarker 2.3.23 版本开始废弃：使用 <a href="#ref_builtin_then"><code>?then(&quot;yes&quot;,
+              &quot;no&quot;)</code></a> 来替代。如果布尔值是true，
+			  </em>这会返回第一个参数(此处是：<code class="inline-code">&quot;yes&quot;</code>)，
+			  否则返回第二个参数(此处是：<code class="inline-code">&quot;no&quot;</code>)。
+			  请注意，返回值总是一个字符串；如果参数是数字，那么首先会转换成字符串。
+			  也请注意，两个参数是评估过的，不管只有一个会被用到；
+			  如果参数不仅仅是文字的话，这也许会有负面影响。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">foo?string</code>： 
+			  <em>从 FreeMarker 2.3.20 版本开始废弃：使用 <a href="#ref_builtin_c_boolean"><code>?c</code></a>
+              来代替，或者设置 <code class="inline-code">boolean_format</code> <a href="ref_directive_setting.html">设置项</a>，比如像
+              <code class="inline-code">&quot;yes,no&quot;</code>，之后转换会自动发生</em>。
+			  如果仍然需要知道，这会转换布尔值为字符串，使用默认字符串来显示 true 
+			  和 false 值。默认情况下，true 被呈现为 <code class="inline-code">&quot;true&quot;</code>，
+			  而 false 被呈现为 <code class="inline-code">&quot;false&quot;</code>。
+			  如果使用 FreeMarker 来生成代码，这是很有用的 <em>(但是从 2.3.20 版本开始，
+			  请使用 <code class="inline-code">?c</code>)</em>，因为这些值不是非本地化(语言，国家)敏感的。
+			  要修改这些默认设置，可以使用 <code class="inline-code">boolean_format</code> <a href="ref_directive_setting.html">设置</a>。</p>
+
+              <p class="programmers-note">请注意，在很少有的情况下，
+			  当值是多类型且同时是布尔值和和字符串时，那么将会返回字符串值，所以
+			  <code class="inline-code">boolean_format</code> 设置没有效果。</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_then">then</h2>
+
+
+          
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始存在。</p>
+            </div>
+
+
+          <p>使用于 
+          <code class="inline-code"><em class="code-color">booleanExp</em>?then(<em class="code-color">whenTrue</em>,
+          <em class="code-color">whenFalse</em>)</code>，就像是类C语言中的三元运算符
+		  (也就是说，<code class="inline-code"><em class="code-color">booleanExp</em> ?
+          <em class="code-color">whenTrue</em> :
+          <em class="code-color">whenFalse</em></code>)。如果
+          <code class="inline-code"><em class="code-color">booleanExp</em></code> 评估为布尔值 true，
+		  那么就评估并返回第一个参数，而若 <code class="inline-code"><em class="code-color">booleanExp</em></code> 
+		  评估为布尔值 false，那么就评估并返回它的第二个参数。当然，三个表达式可以是任意复杂的。
+		  参数表达式可以是任意类型，也可以是不同类型。</p>
+
+          <p>该内建函数的一个重要特殊属性是只有一个参数表达式会被评估。
+		  这和普通的方法调用不同，它们会评估所有的参数表达式，而不管方法是否需要它们。
+		  这也就以为着不需要的参数也可以用于不存在的变量而不会引发错误。
+		  (当然它不能是非法的语法。)</p>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign foo = true&gt;
+${foo?then(&#39;Y&#39;, &#39;N&#39;)}
+
+&lt;#assign foo = false&gt;
+${foo?then(&#39;Y&#39;, &#39;N&#39;)}
+
+&lt;#assign x = 10&gt;
+&lt;#assign y = 20&gt;
+&lt;#-- Prints 100 plus the maximum of x and y: --&gt;
+${100 + (x &gt; y)?then(x, y)}</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Y
+
+N
+
+120</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要选择非布尔值，可以使用 <a href="ref_builtins_type_independent.html#ref_builtin_switch"><code>switch</code>
+            内建函数</a> 来替代嵌套多个
+            <code class="inline-code">then</code>，比如 
+            <code class="inline-code">priority?switch(1, &quot;low&quot;, 2, &quot;medium&quot;, 3,
+            &quot;high&quot;)</code>，或者是 <code class="inline-code">true?switch(priority &lt;= 1,
+            &quot;low&quot;, priority == 2, &quot;medium&quot;, priority &gt;= 3,
+            &quot;high&quot;)</code>。</p>
+            </div>
+
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_date.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_sequence.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

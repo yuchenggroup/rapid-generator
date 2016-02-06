@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" class="page-type-chapter">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>特殊变量参考 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="特殊变量参考">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_specvar.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_specvar.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_specvar.html"><span itemprop="name">特殊变量参考</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li>.spec_vars</li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","特殊变量参考"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_visit.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_reservednames.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-chapter" id="ref_specvar" itemprop="headline">特殊变量参考</h1>
+</div></div><p>特殊变量是由FreeMarker引擎自己定义的变量。要访问它们，
+	  你可以使用 <code class="inline-code">.<em class="code-color">variable_name</em></code> 语法。
+	  比如，你不能仅仅写 <code class="inline-code">version</code>，而必须写<code class="inline-code">.version</code>。</p>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+        <p>在 FreeMarker 2.3.23 版本中，可以使用驼峰格式的特殊变量名来代替蛇形格式，
+		比如 <code class="inline-code">dataModel</code> 代替 <code class="inline-code">data_model</code>。
+		但是需要知道在相同的模板中，FreeMarker 会对模板语言部分的标识符强制使用驼峰格式
+		(用户自定义名称是无效的)。</p>
+        </div>
+<p>支持的特殊变量有：</p><ul>
+        <li>
+          <code class="inline-code">current_template_name</code><code class="inline-code"></code>：
+		  当前所在的模板名称(从 FreeMarker 2.3.23 版本开始可用)。
+		  如果模板是在Java中 <span class="marked-for-programmers">(通过 <code class="inline-code">new Template(null,
+          <em class="code-color">...</em>)</code>)</span> 动态创建的，
+		  而不是从后台通过名称 <span class="marked-for-programmers">(通过
+          <code class="inline-code"><em class="code-color">cfg</em>.getTemplate(name,
+          <em class="code-color">...</em>)</code>)</span>加载的。
+		  那么它可以为空(<code class="inline-code">null</code>)。
+		  迁移说明：如果使用它来替换废弃的 <code class="inline-code">template_name</code>，
+		  请注意，如果模板没有名字，那么它是一个长度为0的字符串，而不是空
+		  (<code class="inline-code">null</code>)，所以可以在遗留的模板中编写 
+		  <code class="inline-code">current_template_name!&#39;&#39;</code>。
+        </li>
+
+        <li>
+          <code class="inline-code">data_model</code>：可以用来直接访问数据模型的哈希表。
+		  也就是，使用 <code class="inline-code">global</code> 指令定义在这里不可见的的变量。
+        </li>
+
+        <li>
+          <code class="inline-code">error</code> (从 FreeMarker 2.3.1 版本开始可用)：
+		  该变量在 <a href="ref_directive_attempt.html#ref.directive.attempt"><code>recover</code>
+          指令</a> 体中可以访问，它存储了我们要恢复错误的信息。
+        </li>
+
+        <li>
+          <code class="inline-code">globals</code>：可以用来访问全局可访问的变量的哈希表：
+		  数据模型和由 <code class="inline-code">global</code> 指令创建的变量。请注意，用 
+		  <code class="inline-code">assign</code> 或 <code class="inline-code">macro</code> 创建的变量不是全局的。
+		  因此当你使用 <code class="inline-code">globals</code> 时你不能隐藏变量。
+        </li>
+
+        <li>
+          <code class="inline-code">lang</code>：返回当前本地化设置的语言部分的值。
+		比如 <code class="inline-code">.locale</code> 是 <code class="inline-code">en_US</code>，
+		那么 <code class="inline-code">.lang</code> 是 <code class="inline-code">en</code>。
+        </li>
+
+        <li>
+          <code class="inline-code">locale</code>：返回当前本地化设置的值。
+		这是一个字符串，比如 <code class="inline-code">en_US</code>。
+		要获取关于本地化字符串值的更多内容，<a href="ref_directive_setting.html#ref.directive.setting">请参考
+          <code>setting</code> 指令</a>。
+        </li>
+
+        <li>
+          <code class="inline-code">locale_object</code> (从 FreeMarker 2.3.21 版本开始可用)：
+		以 <code class="inline-code">java.util.Locale</code> 对象返回本地化设置的当前值，而不是字符串。
+		也就是说，当你想要传递一个 <code class="inline-code">java.util.Locale</code> 对象给Java方法时，
+		它可以用于代替 <code class="inline-code">.locale</code>。(<code class="inline-code">Locale</code> 对象会根据 
+		<code class="inline-code">object_wrapper</code> 设置项的值来被包装。是否真的可以以 
+		<code class="inline-code">Locale</code> 对象传递该值给Java方法依赖于对象包装器，
+		但是对象包装器允许你直接调用Java方法不太可能不支持它。)
+        </li>
+
+        <li>
+          <code class="inline-code">locals</code>：你可以访问局部变量的哈希表
+		  (由 <code class="inline-code">local</code> 指令创建的变量，还有宏的参数)。
+        </li>
+
+        <li>
+          <code class="inline-code">main</code>：可以用来访问主<a href="dgui_misc_namespace.html">命名空间</a>的哈希表。
+		  请注意，像数据模型中的全局变量通过这个哈希表是 
+		  <em>不</em> 可见的。
+        </li>
+
+        <li>
+          <code class="inline-code">main_template_name</code>：顶级模板的名称
+			(从 FreeMarker 2.3.23 版本开始可用)。<span class="marked-for-programmers">(在Java中，这就是
+          <code class="inline-code">Template.process</code> 调用的模板) </span>
+		  如果模板是在Java中 <span class="marked-for-programmers">(通过 <code class="inline-code">new
+          Template(null, <em class="code-color">...</em>)</code>)</span> 
+		  动态创建出来的，而不是从存储器中以名称加载<span class="marked-for-programmers">(通过
+          <code class="inline-code"><em class="code-color">cfg</em>.getTemplate(name,
+          <em class="code-color">...</em>)</code>)</span>的，
+		  那么它可以不存在(<code class="inline-code">null</code>)。迁移说明：
+		  如果使用它来替换废弃的 <code class="inline-code">template_name</code>，
+		  请注意，如果模板没有名字，那么它是一个长度为0的字符串，而不是空
+		  (<code class="inline-code">null</code>)，所以可以在遗留的模板中编写 
+		  <code class="inline-code">current_template_name!&#39;&#39;</code>。
+        </li>
+
+        <li>
+          <code class="inline-code">namespace</code>：可以用来访问当前 <a href="dgui_misc_namespace.html">命名空间</a> 的哈希表。
+		  请注意，像数据模型中的全局变量通过这个哈希表是 
+		  <em>不</em> 可见的。
+        </li>
+
+        <li>
+          <code class="inline-code">node</code> (由于历史原因重命名为 
+		  <code class="inline-code">current_node</code>)：可以用访问者模式(也就是用 <a href="ref_directive_visit.html"><code>visit</code>，
+          <code>recurse</code> 等指令</a>)处理的当前结点。
+		  而且，当使用 <a href="pgui_misc_ant.html">FreeMarker XML Ant 任务</a> 时，
+		  它初始存储根结点。
+        </li>
+
+        <li>
+          <code class="inline-code">now</code>：返回当前的日期-时间。使用示例：
+          &quot;<code class="inline-code">Page generated: ${.now}</code>&quot;，
+          &quot;<code class="inline-code">Today is ${.now?date}</code>&quot;， &quot;<code class="inline-code">The current
+          time is ${.now?time}</code>&quot;。
+        </li>
+
+        <li>
+          <code class="inline-code">output_encoding</code> 
+		  (从 FreeMarker 2.3.1 版本开始可用)：返回当前输出字符集的名称。
+		  如果框架封装 FreeMarker 却没有为 FreeMarker 指定输出字符集时这个特殊变量是不存在的。
+		  <span class="marked-for-programmers">(程序员可以在 <a href="pgui_misc_charset.html">这里...</a> 阅读关于字符集问题的更多内容。)</span>
+        </li>
+
+        <li>
+          <code class="inline-code">template_name</code>：<em>不要使用它，
+		  因为当使用宏时，它的行为是很奇怪的；使用 
+          <code class="inline-code">current_template_name</code> 或
+          <code class="inline-code">main_template_name</code> 来代替(参考那里的迁移说明)。</em>
+		  给出主模板的名字，如果我们运行包含或导入的模板，那么就是它们的名字。
+		  当调用宏时，那就有些困惑了：宏调用不改变该特殊变量的值，但是当 
+          <code class="inline-code">nested</code> 被调用时，它会变成模板所属当前命名空间的名字。
+		  (从FreeMarker 2.3.14 版本开始可用)
+        </li>
+
+        <li>
+          <code class="inline-code">url_escaping_charset</code> 
+		  (从 FreeMarker 2.3.1 版本开始可用)：如果存在，
+		  它存储了应该用于URL转义的字符集的名称。
+		  如果这个变量不存在就意味着没有人指定URL编码应该使用什么样的字符集。
+		  这种情况下，<a href="ref_builtins_string.html#ref_builtin_url"><code>url</code> 内建函数</a> 
+		  使用特殊变量 <code class="inline-code">output_encoding</code> 指定的字符集来进行URL编码。
+		  处理机制和它是相同的。<span class="marked-for-programmers">(程序员可以在 <a href="pgui_misc_charset.html">这里...</a> 阅读关于字符集问题的更多内容。)</span>
+        </li>
+
+        <li>
+          <code class="inline-code">vars</code>：表达式 <code class="inline-code">.vars.foo</code> 
+		  返回和表达式 <code class="inline-code">foo</code> 相同的变量。
+		  出于某些原因你不得不使用方括号语法时这是有用的，因为它只对哈希表子变量有用，
+		  所以你需要一个人工创建的父哈希表。比如，要读取有特殊名称的顶层变量可能会把 
+		  FreeMarker 弄糊涂，你可以写 <code class="inline-code">.vars[&quot;A strange name!&quot;]</code>。
+		  或者，使用和变量 <code class="inline-code">varName</code> 给定的动态名称访问顶层变量你可以写 
+		  <code class="inline-code">.vars[varName]</code>。请注意，这个哈希表由 <code class="inline-code">.vars</code> 
+		  返回，并不支持 <code class="inline-code">?keys</code> 和 <code class="inline-code">?values</code>。
+        </li>
+
+        <li>
+          <code class="inline-code">version</code>：返回 FreeMarker 版本号的字符串形式，
+			比如 <code class="inline-code">2.2.8</code>。这可以用来检查你的应用程序使用的是哪个版本的 
+			FreeMarker，但是要注意这个特殊变量在 2.3.0 或 2.2.8 版本之前不存在。
+			非最终发行版本号在数字包含破折号和进一步信息，比如 
+            2.3.21-nightly_20140726T151800Z.
+        </li>
+      </ul><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_visit.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_reservednames.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

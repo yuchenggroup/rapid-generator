@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>list, else, items, sep, break - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="list, else, items, sep, break">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_list.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_list.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_list.html"><span itemprop="name">list, else, items, sep, break</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","list, else, items, sep, break"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_include.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_local.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_list" itemprop="headline">list, else, items, sep, break</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_91" data-menu-target="autoid_91">概要</a></li><li><a class="page-menu-link" href="#autoid_92" data-menu-target="autoid_92">描述</a><ul><li><a class="page-menu-link" href="#autoid_93" data-menu-target="autoid_93">最简形式</a></li><li><a class="page-menu-link" href="#autoid_94" data-menu-target="autoid_94">else 指令</a></li><li><a class="page-menu-link" href="#autoid_95" data-menu-target="autoid_95">items 指令</a></li><li><a class="page-menu-link" href="#autoid_96" data-menu-target="autoid_96">sep 指令</a></li><li><a class="page-menu-link" href="#autoid_97" data-menu-target="autoid_97">break 指令</a></li><li><a class="page-menu-link" href="#autoid_98" data-menu-target="autoid_98">访问迭代状态</a></li><li><a class="page-menu-link" href="#autoid_99" data-menu-target="autoid_99">相互嵌套循环</a></li><li><a class="page-menu-link" href="#autoid_100" data-menu-target="autoid_100">Java程序员请注意</a></li></ul></li></ul> </div><a name="ref.directive.list"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_91">概要</h2>
+
+
+          <p>形式 1：</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#list <em class="code-color">sequence</em> as <em class="code-color">item</em>&gt;
+    <em class="code-color">Part repeated for each item</em>
+&lt;#else&gt;
+    <em class="code-color">Part executed when there are 0 items</em>
+&lt;/#list&gt;</code></pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code">else</code> 部分是可选的，
+			  而且仅仅从 FreeMarker 2.3.23 版本开始支持。
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">sequence</em></code>：
+			  将我们想要迭代的项，算作是序列或集合的表达式
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">item</em></code>：
+              <a href="dgui_misc_var.html">循环变量</a> 的名称 (不是表达式)
+            </li>
+
+            <li>
+              在标签之间的多个 "parts" 可以是任意的FTL
+			  (包括嵌套的 <code class="inline-code">list</code>)
+            </li>
+          </ul>
+
+          <p>形式 2 (从 FreeMarker 2.3.23 版本开始)：</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#list <em class="code-color">sequence</em>&gt;
+    <em class="code-color">Part executed once if we have more than 0 items</em>
+    &lt;#items as <em class="code-color">item</em>&gt;
+    <em class="code-color">    Part repeated for each item</em>
+    &lt;/#items&gt;
+    <em class="code-color">Part executed once if we have more than 0 items</em>
+&lt;#else&gt;
+    <em class="code-color">Part executed when there are 0 items</em>
+&lt;/#list&gt;</code></pre>
+
+
+          <p>这里：和上面形式1的 "这里" 部分相同。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_92">描述</h2>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_93">最简形式</h3>
+
+
+            <p>假设 <code class="inline-code">users</code> 包含
+            <code class="inline-code">[&#39;Joe&#39;, &#39;Kate&#39;, &#39;Fred&#39;]</code> 序列：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;p&gt;${user}
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Joe
+  &lt;p&gt;Kate
+  &lt;p&gt;Fred</pre></div>
+
+            <p><code class="inline-code">list</code> 指令执行在 
+            <code class="inline-code">list</code> 开始标签和
+            <code class="inline-code">list</code> 结束标签 (
+            <code class="inline-code">list</code> 中间的部分) 之间的代码，
+			对于在序列(或集合)中每个值指定为它的第一个参数。
+			对于每次迭代，循环变量(本例中的 <code class="inline-code">user</code>)将会存储当前项的值。</p>
+
+            <p>循环变量(<code class="inline-code">user</code>) 仅仅存在于 
+            <code class="inline-code">list</code> 标签体内。
+			而且从循环中调用的宏/函数不会看到它(就像它只是局部变量一样)。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_94">else 指令</h3>
+
+
+            <a name="ref.directive.list.else"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p>在 <code class="inline-code">list</code> 中的 <code class="inline-code">else</code> 
+			  仅从 FreeMarker 2.3.23 版本开始支持。</p>
+              </div>
+
+
+            <p>当没有迭代项时，才使用 <code class="inline-code">else</code> 指令，
+			可以输出一些特殊的内容而不只是空在那里：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;p&gt;${user}
+&lt;#else&gt;
+  &lt;p&gt;No users
+&lt;/#list&gt;</pre></div>
+
+            <p>该输出和之前示例是相同的，除了当
+            <code class="inline-code">users</code> 包含0项时：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;No users</pre></div>
+
+            <p>请注意，循环变量 (<code class="inline-code">user</code>) 在
+            <code class="inline-code">else</code> 标签和
+            <code class="inline-code">list</code> 结束标签中间不存在，
+			因为那部分不是循环中的部分。</p>
+
+            <p><code class="inline-code">else</code> 必须是真的在 (也就是在源代码中) 
+			<code class="inline-code">list</code> 指令体内部。也就是说，
+			不能将它移出到宏或包含的模板中。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_95">items 指令</h3>
+
+
+            <a name="ref.directive.items"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p><code class="inline-code">items</code> 从 FreeMarker 2.3.23 版本开始存在</p>
+              </div>
+
+
+            <p>如果不得不在第一列表项之前或在最后一个列表项之后打印一些东西，
+			那么就要使用 <code class="inline-code">items</code> 指令，但至少要有一项。典型的示例为：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;ul&gt;
+    &lt;#items as user&gt;
+      &lt;li&gt;${user}&lt;/li&gt;
+    &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;ul&gt;
+      &lt;li&gt;Joe&lt;/li&gt;
+      &lt;li&gt;Kate&lt;/li&gt;
+      &lt;li&gt;Fred&lt;/li&gt;
+  &lt;/ul&gt;</pre></div>
+
+            <p>如果没有迭代项，那么上面的代码不会输出任何内容，
+			因此不用以空的 <code class="inline-code">&lt;ul&gt;&lt;/ul&gt;</code> 来结束。</p>
+
+            <p>也就是说，当 <code class="inline-code">list</code> 指令没有
+            <code class="inline-code">as <em class="code-color">item</em></code> 参数，
+			如果只有一个迭代项，指令体中的代码仅仅执行一次，否则就不执行。
+			必须内嵌的 <code class="inline-code">items</code> 指令体会对每个迭代项执行，
+			那么 <code class="inline-code">items</code> 指令使用 <code class="inline-code">as
+            <em class="code-color">item</em></code> 定义循环变量，而不是 
+            <code class="inline-code">list</code>。</p>
+
+            <p>有 <code class="inline-code">items</code> 的 <code class="inline-code">list</code> 
+			指令也可以有 <code class="inline-code">else</code> 指令：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;ul&gt;
+    &lt;#items as user&gt;
+      &lt;li&gt;${user}&lt;/li&gt;
+    &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;#else&gt;
+  &lt;p&gt;No users
+&lt;/#list&gt;</pre></div>
+
+            <p>更多细节：</p>
+
+            <ul>
+              <li>
+                <p>解析器会检查没有 <code class="inline-code">as <em class="code-color">item</em></code>
+                参数的 <code class="inline-code">list</code> 通常会有嵌入的 <code class="inline-code">items</code>
+                指令，该 <code class="inline-code">items</code> 指令通常会有一个包围的 
+                <code class="inline-code">list</code>，它没有 <code class="inline-code">as <em class="code-color">item</em></code>
+                参数。当模板解析时就会检查，而不是当模板执行的时候。因此，这些规则也适用于FTL源代码本身，
+				所以不能将 <code class="inline-code">items</code> 移出到宏或者被包含的模板中。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">list</code> 可以有多个 <code class="inline-code">items</code> 指令，
+				但是只有一个允许执行(直到不离开或重新进入包围的 <code class="inline-code">list</code> 指令)；
+				之后试图调用 <code class="inline-code">items</code> 会发生错误。所以多个
+				<code class="inline-code">items</code> 可以用于不同的
+                <code class="inline-code">if</code>-<code class="inline-code">else</code> 分支中去，但不能迭代两次。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">items</code> 指令不能有它自己的嵌入 
+                <code class="inline-code">else</code> 指令，只能被包含的 
+                <code class="inline-code">list</code> 可以有。</p>
+              </li>
+
+              <li>
+                <p>循环变量 (<code class="inline-code">user</code>) 仅仅存在于 
+                <code class="inline-code">items</code> 指令体内部。</p>
+              </li>
+            </ul>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_96">sep 指令</h3>
+
+
+            <a name="ref.directive.sep"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p><code class="inline-code">sep</code> 从 FreeMarker 2.3.23 版本开始存在。</p>
+              </div>
+
+
+            <p>当不得不显示介于每个迭代项(但不能在第一项之前或最后一项之后)
+			之间的一些内容时，可以使用 <code class="inline-code">sep</code>。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;${user}<strong>&lt;#sep&gt;, </strong>&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">Joe, Kate, Fred</pre></div>
+
+            <p>上面的 <code class="inline-code">&lt;#sep&gt;, &lt;/#list&gt;</code> 是 
+            <code class="inline-code">&lt;#sep&gt;, &lt;/#sep&gt;&lt;/#list&gt;</code> 的简写；
+			如果将它放到被包含的指令关闭的位置时，<code class="inline-code">sep</code> 
+			结束标签可以忽略。下面的示例中，就不能使用该简写
+			(HTML标签不会结束任何代码，它们只是 FreeMarker 输出的原生文本)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;div&gt;
+    ${user}<strong>&lt;#sep&gt;, &lt;/#sep&gt;</strong>
+  &lt;/div&gt;
+&lt;/#list&gt;</pre></div>
+
+            <p><code class="inline-code">sep</code> 是编写 <code class="inline-code">&lt;#if
+            <em class="code-color">item</em>?has_next&gt;...&lt;/#if&gt;</code> 
+			的方便形式，有 <code class="inline-code">list</code> 或 <code class="inline-code">items</code> 
+			循环变量时，它就可以使用，并且不限次数。而且，
+			也可以有任意的 FTL 作嵌入的内容。</p>
+
+            <p>解析器会检查在 <code class="inline-code">list <em class="code-color">...</em> as
+            item</code> 内部使用的 <code class="inline-code">sep</code> 或者 
+			<code class="inline-code">items</code> 指令，所以不能将 <code class="inline-code">sep</code> 
+			从重复的部分移出到宏或被包含的模板中。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_97">break 指令</h3>
+
+
+            <a name="ref.directive.list.break"></a>
+
+            
+
+            <p>可以使用 <code class="inline-code">break</code> 指令在迭代的任意点退出。例如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..10 as x&gt;
+  ${x}
+  &lt;#if x == 3&gt;
+    <strong>&lt;#break&gt;</strong>
+  &lt;/#if&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  1
+  2
+  3</pre></div>
+
+            <p><code class="inline-code">break</code> 指令可以放在 
+            <code class="inline-code">list</code> 中的任意位置，直到有 
+            <code class="inline-code">as <em class="code-color">item</em></code> 参数，
+			否则，可以放在 <code class="inline-code">items</code> 指令中的任意位置。
+            如果 <code class="inline-code">break</code> 在 <code class="inline-code">items</code> 内部，
+			那么就只能从 <code class="inline-code">items</code> 开始时存在，而不能从
+            <code class="inline-code">list</code> 开始时存在。通常来说，<code class="inline-code">break</code> 
+			将仅存在于为每个迭代项调用的指令体中，而且只能存在于这样的指令中。
+			例如不能在 <code class="inline-code">list</code> 的 <code class="inline-code">else</code> 部分使用 
+			<code class="inline-code">break</code>，除非 <code class="inline-code">list</code> 内嵌到了其它
+			可以 <code class="inline-code">break</code> 的指令中。</p>
+
+            <p>像 <code class="inline-code">else</code> 和
+            <code class="inline-code">items</code>， <code class="inline-code">break</code> 
+			只能在指令体内部使用，而不能移出到宏或被包含的模板中。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_98">访问迭代状态</h3>
+
+
+            
+
+            
+
+            <p>从 2.3.23 版本开始， <a href="ref_builtins_loop_var.html">循环变量内建函数</a> 
+			就是访问当前迭代状态的最佳方式。例如，这里我们使用
+			<code class="inline-code">counter</code> 和 <code class="inline-code">item_parity</code> 
+			循环变量内建函数(在 <a href="ref_builtins_loop_var.html">循环变量内建函数参考</a> 
+			中查看它们全部)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;table&gt;
+    &lt;#items as user&gt;
+      &lt;tr class=&quot;${user<strong>?item_parity</strong>}Row&quot;&gt;
+        &lt;td&gt;${user<strong>?counter</strong>}
+        &lt;td&gt;${user}
+    &lt;/#items&gt;
+  &lt;/table&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;table&gt;
+      &lt;tr class=&quot;<strong>odd</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>1</strong>
+        &lt;td&gt;Joe
+      &lt;tr class=&quot;<strong>even</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>2</strong>
+        &lt;td&gt;Kate
+      &lt;tr class=&quot;<strong>odd</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>3</strong>
+        &lt;td&gt;Fred
+  &lt;/table&gt;</pre></div>
+
+            <p>在 2.3.22 和之前的版本中，有两个额外的循环变量来获得迭代状态
+			(出于向后兼容考虑，它们仍然存在)：</p>
+
+            <ul>
+              <li>
+                <p><code class="inline-code"><em class="code-color">item</em>_index</code>
+                (<em>已废弃</em>，由 
+                <code class="inline-code"><em class="code-color">item</em>?index</code> 代替)：
+				循环中当前项的索引(从0开始的数字)。</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code"><em class="code-color">item</em>_has_next</code>
+                (<em>已废弃</em>，由 
+                <code class="inline-code"><em class="code-color">item</em>?has_next</code> 代替)：
+				辨别当前项是否是序列的最后一项的布尔值。</p>
+              </li>
+            </ul>
+
+            <p>所以在上面的示例中，可以将 
+            <code class="inline-code">${user?counter}</code> 替换为 <code class="inline-code">${user_index +
+            1}</code>。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_99">相互嵌套循环</h3>
+
+
+            <p>很自然地，<code class="inline-code">list</code> 或
+            <code class="inline-code">items</code> 可以包含更多
+            <code class="inline-code">list</code>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..2 as i&gt;
+  &lt;#list 1..3 as j&gt;
+    i = ${i}, j = ${j}
+  &lt;/#list&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">    i = 1, j = 1
+    i = 1, j = 2
+    i = 1, j = 3
+    i = 2, j = 1
+    i = 2, j = 2
+    i = 2, j = 3</pre></div>
+
+            <p>允许使用冲突的循环变量名称，比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..2 as i&gt;
+  Outer: ${i}
+  &lt;#list 10..12 as i&gt;
+    Inner: ${i}
+  &lt;/#list&gt;
+  Outer again: ${i}
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  Outer: 1
+    Inner: 10
+    Inner: 11
+    Inner: 12
+  Outer again: 1
+  Outer: 2
+    Inner: 10
+    Inner: 11
+    Inner: 12
+  Outer again: 2</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_100">Java程序员请注意</h3>
+
+
+            <p><span class="marked-for-programmers">如果经典兼容模式下 
+            <code class="inline-code">list</code> 接受标量，并将它视为单元素序列。</span></p>
+
+            <p><span class="marked-for-programmers">如果传递包装了 
+			<code class="inline-code">java.util.Iterator</code> 的集合到
+            <code class="inline-code">list</code> 中，那么只能迭代其中的元素一次，因为
+			<code class="inline-code">Iterator</code> 是它们天然的一次性对象。
+			当视图再次去迭代这样的集合变量时，会发生错误并中止模板处理。</span></p>
+          
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_include.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_local.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

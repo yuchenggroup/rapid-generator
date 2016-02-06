@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>在Servlet中使用FreeMarker - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="在Servlet中使用FreeMarker">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_misc_servlet.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_misc_servlet.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc_servlet.html"><span itemprop="name">在Servlet中使用FreeMarker</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","其它","在Servlet中使用FreeMarker"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_misc_logging.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_secureenv.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_misc_servlet" itemprop="headline">在Servlet中使用FreeMarker</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#pgui_misc_servlet_model2" data-menu-target="pgui_misc_servlet_model2">在&quot;Model 2&quot;中使用FreeMarker</a></li><li><a class="page-menu-link" href="#pgui_misc_servlet_include" data-menu-target="pgui_misc_servlet_include">包含其它Web应用程序资源中的内容</a></li><li><a class="page-menu-link" href="#autoid_56" data-menu-target="autoid_56">在FTL中使用自定义JSP标签</a></li><li><a class="page-menu-link" href="#autoid_57" data-menu-target="autoid_57">在JSP页面中嵌入FTL</a></li></ul> </div><a name="topic.servlet"></a><p>作为基础了解，在web应用程序范畴内使用 FreeMarker 和其它并没有什么不同；
+		FreeMarker将它的输出写入传递给 <code class="inline-code">Template.process</code> 方法的 
+		<code class="inline-code">Writer</code> 对象，它不关心 <code class="inline-code">Writer</code> 
+		将输出写入控制台，文件或是 <code class="inline-code">HttpServletResponse</code> 的输出流。
+		FreeMarker 并不知道什么是servlet和web；它仅仅是使用模板文件来合并Java对象，
+		之后从它们中间生成输出文本。从这里可知，如何创建一个Web应用程序都随你的习惯来。</p><p>但是，你可能想在已经存在的Web应用框架中使用FreeMarker。
+		许多框架都是基于&quot;Model 2&quot;架构的，JSP页面来控制显示。
+		如果你使用了这样的框架(比如<a href="http://jakarta.apache.org/struts">Apache Struts</a>)，
+		那么可以继续阅读本文。对于其他框架请参考它们的文档。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_misc_servlet_model2">在&quot;Model 2&quot;中使用FreeMarker</h2>
+
+
+          <p>许多框架依照HTTP请求转发给用户自定义的&quot;action&quot;类，
+		  将数据作为属性放在 <code class="inline-code">ServletContext</code>，
+		  <code class="inline-code">HttpSession</code> 和 <code class="inline-code">HttpServletRequest</code> 对象中，
+		  之后请求被框架派发到一个JSP页面中(视图层)，使用属性传递过来的数据来生成HTML页面，
+		  这样的策略通常就是所指的Model 2模型。</p>
+
+          <p class="center-img">            <img src="figures/model2sketch.png" alt="Figure">          </p>
+
+
+          <p>使用这样的框架，你就可以非常容易地用FTL文件来代替JSP文件。
+		  但是，因为你的Servlet容器(Web应用程序服务器)，不像JSP文件，
+		  它可能并不知道如何处理FTL文件，那么就需要对Web应用程序进行一些额外的配置：</p>
+
+          <div class="orderedlist"><ol type="1">
+            <li>
+              <p>复制 <code class="inline-code">freemarker.jar</code> 
+			  (从FreeMarker发布包的<code class="inline-code">lib</code>目录中)
+              到Web应用程序的 <code class="inline-code">WEB-INF/lib</code> 目录下。</p>
+            </li>
+
+            <li>
+              <p>将下面的部分添加到Web应用程序的 
+			  <code class="inline-code">WEB-INF/web.xml</code> 文件中
+			  (调整部分内容是否需要)：</p>
+            </li>
+          </ol></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;servlet&gt;
+  &lt;servlet-name&gt;freemarker&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;<strong>freemarker.ext.servlet.FreemarkerServlet</strong>&lt;/servlet-class&gt;
+    
+  &lt;!-- FreemarkerServlet settings: --&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;TemplatePath&lt;/param-name&gt;
+    &lt;param-value&gt;/&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;NoCache&lt;/param-name&gt;
+    &lt;param-value&gt;true&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;ContentType&lt;/param-name&gt;
+    &lt;param-value&gt;text/html; charset=UTF-8&lt;/param-value&gt; &lt;!-- Forces UTF-8 output encoding! --&gt;
+  &lt;/init-param&gt;
+    
+  &lt;!-- FreeMarker settings: --&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;incompatible_improvements&lt;/param-name&gt;
+    &lt;param-value&gt;2.3.22&lt;/param-value&gt;
+    &lt;!-- Recommended to set to a high value. For the details, see the Java API docs of
+         freemarker.template.Configuration#Configuration(Version). --&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;template_exception_handler&lt;/param-name&gt;
+    &lt;!-- Use &quot;html_debug&quot; instead during development! --&gt;
+    &lt;param-value&gt;rethrow&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;template_update_delay&lt;/param-name&gt;
+    &lt;!-- ATTENTION, 0 is for development only! Use higher value otherwise. --&gt;
+    &lt;param-value&gt;0&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;default_encoding&lt;/param-name&gt;
+    &lt;!-- The encoding of the template files. --&gt;
+    &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;locale&lt;/param-name&gt;
+    &lt;!-- Influences number and date/time formatting, etc. --&gt;
+    &lt;param-value&gt;en_US&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;number_format&lt;/param-name&gt;
+    &lt;param-value&gt;0.##########&lt;/param-value&gt;
+  &lt;/init-param&gt;
+
+  &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;freemarker&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;<strong>*.ftl</strong>&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+<em>...</em>
+
+&lt;!--
+  Prevent the visiting of MVC Views from outside the servlet container.
+  RequestDispatcher.forward/include should, and will still work.
+  Removing this may open security holes!
+--&gt;
+&lt;security-constraint&gt;
+  &lt;web-resource-collection&gt;
+    &lt;web-resource-name&gt;FreeMarker MVC Views&lt;/web-resource-name&gt;
+    &lt;url-pattern&gt;*.ftl&lt;/url-pattern&gt;
+  &lt;/web-resource-collection&gt;
+  &lt;auth-constraint&gt;
+    &lt;!-- Nobody is allowed to visit these directly. --&gt;
+  &lt;/auth-constraint&gt;
+&lt;/security-constraint&gt;</pre></div>
+
+          <p>在这之后，你可以像使用JSP(<code class="inline-code">*.jsp</code>)
+		  文件那样使用FTL文件(<code class="inline-code">*.ftl</code>)了。
+		  (当然你可以选择除 <code class="inline-code">ftl</code> 之外的扩展名；这只是惯例)</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>它是怎么工作的？让我们先来看看JSP是怎么工作的。
+			许多servlet容器处理JSP时使用一个映射为 <code class="inline-code">*.jsp</code> 
+			的servlet请求URL格式。这样servlet就会接收所有URL是以 
+			<code class="inline-code">.jsp</code> 结尾的请求，查找请求URL地址中的JSP文件，
+			内部编译后生成 <code class="inline-code">Servlet</code>，然后调用生成好的serlvet来生成页面。
+			这里为URL类型是 <code class="inline-code">*.ftl</code> 映射的 
+			<code class="inline-code">FreemarkerServlet</code> 也是相同功能，只是FTL文件不会编译成 
+			<code class="inline-code">Servlet</code>，而是给 <code class="inline-code">Template</code> 对象，
+			之后 <code class="inline-code">Template</code> 对象的 <code class="inline-code">process</code> 
+			方法就会被调用来生成页面。</p>
+            </div>
+
+
+          <p><a name="topic.servlet.scopeAttr"></a>比如，代替这个JSP页面
+		  (注意它使用了Struts标签库来保存设计，而不是嵌入可怕的Java代码)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;%@ taglib uri=&quot;/WEB-INF/struts-bean.tld&quot; prefix=&quot;bean&quot; %&gt;
+&lt;%@ taglib uri=&quot;/WEB-INF/struts-logic.tld&quot; prefix=&quot;logic&quot; %&gt;
+
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Acmee Products International&lt;/title&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello &lt;bean:write name=&quot;user&quot;/&gt;!&lt;/h1&gt;
+  &lt;p&gt;These are our latest offers:
+  &lt;ul&gt;
+    &lt;logic:iterate name=&quot;latestProducts&quot; id=&quot;prod&quot;&gt;
+      &lt;li&gt;&lt;bean:write name=&quot;prod&quot; property=&quot;name&quot;/&gt;
+        for &lt;bean:write name=&quot;prod&quot; property=&quot;price&quot;/&gt; Credits.
+    &lt;/logic:iterate&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+          <p>你可以使用这个FTL文件(使用 <code class="inline-code">ftl</code> 
+		  扩展名而不是 <code class="inline-code">jsp</code>)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Acmee Products International&lt;/title&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello ${user}!&lt;/h1&gt;
+  &lt;p&gt;These are our latest offers:
+  &lt;ul&gt;
+    &lt;#list latestProducts as prod&gt;
+      &lt;li&gt;${prod.name} for ${prod.price} Credits.
+    &lt;/#list&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+
+            <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+            <p>在 FreeMarker 中，<code class="inline-code">&lt;html:form
+            action=&quot;/query&quot;&gt;<em class="code-color">...</em>&lt;/html:form&gt;</code> 
+			仅仅被视为是静态文本，所以它会按照原本输出出来了，就像其他XML或HTML标记一样。
+			JSP标签也仅仅是FreeMarker的指令，没有什么特殊之处，所以你可以 
+			<em>使用FreeMarker语法</em> 形式来调用它们，而不是JSP语法：
+			<code class="inline-code">&lt;@html.form
+            action=&quot;/query&quot;&gt;<em class="code-color">...</em>&lt;/@html.form&gt;</code>。
+			注意在FreeMarker语法中 <em>不能像JSP那样在参数中使用
+			<code class="inline-code">${<em class="code-color">...</em>}</code></em>，
+			而且<em>不能给参数值加引号</em>。
+			所以这样是<em>错误的</em>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- WRONG: --&gt;
+&lt;@my.jspTag color=&quot;${aVariable}&quot; name=&quot;aStringLiteral&quot;
+            width=&quot;100&quot; height=${a+b} /&gt;</pre></div>
+
+            <p>但下面这样是正确的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Good: --&gt;
+&lt;@my.jspTag color=aVariable name=&quot;aStringLiteral&quot;
+            width=100 height=a+b /&gt;</pre></div>
+            </div>
+
+
+          <p>在这两个模板中，当你要引用 <code class="inline-code">user</code> 和 
+		  <code class="inline-code">latestProduct</code> 时，首先它会尝试去查找已经在模板中创建的同名变量
+		  (比如 <code class="inline-code">prod</code>；如果你使用JSP：这是一个page范围内的属性)。
+		  如果那样做不行，它会尝试在 <code class="inline-code">HttpServletRequest</code> 对象中查找那个名字的属性，
+		  如果没有找到就在 <code class="inline-code">HttpSession</code> 中找，如果还没有找到那就在 
+		  <code class="inline-code">ServletContext</code> 中找。FTL按这种情况工作是因为 
+		  <code class="inline-code">FreemarkerServlet</code> 创建数据模型由上面提到的3个对象中的属性而来。
+		  那也就是说，这种情况下根哈希表root不是 <code class="inline-code">java.util.Map</code> 
+		  (正如本手册中的一些例子那样)，而是 
+		  <code class="inline-code">ServletContext</code>+<code class="inline-code">HttpSession</code>+<code class="inline-code">HttpServletRequest</code>
+		  ；FreeMarker 在处理数据模型类型的时候非常灵活。所以如果你想将变量 
+		  <code class="inline-code">&quot;name&quot;</code> 放到数据模型中，那么你可以调用 
+		  <code class="inline-code">servletRequest.setAttribute(&quot;name&quot;, &quot;Fred&quot;)</code>；这是模型2的逻辑，
+		  而 FreeMarker 将会适应它。</p>
+
+          <p><code class="inline-code">FreemarkerServlet</code> 也会在数据模型中放置3个哈希表，
+		  这样你就可以直接访问3个对象中的属性了。这些哈希表变量是：<code class="inline-code">Request</code>，
+		  <code class="inline-code">Session</code>，<code class="inline-code">Application</code>
+		  (和<code class="inline-code">ServletContext</code>对应)。它还会暴露另外一个名为 
+		  <code class="inline-code">RequestParameters</code> 的哈希表，这个哈希表提供访问HTTP请求中的参数。</p>
+
+          <p><code class="inline-code">FreemarkerServlet</code> 也有很多初始参数。
+		  它可以被设置从任意路径来加载模板，从类路径下，或相对于Web应用程序的目录。
+		  你可以设置模板使用的字符集。你还可以设置想使用的对象包装器等等。</p>
+
+          <p>通过子类别，<code class="inline-code">FreemarkerServlet</code> 易于定制特殊需要。
+		  那就是说，如果你需要对所有模板添加一个额外的可用变量，使用servlet的子类，
+		  覆盖 <code class="inline-code">preTemplateProcess()</code> 方法，在模板被执行前，
+		  将你需要的额外数据放到模型中。或者在servlet的子类中，在 
+		  <code class="inline-code">Configuration</code> 中设置这些全局的变量作为 
+		  <a href="pgui_config_sharedvariables.html">共享变量</a>。</p>
+
+          <p>要获取更多信息，可以阅读该类的Java API文档。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_misc_servlet_include">包含其它Web应用程序资源中的内容</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          <p>你可以使用由 <code class="inline-code">FreemarkerServlet</code> (2.3.15版本之后)
+		  提供的客户化标签<code class="inline-code">&lt;@include_page path=&quot;...&quot;/&gt;</code>
+		  来包含另一个Web应用资源的内容到输出内容中；这对于整合JSP页面
+		  (在同一Web服务器中生活在FreeMarker模板旁边)
+		  的输出到FreeMarker模板的输出中非常有用。使用：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@include_page path=&quot;path/to/some.jsp&quot;/&gt;</pre></div>
+
+          <p>和在JSP中使用该标签是相同的：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;jsp:include page=&quot;path/to/some.jsp&quot;&gt;</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p><code class="inline-code">&lt;@include_page ...&gt;</code> 不能和 
+            <code class="inline-code">&lt;#include ...&gt;</code>搞混，
+			后者是为了包含FreeMarker模板而不会牵涉到Servlet容器。
+			使用 <code class="inline-code">&lt;#include ...&gt;</code> 包含的模板和包含它的模板共享模板处理状态，
+			比如数据模型和模板语言变量，而 <code class="inline-code">&lt;@include_page ...&gt;</code> 
+			开始一个独立的HTTP请求处理。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>一些Web应用框架为此提供它们自己的解决方案，
+			这种情况下你就可以使用它们来替代。
+			而一些Web应用框架不使用 <code class="inline-code">FreemarkerServlet</code>，
+			所以 <code class="inline-code">include_page</code> 是不可用的。</p>
+            </div>
+
+
+          <p>路径可以是相对的，也可以是绝对的。相对路径被解释成相对于当前HTTP请求
+		  (一个可以触发模板执行的请求)的URL，而绝对路径在当前的servlet上下文
+		  (当前的Web应用)中是绝对的。你不能从当前Web应用的外部包含页面。
+		  注意你可以包含任意页面，而不仅仅是JSP页面；
+		  我们仅仅使用以 <code class="inline-code">.jsp</code> 结尾的页面作为说明。</p>
+
+          <p>除了参数 <code class="inline-code">path</code> 之外，你也可以用布尔值
+		  (当不指定时默认是true)指定一个名为 <code class="inline-code">inherit_params</code> 
+		  可选的参数来指定被包含的页面对当前的请求是否可见HTTP请求中的参数。</p>
+
+          <p>最后，你可以指定一个名为 <code class="inline-code">params</code> 的可选参数，
+		  来指定被包含页面可见的新请求参数。如果也传递继承的参数，
+		  那么指定参数的值将会得到前缀名称相同的继承参数的值。<code class="inline-code">params</code> 
+		  的值必须是一个哈希表类型，它其中的每个值可以是字符串，
+		  或者是字符串序列(如果你需要多值参数)。这里给出一个完整的示例：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@include_page path=&quot;path/to/some.jsp&quot; inherit_params=true params={&quot;foo&quot;: &quot;99&quot;, &quot;bar&quot;: [&quot;a&quot;, &quot;b&quot;]}/&gt;</pre></div>
+
+          <p>这会包含 <code class="inline-code">path/to/some.jsp</code> 页面，
+		  传递它的所有的当前请求的参数，除了&quot;foo&quot;和&quot;bar&quot;，
+		  这两个会被分别设置为&quot;99&quot;和多值序列&quot;a&quot;，&quot;b&quot;。
+		  如果原来请求中已经有这些参数的值了，那么新值会添加到原来存在的值中。
+		  那就是说，如果&quot;foo&quot;有值&quot;111&quot;和&quot;123&quot;，那么现在它会有&quot;99&quot;，&quot;111&quot;，&quot;123&quot;。</p>
+
+          <p><span class="marked-for-programmers">事实上使用 <code class="inline-code">params</code> 
+		  给参数传递非字符串值是可能的。这样的一个值首先会被转换为适合的Java对象
+		  (数字，布尔值，日期等)，之后调用它们Java对象的 <code class="inline-code">toString()</code> 
+		  方法来得到字符串值。最好不要依赖这种机制，作为替代，
+		  明确参数值在模板级别不能转换成字符串类型之后，
+		  在使用到它的地方可以使用内建函数 <code class="inline-code">?string</code> 
+		  和 <code class="inline-code">?c</code>。</span></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_56">在FTL中使用自定义JSP标签</h2>
+
+
+          
+
+          
+
+          
+
+          <p><code class="inline-code">FreemarkerServlet</code> 将一个哈希表类型的 
+		  <code class="inline-code">JspTaglibs</code> 放到数据模型中，就可以使用它来访问JSP标签库了。
+		  自定义JSP标签库将被视为普通用户自定义指令来访问，自定义EL函数
+		  (从 FreeMarker 2.3.22 版本开始)视为方法。例如，这个JSP文件：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;%@ page contentType=&quot;text/html;charset=ISO-8859-2&quot; language=&quot;java&quot;%&gt;
+&lt;%@ taglib prefix=&quot;e&quot; uri=&quot;/WEB-INF/example.tld&quot; %&gt;
+&lt;%@ taglib prefix=&quot;oe&quot; uri=&quot;/WEB-INF/other-example.tld&quot; %&gt;
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;
+&lt;%@ taglib prefix=&quot;fn&quot; uri=&quot;http://java.sun.com/jsp/jstl/functions&quot; %&gt;
+
+&lt;%-- Custom JSP tags and functions: --%&gt;
+
+&lt;e:someTag numParam=&quot;123&quot; boolParam=&quot;true&quot; strParam=&quot;Example&quot; anotherParam=&quot;${someVar}&quot;&gt;
+  ...
+&lt;/e:someTag&gt;
+
+&lt;oe:otherTag /&gt;
+
+${e:someELFunction(1, 2)}
+
+
+&lt;%-- JSTL: --%&gt;
+
+&lt;c:if test=&quot;${foo}&quot;&gt;
+  Do this
+&lt;/c:if&gt;
+
+&lt;c:choose&gt;
+  &lt;c:when test=&quot;${x == 1}&quot;&gt;
+      Do this
+  &lt;/c:when&gt;
+  &lt;c:otherwise&gt;
+      Do that
+  &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+
+&lt;c:forEach var=&quot;person&quot; items=&quot;${persons}&quot;&gt;
+  ${person.name}
+&lt;/c:forEach&gt;
+
+${fn:trim(bar)}</pre></div>
+
+          <p>基本一致的FTL是：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign e=JspTaglibs[&quot;/WEB-INF/example.tld&quot;]&gt;
+&lt;#assign oe=JspTaglibs[&quot;/WEB-INF/other-example.tld&quot;]&gt;
+
+&lt;#-- Custom JSP tags and functions: --#&gt;
+
+&lt;@e.someTag numParam=123 boolParam=true strParam=&quot;Example&quot; anotherParam=someVar&gt;
+  ...
+&lt;/@e.someTag&gt;
+
+&lt;@oe.otherTag /&gt;
+
+${e.someELFunction(1, 2)}
+
+
+&lt;#-- JSTL - Instead, use native FTL constructs: --&gt;
+
+&lt;#if foo&gt;
+  Do this
+&lt;/#if&gt;
+
+&lt;#if x == 1&gt;
+  Do this
+&lt;#else&gt;
+  Do that
+&lt;/#if&gt;
+
+&lt;#list persons as person&gt;
+  ${person.name}
+&lt;/#list&gt;
+
+${bar?trim}</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>参数值没有使用引号，而且 
+			<code class="inline-code">&quot;${<em class="code-color">...</em>}&quot;</code> 和JSP中使用的一样。
+			后面会详细解释。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p><code class="inline-code">JspTaglibs</code> 不是 FreeMarker 的核心特性；
+			它只存在于通过 <code class="inline-code">FreemarkerServlet</code> 调用的模板。
+			这是因为JSP 标签/函数 假定一个servlet环境(FreeMarker不会)，
+			加上一些Servlet概念被模仿成 <code class="inline-code">FreemarkerServlet</code> 
+			创建的特定Freemarker数据模型。很多现代开发框架以纯净的方式使用FreeMarker，
+			而不是通过 <code class="inline-code">FreemarkerServlet</code>。</p>
+            </div>
+
+
+          <p>因为自定义JSP标签是在JSP环境中来书写操作的，它们假设变量
+		  (在JSP中常被指代&quot;beans&quot;)被存储在4个范围中：page范围，request范围，
+		  session范围和application范围。FTL没有这样的表示法(4种范围)，但是 
+		  <code class="inline-code">FreemarkerServlet</code>给自定义标签提供仿真的环境，
+		  这样就可以维持JSP范围中的&quot;beans&quot;和FTL变量之间的对应关系。
+		  对于自定义的JSP标签，请求request，会话session和应用application是和真实JSP相同的：
+		  <code class="inline-code">javax.servlet.ServletContext</code>，<code class="inline-code">HttpSession</code> 
+		  和 <code class="inline-code">ServletRequest</code> 对象中的属性。从FTL的角度来看，
+		  这三种范围都在数据模型中，这点前面已经解释了。page范围和FTL全局变量(参见<a href="ref_directive_global.html#ref.directive.global"><code>global</code>指令</a>)是对应的。
+		  那也就是，如果你使用 <code class="inline-code">global</code> 指令创建一个变量，通过仿真的JSP环境，
+		  它会作为page范围变量对自定义标签可见。而且，如果一个JSP标签创建了一个新的page范围变量，
+		  那么结果和用 <code class="inline-code">global</code> 指令创建的是相同的。
+		  要注意在数据模型中的变量作为page范围的属性对JSP标签是不可见的，尽管它们在全局是可见的，
+		  因为数据模型和请求，会话，应用范围是对应的，而不是page范围。</p>
+
+          <p>在JSP页面中，你可以对所有属性值加引号，这和参数类型是字符串，
+		  布尔值或数字没有关系。但是因为在FTL模板中自定义标签可以被用户自定义FTL指令访问到，
+		  你将不得不在自定义标签中使用FTL语法规则，而不是JSP语法。所以当你指定一个&quot;属性&quot;的值时，
+		  那么在 <code class="inline-code">=</code> 的右边是一个 <a href="dgui_template_exp.html">FTL 表达式</a>。因此，
+		  <em>你不能对布尔值和数字值的参数加引号</em>
+		  (比如：<code class="inline-code">&lt;@tiles.insert page=&quot;/layout.ftl&quot; flush=true/&gt;</code>)，
+		  否则它们将被解释为字符串值，当FreeMarker试图传递值到期望非字符串值的自定义标记中时，
+		  这就会引起类型不匹配错误。而且还要注意，这很自然，你可以使用任意FTL表达式作为属性的值，
+		  比如变量，计算的结果值等。(比如：<code class="inline-code">&lt;@tiles.insert page=layoutName
+          flush=foo &amp;&amp; bar/&gt;</code>)</p>
+
+          <p>Servlet容器运行过程中，因为它实现了自身的轻量级JSP运行时环境，
+		  它用到JSP标签库，而 FreeMarker 并不依赖于JSP支持。这是一个很小但值得注意的地方：
+		  在它们的TLD文件中，开启 FreeMarker 的JSP运行时环境来分发事件到JSP标签库中注册时间监听器，
+		  你应该将下面的内容添加到Web应用下的 <code class="inline-code">WEB-INF/web.xml</code> 文件中：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;listener&gt;
+  &lt;listener-class&gt;freemarker.ext.jsp.EventForwarding&lt;/listener-class&gt;
+&lt;/listener&gt;</pre></div>
+
+          <p>请注意，尽管servlet容器没有本地的JSP支持，你也可以在 FreeMarker 中使用JSP标签库。
+		  只是确保对JSP 1.2版本(或更新)的 <code class="inline-code">javax.servlet.jsp.*</code> 
+		  包在Web应用程序中可用就行。如果你的servlet容器只对JSP 1.1支持，
+		  那么你不得不将下面六个类(比如你可以从Tomcat 5.x或Tomcat 4.x的jar包中提取)复制到Web应用的 
+		  <code class="inline-code">WEB-INF/classes/<em class="code-color">...</em></code>目录下：
+		  <code class="inline-code">javax.servlet.jsp.tagext.IterationTag</code>，
+          <code class="inline-code">javax.servlet.jsp.tagext.TryCatchFinally</code>，
+          <code class="inline-code">javax.servlet.ServletContextListener</code>，
+          <code class="inline-code">javax.servlet.ServletContextAttributeListener</code>，
+          <code class="inline-code">javax.servlet.http.HttpSessionAttributeListener</code>，
+          <code class="inline-code">javax.servlet.http.HttpSessionListener</code>。但是要注意，
+		  因为容器只支持JSP 1.1，通常是使用较早的Servlet 2.3之前的版本，
+		  事件监听器可能就不支持，因此JSP 1.2标签库来注册事件监听器会正常工作。</p>
+
+          <p>在撰写本文档时，JSP已经升级到2.1了，许多特性也已经实现了，
+		  除了JSP 2(也就是说JSP自定义标记在JSP语言中<em>实现了</em>)的&quot;标签文件&quot;特性。
+		  标签文件需要被编译成Java类文件，在 FreeMarker 下才会有用。</p>
+
+          <p><code class="inline-code">JspTaglibs[<em class="code-color">uri</em>]</code>
+          会去找到URI指定的TLD，就像JSP的 <code class="inline-code">@taglib</code> 指令所做的。
+		  它实现了JSP规范中所描述的TLD发现机制。这里可以阅读更多，但简而言之，
+		  它会在 <code class="inline-code">WEB-INF/web.xml</code> <code class="inline-code">taglib</code> 元素中，
+		  在 <code class="inline-code">WEB-INF/**/*.tld</code> 文件中，还有
+		  <code class="inline-code">WEB-INF/lib/*.{jar,zip}/META-INF/**/*.tld</code> 文件中寻找TLD。
+		  此外，当设置了 <code class="inline-code">FreemarkerServlet</code> 的初始化参数(从 2.3.22版本开始)
+		  <code class="inline-code">MetaInfTldSources</code> 和/或 <code class="inline-code">ClasspathTlds</code>，
+		  即便是在WAR结构之外，它也会发现对于类加载器可见的TLD。参考 
+		  <code class="inline-code">FreemarkerServlet</code> 的Java API文档来获取更多描述。
+		  它也可以从Java系统属性中来设置，当你想在Eclipse运行配置中来修改而不去修改 
+		  <code class="inline-code">web.xml</code>时，就可以随手完成；再强调一点，请参考
+          <code class="inline-code">FreemarkerServlet</code> API 文档。
+          <code class="inline-code">FreemarkerServlet</code> 也会识别
+          <code class="inline-code">org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</code>
+          servlet 上下文属性，并且将它中间的配置项添加到
+          <code class="inline-code">MetaInfTldSources</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_57">在JSP页面中嵌入FTL</h2>
+
+
+          
+
+          <p>有一个标签库允许你将FTL片段放到JSP页面中。
+		  嵌入的FTL片段可以访问JSP 的4种范围内的属性(Beans)。
+		  你可以在 FreeMarker 发布包中找到一个可用的示例和这个标签库。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_misc_logging.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_secureenv.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

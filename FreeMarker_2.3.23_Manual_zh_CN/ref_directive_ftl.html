@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>ftl - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="ftl">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_ftl.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_ftl.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_ftl.html"><span itemprop="name">ftl</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","ftl"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_flush.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_function.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_ftl" itemprop="headline">ftl</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_79" data-menu-target="autoid_79">概要</a></li><li><a class="page-menu-link" href="#autoid_80" data-menu-target="autoid_80">描述</a></li></ul> </div><a name="ref.directive.ftl"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_79">概要</h2>
+
+
+          
+<pre class="metaTemplate">
+<code class="inline-code">&lt;#ftl <em class="code-color">param1</em>=<em class="code-color">value1</em> <em class="code-color">param2</em>=<em class="code-color">value2</em> <em class="code-color">...</em> <em class="code-color">paramN</em>=<em class="code-color">valueN</em>&gt;</code>
+</pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code"><em class="code-color">param1</em></code>,
+              <code class="inline-code"><em class="code-color">param2</em></code> 等：
+			  参数的名字，不是表达式。允许的参数有：
+			  <code class="inline-code">encoding</code>，
+              <code class="inline-code">strip_whitespace</code>，
+              <code class="inline-code">strip_text</code> 等。参见下面。
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">value1</em></code>,
+              <code class="inline-code"><em class="code-color">value2</em></code> 等：
+			  参数的值。必须是一个常量表达式(如 <code class="inline-code">true</code>，
+			  或 <code class="inline-code">&quot;ISO-8859-5&quot;</code>，或 
+			  <code class="inline-code">{x:1, y:2}</code>)。它不能用变量。
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_80">描述</h2>
+
+
+          <p>告诉 FreeMarker 和其他工具关于模板的信息，
+		  而且帮助程序员来自动检测一个文本文件是否是 FTL 文件。该指令，
+		  如果存在，必须是模板的第一句代码。该指令前的任何 <a href="gloss.html#gloss.whiteSpace">空白</a> 将被忽略。
+		  该指令的老式语法(<code class="inline-code">#</code>-less)格式是不支持的。</p>
+
+          <p>一些设置(编码方式，空白剥离等)在这里给定的话就有最高的优先级，
+		  也就是说，它们直接作用于模板而不管其他任何 FreeMarker 的配置设置。</p>
+
+          <p>参数：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">encoding</code>：
+			  使用它，你可以在模板文件本身中为模板指定编码方式(字符集)
+			  <span class="marked-for-programmers">(也就是说，这是新创建 
+			  <code class="inline-code">Template</code> 的 <code class="inline-code">encoding</code> 设置，
+			  而且 <code class="inline-code">Configuration.getTemplate</code> 中的 
+			  <code class="inline-code">encoding</code> 参数不能覆盖它</span>)。要注意，
+			  FreeMarker 会尝试会和自动猜测的编码方式
+			  (这依赖于程序员对 FreeMarker 的配置)找到 <code class="inline-code">ftl</code> 
+			  指令并解释它，然后就会发现 <code class="inline-code">ftl</code> 
+			  指令会让一些东西有所不同，之后以新的编码方式来重新读取模板。
+			  因此，直到 <code class="inline-code">ftl</code> 标记使用第一个编码方式读取到结尾，
+			  模板必须是合法的FTL。
+			  这个参数的合法值是从IANA字符集注册表中参考MIME中的字符集名称。
+			  比如 ISO-8859-5，UTF-8 或 Shift_JIS。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">strip_whitespace</code>：
+			  这将开启/关闭 <a href="dgui_misc_whitespace.html#dgui_misc_whitespace_stripping">空白剥离</a>。
+			  合法的值是布尔值常量 <code class="inline-code">true</code> 和 <code class="inline-code">false</code>
+			  (为了向下兼容，字符串 <code class="inline-code">&quot;yes&quot;</code>，<code class="inline-code">&quot;no&quot;</code>，
+			  <code class="inline-code">&quot;true&quot;</code>，<code class="inline-code">&quot;false&quot;</code> 也是可以的)。
+			  默认值(也就是当你不使用这个参数时)是依赖于程序员对 FreeMarker 的配置，
+			  但是对新的项目还应该是 <code class="inline-code">true</code>。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">strip_text</code>：当开启它时，
+			  当模板被解析时模板中所有顶级文本被移除。这个不会影响宏，指令，或插值中的文本。
+			  合法值是布尔值常量 <code class="inline-code">true</code> 和 <code class="inline-code">false</code>
+			  (为了向下兼容，字符串 <code class="inline-code">&quot;yes&quot;</code>，<code class="inline-code">&quot;no&quot;</code>，
+			  <code class="inline-code">&quot;true&quot;</code>，<code class="inline-code">&quot;false&quot;</code> 也是可以的)。
+			  默认值(也就是当你不使用这个参数时)是 <code class="inline-code">false</code>。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">strict_syntax</code>：这会开启/关闭&quot;严格的语法&quot;。
+			  合法值是布尔值常量 <code class="inline-code">true</code> 和 <code class="inline-code">false</code>
+			  (为了向下兼容，字符串 <code class="inline-code">&quot;yes&quot;</code>，<code class="inline-code">&quot;no&quot;</code>，
+			  <code class="inline-code">&quot;true&quot;</code>，<code class="inline-code">&quot;false&quot;</code> 也是可以的)。
+			  默认值(也就是当你不使用这个参数时)是依赖于程序员对 FreeMarker 的配置，
+			  但是对新的项目还应该是 <code class="inline-code">true</code>。<span class="marked-for-programmers">(程序员：对于 
+			  <code class="inline-code">config.setStrictSyntaxMode(true);</code> 你必须明确设置它为 
+			  <code class="inline-code">true</code>)</span> 要获取更多信息，可以参考：<a href="ref_depr_oldsyntax.html">废弃的 FTL 结构/老式 FTL 语法</a></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">ns_prefixes</code>：这是关联结点命名空间前缀的哈希表。
+			  比如：<code class="inline-code">{&quot;e&quot;:&quot;http://example.com/ebook&quot;,
+              &quot;vg&quot;:&quot;http://example.com/vektorGraphics&quot;}</code>。这通常是用于XML处理的，
+			  前缀可以用于XML查询，但是它也影响 <a href="ref_directive_visit.html">指令
+              <code>visit</code> 和 <code>recurse</code></a>的工作。
+			  相同结点的命名空间只能注册一个前缀(否则会发生错误)，
+			  所以在前缀和结点命名空间中是一对一的关系。前缀 <code class="inline-code">D</code> 
+			  和 <code class="inline-code">N</code> 是保留的。如果你注册前缀 <code class="inline-code">D</code>，
+			  那么除了你可以使用前缀 <code class="inline-code">D</code> 来关联结点命名空间，
+			  你也可以设置默认的结点命名空间。前缀 <code class="inline-code">N</code> 不能被注册；
+			  当且仅当前缀 <code class="inline-code">D</code> 被注册时，
+			  它被用来表示在特定位置没有结点命名空间的结点。
+			  (要参考默认结点命名空间的用法，<code class="inline-code">N</code>，一般的前缀，
+			  可以参考 <a href="xgui.html">XML
+              处理</a> 和 <a href="ref_directive_visit.html"><code>visit</code> 和
+              <code>recurse</code></a>)。<code class="inline-code">ns_prefixes</code> 
+			  的作用限制在单独的 <a href="dgui_misc_namespace.html">FTL 命名空间</a>内，
+			  换句话说，就是为模板创建的FTL命名空间内。这也意味着 
+			  <code class="inline-code">ns_prefixes</code> 当一个FTL命名空间为包含它的模板所创建时才有作用，
+			  否则 <code class="inline-code">ns_prefixes</code> 参数没有效果。FTL命名空间当下列情况下为模板创建：
+			  (a)模板是&quot;主&quot;模板，也就是说它不是被 <code class="inline-code">&lt;#include ...&gt;</code> 
+			  来调用的模板，但是直接被调用的(<span class="marked-for-programmers">和类
+              <code class="inline-code">Template</code> 或
+              <code class="inline-code">Environment</code> 中的Java方法 <code class="inline-code">process</code></span>)；
+			  (b)模板直接被 <code class="inline-code">&lt;#import ...&gt;</code> 调用。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">attributes</code>：这是关联模板任意属性(名-值对)的哈希表。
+			  属性的值可以是任意类型(字符串，数字，序列等)。FreeMarker 不会尝试去理解属性的含义。
+			  它是由封装 FreeMarker(比如Web应用框架)的应用程序决定的。
+			  因此，允许的属性的设置是它们依赖的应用(Web应用框架)的语义。
+			  <span class="marked-for-programmers">程序员：你可以通过关联
+			  <code class="inline-code">Template</code> 对象的
+			  <code class="inline-code">getCustomAttributeNames</code> 和
+			  <code class="inline-code">getCustomAttribute</code> 方法
+			  (从 <code class="inline-code">freemarker.core.Configurable</code> 继承而来)获得属性。
+			  如当模板被解析时，关联 <code class="inline-code">Template</code> 对象的模板属性，
+			  属性可以在任意时间被读取，而模板不需要被执行。
+			  上面提到的方法返回未包装的属性值，也就是说，
+			  使用 FreeMarker 独立的类型，如 <code class="inline-code">java.util.List</code>。</span></p>
+            </li>
+          </ul>
+
+          <p>该指令也决定模板是否使用尖括号语法(比如 
+		  <code class="inline-code">&lt;#include &#39;foo.ftl&#39;&gt;</code>)或 <a href="dgui_misc_alternativesyntax.html">方括号语法</a> 
+		  (如 <code class="inline-code">[#include &#39;foo.ftl&#39;]</code>)。简单而言，
+		  该指令使用的语法将会是整个模板使用的语法，
+		  而不管 FreeMarker 是如何配置的。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_flush.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_function.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

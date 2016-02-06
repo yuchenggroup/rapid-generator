@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>老式 FTL 语法 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="老式 FTL 语法">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_depr_oldsyntax.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_depr_oldsyntax.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_deprecated.html"><span itemprop="name">废弃的 FTL 结构</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_depr_oldsyntax.html"><span itemprop="name">老式 FTL 语法</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","废弃的 FTL 结构","老式 FTL 语法"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_depr_transform.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_depr_numerical_interpolation.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_depr_oldsyntax" itemprop="headline">老式 FTL 语法</h1>
+</div></div><p>在FTL标签中使用 <code class="inline-code">#</code> 形式的FTL语法已经是不要求
+		(在 2.1 版本之前是不允许的)的了。比如，你可以这样写代码：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Welcome!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome ${user}!&lt;/h1&gt;
+  &lt;p&gt;We have there animals:
+  &lt;ul&gt;
+  <strong>&lt;list animals as animal&gt;</strong>
+    &lt;li&gt;${animal.name} for ${animal.price} Euros
+  <strong>&lt;/list&gt;</strong>
+  &lt;/ul&gt;
+  <strong>&lt;include &quot;common_footer.html&quot;&gt;</strong>
+&lt;/body&gt;
+&lt;/html&gt;</pre></div><p>而没有 <code class="inline-code">#</code> 样式语法的代码对于HTML作者来说更加自然，
+		它有很多的缺点，所以最终我们决定废弃它。使用新式语法(又称为&quot;严格的语法&quot;)，
+		<code class="inline-code">#</code> 是严格要求的。也就是说，像 
+		<code class="inline-code">&lt;include &quot;common_footer.html&quot;&gt;</code> 
+		这样的东西将会原样出现在输出中，因为它们不被认为是FTL标签。
+		注意用户自定义指令使用 <code class="inline-code">@</code> <em>代替</em> 
+		<code class="inline-code">#</code>。</p><p>然而，为了给用户时间来准备这种改变，在 FreeMarker 2.1 和 2.2 版本中，
+		<code class="inline-code">#</code> 的用法是可选的，除非程序员调用 <code class="inline-code">Configuration</code> 
+		的 <code class="inline-code">setStrictSyntaxMode(true)</code> 在 FreeMarker 配置中开启严格语法模式。
+		事实上，我们把这个强烈建议给程序员。从后续释出版本开始，这个设置将会初始设置为 
+		<code class="inline-code">true</code>。而且，如果你在模板文件中想使用严格语法或老式语法，你可以用 <a href="ref_directive_ftl.html#ref.directive.ftl"><code>ftl</code> 指令</a>来指定。</p><p>&quot;严格语法&quot;比遗留的FTL语法的好处是：</p><ul>
+          <li>
+            <p>对于FTL来说，所有
+            <code class="inline-code">&lt;#<em class="code-color">...</em>&gt;</code> 和 
+            <code class="inline-code">&lt;/#<em class="code-color">...</em>&gt;</code> 都是保留的：</p>
+
+            <ul>
+              <li>
+                <p>我们可以引入新的指令而不破坏向后兼容。</p>
+              </li>
+
+              <li>
+                <p>我们可以检测你是否创留了一个打字错误，也就是 
+				<code class="inline-code">&lt;#inculde
+                <em class="code-color">...</em>&gt;</code> 被视为解析时的错误，
+				而不是被静默地视为简单文本。</p>
+              </li>
+
+              <li>
+                <p>对于第三方工具来处理模板(比如高亮语法显示)来说是简单的，
+				特别是因为它们不需要知道新释出版本中被引入的新指令。</p>
+              </li>
+
+              <li>
+                <p>模板更易于阅读，因为很容易辨认嵌入在HTML或其他标记中的 
+				<code class="inline-code">&lt;#...&gt;</code> 标签。</p>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <p><code class="inline-code">&lt;#</code> 和 <code class="inline-code">&lt;/#</code> 是合法的XML
+			(除了在CDATA段中)，而且其他大多数SGML应用中也是合法的，
+			所以它们不能妨碍用在静态文本部分(比如你在生成的XML中有 
+			<code class="inline-code">include</code> 元素)的标签。</p>
+          </li>
+        </ul><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_depr_transform.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_depr_numerical_interpolation.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>具体细节 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="具体细节">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/xgui_declarative_details.html">
+<link rel="canoical" href="http://freemarker.org/docs/xgui_declarative_details.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui.html"><span itemprop="name">XML处理指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui_declarative.html"><span itemprop="name">声明的XML处理</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui_declarative_details.html"><span itemprop="name">具体细节</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","XML处理指南","声明的XML处理","具体细节"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="xgui_declarative_basics.html"><span>Previous</span></a><a class="paging-arrow next" href="app.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="xgui_declarative_details" itemprop="headline">具体细节</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_139" data-menu-target="autoid_139">默认处理器</a></li><li><a class="page-menu-link" href="#autoid_140" data-menu-target="autoid_140">访问单独结点</a></li><li><a class="page-menu-link" href="#autoid_141" data-menu-target="autoid_141">XML命名空间</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_139">默认处理器</h2>
+
+
+          <p>对于一些XML结点类型，有默认的处理器，
+		  这会处理你不给这些结点定义处理器的结点
+		  (也就是说，如果没有可用的，和结点名称相同的用户自定义指令)。
+		  这里的结点类型，默认的处理器会做：</p>
+
+          <ul>
+            <li>
+              <p>文本结点：打印其中的文本。要注意，在很多应用程序中，
+			  这对你来说并不好，因为你应该在你发送它们到输出
+			  (使用 <code class="inline-code">?html</code> 或 <code class="inline-code">?xml</code> 
+			  或 <code class="inline-code">?rtf</code> 等，这基于输出的格式)前转义这些文本。</p>
+            </li>
+
+            <li>
+              <p>处理指令结点：如果你定义了自定义指令，可以通过调用处理器调用
+			  <code class="inline-code">@pi</code>，否则将什么都不做(忽略这些结点)。</p>
+            </li>
+
+            <li>
+              <p>	注释结点，文档类型结点：什么都不做(忽略这些结点)。</p>
+            </li>
+
+            <li>
+              <p>文档结点：调用 <code class="inline-code">recurse</code>，也就是说，
+			  访问文档结点的所有子结点。</p>
+            </li>
+          </ul>
+
+          <p>元素和属性结点通常将会被XML独立机制处理。也就是，
+		  <code class="inline-code">@<em class="code-color">node_type</em></code> 将会被调用作为处理器，
+		  如果它没有被定义，那么错误会阻止模板的处理。</p>
+
+          <p>元素结点的情形，这意味着如果你定义了一个称为 <code class="inline-code">@element</code> 
+		  的宏(或其他种类的用户自定义指令)，没有其他特定的处理器时，
+		  那么它会捕捉所有元素结点。如果你没有 <code class="inline-code">@element</code> 处理器，
+		  那么 <em>必须</em> 为所有可能的元素定义处理器。</p>
+
+          <p>属性结点在 <code class="inline-code">recurse</code> 指令中不可见，
+		  所以不需要为它们编写处理器。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_140">访问单独结点</h2>
+
+
+          <p>使用<a href="ref_directive_visit.html#ref.directive.visit"><code>visit</code> 指令</a>
+		  可以访问单独的结点，而不是结点的子结点：
+		  <code class="inline-code">&lt;#visit <em class="code-color">nodeToVisist</em>&gt;</code>。
+		  有时这会很有用。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_141">XML命名空间</h2>
+
+
+          
+
+          <p>我们说过对于一个元素的处理器，用户自定义指令(比如宏)的名字就是元素的名字。
+		  事实上，它是元素的完全限定名：
+		  <code class="inline-code"><em class="code-color">prefix</em>:<em class="code-color">elementName</em></code>。
+		  这个关于 <code class="inline-code"><em class="code-color">prefix</em></code> 的使用规则和命令式处理是相同的。
+		  因此，用户自定义指令 <code class="inline-code">book</code> 仅仅处理不属于任何XML命名空间
+		  (除非你已经定义了默认的XML命名空间)的 <code class="inline-code">book</code> 元素。
+		  所以示例XML将会使用XML命名空间 <code class="inline-code">http://example.com/ebook</code>：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;book xmlns=&quot;http://example.com/ebook&quot;&gt;
+<em>...</em></pre></div>
+
+          <p>那么FTL就会像这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template"><strong>&lt;#ftl ns_prefixes={&quot;e&quot;:&quot;http://example.com/ebook&quot;}&gt;</strong>
+
+&lt;#recurse doc&gt;
+
+&lt;#macro &quot;<strong>e:</strong>book&quot;&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;&lt;#recurse .node[&quot;<strong>e:</strong>title&quot;]&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;&lt;#recurse .node[&quot;<strong>e:</strong>title&quot;]&gt;&lt;/h1&gt;
+      &lt;#recurse&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/#macro&gt;
+
+&lt;#macro &quot;<strong>e:</strong>chapter&quot;&gt;
+  &lt;h2&gt;&lt;#recurse .node[&quot;<strong>e:</strong>title&quot;]&gt;&lt;/h2&gt;
+  &lt;#recurse&gt;
+&lt;/#macro&gt;
+
+&lt;#macro &quot;<strong>e:</strong>para&quot;&gt;
+  &lt;p&gt;&lt;#recurse&gt;
+&lt;/#macro&gt;
+
+&lt;#macro &quot;<strong>e:</strong>title&quot;&gt;
+  &lt;#--
+    We have handled this element imperatively,
+    so we do nothing here.
+  --&gt;
+&lt;/#macro&gt;
+
+&lt;#macro @text&gt;${.node?html}&lt;/#macro&gt;</pre></div>
+
+          <p>或者你可以定义一个默认的XML命名空间，
+		  那后面部分的模板保持和源XML命名空间相同，比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#ftl ns_prefixes={&quot;<strong>D</strong>&quot;:&quot;http://example.com/ebook&quot;}&gt;
+
+&lt;#recurse doc&gt;
+
+&lt;#macro book&gt;
+<em>...</em></pre></div>
+
+          <p>但是这种情形下不要忘了在XPath表达式(我们在默认中没有使用)中，
+		  默认的XML命名空间必须通过明确的 <code class="inline-code">D:</code> 来访问，
+		  因为在XPath中没有前缀的名称通常指代没有XML命名空间的结点。
+		  而且注意到命令式的XML处理也是相同的逻辑，如果(当且仅当)没有默认XML命名空间时，
+		  元素处理器的名字没有XML命名空间是 
+		  <code class="inline-code">N:<em class="code-color">elementName</em></code>。
+		  然而，对于不是元素类型的结点(比如文本结点)，你不能在处理器名称中使用前缀
+		  <code class="inline-code">N</code>，因为这些结点在XML命名空间中是没有这些概念的。
+		  所以对于示例，文本结点的处理器通常就是 <code class="inline-code">@text</code>。</p>
+
+          <p>对于更详细的内容，请阅读 <a href="ref_directive_visit.html">
+          <code>recurse</code> 和 <code>visit</code></a>
+          指令的参考文档。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="xgui_declarative_basics.html"><span>Previous</span></a><a class="paging-arrow next" href="app.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

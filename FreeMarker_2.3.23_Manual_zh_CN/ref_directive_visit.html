@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>visit, recurse, fallback - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="visit, recurse, fallback">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_visit.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_visit.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_visit.html"><span itemprop="name">visit, recurse, fallback</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","visit, recurse, fallback"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_userDefined.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_specvar.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_visit" itemprop="headline">visit, recurse, fallback</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_121" data-menu-target="autoid_121">概要</a></li><li><a class="page-menu-link" href="#autoid_122" data-menu-target="autoid_122">描述</a><ul><li><a class="page-menu-link" href="#autoid_123" data-menu-target="autoid_123">Visit</a></li><li><a class="page-menu-link" href="#autoid_124" data-menu-target="autoid_124">Recurse</a></li><li><a class="page-menu-link" href="#autoid_125" data-menu-target="autoid_125">Fallback</a></li></ul></li></ul> </div><a name="ref.directive.visit"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_121">概要</h2>
+
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#visit <em class="code-color">node</em> using <em class="code-color">namespace</em>&gt;</code>
+或
+<code class="inline-code">&lt;#visit <em class="code-color">node</em>&gt;</code></pre>
+
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#recurse <em class="code-color">node</em> using <em class="code-color">namespace</em>&gt;</code>
+或
+<code class="inline-code">&lt;#recurse <em class="code-color">node</em>&gt;</code>
+或
+<code class="inline-code">&lt;#recurse using <em class="code-color">namespace</em>&gt;</code>
+或
+<code class="inline-code">&lt;#recurse&gt;</code></pre>
+
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#fallback&gt;</code></pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code"><em class="code-color">node</em></code>：
+			  算作 <a href="xgui_expose_dom.html">结点变量</a> 的表达式。
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">namespace</em></code>：
+			  <a href="dgui_misc_namespace.html">命名空间</a>，或者是命名空间的序列。
+			  命名空间可以以命名空间哈希表(又称为根哈希表)给定，
+			  或者可以引入一个存储模板路径的字符串。代替命名空间哈希表，
+			  你也可以使用普通哈希表。
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_122">描述</h2>
+
+
+          <p><code class="inline-code">visit</code> 和 <code class="inline-code">recurse</code> 
+		  指令是用来递归处理树的。在实践中，这通常被用来 <a href="xgui.html">处理XML</a>。</p>
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_123">Visit</h3>
+
+
+            <p>当你调用了 <code class="inline-code">&lt;#visit <em class="code-color">node</em>&gt;</code>时，
+			它看上去像用户自定义指令(比如宏)来调用从结点名称
+			(<code class="inline-code"><em class="code-color">node</em>?node_name</code>)
+			和命名空间
+			(<code class="inline-code"><em class="code-color">node</em>?node_namesoace</code>)
+			中有名称扣除的结点。名称扣除的规则：</p>
+
+            <ul>
+              <li>
+                <p>如果结点不支持结点命名空间(如XML中的文本结点)，
+				那么这个指令名仅仅是结点的名称
+				(<code class="inline-code"><em class="code-color">node</em>?node_name</code>)。
+				<span class="marked-for-programmers">如果 <code class="inline-code">getNodeNamespace</code> 
+				方法返回 <code class="inline-code">null</code> 时结点就不支持结点命名空间了。</span></p>
+              </li>
+
+              <li>
+                <p>如果结点支持结点命名空间(如XML中的元素结点)，
+				那么从结点命名空间中的前缀扣除可能在结点名称前和一个做为分隔符
+				(比如 <code class="inline-code">e:book</code>)的冒号追加上去。前缀，以及是否使用前缀，
+				依赖于何种前缀 <a href="dgui_misc_namespace.html">FTL命名空间</a> 中用 
+				<code class="inline-code">ftl</code> 指令的 <code class="inline-code">ns_prefixes</code> 参数注册的，
+				那里 <code class="inline-code">visit</code> 寻找控制器指令
+				(<code class="inline-code">visit</code> 调用的相同FTL命名空间不是重要的，后面你将会看到)。
+				具体来说，如果没有用 <code class="inline-code">ns_prefixes</code> 注册默认的命名空间，
+				那么对于不属于任何命名空间(<span class="marked-for-programmers">当 <code class="inline-code">getNodeNamespace</code>
+                返回 <code class="inline-code">&quot;&quot;</code></span>)的结点来说就不使用前缀。
+				如果使用 <code class="inline-code">ns_prefixes</code> 给不属于任意命名空间的结点注册了默认命名空间，
+				那么就使用前缀 <code class="inline-code">N</code>，而对于属于默认结点命名空间的结点就不使用前缀了。
+				否则，这两种情况下，用 <code class="inline-code">ns_prefixes</code> 关联结点命名空间的前缀已经被使用了。
+				如果没有关联结点命名空间的结点前缀，那么 <code class="inline-code">visit</code> 
+				仅仅就好像没有以合适的名称发现指令。</p>
+              </li>
+            </ul>
+
+            <p>自定义指令调用的结点对于特殊变量 <code class="inline-code">.node</code> 是可用的。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Assume that nodeWithNameX?node_name is &quot;x&quot; --&gt;
+&lt;#visit nodeWithNameX&gt;
+Done.
+&lt;#macro x&gt;
+   Now I&#39;m handling a node that has the name &quot;x&quot;.
+   Just to show how to access this node: this node has ${.node?children?size} children.
+&lt;/#macro&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">   Now I&#39;m handling a node that has the name &quot;x&quot;.
+   Just to show how to access this node: this node has 3 children.
+Done.</pre></div>
+
+            <p>如果使用可选的 <code class="inline-code">using</code> 从句来指定一个或多个命名空间，
+			那么 <code class="inline-code">visit</code> 就会在那么命名空间中寻找指令，
+			和先前列表中指定的命名空间都获得优先级。如果指定 <code class="inline-code">using</code> 从句，
+			对最后一个未完成的 <code class="inline-code">visit</code> 调用的用 <code class="inline-code">using</code> 
+			从句指定命名空间的命名空间或序列被重用了。如果没有这样挂起的 
+			<code class="inline-code">visit</code> 调用，那么当前的命名空间就被使用。
+			比如，如果你执行这个模板：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;n1.ftl&quot; as n1&gt;
+&lt;#import &quot;n2.ftl&quot; as n2&gt;
+
+&lt;#-- This will call n2.x (because there is no n1.x): --&gt;
+&lt;#visit nodeWithNameX using [n1, n2]&gt;
+
+&lt;#-- This will call the x of the current namespace: --&gt;
+&lt;#visit nodeWithNameX&gt;
+
+&lt;#macro x&gt;
+  Simply x
+&lt;/#macro&gt;</pre></div>
+
+            <p>这是 <code class="inline-code">n1.ftl</code>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro y&gt;
+  n1.y
+&lt;/#macro&gt;</pre></div>
+
+            <p>这是 <code class="inline-code">n2.ftl</code>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro x&gt;
+  n2.x
+  &lt;#-- This callc n1.y as it inherits the &quot;using [n1, n2]&quot; from the pending visit call: --&gt;
+  &lt;#visit nodeWithNameY&gt;
+  &lt;#-- This will call n2.y: --&gt;
+  &lt;#visit nodeWithNameY using .namespace&gt;
+&lt;/#macro&gt;
+
+&lt;#macro y&gt;
+  n2.y
+&lt;/#macro&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">
+  n2.x
+  n1.y
+  n2.y
+
+  Simply x
+ </pre></div>
+
+            <p>如果 <code class="inline-code">visit</code> 
+			既没有在和之前描述规则的名称扣除相同名字的FTL命名空间发现自定义指令，
+			那么它会尝试用名称 <code class="inline-code">@<em class="code-color">node_type</em></code> 查找，
+			又如果结点不支持结点类型属性
+			(也就是 <code class="inline-code"><em class="code-color">node</em>?node_type</code> 返回未定义变量)，
+			那么使用名称 <code class="inline-code">@default</code>。对于查找来说，它使用和之前描述相同的机制。
+			如果仍然没有找到处理结点的自定义指令，那么 <code class="inline-code">visit</code> 停止模板执行，
+			并抛出错误。一些XML特定的结点类型在这方面有特殊的处理；
+			参考：<a href="xgui_declarative_details.html">XML处理指南/声明的XML处理/具体细节</a>。比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Assume that nodeWithNameX?node_name is &quot;x&quot; --&gt;
+&lt;#visit nodeWithNameX&gt;
+
+&lt;#-- Assume that nodeWithNameY?node_type is &quot;foo&quot; --&gt;
+&lt;#visit nodeWithNameY&gt;
+
+&lt;#macro x&gt;
+Handling node x
+&lt;/#macro&gt;
+
+&lt;#macro @foo&gt;
+There was no specific handler for node ${node?node_name}
+&lt;/#macro&gt;</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">Handling node x
+  
+There was no specific handler for node y
+
+ </pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_124">Recurse</h3>
+
+
+            <a name="ref.directive.recurse"></a>
+
+            <p><code class="inline-code">&lt;#recurse&gt;</code> 指令是真正纯语义上的指令。
+			它访问结点的所有子结点(而没有结点本身)。所以来写：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#recurse <em>someNode</em> using <em>someLib</em>&gt;</pre></div>
+
+            <p>和这个是相等的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list <em>someNode</em>?children as <em>child</em>&gt;&lt;#visit <em>child</em> using <em>someLib</em>&gt;&lt;/#list&gt;</pre></div>
+
+            <p>而目标结点在 <code class="inline-code">recurse</code> 指令中是可选的。
+			如果目标结点没有指定，那就仅仅使用 <code class="inline-code">.node</code>。
+			因此，<code class="inline-code">&lt;#recurse&gt;</code> 这个精炼的指令和下面这个是相同的：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list .node?children as child&gt;&lt;#visit child&gt;&lt;/#list&gt;</pre></div>
+
+            <p>对于熟悉XSLT的用户的评论，<code class="inline-code">&lt;#recurse&gt;</code> 
+			是和XSLT中 <code class="inline-code">&lt;xsl:apply-templates/&gt;</code> 指令相当类似的。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_125">Fallback</h3>
+
+
+            <a name="ref.directive.fallback"></a>
+
+            <p>正如前面所学的，在 <code class="inline-code">visit</code> 指令的文档中，
+			自定义指令控制的结点也许在多个FTL命名空间中被搜索。
+			<code class="inline-code">fallback</code> 指令可以被用在自定义指令中被调用处理结点。
+			它指挥 FreeMarker 在更多的命名空间
+			(也就是，在当前调用列表中自定义指令命名空间之后的命名空间)
+			中来继续搜索自定义指令。如果结点处理器被发现，
+			那么就被调用，否则 <code class="inline-code">fallback</code> 不会做任何事情。</p>
+
+            <p>这个指令的典型用法是在处理程序库之上写定制层，有时传递控制到定制的库中：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/docbook.ftl&quot; as docbook&gt;
+
+&lt;#--
+  We use the docbook library, but we override some handlers
+  in this namespace.
+--&gt;
+&lt;#visit document using [.namespace, docbook]&gt;
+
+&lt;#--
+  Override the &quot;programlisting&quot; handler, but only in the case if
+  its &quot;role&quot; attribute is &quot;java&quot;
+--&gt;
+&lt;#macro programlisting&gt;
+  &lt;#if .node.@role[0]!&quot;&quot; == &quot;java&quot;&gt;
+    &lt;#-- Do something special here... --&gt;
+    ...
+  &lt;#else&gt;
+    &lt;#-- Just use the original (overidden) handler --&gt;
+    &lt;#fallback&gt;
+  &lt;/#if&gt;
+&lt;/#macro&gt;</pre></div>
+          
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_userDefined.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_specvar.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

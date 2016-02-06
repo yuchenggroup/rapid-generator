@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>和Ant一起使用FreeMarker - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="和Ant一起使用FreeMarker">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_misc_ant.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_misc_ant.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc_ant.html"><span itemprop="name">和Ant一起使用FreeMarker</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","其它","和Ant一起使用FreeMarker"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_misc_xml_legacy.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_jythonwrapper.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_misc_ant" itemprop="headline">和Ant一起使用FreeMarker</h1>
+</div></div><p>我们现在知道有两种&quot;FreeMarker Ant tasks&quot;：</p><ul>
+          <li>
+            <p><code class="inline-code">FreemarkerXmlTask</code>：它来自于FreeMarker的发布包，
+			打包到 <code class="inline-code">freemarker.jar</code> 中。
+			这是使用FreeMarker模板转换XML文档的轻量级的，易于使用的Ant任务。
+			它的入口源文件(输入文件)是XML文件，和生成的输出文件对应，
+			这是通过单独模板实现的。也就是说，对于每个XML文件，
+			模板会被执行(在数据模型中的XML文档)，
+			模板的输出会被写入到一个和原XML文件名相似名称的文件中。
+			因此，模板文件扮演了一个和XSLT样式表相似的角色，但它是FTL，而不是XSLT。</p>
+          </li>
+
+          <li>
+            <p>FMPP：这是一个重量级的，以很少的XML为中心，
+			  第三方Ant任务(和独立的命令行工具)。
+			  它主要的目的是用作为模板文件的源文件(输入文件)生成它们自己对应的输出文件，
+			  但它也对以XML为源文件的 <code class="inline-code">FreemarkerXmlTask</code> 进行支持。
+			  而且，相比于<code class="inline-code">FreemarkerXmlTask</code>，它还有额外的特性。
+			  那么它的缺点是什么？它太复杂太一般化了，不容易掌握和使用。</p>
+          </li>
+        </ul><p>这一部分介绍了 <code class="inline-code">FreemarkerXmlTask</code>，
+		要了解FMPP更多的信息，可以访问它的主页：<a href="http://fmpp.sourceforge.net/">http://fmpp.sourceforge.net/</a>。</p><p>为了使用 <code class="inline-code">FreemarkerXmlTask</code>，
+		首先必须在你的Ant构建文件中定义 
+		<code class="inline-code">freemarker.ext.ant.FreemarkerXmlTask</code>，然后调用任务。
+		假设你想使用假定的&quot;xml2html.ftl&quot;模板转换一些XML文档到HTML，
+		XML文档在目录&quot;xml&quot;中而HTML文档生成到目录&quot;html&quot;中，你应该这样来写：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;taskdef name=&quot;freemarker&quot; classname=&quot;freemarker.ext.ant.FreemarkerXmlTask&quot;&gt;
+  &lt;classpath&gt;
+    &lt;pathelement location=&quot;freemarker.jar&quot; /&gt;
+  &lt;/classpath&gt;
+&lt;/taskdef&gt;
+&lt;mkdir dir=&quot;html&quot; /&gt;
+&lt;freemarker basedir=&quot;xml&quot; destdir=&quot;html&quot; includes=&quot;**/*.xml&quot; template=&quot;xml2html.ftl&quot; /&gt;</pre></div><p>这个任务将会对每个XML文档调用模板。每个文档将会被解析成DOM树，
+		然后包装成FreeMarker结点变量。当模板开始执行时，
+		特殊变量 <code class="inline-code">.node</code> 被设置成XML文档结点的根root。</p><p>请注意，如果你正使用遗留的(FreeMarker 2.2.x 和以前版本)XML适配器实现，
+		也同样可以进行，而且XML树的根结点被放置在数据模型中，
+		作为变量 <code class="inline-code">document</code>。它包含了遗留的 
+		<code class="inline-code">freemarker.ext.xml.NodeListModel</code> 类的实例。</p><p>请注意，所有通过构建文件定义的属性将会作为名为&quot;properties&quot;的哈希表模型来用。
+		一些其他方法也会可用；对模板中什么样的可用变量的详细描述，
+		还有什么样的属性可以被任务接受，参见 
+		<code class="inline-code">freemarker.ext.ant.FreemarkerXmlTask</code> 的JavaDoc文档。</p><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_misc_xml_legacy.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_jythonwrapper.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

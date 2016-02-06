@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>setting - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="setting">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_setting.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_setting.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_setting.html"><span itemprop="name">setting</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","setting"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_nt.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_stop.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_setting" itemprop="headline">setting</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_111" data-menu-target="autoid_111">概要</a></li><li><a class="page-menu-link" href="#autoid_112" data-menu-target="autoid_112">描述</a></li></ul> </div><a name="ref.directive.setting"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_111">概要</h2>
+
+
+          
+<pre class="metaTemplate">
+<code class="inline-code">&lt;#setting <em class="code-color">name</em>=<em class="code-color">value</em>&gt;</code>
+</pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code"><em class="code-color">name</em></code>：
+			  设置的名称。不是表达式！
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">value</em></code>：
+			  设置的新值，是表达式。
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_112">描述</h2>
+
+
+          <p>为进一步的处理而设置。设置是影响 FreeMarker 行为的值。
+		  新值仅仅在被设置的模板处理时出现，而且不触碰模板本身。
+		  设置的初始值是由程序员设定的 <span class="marked-for-programmers">(参考： <a href="pgui_config_settings.html">程序开发指南/配置(Configuration)/配置设置</a>)</span>。</p>
+
+          <p>支持的设置有：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">locale</code>：输出的本地化(语言)。
+				它可以影响数字，日期等显示格式。它的值是由语言编码
+				(小写两个字母的ISO-639编码)和可选的国家码
+				(大写的两个字母ISO-3166编码)组成的字符串，它们以下划线相分隔，
+				如果我们已经指定了国家那么一个可选的不同编码
+				(不是标准的)会以下划线分隔开国家。合法的值示例：<code class="inline-code">en</code>，
+				<code class="inline-code">en_US</code>，<code class="inline-code">en_US_MAC</code>。
+				FreeMarker 会尝试使用特定可用的本地化设置，所以如果你指定了
+				<code class="inline-code">en_US_MAC</code>，但是它不被知道，那么它会尝试 
+				<code class="inline-code">en_US</code>，然后尝试 <code class="inline-code">en</code>，
+				然后是计算机(可能是由程序员设置的)默认的本地化设置。</p>
+            </li>
+
+            <li>
+              <p><a name="ref.setting.number_format"></a><code class="inline-code">number_format</code>：
+				当没有指定确定的格式化形式时，用来转化数字到字符串形式的数字格式化设置。
+				可以是下列中的一个预定义值 <code class="inline-code">number</code>(默认的)，
+				<code class="inline-code">computer</code>，<code class="inline-code">currency</code>，
+				或 <code class="inline-code">percent</code>。此外，以 <a href="http://java.sun.com/j2se/1.4/docs/api/java/text/DecimalFormat.html">Java小数数字格式化语法</a> 书写的任意的格式化形式也可以被指定。
+			  更多格式形式内容: <a href="ref_builtins_number.html#ref_builtin_string_for_number"><code>string</code> 
+              内建函数</a>。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">boolean_format</code>：
+			  以逗号分隔的一对字符串来分别展示 true 和 false 值，
+			  当没有指定确定的格式时(比如在 
+              <code class="inline-code">${<em class="code-color">booleanValue</em>}</code> 中)，
+			  将转换布尔值到字符串。请注意，当前的空格没有从该字符串中移除，
+			  所以不要将空格放在逗号后面。默认值是 <code class="inline-code">&quot;true,false&quot;</code>。
+			  但是 FreeMarker 会拒绝为 <code class="inline-code">${<em class="code-color">booleanValue</em>}</code> 
+			  使用特定值，而需要使用 <code class="inline-code">${<em class="code-color">booleanValue</em>?c}</code> 
+			  来代替(从 2.3.21 版本开始有效)。对于其它任意值，比如 <code class="inline-code">&quot;Y,N&quot;</code>，
+              <code class="inline-code">${<em class="code-color">booleanValue</em>}</code> 也是有效的。
+			  请参考：<a href="ref_builtins_boolean.html#ref_builtin_string_for_boolean"><code>string</code>
+              内建函数</a>。</p>
+            </li>
+
+            <li>
+              <p><a name="topic.dateTimeFormatSettings"></a><a name="topic_date_format_settings"></a> <code class="inline-code">date_format</code>,
+              <code class="inline-code">time_format</code>,
+              <code class="inline-code">datetime_format</code>：当没有通过 <a href="ref_builtins_date.html#ref_builtin_string_for_date"><code>string</code>
+              内建函数</a>(或相反)指定确定的格式时，格式将日期/时间/日期-时间值
+			  (Java <code class="inline-code">java.util.Date</code> 和它的子类)转换为字符串，
+			  比如 <code class="inline-code">${someDate}</code>。<code class="inline-code">date_format</code> 
+			  设置仅仅格式于存储的无时间部分的值，<code class="inline-code">time_format</code> 
+			  仅仅格式于存储无日期部分的值，而 <code class="inline-code">datetime_format</code> 
+			  仅仅格式于日期-时间值。除了当它应用于字符串值时，这些设置也影响进行了 <a href="ref_builtins_string.html#ref_builtin_string_date"><code>?time</code>，
+              <code>?date</code>， 和
+              <code>?datetime</code></a> 操作的格式。</p>
+
+              <p>
+			  可能的设置是(引号标记不是值本身的一部分)：</p>
+
+              <ul>
+                <li>
+                  <p><a href="http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">
+                  Java 的 <code>SimpleDateFormat</code> 接受 </a> 的模式，例如 
+                  <code class="inline-code">&quot;dd.MM.yyyy HH:mm:ss&quot;</code> (这里
+                  <code class="inline-code">&quot;HH&quot;</code> 表示 0-23 时) 或
+                  <code class="inline-code">&quot;MM/dd/yyyy hh:mm:ss a&quot;</code> (如果当前语言是英语，这里
+                  <code class="inline-code">&quot;a&quot;</code> 输出 AM 或 PM)。</p>
+                </li>
+
+                <li>
+                  <p><code class="inline-code">&quot;xs&quot;</code> 就是XML Schema 格式，或
+                  <code class="inline-code">&quot;iso&quot;</code> 是 ISO 8601:2004 格式。
+				  这些格式允许多个可选项，由空格分隔开，比如
+                  <code class="inline-code">&quot;iso m nz&quot;</code> (或者使用 
+                  <code class="inline-code">_</code>，比如 <code class="inline-code">&quot;iso_m_nz&quot;</code>；
+                  比如设置 <code class="inline-code">lastModified?string.iso_m_nz</code> 时就很有用)。
+				  选项和它们的意义是：</p>
+
+                  <ul>
+                    <li>
+                      <p>精度选择：</p>
+
+                      <ul>
+                        <li>
+                          <code class="inline-code">ms</code>：毫秒，通常显示3位数字，
+						  即便它们都是0。例如：<code class="inline-code">13:45:05.800</code>
+                        </li>
+
+                        <li>
+                          <code class="inline-code">s</code>：秒(如果非0，小数部分就被丢弃了)，
+						  比如 <code class="inline-code">13:45:05</code>
+                        </li>
+
+                        <li>
+                          <code class="inline-code">m</code>：分，比如 
+                          <code class="inline-code">13:45</code>。它不允许用于 
+                          <code class="inline-code">&quot;xs&quot;</code>。
+                        </li>
+
+                        <li>
+                          <code class="inline-code">h</code>：小时，比如 
+                          <code class="inline-code">13</code>。它不允许用于 
+                          <code class="inline-code">&quot;xs&quot;</code>。
+                        </li>
+
+                        <li>
+                          两者皆不：上至毫秒的精度，但是尾部的0毫秒就被移除了，
+						  否则，如果它是0，整个毫秒部分也被移除。比如：
+                          <code class="inline-code">13:45:05.8</code>
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <p>时区偏移可见性选项：</p>
+
+                      <ul>
+                        <li>
+                          <code class="inline-code">fz</code>: "Force
+                          Zone"，通常显示时区偏移(也对
+                          <code class="inline-code">java.sql.Date</code> 和
+                          <code class="inline-code">java.sql.Time</code> 值)。但是，
+						  因为 ISO 8601 不允许日期(也就是没有时间的日期)显示时区偏移，
+						  该选项对使用 <code class="inline-code">&quot;iso&quot;</code> 的日期就没有作用。
+                        </li>
+
+                        <li>
+                          <code class="inline-code">nz</code>: "No Zone"，
+						  从不显示时区偏移
+                        </li>
+
+                        <li>
+                          两者皆不：除了 <code class="inline-code">java.sql.Date</code> 和
+                          <code class="inline-code">java.sql.Time</code>，还有 
+                          <code class="inline-code">&quot;iso&quot;</code> 日期值，通常都显示时区偏移。
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <p>时区选项：</p>
+
+                      <ul>
+                        <li>
+                          <code class="inline-code">u</code>：使用 UTC 来代替 
+						  <code class="inline-code">time_zone</code> 设置建议的内容。
+						  然而，<code class="inline-code">java.sql.Date</code> 和
+                          <code class="inline-code">java.sql.Time</code> 不受它影响
+						  (参考 <code class="inline-code">sql_date_and_time_time_zone</code> 
+						  去理解为什么)
+                        </li>
+
+                        <li>
+                          <code class="inline-code">fu</code>: "Force
+                          UTC"，也就是说，使用 UTC 来代替 
+                          <code class="inline-code">time_zone</code> 或
+                          <code class="inline-code">sql_date_and_time_time_zone</code> 
+						  设置建议的内容。这会影响 
+                          <code class="inline-code">java.sql.Date</code> 和
+                          <code class="inline-code">java.sql.Time</code> 值。
+                        </li>
+
+                        <li>
+                          两者皆不：使用 
+                          <code class="inline-code">time_zone</code> 或
+                          <code class="inline-code">sql_date_and_time_time_zone</code>
+                          配置设置项建议的时区。
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <p>来自相同分类的选项是互斥的，比如一起使用
+				  <code class="inline-code">m</code> 和 <code class="inline-code">s</code>
+                  就会有错误。</p>
+
+                  <p>选项可以指定一个任意的顺序。</p>
+
+                  <p>精度和时区偏移可见性选项不影响解析，只影响格式化。例如，
+				  即使使用 <code class="inline-code">&quot;iso m nz&quot;</code>，
+                  <code class="inline-code">&quot;2012-01-01T15:30:05.125+01&quot;</code> 
+				  也会被成功解析含有毫秒精度。仅当解析不包含时区偏移的字符串时，
+				  时区选项(比如 <code class="inline-code">&quot;u&quot;</code>) 影响选择的时区。</p>
+
+                  <p>使用 <code class="inline-code">&quot;iso&quot;</code> 解析会理解 
+                  "extend format" 和 "basic
+                  format"，比如 <code class="inline-code">20141225T235018</code>。
+				  它不支持所有的 ISO 8601 字符串：如果有日期部分，
+				  必须使用年，月和日值(不是年中的星期)，并且日不能被忽略。</p>
+
+                  <p><code class="inline-code">&quot;iso&quot;</code> 的输出是有意的，
+				  所以它也是有 XML Schema 格式值的很好表述，除了0和负数的年，
+				  这里是不可能的。也请注意，时区偏移在 <code class="inline-code">&quot;iso&quot;</code> 
+				  格式中是忽略的，而在 <code class="inline-code">&quot;xs&quot;</code> 格式中是保留的。</p>
+                </li>
+
+                <li>
+                  <p><code class="inline-code">&quot;short&quot;</code>，
+                  <code class="inline-code">&quot;medium&quot;</code>， <code class="inline-code">&quot;long&quot;</code>，或 
+                  <code class="inline-code">&quot;full&quot;</code>，这些由Java平台定义，有本地依赖含义 
+                  (参考 <a href="http://docs.oracle.com/javase/7/docs/api/java/text/DateFormat.html">
+                  <code>java.text.DateFormat</code> 的文档</a>)。
+				  对于日期-时间值，可以分别指定日期和时间部分的长度，使用
+				  <code class="inline-code">_</code> 将它们分开，比如 <code class="inline-code">&quot;short_medium&quot;</code>。
+                  (对于时间-日期值，<code class="inline-code">&quot;medium&quot;</code> 表示
+                  <code class="inline-code">&quot;medium_medium&quot;</code>。)</p>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <p><code class="inline-code">time_zone</code>：时区的名称来显示并格式化时间。
+				默认情况下，使用JVM的时区。也可以是 <a href="http://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html">Java
+              时区 API</a> 接受的值，或者 <code class="inline-code">&quot;JVM default&quot;</code> (从
+              FreeMarker 2.3.21 版本开始) 使用JVM默认的时区。比如：
+              <code class="inline-code">&quot;GMT&quot;</code>， <code class="inline-code">&quot;GMT+2&quot;</code>，
+              <code class="inline-code">&quot;GMT-1:30&quot;</code>， <code class="inline-code">&quot;CET&quot;</code>，
+              <code class="inline-code">&quot;PST&quot;</code>，
+              <code class="inline-code">&quot;America/Los_Angeles&quot;</code>。</p>
+
+                <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+                <p>如果修改了该设置的默认值，那么也应该设置
+                <code class="inline-code">sql_date_and_time_time_zone</code> 为 &quot;JVM
+                default&quot;。<span class="marked-for-programmers">在 
+                <code class="inline-code">Configurable.setSQLDateAndTimeTimeZone(TimeZone)</code>
+				的Java API 文档中参考更多内容。</span></p>
+                </div>
+
+            </li>
+
+            <li>
+              <p><code class="inline-code">sql_date_and_time_time_zone</code>
+              (从 FreeMarker 2.3.21 版本开始)：它控制高度技术性的问题，
+			  所以它应该由程序员在Java代码中来设置。
+			  <span class="marked-for-programmers">对于程序员：如果它设置为 
+              非 <code class="inline-code">null</code>，对于来自SQL数据库(更精确地，就是 
+			  <code class="inline-code">java.sql.Date</code> 和
+              <code class="inline-code">java.sql.Time</code> 对象)的仅日期和仅时间值来说，
+			  FreeMarker 会使用该时区来代替由 <code class="inline-code">time_zone</code> 
+			  设置项指定的时区。在 
+              <code class="inline-code">Configurable.setSQLDateAndTimeTimeZone(TimeZone)</code> 
+			  的Java API文档中参考更多。
+			  </span></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">url_escaping_charset</code>：
+				用来URL转义(比如<code class="inline-code">${foo?url}</code>)的字符集，
+				来计算转义(<code class="inline-code">%<em class="code-color">XX</em></code>)的部分。
+				通常包含 FreeMarker 的框架应该设置它，所以不应该在模板中来设置。<span class="marked-for-programmers">(程序员可以在 <a href="pgui_misc_charset.html">这里...</a> 阅读更多内容。)</span></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">output_encoding</code>：告诉 FreeMarker 
+				输出的字符集是什么。因为 FreeMarker 输出 UNICODE 字符集
+				(<span class="marked-for-programmers">写入
+              <code class="inline-code">java.io.Writer</code></span>)的流，它不由输出编码所影响，
+			  但是一些宏/函数和内建函数也许想使用这些信息。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">classic_compatible</code>：这是对于专家来说的。
+				它的值应该是布尔值。参考 
+              <code class="inline-code">freemarker.template.Configurable</code> 的文档来获取更多信息。</p>
+            </li>
+          </ul>
+
+          <p>比如：假设初始化的模板本地化是 de_DE
+          (德国)。那么：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${1.2}
+&lt;#setting locale=&quot;en_US&quot;&gt;
+${1.2}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">1,2
+1.2</pre></div>
+
+          <p>因为德国人使用逗号作为小数分隔符，而美国人使用点。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_nt.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_stop.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

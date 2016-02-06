@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>import - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="import">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_import.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_import.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_import.html"><span itemprop="name">import</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","import"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_if.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_include.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_import" itemprop="headline">import</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_87" data-menu-target="autoid_87">概要</a></li><li><a class="page-menu-link" href="#autoid_88" data-menu-target="autoid_88">描述</a></li></ul> </div><a name="ref.directive.import"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_87">概要</h2>
+
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#import <em class="code-color">path</em> as <em class="code-color">hash</em>&gt;</code>
+</pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code"><em class="code-color">path</em></code>：模板的路径。
+			  这是一个算作是字符串的表达式。(换句话说，它不是一个固定的字符串，
+			  它可以是这样的一些东西，比如，<code class="inline-code">profile.baseDir + &quot;/menu.ftl&quot;</code>。)
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">hash</em></code>:
+			  访问命名空间的哈希表变量不带引号的名字。不是表达式。
+			  (如果要引入动态创建的名字，那么就不得不使用 <a href="app_faq.html#faq_assign_to_dynamic_variable_name">这个技巧</a>。)
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_88">描述</h2>
+
+
+          <p>引入一个库。也就是说，它创建一个新的空命名空间，
+		  然后在那个命名空间中执行给定 
+		  <code class="inline-code"><em class="code-color">path</em></code> 参数中的模板，
+		  所以模板用变量(宏，函数等)填充命名空间。
+		  然后使得新创建的命名空间对哈希表的调用者可用。
+		  这个哈希表变量将会在命名空间中，由 <code class="inline-code">import</code>
+		  (就像你可以用 <code class="inline-code">assign</code> 指令来创建一样。)
+		  的调用者被创建成一个普通变量，名字就是 
+		  <code class="inline-code"><em class="code-color">hash</em></code> 参数给定的。</p>
+
+          <p>如果你用同一个 <code class="inline-code"><em class="code-color">path</em></code> 
+		  多次调用 <code class="inline-code">import</code>，它会创建命名空间，
+		  但是只运行第一次 <code class="inline-code">import</code> 的调用。
+		  后面的调用仅仅创建一个哈希表变量，你只是通过它来访问 
+		  <em>同一个</em> 命名空间。</p>
+
+          <p>由引入的模板打印的输出内容将会被忽略
+		  (不会在包含它的地方被插入)。模板的执行是来用变量填充命名空间，
+		  而不是写到输出中。</p>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/libs/mylib.ftl&quot; as my&gt;
+
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt;</pre></div>
+
+          <p><code class="inline-code"><em class="code-color">path</em></code> 
+		  参数可以是一个相对路径，比如 <code class="inline-code">&quot;foo.ftl&quot;</code> 
+		  和 <code class="inline-code">&quot;../foo.ftl&quot;</code>，或者是像 
+		  <code class="inline-code">&quot;/foo.ftl&quot;</code> 一样的绝对路径。
+		  相对路径是相对于使用 <code class="inline-code">import</code> 指令模板的目录。
+		  绝对路径是程序员配置 FreeMarker 时定义的相对于根路径
+		  (通常指代&quot;模板的根目录&quot;)的路径。</p>
+
+          <p>通常使用<code class="inline-code">/</code>(斜杠)来分隔路径组成，
+		  而不是<code class="inline-code">\</code>(反斜杠)。如果你从你本地的文件系统中加载模板，
+		  那么它使用反斜杠(比如在Windows环境下)，FreeMarker 将会自动转换它们。</p>
+
+          <p>像 <code class="inline-code">include</code> 指令一样，<a href="ref_directive_include.html#ref_directive_include_acquisition">获得机制</a> 和
+          <a href="ref_directive_include.html#ref_directive_include_localized">本地化查找</a> 
+		  也可以用来解决路径问题。</p>
+
+          <p><span class="marked-for-programmers">请注意，对于所有模板来说，
+		  它可以自动做通用的引入操作，使用 <code class="inline-code">Configuration</code> 
+		  的&quot;自动引入&quot;设置就行了。</span></p>
+
+          <p>如果你命名空间不是很了解，应该阅读： <a href="dgui_misc_namespace.html">模板开发指南/其它/命名空间</a></p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_if.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_include.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

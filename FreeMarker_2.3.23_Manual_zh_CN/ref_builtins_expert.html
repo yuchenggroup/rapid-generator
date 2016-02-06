@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>很少使用的和专家级的内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="很少使用的和专家级的内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_expert.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_expert.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_expert.html"><span itemprop="name">很少使用的和专家级的内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","很少使用的和专家级的内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_type_independent.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directives.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_expert" itemprop="headline">很少使用的和专家级的内建函数</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#ref_buitin_api_and_has_api" data-menu-target="ref_buitin_api_and_has_api">api, has_api</a></li><li><a class="page-menu-link" href="#ref_builtin_numType" data-menu-target="ref_builtin_numType">byte, double, float, int, long, short</a></li><li><a class="page-menu-link" href="#ref_builtin_eval" data-menu-target="ref_builtin_eval">eval</a></li><li><a class="page-menu-link" href="#ref_builtin_has_content" data-menu-target="ref_builtin_has_content">has_content</a></li><li><a class="page-menu-link" href="#ref_builtin_interpret" data-menu-target="ref_builtin_interpret">interpret</a></li><li><a class="page-menu-link" href="#ref_builtin_isType" data-menu-target="ref_builtin_isType">is_...</a></li><li><a class="page-menu-link" href="#ref_builtin_namespace" data-menu-target="ref_builtin_namespace">namespace</a></li><li><a class="page-menu-link" href="#ref_builtin_new" data-menu-target="ref_builtin_new">new</a></li><li><a class="page-menu-link" href="#ref_builtin_numToDate" data-menu-target="ref_builtin_numToDate">number_to_date, number_to_time, number_to_datetime</a></li></ul> </div><p>这些是你通常情况下不应该使用的内建函数，
+		但是在特殊情况下(调试，高级宏)它们会有用。
+		如果你需要在普通页面模板中使用这些函数，
+		你可能会重新访问数据模型，所以你不要使用它们。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_buitin_api_and_has_api">api, has_api</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>这些内建函数从 FreeMarker 2.3.22 版本开始存在。</p>
+            </div>
+
+
+          <p>如果value本身支持这个额外的特性，
+		  <code class="inline-code"><em class="code-color">value</em>?api</code>
+          提供访问 <code class="inline-code"><em class="code-color">value</em></code> 的API
+		  (通常是 Java API)，比如 
+          <code class="inline-code"><em class="code-color">value</em>?api.<em class="code-color">someJavaMethod()</em></code>，
+		  当需要调用对象的Java方法时，这种方式很少使用，
+		  但是 FreeMarker 揭示的value的简化视图的模板隐藏了它，也没有相等的内建函数。
+		  例如，当有一个 <code class="inline-code">Map</code>，并放入数据模型
+		  (使用默认的对象包装器)，模板中的
+          <code class="inline-code">myMap.myMethod()</code> 基本上翻译成Java的 <code class="inline-code">((Method)
+          myMap.get(&quot;myMethod&quot;)).invoke(...)</code>，因此不能调用 
+          <code class="inline-code">myMethod</code>。如果编写了 
+          <code class="inline-code">myMap?api.myMethod()</code> 来代替，那么就是Java中的
+          <code class="inline-code">myMap.myMethod()</code>。</p>
+
+          <p>尽可能地<em>应避免使用 <code class="inline-code">api</code>，
+		  基于FTL类型和相关内建函数的功能。</em> 例如，不要使用
+          <code class="inline-code">users?api.size()</code>，但可以使用
+          <code class="inline-code">users?size</code>。使用 
+          <code class="inline-code">?api</code> 的变化是很累赘的，更慢，
+		  当 FreeMarker 配置设置修改时容易失败，最重要的是，
+		  当数据模型的技术细节改变时更容易失败。例如，如果
+		  <code class="inline-code">users</code> 由 <code class="inline-code">List</code> 
+		  变为数组，那么 <code class="inline-code">users?size</code> 继续有效，而
+          <code class="inline-code">users?api.size()</code> 就会失败。</p>
+
+          <p>由于一些原因，避免调用 <em>修改</em> 
+          对象 (特别是 <code class="inline-code">Map</code> 和
+          <code class="inline-code">Collection</code>) 或非线程安全的方法。
+		  模板通常也不希望去修改暴露于它们的对象，只是展示它们。
+		  因此应用程序可能会传递一些对象到多个(可能是并发的)模板处理中。</p>
+
+          <p><code class="inline-code">api</code> 内建函数不是到处都可用的，
+		  有一些需求会遇到：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">api_builtin_enabled</code> 配置设置项必须设置为
+              <code class="inline-code">true</code>。为了不降低已有应用程序的安全性，它的默认值是 
+              <code class="inline-code">false</code> (至少在 2.3.22 版本中)。</p>
+            </li>
+
+            <li>
+              <p>值本身要支持它。我们在讨论当模板看到的值，它是通过 <a href="pgui_datamodel_objectWrapper.html">对象包装</a> 
+			  从原始对象值(来自于数据模型或者Java方法的返回值)中创建的。
+			  因此，这就依赖 FreeMarker 的配置设置项 <code class="inline-code">object_wrapper</code>，
+			  还有被包装的(原始)对象：</p>
+
+              <ul>
+                <li>
+                  <p>当对象包装器是
+                  <code class="inline-code">DefaultObjectWrapper</code> ，并且它的
+                  <code class="inline-code">incompatibleImprovements</code> 设置为 2.3.22 或更高
+                  (<a href="pgui_datamodel_objectWrapper.html#topic.defaultObjectWrapperIcI">在这里看如何设置它</a>) 
+				  (事实上，要做的是将它的 <code class="inline-code">useAdaptersForContainer</code> 
+				  属性设置为 <code class="inline-code">true</code>，但那是提到的 
+                  <code class="inline-code">incompatibleImprovements</code> 的默认值)时，从
+				  <code class="inline-code">Map</code> 和 <code class="inline-code">List</code> 
+				  中得到FTL值支持 <code class="inline-code">?api</code>。其它的
+				  <code class="inline-code">java.util.Collections</code> 也是这样，如果
+                  <code class="inline-code">DefaultObjectWrapper</code> 的
+                  <code class="inline-code">forceLegacyNonListCollections</code> 属性设置为 
+                  <code class="inline-code">false</code> (默认是 <code class="inline-code">true</code>，
+				  这是为了更好的向后兼容拆包)。</p>
+                </li>
+
+                <li>
+                  <p>当被纯
+                  <code class="inline-code">BeansWrapper</code> 包装时，所有值都支持
+                  <code class="inline-code">?api</code>。但是再次重申，如果有其它方法，就避免使用它。</p>
+                </li>
+
+                <li>
+                  <p>实现了 <code class="inline-code">freemarker.template.TemplateModelWithAPISupport</code> 接口，
+				  自定义的 <code class="inline-code">TemplateModel</code> 可以支持
+                  <code class="inline-code">?api</code>。</p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <p>当在配置中不允许或值本身不支持 <code class="inline-code">?api</code> 时使用了它，
+		  就会中止模板处理并发生错误。</p>
+
+          <p>一个值是否支持 <code class="inline-code">?api</code> 可以通过
+          <code class="inline-code"><em class="code-color">value</em>?has_api</code> 来检测，
+		  返回一个布尔值。请注意，<code class="inline-code">?has_api</code> 的结果不受
+          <code class="inline-code">api_builtin_enabled</code> 设置的影响。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_numType">byte, double, float, int, long, short</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>返回一个包含原变量中相同值的 <code class="inline-code">SimpleNumber</code>，
+		  但是在内部表示值中使用了 <code class="inline-code">java.lang.<em class="code-color">Type</em></code>。
+		  如果方法被重载了，这是有用的，或者一个 <code class="inline-code">TemplateModel</code> 
+		  解包器在自动选择适合的 <code class="inline-code">java.lang.*</code> 类型有问题时。
+		  请注意，从2.3.9版本开始，解包器有本质上改进，
+		  所以将基本不会使用到这些内建函数来转换数字类型了，
+		  除非在重载方法调用中来解决一些含糊的东西。</p>
+
+          <p>内建函数 <code class="inline-code">long</code> 也可以用于日期，
+		  时间和时间日期类型的值来获取返回为 <code class="inline-code">java.util.Date.getTime()</code> 
+		  的值。如果你不得不调用使用 <code class="inline-code">long</code> 类型时间戳的Java方法时，
+		  这是非常有用的。这个转换不是自动进行的。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_eval">eval</h2>
+
+
+          
+
+          
+
+          <p>这个函数求一个作为FTL表达式的字符串的值。比如 
+		  <code class="inline-code">&quot;1+2&quot;?eval</code>返回数字3。</p>
+
+          <p>在调用 <code class="inline-code">eval</code> 的地方，
+		  已被求值的表达式看到相同的变量(比如本地变量)是可见的。
+		  也就是说，它的行为就像在 
+		  <code class="inline-code"><em class="code-color">s</em>?eval</code> 处，
+		  你有 <code class="inline-code"><em class="code-color">s</em></code> 的
+		  <em>值</em>。除了，指向在 
+		  <code class="inline-code"><em class="code-color">s</em></code> 
+		  之外创建的循环变量，它不能使用
+		  <a href="ref_builtins_loop_var.html">循环变量内建函数</a>。</p>
+
+          <p>配置设置项影响来自 <code class="inline-code">Configuration</code> 
+		  对象表达式解析(比如语法)，而不是来自调用 <code class="inline-code">eval</code> 的的模板。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_has_content">has_content</h2>
+
+
+          
+
+          <p>如果变量(不是Java的 <code class="inline-code">null</code>)
+		  存在而且不是&quot;空&quot;就返回 <code class="inline-code">true</code>，否则返回 
+		  <code class="inline-code">false</code>。&quot;空”&quot;含义靠具体的情形来决定。
+		  它是直观的常识性概念。下面这些都是空：长度为0的字符串，
+		  没有子变量的序列或哈希表，一个已经超过最后一项元素的集合。
+		  如果值不是字符串，序列，哈希表或集合，如果它是数字，日期或布尔值
+		  (比如 <code class="inline-code">0</code> 和 <code class="inline-code">false</code> 是非空的)，
+		  那么它被认为是非空的，否则就是空的。注意当你的数据模型实现了多个模板模型接口，
+		  你可能会得到不是预期的结果。然而，当你有疑问时你通常可以使用 
+		  <code class="inline-code">expr!?size &gt; 0</code> 或 <code class="inline-code">expr!?length &gt;
+          0</code> 来代替 <code class="inline-code">expr?has_content</code>。</p>
+
+          <p>这个函数是个特殊的函数，你可以使用像 <a href="dgui_template_exp.html#dgui_template_exp_missing_default">默认值操作符</a> 
+		  那样的圆括号手法。也就是说，你可以编写 
+		  <code class="inline-code">product.color?has_content</code> 和 
+		  <code class="inline-code">(product.color)?has_content</code> 这样的代码。
+		  第一个没有控制当 <code class="inline-code">product</code> 为空的情形，而第二个控制了。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_interpret">interpret</h2>
+
+
+          
+
+          <p>该内建函数解析字符串作为FTL模板，而且返回一个用户自定义指令，
+		  也就是当应用于任意代码块中时，执行模板就像它当时 <a href="ref_directive_include.html"><code>被包含</code></a> 
+		  一样。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x=[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]&gt;
+&lt;#assign templateSource = r&quot;&lt;#list x as y&gt;${y}&lt;/#list&gt;&quot;&gt;
+&lt;#-- Note: That r was needed so that the ${y} is not interpreted above --&gt;
+&lt;#assign inlineTemplate = templateSource?interpret&gt;
+&lt;@inlineTemplate /&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">abc</pre></div>
+
+          <p>正如你看到的，<code class="inline-code">inlineTemplate</code> 是用户自定义指令，
+		  也就是当被执行时，运行当时内容是是 <code class="inline-code">templateSource</code> 值的模板。</p>
+
+          <p>配置设置项影响来自 <code class="inline-code">Configuration</code> 
+		  对象的解析(比如标签语法和命名转换)，而不是来自调用 
+		  <code class="inline-code">interpret</code> 的模板。
+		  这也就以为着之前的自动探测标签语法或命名转换不会影响已解释模板的解析。
+		  这也和 <a href="ref_directive_include.html"><code>include</code>
+          指令</a> 的工作方式一致。</p>
+
+          <p>通过 <code class="inline-code">interpret</code> 创建的模板名称就是模板调用
+          <code class="inline-code">interpret</code> 的名称，并加上
+          <code class="inline-code">&quot;-&gt;anonymous_interpreted&quot;</code>。例如，
+		  如果模板调用的内建函数是 <code class="inline-code">&quot;foo/bar.ftl&quot;</code>，
+		  那么结果模板的名称就是 <code class="inline-code">&quot;foo/bar.ftl-&gt;anonymous_interpreted&quot;</code>。
+		  因此，在已解释模板中的相对路径也就相对于该路径
+		  (也就是说，根路径就是 <code class="inline-code">&quot;foo&quot;</code>)，
+		  而且在已解释模板内部的错误将会指向这个生成的模板名称。</p>
+
+          <p>要得到更多有用的错误消息，可以在 <code class="inline-code">&quot;-&gt;&quot;</code> 
+		  之后覆盖模板名称部分。例如，我们说 <code class="inline-code">mailTemplateSource</code>
+		  来自于数据库表 <code class="inline-code">mail_template</code>，那么在错误时，
+		  想得到包含数据库ID的失败模板的错误日志：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign inlineTemplate = [mailTemplateSource, &quot;mail_templates id=${mailTemplateId}&quot;]?interpret&gt;</pre></div>
+
+          <p>正如你看到的，<code class="inline-code">interpret</code> 可以应用于有两项的序列，
+		  这里的第一项是要解释的FTL字符串，第二项是在 <code class="inline-code">&quot;-&gt;&quot;</code> 
+		  之后使用的模板名称。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_isType">is_...</h2>
+
+
+          
+
+          
+
+          <p>这些内建函数用来检查变量的类型，然后根据类型返回 
+		  <code class="inline-code">true</code> 或 <code class="inline-code">false</code>。
+		  下面是 <code class="inline-code">is_<em class="code-color">...</em></code> 内建函数列表：</p>
+
+            <div class="table-responsive">
+    <table class="table">
+
+            <thead>
+              <tr>
+                <th>内建函数</th>
+
+
+                <th>如果值是 … 时返回 <code class="inline-code">true</code></th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+              <tr>
+                <td><code class="inline-code">is_string</code></td>
+
+
+                <td>字符串</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_number</code></td>
+
+
+                <td>数字</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_boolean</code></td>
+
+
+                <td>布尔值</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_date</code></td>
+
+
+                <td>不要使用它！使用 <code class="inline-code">is_date_like</code> 来代替，
+				它们是相同的。往后也许会修改它的含义为 <code class="inline-code">date_only</code>。</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_date_like</code></td>
+
+
+                <td>日期，也就似乎日期，时间或者日期-时间，
+				亦或者是未知精确类型的日期(从 FreeMarker 2.3.21 版本开始)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_date_only</code></td>
+
+
+                <td>日期 (没有时间部分) (从 FreeMarker 2.3.21 版本开始)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_time</code></td>
+
+
+                <td>时间 (没有年-月-日部分) (从 FreeMarker 2.3.21 版本开始)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_datetime</code></td>
+
+
+                <td>日期-时间 (包含年-月-日和时间两者)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_unknown_date_like</code></td>
+
+
+                <td>不清楚是日期或时间或日期-时间的日期</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_method</code></td>
+
+
+                <td>方法</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_transform</code></td>
+
+
+                <td>变换</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_macro</code></td>
+
+
+                <td>宏或函数(当然，由于历史问题，也对函数有效)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_hash</code></td>
+
+
+                <td>哈希表 (包含扩展的哈希表)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_hash_ex</code></td>
+
+
+                <td>扩展的哈希表 (支持 <code class="inline-code">?keys</code> 和
+                <code class="inline-code">?values</code>)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_sequence</code></td>
+
+
+                <td>序列</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_collection</code></td>
+
+
+                <td>集合 (包含扩展的集合)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_collection_ex</code></td>
+
+
+                <td>扩展的集合 (支持
+                <code class="inline-code">?size</code>)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_enumerable</code></td>
+
+
+                <td>序列或集合</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_indexable</code></td>
+
+
+                <td>序列</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_directive</code></td>
+
+
+                <td>指令类型 (例如宏 <span class="marked-for-programmers">或
+                <code class="inline-code">TemplateDirectiveModel</code>，
+                <code class="inline-code">TemplateTransformModel</code>, 等...</span>)，
+				或者函数 (由于历史问题)</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">is_node</code></td>
+
+
+                <td>结点</td>
+
+              </tr>
+
+            </tbody>
+
+              </table>
+  </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_namespace">namespace</h2>
+
+
+          
+
+          <p>该内建函数返回和宏变量或函数变量关联的命名空间
+		  (也就是命名空间的&quot;入口&quot;哈希表)。你只能和宏和函数一起来用它。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_new">new</h2>
+
+
+          
+
+          
+
+          <p>这是用来创建一个确定的 <code class="inline-code">TemplateModel</code> 
+		  实现变量的内建函数。</p>
+
+          <p>在 <code class="inline-code">?</code> 的左边你可以指定一个字符串，
+		  是 <code class="inline-code">TemplateModel</code> 实现类的完全限定名。
+		  结果是调用构造方法生成一个方法变量，然后将新变量返回。</p>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Creates an user-defined directive be calling the parameterless constructor of the class --&gt;
+&lt;#assign word_wrapp = &quot;com.acmee.freemarker.WordWrapperDirective&quot;?new()&gt;
+&lt;#-- Creates an user-defined directive be calling the constructor with one numerical argument --&gt;
+&lt;#assign word_wrapp_narrow = &quot;com.acmee.freemarker.WordWrapperDirective&quot;?new(40)&gt;</pre></div>
+
+          <p>更多关于构造方法参数被包装和如何选择重载的构造方法信息，
+		  请阅读： <a href="pgui_misc_beanwrapper.html">程序开发指南/其它/Bean的包装</a></p>
+
+          <p>该内建函数可以是出于安全考虑的，
+		  因为模板作者可以创建任意的Java对象，只要它们实现了 
+		  <code class="inline-code">TemplateModel</code> 接口，然后来使用这些对象。
+		  而且模板作者可以触发没有实现 <code class="inline-code">TemplateModel</code> 
+		  接口的类的静态初始化块。你可以(从 2.3.17版开始)使用
+		  <code class="inline-code">Configuration.setNewBuiltinClassResolver(TemplateClassResolver)</code>
+		  或设置 <code class="inline-code">new_builtin_class_resolver</code> 来限制这个内建函数对类的访问。
+		  参考Java API文档来获取详细信息。如果允许并不是很可靠的用户上传模板，
+		  那么你一定要关注这个问题。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_numToDate">number_to_date, number_to_time, number_to_datetime</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>它们被用来转换数字(通常是Java的 <code class="inline-code">long</code>类型)到日期，
+		  时间或时间日期类型。这就使得它们和Java中的 
+		  <code class="inline-code">new java.util.Date(long)</code> 是一致的。那也就是说，
+		  现在数字可以被解释成毫秒数进行参数传递。数字可以是任意内容和任意类型，
+		  只要它的值可以认为是 <code class="inline-code">long</code> 就行。如果数字不是完整的，
+		  那么它就会根据&quot;五入&quot;原则进行进位。这个转换不是自动进行的。</p>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${1305575275540?number_to_datetime}
+${1305575275540?number_to_date}
+${1305575275540?number_to_time}</pre></div>
+
+          <p>将会输出这样的内容(基于当前的本地化设置和时区)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">May 16, 2011 3:47:55 PM
+May 16, 2011
+3:47:55 PM</pre></div>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_type_independent.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directives.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

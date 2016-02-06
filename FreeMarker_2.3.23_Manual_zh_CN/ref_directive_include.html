@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>include - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="include">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_include.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_include.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directives.html"><span itemprop="name">指令参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_directive_include.html"><span itemprop="name">include</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","指令参考","include"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_import.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_list.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_include" itemprop="headline">include</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_89" data-menu-target="autoid_89">概要</a></li><li><a class="page-menu-link" href="#autoid_90" data-menu-target="autoid_90">描述</a><ul><li><a class="page-menu-link" href="#ref_directive_include_acquisition" data-menu-target="ref_directive_include_acquisition">使用获得机制</a></li><li><a class="page-menu-link" href="#ref_directive_include_localized" data-menu-target="ref_directive_include_localized">本地化查找</a></li></ul></li></ul> </div><a name="ref.directive.include"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_89">概要</h2>
+
+
+          
+<pre class="metaTemplate">
+<code class="inline-code">&lt;#include <em class="code-color">path</em>&gt;</code>
+或
+<code class="inline-code">&lt;#include <em class="code-color">path</em> <em class="code-color">options</em>&gt;</code>
+</pre>
+
+
+          <p>这里：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code"><em class="code-color">path</em></code>：
+			  要包含文件的路径；一个算作是字符串的表达式。(用其他话说，
+			  它不用是一个固定的字符串，它也可以是像 
+			  <code class="inline-code">profile.baseDir + &quot;/menu.ftl&quot;</code>这样的东西。)
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">options</em></code>：
+			  一个或多个这样的选项：
+              <code class="inline-code">encoding=<em class="code-color">encoding</em></code>,
+              <code class="inline-code">parse=<em class="code-color">parse</em></code>
+
+              <ul>
+                <li>
+                  <code class="inline-code"><em class="code-color">encoding</em></code>：
+				  算作是字符串的表达式
+                </li>
+
+                <li>
+                  <code class="inline-code"><em class="code-color">parse</em></code>：
+				  算作是布尔值的表达式(为了向下兼容，也接受一部分字符串值)
+                </li>
+
+                <li>
+                  <code class="inline-code"><em class="code-color">ignore_missing</em></code>:
+				  算作是布尔值的表达式
+                </li>
+              </ul>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_90">描述</h2>
+
+
+          <p>你可以使用它在你的模板中插入另外一个 FreeMarker 模板文件
+		  (由 <code class="inline-code"><em class="code-color">path</em></code> 参数指定)。
+		  被包含模板的输出格式是在 <code class="inline-code">include</code> 标签出现的位置插入的。
+		  被包含的文件和包含它的模板共享变量，就像是被复制粘贴进去的一样。
+		  <code class="inline-code">include</code> 指令不能由被包含文件的内容所替代，
+		  它只是当 FreeMarker 每次在模板处理期间到达 <code class="inline-code">include</code> 
+		  指令时处理被包含的文件。所以对于如果 <code class="inline-code">include</code> 
+		  在 <code class="inline-code">list</code> 循环之中的例子，
+		  你可以为每个循环周期内指定不同的文件名。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>这个指令不能和JSP(Servlet)的include搞混，
+			因为它不涉及到Servlet容器中，只是处理应外一个FreeMarker模板，
+			不能&quot;离开&quot;FreeMarker。关于如何处理&quot;JSP include&quot;，<a href="app_faq.html#faq_servlet_include">请阅读...</a>。</p>
+            </div>
+
+
+          <p><code class="inline-code"><em class="code-color">path</em></code>
+		  参数可以是如 <code class="inline-code">&quot;foo.ftl&quot;</code> 和 
+		  <code class="inline-code">&quot;../foo.ftl&quot;</code> 一样的相对路径，或者是如 
+		  <code class="inline-code">&quot;/foo.ftl&quot;</code> 这样的绝对路径。
+		  相对路径是相对于使用 <code class="inline-code">import</code> 指令的模板文件夹。
+		  绝对路径是相对于程序员在配置 FreeMarker 时定义的基路径
+		  (通常指代&quot;模板的根路径&quot;)。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>这和 FreeMarker 2.1 版本之前的处理方式不同，
+			之前的路径通常是绝对路径。为了保留原来的行为，
+			要在 <code class="inline-code">Configuration</code> 对象中开启经典的兼容模式。</p>
+            </div>
+
+
+          <p>通常使用 <code class="inline-code">/</code>(斜杠)来分隔路径成分，
+		  而不是 <code class="inline-code">\</code>(反斜杠)。如果你从你本地的文件系统加载模板，
+		  而它使用反斜杠(像Windows操作系统)，也要使用 <code class="inline-code">/</code>。</p>
+
+          <p>比如：</p>
+
+          <p>假设 /common/copyright.ftl 包含：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">Copyright 2001-2002 ${me}&lt;br&gt;
+All rights reserved.</pre></div>
+
+          <p>那么：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign me = &quot;Juila Smith&quot;&gt;
+&lt;h1&gt;Some test&lt;/h1&gt;
+&lt;p&gt;Yeah.
+&lt;hr&gt;
+<strong>&lt;#include &quot;/common/copyright.ftl&quot;&gt;</strong></pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;h1&gt;Some test&lt;/h1&gt;
+&lt;p&gt;Yeah.
+&lt;hr&gt;
+<strong>Copyright 2001-2002 Juila Smith
+All rights reserved.</strong></pre></div>
+
+          <p>支持的 
+          <code class="inline-code"><em class="code-color">options</em></code> 选项有：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">parse</code>：如果它为 <code class="inline-code">true</code>，
+			  那么被包含的文件将会当作FTL来解析，否则整个文件将被视为简单文本
+			  (也就是说不会在其中查找 FreeMarker 的结构)。如果你忽略了这个选项，
+			  那么它默认是 <code class="inline-code">true</code>。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">encoding</code>：被包含文件从包含它的文件继承的编码方式
+			  (实际就是字符集)，除非你用这个选项来指定编码方式。
+			  合法的名字有：ISO-8859-2，UTF-8，Shift_JIS，Big5，EUC-KR，GB2312。
+			  <span class="marked-for-programmers">编码名称要和java.io.InputStreamReader
+			  中支持的那些一致(对于Java API 1.3版本：MIME 
+			  希望的字符集是从IANA字符集注册处得到的)</span></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">ignore_missing</code>：当为 
+              <code class="inline-code">true</code>，模板引用为空时压制错误，而 
+			  <code class="inline-code">&lt;#include ...&gt;</code> 不会输出任何东西。当为 
+              <code class="inline-code">false</code> 时，如果模板不存在，
+			  那么模板处理就会发生错误并停止。如果忽略这个选项，那么它的默认值是 
+			  <code class="inline-code">false</code>。</p>
+            </li>
+          </ul>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;/common/navbar.html&quot; parse=false encoding=&quot;Shift_JIS&quot;&gt;</pre></div>
+
+          <p><span class="marked-for-programmers">请注意，
+		  对于所有模板可能会用 <code class="inline-code">Configuration</code> 
+		  的&quot;自动包含&quot;设置自动处理通用的包含物。</span></p>
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="ref_directive_include_acquisition">使用获得机制</h3>
+
+
+            
+
+            <p>有一个特殊的路径组成，是用一个星号(<code class="inline-code">*</code>)来代表的。
+			它被解释为&quot;当前目录或其他任意它的父目录&quot;。因此，
+			如果模板在 <code class="inline-code">/foo/bar/template.ftl</code> 位置上，有下面这行：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;*/footer.ftl&quot;&gt;</pre></div>
+
+            <p>那么引擎就会在下面的位置上寻找模板，并按这个顺序：</p>
+
+            <ul>
+              <li>
+                <code class="inline-code">/foo/bar/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/footer.ftl</code>
+              </li>
+            </ul>
+
+            <p>该机制被称为 <strong>acquisition</strong> 
+			并允许设计者在父目录中放置通用的被包含的文件，
+			而且当需要时在每个子路径基础上重新定义它们。
+			我们说包含它们的模板获得了从包含它的第一个父目录中的模板。请注意，
+			你不但可以在星号的右面指定一个模板的名字，也可以指定一个子路径。
+			也就是说，如果前面的模板由下面这个所替代：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;*/commons/footer.ftl&quot;&gt;</pre></div>
+
+            <p>那么引擎将会从下面的路径开始寻找模板，并按这个顺序：</p>
+
+            <ul>
+              <li>
+                <code class="inline-code">/foo/bar/commons/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/commons/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/commons/footer.ftl</code>
+              </li>
+            </ul>
+
+            <p>最终，星号不再是路径的第一个元素：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;commons/*/footer.ftl&quot;&gt;</pre></div>
+
+            <p>会让引擎将会从下面的路径开始寻找模板，并按这个顺序：</p>
+
+            <ul>
+              <li>
+                <code class="inline-code">/foo/bar/commons/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/bar/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/footer.ftl</code>
+              </li>
+            </ul>
+
+            <p>然而，在路径中最多只能有一个星号。
+			指定多余一个星号会导致模板不能被发现。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="ref_directive_include_localized">本地化查找</h3>
+
+
+            
+
+            <p>本地化是语言和可选的国家或方言标识符
+			(加上可能的更多变体标识符，比如 "MAC")。
+			无论何时模板被请求，期望的本地化都会被指定(明确或含蓄)，
+			FreeMarker 会试图找到变化的模板来匹配本地化环境。当模板包含或引入其它模板时，
+			在内部也会被请求一个本地化环境，也就是 <code class="inline-code">locale</code> 配置的本地化，
+			通常它是顶级模板的本地化设置。</p>
+
+            <p>假设模板使用本地化 <code class="inline-code">en_US</code> 来加载，
+			就是美国英语。当包含其它模板时：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;footer.ftl&quot;&gt;</pre></div>
+
+            <p>引擎实际上就会寻找一些模板，并按照这个顺序：</p>
+
+            <ul>
+              <li>
+                <code class="inline-code">footer_en_US.ftl</code>,
+              </li>
+
+              <li>
+                <code class="inline-code">footer_en.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">footer.ftl</code>
+              </li>
+            </ul>
+
+            <p>它会使用第一个存在的。</p>
+
+            <p>请注意，如果 FreeMarker 查找的本地化变化是由程序员配置的，
+			那么这里我们只能描述默认的行为。<span class="marked-for-programmers"> 可以使用
+            <code class="inline-code">localized_lookup</code> 设置来禁用本地化查找
+            (<code class="inline-code">Configuration.setLocalizedLookup(boolean)</code>)。
+			而且，可以使用 <code class="inline-code">template_lookup_strategy</code> 
+			设置来自行定义推导出的模板名称序列
+            (<code class="inline-code">Configuration.setTemplateLookupStrategy(TemplateLookupStrategy)</code>)。
+			</span></p>
+
+            <p>当你同时使用获得机制(也就是路径中的 <code class="inline-code">*</code> 步骤)
+            和本地化查找时，在父目录中有指定本地化的模板优先于在子目录中有很少本地化的模板。
+			假设你使用下面的代码来包含 <code class="inline-code">/foo/bar/template.ftl</code>：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#include &quot;*/footer.ftl&quot;&gt;</pre></div>
+
+            <p>引擎将会查找这些模板，并按照这个顺序：</p>
+
+            <ul>
+              <li>
+                <code class="inline-code">/foo/bar/footer_en_US.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/footer_en_US.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/footer_en_US.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/bar/footer_en.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/footer_en.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/footer_en.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/bar/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/foo/footer.ftl</code>
+              </li>
+
+              <li>
+                <code class="inline-code">/footer.ftl</code>
+              </li>
+            </ul>
+          
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_import.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_list.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

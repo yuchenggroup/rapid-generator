@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>指令 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="指令">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_datamodel_directive.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_datamodel_directive.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel.html"><span itemprop="name">数据模型</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel_directive.html"><span itemprop="name">指令</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","数据模型","指令"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_datamodel_method.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_datamodel_node.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_datamodel_directive" itemprop="headline">指令</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_33" data-menu-target="autoid_33">示例 1</a></li><li><a class="page-menu-link" href="#autoid_34" data-menu-target="autoid_34">示例 2</a></li><li><a class="page-menu-link" href="#autoid_35" data-menu-target="autoid_35">注意</a></li></ul> </div><p>Java程序员可以使用 <code class="inline-code">TemplateDirectiveModel</code> 
+		接口在Java代码中实现自定义指令。详情可以参加API文档。</p>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+          <p><code class="inline-code">TemplateDirectiveModel</code> 在 FreeMarker 2.3.11 版本时才加入，
+          来代替快被废弃的 <code class="inline-code">TemplateTransformModel</code>。</p>
+          </div>
+
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_33">示例 1</h2>
+
+
+          <p>我们要实现一个指令，
+		  这个指令可以将在它开始标签和结束标签之内的字符都转换为大写形式。
+		  就像这个模板：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">foo
+<strong>&lt;@upper&gt;</strong>
+  bar
+  &lt;#-- All kind of FTL is allowed here --&gt;
+  &lt;#list [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;] as color&gt;
+    ${color}
+  &lt;/#list&gt;
+  baaz
+<strong>&lt;/@upper&gt;</strong>
+wombat</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">foo
+  BAR
+    RED
+    GREEN
+    BLUE
+  BAAZ
+wombat</pre></div>
+
+          <p>下面是指令类的源代码:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">package com.example;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
+
+/**
+ *  FreeMarker user-defined directive that progressively transforms
+ *  the output of its nested content to upper-case.
+ *  
+ *  
+ *  &lt;p&gt;&lt;b&gt;Directive info&lt;/b&gt;&lt;/p&gt;
+ * 
+ *  &lt;p&gt;Directive parameters: None
+ *  &lt;p&gt;Loop variables: None
+ *  &lt;p&gt;Directive nested content: Yes
+ */
+public class UpperDirective implements TemplateDirectiveModel {
+    
+    public void execute(Environment env,
+            Map params, TemplateModel[] loopVars,
+            TemplateDirectiveBody body)
+            throws TemplateException, IOException {
+        // Check if no parameters were given:
+        if (!params.isEmpty()) {
+            throw new TemplateModelException(
+                    &quot;This directive doesn&#39;t allow parameters.&quot;);
+        }
+        if (loopVars.length != 0) {
+                throw new TemplateModelException(
+                    &quot;This directive doesn&#39;t allow loop variables.&quot;);
+        }
+        
+        // If there is non-empty nested content:
+        if (body != null) {
+            // Executes the nested body. Same as &lt;#nested&gt; in FTL, except
+            // that we use our own writer instead of the current output writer.
+            body.render(new UpperCaseFilterWriter(env.getOut()));
+        } else {
+            throw new RuntimeException(&quot;missing body&quot;);
+        }
+    }
+    
+    /**
+     * A {@link Writer} that transforms the character stream to upper case
+     * and forwards it to another {@link Writer}.
+     */ 
+    private static class UpperCaseFilterWriter extends Writer {
+       
+        private final Writer out;
+           
+        UpperCaseFilterWriter (Writer out) {
+            this.out = out;
+        }
+
+        public void write(char[] cbuf, int off, int len)
+                throws IOException {
+            char[] transformedCbuf = new char[len];
+            for (int i = 0; i &lt; len; i++) {
+                transformedCbuf[i] = Character.toUpperCase(cbuf[i + off]);
+            }
+            out.write(transformedCbuf);
+        }
+
+        public void flush() throws IOException {
+            out.flush();
+        }
+
+        public void close() throws IOException {
+            out.close();
+        }
+    }
+
+}</pre></div>
+
+          <p>现在我们需要创建这个类的实例，
+		  然后让这个指令在模板中可以通过名称&quot;upper&quot;来访问
+		  (或者是其它我们想用的名字)。一个可行的方案是把这个指令放到数据模型中：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">root.put(&quot;upper&quot;, new com.example.UpperDirective());</pre></div>
+
+          <p>但更好的做法是将常用的指令作为 <a href="pgui_config_sharedvariables.html">共享变量</a> 
+		  放到 <code class="inline-code">Configuration</code> 中。</p>
+
+          <p>当然也可以使用 <a href="ref_builtins_expert.html#ref_builtin_new">内建函数<code>new</code></a>
+		  将指令放到一个FTL库(宏的集合，就像在模板中，
+		  使用 <code class="inline-code">include</code> 或 <code class="inline-code">import</code> )中：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Maybe you have directives that you have implemented in FTL --&gt;
+&lt;#macro something&gt;
+  ...
+&lt;/#macro&gt;
+
+&lt;#-- Now you can&#39;t use &lt;#macro upper&gt;, but instead you can: --&gt;
+&lt;#assign upper = &quot;com.example.UpperDirective&quot;?new()&gt;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_34">示例 2</h2>
+
+
+          <p>我们来创建一个指令，这个指令可以一次又一次地执行其中的嵌套内容，
+		  这个次数由指定的数字来确定(就像 <code class="inline-code">list</code> 指令)，
+		  可以使用<code class="inline-code">&lt;hr&gt;</code>将输出的重复内容分开。
+		  这个指令我们命名为&quot;repeat&quot;。示例模板如下：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x = 1&gt;
+
+<strong>&lt;@repeat count=4&gt;</strong>
+  Test ${x}
+  &lt;#assign x++&gt;
+<strong>&lt;/@repeat&gt;</strong>
+
+<strong>&lt;@repeat count=3 hr=true&gt;</strong>
+  Test
+<strong>&lt;/@repeat&gt;</strong>
+
+<strong>&lt;@repeat count=3; cnt&gt;</strong>
+  ${cnt}. Test
+<strong>&lt;/@repeat&gt;</strong></pre></div>
+
+          <p>输出为：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  Test 1
+  Test 2
+  Test 3
+  Test 4
+
+  Test
+&lt;hr&gt;  Test
+&lt;hr&gt;  Test
+
+  1. Test
+  2. Test
+  3. Test
+ </pre></div>
+
+          <p>指令的实现类为：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">package com.example;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.Map;
+
+import freemarker.core.Environment;
+import freemarker.template.SimpleNumber;
+import freemarker.template.TemplateBooleanModel;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateNumberModel;
+
+/**
+ * FreeMarker user-defined directive for repeating a section of a template,
+ * optionally with separating the output of the repetations with
+ * &lt;tt&gt;&amp;lt;hr&gt;&lt;/tt&gt;-s.
+ *
+ * 
+ * &lt;p&gt;&lt;b&gt;Directive info&lt;/b&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;Parameters:
+ * &lt;ul&gt;
+ *   &lt;li&gt;&lt;code&gt;count&lt;/code&gt;: The number of repetations. Required!
+ *       Must be a non-negative number. If it is not a whole number then it will
+ *       be rounded &lt;em&gt;down&lt;/em&gt;.
+ *   &lt;li&gt;&lt;code&gt;hr&lt;/code&gt;: Tells if a HTML &quot;hr&quot; element could be printed between
+ *       repetations. Boolean. Optional, defaults to &lt;code&gt;false&lt;/code&gt;. 
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;Loop variables: One, optional. It gives the number of the current
+ *    repetation, starting from 1.
+ * 
+ * &lt;p&gt;Nested content: Yes
+ */
+public class RepeatDirective implements TemplateDirectiveModel {
+    
+    private static final String PARAM_NAME_COUNT = &quot;count&quot;;
+    private static final String PARAM_NAME_HR = &quot;hr&quot;;
+    
+    public void execute(Environment env,
+            Map params, TemplateModel[] loopVars,
+            TemplateDirectiveBody body)
+            throws TemplateException, IOException {
+        
+        // ---------------------------------------------------------------------
+        // Processing the parameters:
+        
+        int countParam = 0;
+        boolean countParamSet = false;
+        boolean hrParam = false;
+        
+        Iterator paramIter = params.entrySet().iterator();
+        while (paramIter.hasNext()) {
+            Map.Entry ent = (Map.Entry) paramIter.next();
+            
+            String paramName = (String) ent.getKey();
+            TemplateModel paramValue = (TemplateModel) ent.getValue();
+            
+            if (paramName.equals(PARAM_NAME_COUNT)) {
+                if (!(paramValue instanceof TemplateNumberModel)) {
+                    throw new TemplateModelException(
+                            &quot;The \&quot;&quot; + PARAM_NAME_HR + &quot;\&quot; parameter &quot;
+                            + &quot;must be a number.&quot;);
+                }
+                countParam = ((TemplateNumberModel) paramValue)
+                        .getAsNumber().intValue();
+                countParamSet = true;
+                if (countParam &lt; 0) {
+                    throw new TemplateModelException(
+                            &quot;The \&quot;&quot; + PARAM_NAME_HR + &quot;\&quot; parameter &quot;
+                            + &quot;can&#39;t be negative.&quot;);
+                }
+            } else if (paramName.equals(PARAM_NAME_HR)) {
+                if (!(paramValue instanceof TemplateBooleanModel)) {
+                    throw new TemplateModelException(
+                            &quot;The \&quot;&quot; + PARAM_NAME_HR + &quot;\&quot; parameter &quot;
+                            + &quot;must be a boolean.&quot;);
+                }
+                hrParam = ((TemplateBooleanModel) paramValue)
+                        .getAsBoolean();
+            } else {
+                throw new TemplateModelException(
+                        &quot;Unsupported parameter: &quot; + paramName);
+            }
+        }
+        if (!countParamSet) {
+                throw new TemplateModelException(
+                        &quot;The required \&quot;&quot; + PARAM_NAME_COUNT + &quot;\&quot; paramter&quot;
+                        + &quot;is missing.&quot;);
+        }
+        
+        if (loopVars.length &gt; 1) {
+                throw new TemplateModelException(
+                        &quot;At most one loop variable is allowed.&quot;);
+        }
+        
+        // Yeah, it was long and boring...
+        
+        // ---------------------------------------------------------------------
+        // Do the actual directive execution:
+        
+        Writer out = env.getOut();
+        if (body != null) {
+            for (int i = 0; i &lt; countParam; i++) {
+                // Prints a &lt;hr&gt; between all repetations if the &quot;hr&quot; parameter
+                // was true:
+                if (hrParam &amp;&amp; i != 0) {
+                    out.write(&quot;&lt;hr&gt;&quot;);
+                }
+                
+                // Set the loop variable, if there is one:
+                if (loopVars.length &gt; 0) {
+                    loopVars[0] = new SimpleNumber(i + 1);
+                }
+                
+                // Executes the nested body (same as &lt;#nested&gt; in FTL). In this
+                // case we don&#39;t provide a special writer as the parameter:
+                body.render(env.getOut());
+            }
+        }
+    }
+
+}</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_35">注意</h2>
+
+
+          <p><code class="inline-code">TemplateDirectiveModel</code> 
+		  对象通常不应该是有状态的，这一点非常重要。
+		  一个经常犯的错误是存储指令的状态然后在对象的属性中调用执行。
+		  想一下相同指令的嵌入调用，或者指令对象被用作共享变量，
+		  并通过多线程同时访问。</p>
+
+          <p>不幸的是， <code class="inline-code">TemplateDirectiveModel</code> 
+		  不支持传递参数的位置(而不是参数名称)。从 FreeMarker 2.4 版本开始，它将被修正。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_datamodel_method.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_datamodel_node.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

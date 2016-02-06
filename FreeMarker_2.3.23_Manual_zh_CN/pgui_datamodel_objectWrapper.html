@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>对象包装 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="对象包装">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_datamodel_objectWrapper.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_datamodel_objectWrapper.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel.html"><span itemprop="name">数据模型</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_datamodel_objectWrapper.html"><span itemprop="name">对象包装</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","数据模型","对象包装"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_datamodel_node.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_datamodel_objectWrapper" itemprop="headline">对象包装</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#pgui_datamodel_defaultObjectWrapper" data-menu-target="pgui_datamodel_defaultObjectWrapper">默认对象包装器</a></li><li><a class="page-menu-link" href="#pgui_datamodel_customObjectWrappingExample" data-menu-target="pgui_datamodel_customObjectWrappingExample">自定义对象包装示例</a></li></ul> </div><p>对象包装器是实现了 <code class="inline-code">freemarker.template.ObjectWrapper</code> 
+		接口的类。它的目标是实现Java对象(应用程序中特定类等，比如 <code class="inline-code">String</code>，
+		<code class="inline-code">Map</code>，<code class="inline-code">List</code> 实例)和FTL类型系统之间的映射。换句话说，
+		它指定了模板如何在数据模型(包含从模板中调用的Java方法的返回值)中发现Java对象。
+		对象包装器作为插件放入 <code class="inline-code">Configuration</code> 中，可以使用
+		<code class="inline-code">object_wrapper</code> 属性设置
+		(或者使用<code class="inline-code">Configuration.setObjectWrapper</code>)。</p><p>从技术角度来说，FTL类型系统由之前介绍过的 <code class="inline-code">TemplateModel</code> 子接口
+		(<code class="inline-code">TemplateScalarModel</code>，<code class="inline-code">TemplateHashMode</code>，
+        <code class="inline-code">TemplateSequenceModel</code>等)来表示。要映射Java对象到FTL类型系统中，
+		对象包装器的 <code class="inline-code">TemplateModel wrap(java.lang.Object obj)</code> 方法会被调用。</p><p>有时FreeMarker需要撤回映射，此时 <code class="inline-code">对象包装器ObjectWrapper</code> 
+		的 <code class="inline-code">Object unwrap(TemplateModel)</code> 方法就被调用了
+		(或其他的变化，请参考API文档来获取详细内容)。最后的操作是在
+        <code class="inline-code">ObjectWrapperAndUnwrapper</code> 中，它是
+        <code class="inline-code">ObjectWrapper</code> 的子接口。很多实际的包装器会实现 
+        <code class="inline-code">ObjectWrapperAndUnwrapper</code> 接口。</p><p>我们来看一下包装Java对象并包含其他对象
+		(比如 <code class="inline-code">Map</code>，<code class="inline-code">List</code>，数组，
+		或者有JavaBean属性的对象)是如何进行的。可以这么说，对象包装器将 
+		<code class="inline-code">Object[]</code> 数组包装成 <code class="inline-code">TemplateSquenceModel</code> 
+		接口的一些实现。当FreeMarker需要FTL序列中项的时候，它会调用 
+        <code class="inline-code">TemplateSquenceModel.get(int index)</code> 方法。该方法的返回值是 
+        <code class="inline-code">TemplateModel</code>，也就是说，<code class="inline-code">TemplateSquenceModel</code> 
+		实现不仅仅可以从给定的数组序列获取 <code class="inline-code">对象</code>，
+		也可以负责在返回它之前包装该值。为了解决这个问题，典型的 
+		<code class="inline-code">TemplateSquenceModel</code> 实现将会存储它创建的
+        <code class="inline-code">ObjectWrapper</code>，之后再调用该 <code class="inline-code">ObjectWrapper</code> 
+		来包装包含的值。相同的逻辑代表了 <code class="inline-code">TemplateHashModel</code> 或其他的
+        <code class="inline-code">TemplateModel</code>，它是其它 <code class="inline-code">TemplateModel</code> 的容器。
+		因此，通常不论值的层次结构有多深，所有值都会被同一个 <code class="inline-code">ObjectWrapper</code> 
+		包装。(要创建 <code class="inline-code">TemplateModel</code> 的实现类，请遵循这个原则，可以使用 
+		<code class="inline-code">freemarker.template.WrappingTemplateModel</code> 作为基类。)</p><p>数据模型本身(root变量)是 <code class="inline-code">TemplateHashModel</code>。
+		在 <code class="inline-code">Template.process</code> 中指定的root对象将会被在 
+		<code class="inline-code">object_wrapper</code> 配置中设置的对象包装器所包装，并产生一个
+        <code class="inline-code">TemplateHashModel</code>。从此，被包含值的包装遵循之前描述的逻辑
+		(比如，容器负责包装它的子实例)。</p><p>行为良好的对象包装器都会绕过已经实现 <code class="inline-code">TemplateModel</code> 
+		接口的对象。如果将已经实现 <code class="inline-code">TemplateModel</code> 的对象放到数据模型中
+		(或者从模板中调用的Java方法返回这个对象)，那么就可以避免实际的对象包装。
+		当特别是通过模板访问创建的值时，通常会这么做。因此，要避免更多上面对象包装的性能问题，
+		但也可以精确控制模板可以看到的内容(不是基于当前对象包装器的映射策略)。
+		常见的应用程序使用该手法是使用 <code class="inline-code">freemarker.template.SimpleHash</code> 
+		作为数据模型的根root(而不是<code class="inline-code">Map</code>)，当使用 <code class="inline-code">SimpleHash</code>
+		的 <code class="inline-code">put</code> 方法来填充(这点很重要，它不会复制已经填充并存在的
+		<code class="inline-code">Map</code>)。这会加快顶层数据模型变量的访问速度。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_datamodel_defaultObjectWrapper">默认对象包装器</h2>
+
+
+          
+
+          
+
+          <p><code class="inline-code">object_wrapper</code> <code class="inline-code">Configuration</code> 
+		  的默认设置是 <code class="inline-code">freemarker.template.DefaultObjectWrapper</code> 
+		  实例。除非有特别的需求，那么建议使用这个对象包装器，或者是自定义的
+          <code class="inline-code">DefaultObjectWrapper</code> 的子类。</p>
+
+          <p>它会识别大部分基本的Java类型，比如 <code class="inline-code">String</code>，
+		  <code class="inline-code">Number</code>，<code class="inline-code">Boolean</code>，
+		  <code class="inline-code">Date</code>，<code class="inline-code">List</code> (通常还有全部的 
+		  <code class="inline-code">java.util.Collection</code> 类型)，
+		  数组，<code class="inline-code">Map</code>等。并把它们自然地包装成匹配 
+		  <code class="inline-code">TemplateModel</code> 接口的对象。它也会使用
+		  <code class="inline-code">freemarker.ext.dom.NodeModel</code> 来包装W3C DOM结点，
+		  所以可以很方便地处理XML， <a href="xgui.html">在XML章节会有描述</a>)。
+		  对于Jython对象，会代理到 <code class="inline-code">freemarker.ext.jython.JythonWrapper</code> 上。
+		  而对于其它所有对象，则会调用 <code class="inline-code">BeansWrapper.wrap</code>(超类的方法)，
+		  暴露出对象的JavaBean属性作为哈希表项
+		  (比如FTL中的 <code class="inline-code">myObj.foo</code> 会在后面调用 <code class="inline-code">getFoo()</code>)，
+		  也会暴露出对象(比如FTL中的 <code class="inline-code">myObj.bar(1, 2)</code> 就会调用方法)
+		  的公有方法(JavaBean action)。(关于对象包装器的更多信息，请参阅
+		  <a href="pgui_misc_beanwrapper.html">该章节</a>。)</p>
+
+          <p>关于 <code class="inline-code">DefaultObjectWrapper</code> 更多值得注意的细节：</p>
+
+          <ul>
+            <li>
+              <p>不用经常使用它的构造方法，而是使用 
+			  <code class="inline-code">DefaultObjectWrapperBuilder</code> 来创建它。
+			  这就允许 FreeMarker 使用单例。</p>
+            </li>
+
+            <li>
+              <p><a name="topic.defaultObjectWrapperIcI"></a><code class="inline-code">DefaultObjectWrapper</code> 有
+              <code class="inline-code">incompatibleImprovements</code> 属性，
+			  这在 2.3.22 或更高版本中是极力推荐的(参看该效果的 <a href="http://freemarker.org/docs/api/freemarker/template/DefaultObjectWrapper.html#DefaultObjectWrapper-freemarker.template.Version-">API文档</a>)。如何来设置：</p>
+
+              <ul>
+                <li>
+                  <p>如果已经在 2.3.22 或更高版本的 
+				  <em><code class="inline-code">Configuration</code></em> 
+				  中设置了 <code class="inline-code">incompatible_improvements</code> 选项，
+				  而没有设置 <code class="inline-code">object_wrapper</code> 选项(那么它就保留默认值)，
+				  我们就什么都做不了了，因为它已经使用了同等 
+				  <code class="inline-code">incompatibleImprovements</code> 属性值的
+                  <code class="inline-code">DefaultObjectWrapper</code> 单例。</p>
+                </li>
+
+                <li>
+                  <p><a name="topic.setDefaultObjectWrapperIcIIndividually"></a>另外也可以在 <code class="inline-code">Configuration</code> 中独立设置
+                  <code class="inline-code">incompatibleImprovements</code>。基于如何创建/设置
+				  <code class="inline-code">ObjectWrapper</code>，可以通过这样完成
+                  (假设想要 <code class="inline-code">incompatibleImprovements</code> 2.3.22)：</p>
+
+                  <ul>
+                    <li>
+                      <p>如果使用了构建器API：</p>
+
+                      
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">... = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_22).build()</pre></div>
+                    </li>
+
+                    <li>
+                      <p>或者使用构造方法：</p>
+
+                      
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">... = new DefaultObjectWrapper(Configuration.VERSION_2_3_22)</pre></div>
+                    </li>
+
+                    <li>
+                      <p>或者使用 <code class="inline-code">object_wrapper</code> 属性
+                      (<code class="inline-code">*.properties</code> 文件或
+                      <code class="inline-code">java.util.Properties</code> 对象)：</p>
+
+                      
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">object_wrapper=DefaultObjectWrapper(2.3.21)</pre></div>
+                    </li>
+
+                    <li>
+                      <p>或者通过 <code class="inline-code">FreemarkerServlet</code> 配置
+					  <code class="inline-code">object_wrapper</code> 和在 
+					  <code class="inline-code">web.xml</code> 中的 
+					  <code class="inline-code">init-param</code> 属性来配置：</p>
+
+                      
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;init-param&gt;
+    &lt;param-name&gt;object_wrapper&lt;/param-name&gt;
+    &lt;param-value&gt;DefaultObjectWrapper(2.3.21)&lt;/param-value&gt;
+&lt;/init-param&gt;</pre></div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <p>在新的或测试覆盖良好的项目中，也建议设置
+              <code class="inline-code">forceLegacyNonListCollections</code> 
+			  属性为 <code class="inline-code">false</code>。
+			  如果使用 <code class="inline-code">.properties</code> 或
+              <code class="inline-code">FreemarkerServlet</code> 初始化参数，就会像
+              <code class="inline-code">DefaultObjectWrapper(2.3.22, forceLegacyNonListCollections=false)</code>，
+			  同时，使用Java API可以在 <code class="inline-code">DefaultObjectWrapperBuilder</code> 对象调用
+			  <code class="inline-code">build()</code> 之前调用
+              <code class="inline-code">setForceLegacyNonListCollections(false)</code>。</p>
+            </li>
+
+            <li>
+              <p>自定义
+              <code class="inline-code">DefaultObjectWrapper</code> 的最常用方法是覆盖
+              <code class="inline-code">handleUnknownType</code> 方法。</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_datamodel_customObjectWrappingExample">自定义对象包装示例</h2>
+
+
+          
+
+          
+
+          
+
+          <p>我们假定有一个应用程序特定的类，像下面这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">package com.example.myapp;
+
+public class Tupple&lt;E1, E2&gt; {
+    public Tupple(E1 e1, E2 e2) { ... }
+    public E1 getE1() { ... }
+    public E2 getE2() { ... }
+}</pre></div>
+
+          <p>若想让模板将它视作长度为2的序列，那么就可以这么来调用
+		  <code class="inline-code">someTupple[1]</code>，
+          <code class="inline-code">&lt;#list someTupple
+          <em class="code-color">...</em>&gt;</code>, 或者
+          <code class="inline-code">someTupple?size</code>。需要创建一个
+          <code class="inline-code">TemplateSequenceModel</code> 实现来适配
+          <code class="inline-code">Tupple</code> 到
+          <code class="inline-code">TempateSequenceMoldel</code> 接口：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">package com.example.myapp.freemarker;
+
+...
+
+public class TuppleAdapter extends WrappingTemplateModel implements TemplateSequenceModel,
+        AdapterTemplateModel {
+    
+    private final Tupple&lt;?, ?&gt; tupple;
+    
+    public TuppleAdapter(Tupple&lt;?, ?&gt; tupple, ObjectWrapper ow) {
+        super(ow);  // coming from WrappingTemplateModel
+        this.tupple = tupple;
+    }
+
+    @Override  // coming from TemplateSequenceModel
+    public int size() throws TemplateModelException {
+        return 2;
+    }
+    
+    @Override  // coming from TemplateSequenceModel
+    public TemplateModel get(int index) throws TemplateModelException {
+        switch (index) {
+        case 0: return wrap(tupple.getE1());
+        case 1: return wrap(tupple.getE2());
+        default: return null;
+        }
+    }
+
+    @Override  // coming from AdapterTemplateModel
+    public Object getAdaptedObject(Class hint) {
+        return tupple;
+    }
+    
+}</pre></div>
+
+          <p>关于类和接口：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">TemplateSequenceModel</code>：
+			  这就是为什么模板将它视为序列</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">WrappingTemplateModel</code>：
+			  只是一个方便使用的类，用于 <code class="inline-code">TemplateModel</code> 
+			  对象进行自身包装。通常仅对包含其它对象的对象需要。
+              参考上面的 <code class="inline-code">wrap(<em class="code-color">...</em>)</code> 调用。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">AdapterTemplateModel</code>：
+			  表明模板模型适配一个已经存在的对象到 
+              <code class="inline-code">TemplateModel</code> 接口，
+			  那么去掉包装就会给出原有对象。</p>
+            </li>
+          </ul>
+
+          <p>最后，我们告诉 FreeMarker 用 <code class="inline-code">TuppleAdapter</code> 
+		  (或者，可以在将它们传递到FreeMarker之前手动包装它们)
+		  包装 <code class="inline-code">Tupple</code>。那样的话，首先创建一个自定义的对象包装器：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">package com.example.myapp.freemarker;
+
+...
+
+public class MyAppObjectWrapper extends DefaultObjectWrapper {
+
+    public MyAppObjectWrapper(Version incompatibleImprovements) {
+        super(incompatibleImprovements);
+    }
+    
+    @Override
+    protected TemplateModel handleUnknownType(final Object obj) throws TemplateModelException {
+        if (obj instanceof Tupple) {
+            return new TuppleAdapter((Tupple&lt;?, ?&gt;) obj, this);
+        }
+        
+        return super.handleUnknownType(obj);
+    }
+    
+}</pre></div>
+
+          <p>那么当配置 FreeMarker (<a href="pgui_config.html">关于配置，参考这里...</a>)
+		  将我们的对象包装器插在：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">// Where you initialize the cfg *singleton* (happens just once in the application life-cycle):
+cfg = new Configuration(Configuration.VERSION_2_3_22);
+...
+cfg.setObjectWrapper(new MyAppObjectWrapper(cfg.getIncompatibleImprovements()));</pre></div>
+
+          <p>或者使用 <code class="inline-code">java.util.Properties</code> 来代替配置 
+		  FreeMarker (也就是 <code class="inline-code">.properties</code> 文件)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">object_wrapper=com.example.myapp.freemarker.MyAppObjectWrapper(2.3.22)</pre></div>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_datamodel_node.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_config.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

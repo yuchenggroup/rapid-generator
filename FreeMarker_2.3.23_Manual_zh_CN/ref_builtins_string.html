@@ -1,0 +1,1918 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>字符串内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="字符串内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_string.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_string.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_string.html"><span itemprop="name">字符串内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","字符串内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_alphaidx.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_number.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_string" itemprop="headline">字符串内建函数</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#ref_builtin_boolean" data-menu-target="ref_builtin_boolean">boolean</a></li><li><a class="page-menu-link" href="#ref_builtin_cap_first" data-menu-target="ref_builtin_cap_first">cap_first</a></li><li><a class="page-menu-link" href="#ref_builtin_capitalize" data-menu-target="ref_builtin_capitalize">capitalize</a></li><li><a class="page-menu-link" href="#ref_builtin_chop_linebreak" data-menu-target="ref_builtin_chop_linebreak">chop_linebreak</a></li><li><a class="page-menu-link" href="#ref_builtin_contains" data-menu-target="ref_builtin_contains">contains</a></li><li><a class="page-menu-link" href="#ref_builtin_string_date" data-menu-target="ref_builtin_string_date">date, time, datetime</a></li><li><a class="page-menu-link" href="#ref_builtin_ends_with" data-menu-target="ref_builtin_ends_with">ends_with</a></li><li><a class="page-menu-link" href="#ref_builtin_ensure_ends_with" data-menu-target="ref_builtin_ensure_ends_with">ensure_ends_with</a></li><li><a class="page-menu-link" href="#ref_builtin_ensure_starts_with" data-menu-target="ref_builtin_ensure_starts_with">ensure_starts_with</a></li><li><a class="page-menu-link" href="#ref_builtin_groups" data-menu-target="ref_builtin_groups">groups</a></li><li><a class="page-menu-link" href="#ref_builtin_html" data-menu-target="ref_builtin_html">html</a></li><li><a class="page-menu-link" href="#ref_builtin_index_of" data-menu-target="ref_builtin_index_of">index_of</a></li><li><a class="page-menu-link" href="#ref_builtin_j_string" data-menu-target="ref_builtin_j_string">j_string</a></li><li><a class="page-menu-link" href="#ref_builtin_js_string" data-menu-target="ref_builtin_js_string">js_string</a></li><li><a class="page-menu-link" href="#ref_builtin_json_string" data-menu-target="ref_builtin_json_string">json_string</a></li><li><a class="page-menu-link" href="#ref_builtin_keep_after" data-menu-target="ref_builtin_keep_after">keep_after</a></li><li><a class="page-menu-link" href="#ref_builtin_keep_after_last" data-menu-target="ref_builtin_keep_after_last">keep_after_last</a></li><li><a class="page-menu-link" href="#ref_builtin_keep_before" data-menu-target="ref_builtin_keep_before">keep_before</a></li><li><a class="page-menu-link" href="#ref_builtin_keep_before_last" data-menu-target="ref_builtin_keep_before_last">keep_before_last</a></li><li><a class="page-menu-link" href="#ref_builtin_last_index_of" data-menu-target="ref_builtin_last_index_of">last_index_of</a></li><li><a class="page-menu-link" href="#ref_builtin_left_pad" data-menu-target="ref_builtin_left_pad">left_pad</a></li><li><a class="page-menu-link" href="#ref_builtin_length" data-menu-target="ref_builtin_length">length</a></li><li><a class="page-menu-link" href="#ref_builtin_lower_case" data-menu-target="ref_builtin_lower_case">lower_case</a></li><li><a class="page-menu-link" href="#ref_builtin_matches" data-menu-target="ref_builtin_matches">matches</a></li><li><a class="page-menu-link" href="#ref_builtin_number" data-menu-target="ref_builtin_number">number</a></li><li><a class="page-menu-link" href="#ref_builtin_replace" data-menu-target="ref_builtin_replace">replace</a></li><li><a class="page-menu-link" href="#ref_builtin_right_pad" data-menu-target="ref_builtin_right_pad">right_pad</a></li><li><a class="page-menu-link" href="#ref_builtin_remove_beginning" data-menu-target="ref_builtin_remove_beginning">remove_beginning</a></li><li><a class="page-menu-link" href="#ref_builtin_remove_ending" data-menu-target="ref_builtin_remove_ending">remove_ending</a></li><li><a class="page-menu-link" href="#ref_builtin_rtf" data-menu-target="ref_builtin_rtf">rtf</a></li><li><a class="page-menu-link" href="#ref_builtin_split" data-menu-target="ref_builtin_split">split</a></li><li><a class="page-menu-link" href="#ref_builtin_starts_with" data-menu-target="ref_builtin_starts_with">starts_with</a></li><li><a class="page-menu-link" href="#ref_builtin_string_for_string" data-menu-target="ref_builtin_string_for_string">string (当被用作是字符串值时)</a></li><li><a class="page-menu-link" href="#ref_builtin_substring" data-menu-target="ref_builtin_substring">substring (已废弃)</a></li><li><a class="page-menu-link" href="#ref_builtin_trim" data-menu-target="ref_builtin_trim">trim</a></li><li><a class="page-menu-link" href="#ref_builtin_uncap_first" data-menu-target="ref_builtin_uncap_first">uncap_first</a></li><li><a class="page-menu-link" href="#ref_builtin_upper_case" data-menu-target="ref_builtin_upper_case">upper_case</a></li><li><a class="page-menu-link" href="#ref_builtin_url" data-menu-target="ref_builtin_url">url</a></li><li><a class="page-menu-link" href="#ref_builtin_url_path" data-menu-target="ref_builtin_url_path">url_path</a></li><li><a class="page-menu-link" href="#ref_builtin_word_list" data-menu-target="ref_builtin_word_list">word_list</a></li><li><a class="page-menu-link" href="#ref_builtin_xhtml" data-menu-target="ref_builtin_xhtml">xhtml</a></li><li><a class="page-menu-link" href="#ref_builtin_xml" data-menu-target="ref_builtin_xml">xml</a></li><li><a class="page-menu-link" href="#ref_builtin_string_flags" data-menu-target="ref_builtin_string_flags">通用标志</a></li></ul> </div><p>这些内建函数作用于表达式左侧的字符串值。
+		如果左侧值是数字或日期/时间/日期-时间或布尔类型(从 2.3.20 版本开始)，
+		根据当前的number-, date/time/date-time- 和 boolean-format设置，
+		那么它会自动被转成字符串值(当使用<code class="inline-code">${<em class="code-color">...</em>}</code>
+		插入这些值时，应用的都是一样的格式程序)。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_boolean">boolean</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>字符串转为布尔值。字符串必须是
+          <code class="inline-code">true</code> 或 <code class="inline-code">false</code>
+		  (大小写敏感！)，或者必须是由 <code class="inline-code">boolean_format</code> 
+		  设置的特定格式。</p>
+
+          <p>如果字符串不是适当的格式，那么当访问该内建函数时，
+		  就会发成错误终止模板处理。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_cap_first">cap_first</h2>
+
+
+          
+
+          <p>字符串中的首单词的首字母大写。
+		  关于&quot;单词&quot;的准确意义，可以参考 <a href="#ref_builtin_word_list">word_list 内建函数</a>。
+          例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;  green mouse&quot;?cap_first}
+${&quot;GreEN mouse&quot;?cap_first}
+${&quot;- green mouse&quot;?cap_first}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  Green mouse
+GreEN mouse
+- green mouse</pre></div>
+
+          <p>In the case of <code class="inline-code">&quot;- green mouse&quot;</code>, the first
+          word is the <code class="inline-code">-</code>.</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_capitalize">capitalize</h2>
+
+
+          
+
+          <p>字符串中所有单词的首字母大写。
+		  关于&quot;单词&quot;的准确意义，可以参考 <a href="#ref_builtin_word_list">word_list 内建函数</a>。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;  green  mouse&quot;?capitalize}
+${&quot;GreEN mouse&quot;?capitalize}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  Green Mouse
+Green Mouse</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_chop_linebreak">chop_linebreak</h2>
+
+
+          
+
+          <p>在末尾没有 <a href="gloss.html#gloss.lineBreak">换行符</a> 的字符串，
+		  那么可以换行，否则不改变字符串。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_contains">contains</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>这个内建函数从 FreeMarker 2.3.1 版本开始可用。
+			在2.3版本中是没有的。</p>
+            </div>
+
+
+          <p>如果函数中的参数指定的子串出现在源字符串中，
+		  那么返回true。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if &quot;piceous&quot;?contains(&quot;ice&quot;)&gt;It contains &quot;ice&quot;&lt;/#if&gt;</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">It contains &quot;ice&quot;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_string_date">date, time, datetime</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>字符串转换成日期值，时间或日期-时间值。需要一个由 <a href="ref_directive_setting.html#topic.dateTimeFormatSettings"><code>date_format</code>，
+          <code>time_format</code> 和
+          <code>datetime_format</code> 设置</a>指定的格式。
+		  如果字符串不是适当的格式，那么当访问该内建函数时，
+		  就会发生错误中止模板的处理。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- The date_format, time_format and datetime_format settings must match this format! --&gt;
+&lt;#assign someDate = &quot;Oct 25, 1995&quot;?date&gt;
+&lt;#assign someTime = &quot;3:05:30 PM&quot;?time&gt;
+&lt;#assign someDatetime = &quot;Oct 25, 1995 03:05:00 PM&quot;?datetime&gt;
+
+&lt;#-- Changing the setting value changes the expected format: --&gt;
+&lt;#setting datetime_format=&quot;iso&quot;&gt;
+&lt;#assign someDatetime = &quot;1995-10-25T15:05&quot;?datetime&gt;</pre></div>
+
+          <p>也可以指定明确的格式，比如
+          <code class="inline-code">?datetime.<em class="code-color">format</em></code> 或
+          <code class="inline-code">?datetime[&quot;<em class="code-color">format</em>&quot;]</code>
+          (由于历史原因，也可以是
+          <code class="inline-code">?datetime(&quot;<em class="code-color">format</em>&quot;)</code>)，
+		  它们与 <code class="inline-code">?date</code> 和 <code class="inline-code">?time</code>是相同的。
+		  对于格式化值的语法和意义，可以参考 <a href="ref_directive_setting.html#topic.dateTimeFormatSettings"><code>date_format</code>,
+          <code>time_format</code> 和
+          <code>datetime_format</code> 设置</a> 的可能的值。 比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Parsing XML Schema xs:date, xs:time and xs:dateTime values: --&gt;
+&lt;#assign someDate = &quot;1995-10-25&quot;?date.xs&gt;
+&lt;#assign someTime = &quot;15:05:30&quot;?time.xs&gt;
+&lt;#assign someDatetime = &quot;1995-10-25T15:05:00&quot;?datetime.xs&gt;
+
+&lt;#-- Parsing ISO 8601 (both extended and basic formats): --&gt;
+&lt;#assign someDatetime = &quot;1995-10-25T15:05&quot;?datetime.iso&gt;
+&lt;#assign someDatetime = &quot;19951025T1505&quot;?datetime.iso&gt;
+
+&lt;#-- Parsing with SimpleDateFormat patterns: --&gt;
+&lt;#assign someDate = &quot;10/25/1995&quot;?date(&quot;MM/dd/yyyy&quot;)&gt;
+&lt;#assign someTime = &quot;15:05:30&quot;?time(&quot;HH:mm:ss&quot;)&gt;
+&lt;#assign someDatetime = &quot;1995-10-25 03:05 PM&quot;?datetime(&quot;yyyy-MM-dd hh:mm a&quot;)&gt;</pre></div>
+
+          <p>避免误解，左侧值无需是字符串文本。比如，当从XML结点
+		  (此处的所有值都是未被解析的字符串)读取数据，那么就需要这样来做
+          <code class="inline-code">order.confirmDate?date.xs</code>，将字符串转化成真实的日期。</p>
+
+          <p>当然，格式也可以是一个变量，比如：
+          <code class="inline-code">&quot;<em class="code-color">...</em>&quot;?datetime[myFormat]</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_ends_with">ends_with</h2>
+
+
+          
+
+          <p>返回是否这个字符串以参数中指定的子串结尾。
+		  比如 <code class="inline-code">&quot;ahead&quot;?ends_with(&quot;head&quot;)</code> 返回布尔值 
+		  <code class="inline-code">true</code>。<code class="inline-code">&quot;head&quot;?ends_with(&quot;head&quot;)</code> 
+		  也返回 <code class="inline-code">true</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_ensure_ends_with">ensure_ends_with</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用</p>
+            </div>
+
+
+          <p>如果字符串没有以第一个参数指定的子串结尾，
+		  那么就会将它加到字符串后面，否则返回原字符串。比如，
+          <code class="inline-code">&quot;foo&quot;?ensure_ends_with(&quot;/&quot;)</code> 和
+          <code class="inline-code">&quot;foo/&quot;?ensure_ends_with(&quot;/&quot;)</code> 返回
+          <code class="inline-code">&quot;foo/&quot;</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_ensure_starts_with">ensure_starts_with</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用</p>
+            </div>
+
+
+          <p>如果字符串没有以第一个参数指定的子串开头，
+		  那么就会将它加到字符串开头，否则返回原字符串。比如，
+          <code class="inline-code">&quot;foo&quot;?ensure_starts_with(&quot;/&quot;)</code> 和
+          <code class="inline-code">&quot;/foo&quot;?ensure_starts_with(&quot;/&quot;)</code> 返回
+          <code class="inline-code">&quot;/foo&quot;</code>。</p>
+
+          <p>如果指定两个参数，那么第一个参数就被解释成Java正则表达式，
+		  如果它不匹配字符串的开头，那么第二个参数指定的字符串就会添加到字符串开头。
+		  比如 <code class="inline-code">someURL?ensure_starts_with(&quot;[a-zA-Z]+://&quot;, &quot;http://&quot;)</code> 
+		  就会检查如果字符串是否以 <code class="inline-code">&quot;[a-zA-Z]+://&quot;</code> 开头
+		  (请注意，不需要 <code class="inline-code">^</code>)，如果不是的话，就添加
+		  <code class="inline-code">&quot;http://&quot;</code>。</p>
+
+          <p>该方法也接受第三个<a href="#ref_builtin_string_flags">标志位参数</a>。因为调用两个参数暗指
+		  <code class="inline-code">&quot;r&quot;</code>(也就是正则表达式模式)，那么就需要第三个参数了。
+		  值得注意的一点是当不需要第一参数被解释成正则表达式，而只是普通文本，
+		  但是又想让比较是大小写敏感的，那么此时就需要使用 <code class="inline-code">&quot;i&quot;</code>
+		  作为第三个参数。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_groups">groups</h2>
+
+
+          
+
+          <p>这个函数只作用于内建函数 <code class="inline-code">matches</code> 
+		  的结果。请参考 <a href="#ref_builtin_matches">这里...</a>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_html">html</h2>
+
+
+          
+
+          
+
+          <p>字符串按照HTML标记输出。也就是说，下面字符串将会被替代：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code">&lt;</code> 替换为
+              <code class="inline-code">&amp;lt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&gt;</code> 替换为
+              <code class="inline-code">&amp;gt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&amp;</code> 替换为
+              <code class="inline-code">&amp;amp;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&quot;</code> 替换为
+              <code class="inline-code">&amp;quot;</code>
+            </li>
+
+            <li>
+              如果程序员设置了FreeMarker(将 <code class="inline-code">incompatible_improvements</code> 
+			  设置为 <code class="inline-code">2.3.20</code> 或更高；更多内容请参考 <a href="http://freemarker.org/docs/api/freemarker/template/Configuration.html#setIncompatibleImprovements%28freemarker.core.Version%29">这里</a>)，那么
+			  <code class="inline-code">&#39;</code> 被替换为
+              <code class="inline-code">&amp;#39;</code>。
+            </li>
+          </ul>
+
+          <p>请注意，如果想安全地插入一个属性，
+		  必须在HTML模板中使用引号标记(是 
+		  <code class="inline-code">&quot;</code>，而不是 <code class="inline-code">&#39;</code>)为属性值加引号：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;input type=text name=user value=<strong>&quot;</strong>${user?html}<strong>&quot;</strong>&gt;</pre></div>
+
+          <p>请注意，在HTML页面中，通常想对所有插值使用这个内建函数。
+		  所以可以使用 <a href="ref_directive_escape.html"><code>escape</code>
+          指令</a> 来节约很多输入，减少偶然错误的机会。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_index_of">index_of</h2>
+
+
+          
+
+          <p>返回第一次字符串中出现子串时的索引位置。
+		  例如 <code class="inline-code">&quot;abcabc&quot;?index_of(&quot;bc&quot;)</code> 将会返回1
+		  (不要忘了第一个字符的索引是0)。而且，你可以指定开始搜索的索引位置：
+		  <code class="inline-code">&quot;abcabc&quot;?index_of(&quot;bc&quot;, 2)</code> 将会返回4。
+		  这对第二个参数的数值没有限制：如果它是负数，那就和是0是相同效果了，
+		  如果它比字符串的长度还大，那么就和它是字符串长度那个数值是一个效果。
+		  小数会被切成整数。</p>
+
+          <p>如果第一个参数作为子串没有在该字符串中出现时
+		  (如果你使用了第二个参数，那么就从给定的序列开始)，那么就返回-1。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_j_string">j_string</h2>
+
+
+          
+
+          <p>根据Java语言字符串转义规则来转义字符串，
+		  所以它很安全的将值插入到字符串类型中。要注意它 
+		  <em>不会</em> 在被插入的值的两侧添加引号；
+		  你需要在字符串值 <em>内部</em> 来使用。</p>
+
+          <p>所有 <a href="gloss.html#gloss.UCS">UCS</a> 编码下指向0x20的字符会被转义。
+		  当它们在Java语言中(比如<code class="inline-code">\n</code>，<code class="inline-code">\t</code>等)
+		  没有专门的转义序列时，将会被用UNICODE进行转义替换
+		  (<code class="inline-code">\u<em class="code-color">XXXX</em></code>)。</p>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign beanName = &#39;The &quot;foo&quot; bean.&#39;&gt;
+String BEAN_NAME = &quot;${beanName?j_string}&quot;;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">String BEAN_NAME = &quot;The \&quot;foo\&quot; bean.&quot;;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_js_string">js_string</h2>
+
+
+          
+
+          <p>根据JavaScript语言字符串转义规则来转义字符串，
+		  所以它很安全的将值插入到字符串类型中。要注意，
+		  它不会在被插入的值两侧添加引号；
+		  你需要在字符串值 <em>内部</em> 来使用。</p>
+
+          <p>引号(<code class="inline-code">&quot;</code>)和单引号(<code class="inline-code">&#39;</code>)要被转义。
+		  从 FreeMarker 2.3.1 开始，也要将 <code class="inline-code">&gt;</code> 
+		  转义为 <code class="inline-code">\&gt;</code>(为了避免 <code class="inline-code">&lt;/script&gt;</code>)。</p>
+
+          <p>所有在 <a href="gloss.html#gloss.UCS">UCS</a> 
+		  编码下指向0x20的字符将会被转义。
+		  当它们在JavaScript中没有专用的转义序列时
+		  (比如 <code class="inline-code">\n</code>，<code class="inline-code">\t</code> 等)，
+		  它们会被UNICODE字符代替(<code class="inline-code">\u<em class="code-color">XXXX</em></code>)。</p>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign user = &quot;Big Joe&#39;s \&quot;right hand\&quot;&quot;&gt;
+&lt;script&gt;
+  alert(&quot;Welcome ${user?js_string}!&quot;);
+&lt;/script&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">&lt;script&gt;
+  alert(&quot;Welcome Big Joe\&#39;s \&quot;right hand\&quot;!&quot;);
+&lt;/script&gt;</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_json_string">json_string</h2>
+
+
+          
+
+          <p>根据JSON语言的字符串规则来转义字符串，
+		  所以在字符串中插入值是安全的。
+		  要注意它 <em>不会</em> 在被插入的值两侧添加引号；
+		  你需要在字符串值 <em>内部</em> 来使用。</p>
+
+          <p>这不会转义 <code class="inline-code">&#39;</code> 字符，因为JSON字符串必须使用 
+		  <code class="inline-code">&quot;</code> 来括起来。它会在 <code class="inline-code">&lt;</code> 
+		  之后直接出现的 <code class="inline-code">/</code>(斜杠)字符转义为 <code class="inline-code">\/</code>，
+		  来避免 <code class="inline-code">&lt;/script&gt;</code> 等。
+		  它也会在 <code class="inline-code">]]</code> 之后转义 <code class="inline-code">&gt;</code> 
+		  字符为 <code class="inline-code">\u003E</code>，来避免退出XML的 <code class="inline-code">CDATA</code> 段。</p>
+
+          <p>所有在 <a href="gloss.html#gloss.UCS">UCS</a> 编码下指向0x20的字符会被转义。
+		  当在JSON中没有专用的转义序列时
+		  (比如 <code class="inline-code">\n</code>，<code class="inline-code">\t</code> 等)，
+		  它们会被UNICODE字符代替(<code class="inline-code">\u<em class="code-color">XXXX</em></code>)。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_keep_after">keep_after</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用。</p>
+            </div>
+
+
+          <p>移除字符串中的一部分内容，该部分是给定子串第一次出现之前的部分。
+		  比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;abcdefgh&quot;?keep_after(&quot;de&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">fgh</pre></div>
+
+          <p>如果参数字符串没有找到，它会返回空串。如果参数是长度为0的字符串，
+		  它会返回源字符串，不会改变。</p>
+
+          <p>该方法接受可选的 <a href="#ref_builtin_string_flags">标志位参数</a>，作为它的第二个参数：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;foo : bar&quot;?keep_after(r&quot;\s*:\s*&quot;, &quot;r&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">bar</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_keep_after_last">keep_after_last</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.22 版本开始可用。</p>
+            </div>
+
+
+          <p>和 <a href="#ref_builtin_keep_after"><code>keep_after</code></a> 相同，
+		  但是它会保留参数最后一次出现后的部分，而不是第一次。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;foo.bar.txt&quot;?keep_after_last(&quot;.&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">txt</pre></div>
+
+          <p>若使用 <code class="inline-code">keep_after</code> 则会得到
+          <code class="inline-code">bar.txt</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_keep_before">keep_before</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用。</p>
+            </div>
+
+
+          <p>移除字符串的一部分，该部分是从给定子串开始的部分。
+		  比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;abcdef&quot;?keep_before(&quot;de&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">abc</pre></div>
+
+          <p>如果参数字符串没有找到，它会返回源字符串，不会改变。
+		  如果参数是长度为0的字符串，它会返回空串。</p>
+
+          <p>该方法接受可选的 <a href="#ref_builtin_string_flags">标志位参数</a>，作为它的第二个参数：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;foo : bar&quot;?keep_before(r&quot;\s*:\s*&quot;, &quot;r&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">foo</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_keep_before_last">keep_before_last</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.22 版本开始可用。</p>
+            </div>
+
+
+          <p>和 <a href="#ref_builtin_keep_before"><code>keep_before</code></a> 相同，
+		  但是保留参数最后一次出现之前的部分，而不是第一次出现之前。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;foo.bar.txt&quot;?keep_after_last(&quot;.&quot;)}</pre></div>
+
+          <p>将会输出</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">foo.bar</pre></div>
+
+          <p>若使用 <code class="inline-code">keep_before</code> 则会得到
+          <code class="inline-code">foo</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_last_index_of">last_index_of</h2>
+
+
+          
+
+          <p>返回最后一次(最右边)字符串中出现子串时的索引位置。
+		  它返回子串第一个(最左边)字符所在位置的索引。例如： 
+		  <code class="inline-code">&quot;abcabc&quot;?last_index_of(&quot;ab&quot;)</code>：将会返回3。
+		  而且可以指定开始搜索的索引。例如，
+		  <code class="inline-code">&quot;abcabc&quot;?last_index_of(&quot;ab&quot;, 2)</code>，将会返回0。
+		  要注意第二个参数暗示了子串开始的最大索引。对第二个参数的数值没有限制：
+		  如果它是负数，那么效果和是零的一样，如果它比字符串的长度还大，
+		  那么就和它是字符串长度那个数值是一个效果。小数会被切成整数。</p>
+
+          <p>如果第一个参数作为子串没有在该字符串中出现时
+		  (如果你使用了第二个参数，那么就从给定的序列开始)，那么就返回-1。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_left_pad">left_pad</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.1 版本开始可用。</p>
+            </div>
+
+
+          <p>如果它仅仅用1个参数，那么它将在字符串的开始插入空白，
+		  直到整个串的长度达到参数指定的值。
+		  如果字符串的长度达到指定数值或者比指定的长度还长，
+		  那么就什么都不做了。比如这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">[${&quot;&quot;?left_pad(5)}]
+[${&quot;a&quot;?left_pad(5)}]
+[${&quot;ab&quot;?left_pad(5)}]
+[${&quot;abc&quot;?left_pad(5)}]
+[${&quot;abcd&quot;?left_pad(5)}]
+[${&quot;abcde&quot;?left_pad(5)}]
+[${&quot;abcdef&quot;?left_pad(5)}]
+[${&quot;abcdefg&quot;?left_pad(5)}]
+[${&quot;abcdefgh&quot;?left_pad(5)}]</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">[     ]
+[    a]
+[   ab]
+[  abc]
+[ abcd]
+[abcde]
+[abcdef]
+[abcdefg]
+[abcdefgh]</pre></div>
+
+          <p>如果使用了两个参数，那么第一个参数表示的含义和你使用一个参数时的相同，
+		  第二个参数指定用什么东西来代替空白字符。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">[${&quot;&quot;?left_pad(5, &quot;-&quot;)}]
+[${&quot;a&quot;?left_pad(5, &quot;-&quot;)}]
+[${&quot;ab&quot;?left_pad(5, &quot;-&quot;)}]
+[${&quot;abc&quot;?left_pad(5, &quot;-&quot;)}]
+[${&quot;abcd&quot;?left_pad(5, &quot;-&quot;)}]
+[${&quot;abcde&quot;?left_pad(5, &quot;-&quot;)}]</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">[-----]
+[----a]
+[---ab]
+[--abc]
+[-abcd]
+[abcde]</pre></div>
+
+          <p>第二个参数也可以是个长度比1大的字符串。
+		  那么这个字符串会周期性的插入，比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">[${&quot;&quot;?left_pad(8, &quot;.oO&quot;)}]
+[${&quot;a&quot;?left_pad(8, &quot;.oO&quot;)}]
+[${&quot;ab&quot;?left_pad(8, &quot;.oO&quot;)}]
+[${&quot;abc&quot;?left_pad(8, &quot;.oO&quot;)}]
+[${&quot;abcd&quot;?left_pad(8, &quot;.oO&quot;)}]</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">[.oO.oO.o]
+[.oO.oO.a]
+[.oO.oOab]
+[.oO.oabc]
+[.oO.abcd]</pre></div>
+
+          <p>第二个参数必须是个字符串值，而且至少有一个字符。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_length">length</h2>
+
+
+          
+
+          <p>字符串中字符的数量。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_lower_case">lower_case</h2>
+
+
+          
+
+          <p>字符串的小写形式。比如 
+		  <code class="inline-code">&quot;GrEeN MoUsE&quot;?lower_case</code> 
+		  将会是 <code class="inline-code">&quot;green mouse&quot;</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_matches">matches</h2>
+
+
+          
+
+          <p>这是一个&quot;超级用户&quot;函数。如果不懂 <a href="gloss.html#gloss.regularExpression">正则表达式</a>，就忽略它吧。</p>
+
+          <p>该内建函数决定了字符串是否精确匹配模式。而且，它会返回匹配子串的列表。
+		  返回值是多类型值：</p>
+
+          <ul>
+            <li>
+              <p>布尔值：如果字符串整体匹配了模式，就是 <code class="inline-code">true</code>，
+			  否则就是 <code class="inline-code">false</code>。比如：<code class="inline-code">&quot;fooo&quot;?matches(&#39;fo*&#39;)</code> 
+			  就是 <code class="inline-code">true</code>，但是 <code class="inline-code">&quot;fooo bar&quot;?matches(&#39;fo*&#39;)</code> 是
+              <code class="inline-code">false</code>。</p>
+            </li>
+
+            <li>
+              <p>序列：字符串匹配的子串的列表。很有可能是长度为0的序列。</p>
+            </li>
+          </ul>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#if &quot;fxo&quot;?matches(&quot;f.?o&quot;)&gt;Matches.&lt;#else&gt;Does not match.&lt;/#if&gt;
+
+&lt;#assign res = &quot;foo bar fyo&quot;?matches(&quot;f.?o&quot;)&gt;
+&lt;#if res&gt;Matches.&lt;#else&gt;Does not match.&lt;/#if&gt;
+Matching sub-strings:
+&lt;#list res as m&gt;
+- ${m}
+&lt;/#list&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Matches.
+
+Does not match.
+Matching sub-strings:
+- foo
+- fyo</pre></div>
+
+          <p>如果正则表达式包含分组(圆括号)，那么可以使用
+		  <code class="inline-code">groups</code> 内建函数来访问它们：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Entire input match --&gt;
+&lt;#assign res = &quot;John Doe&quot;?matches(r&quot;(\w+) (\w+)&quot;)&gt;
+&lt;#if res&gt; &lt;#-- Must not try to access groups if there was no match! --&gt;
+  First name: ${res?groups[1]}
+  Second name: ${res?groups[2]}
+&lt;/#if&gt;
+
+&lt;#-- Subtring matches --&gt;
+&lt;#assign res = &quot;aa/rx; ab/r;&quot;?matches(&quot;(.+?)/*(.+?);&quot;)&gt;
+&lt;#list res as m&gt;
+  - &quot;${m}&quot; is &quot;${m?groups[1]}&quot; per &quot;${m?groups[2]}&quot;
+&lt;/#list&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  First name: John
+  Second name: Doe
+
+  - &quot;aa/rx;&quot; is &quot;a&quot; per &quot;a/rx&quot;
+  - &quot; ab/r;&quot; is &quot; &quot; per &quot;ab/r&quot;</pre></div>
+
+          <p>请注意，上面的 <code class="inline-code">groups</code> 
+		  对子串匹配和整个字符串匹配的结果都起作用。</p>
+
+          <p><code class="inline-code">matches</code> 接受可选的第二参数，
+          <a href="#ref_builtin_string_flags">标志位</a>。请注意，
+		  它不支持标志 <code class="inline-code">f</code>，也会忽略 
+          <code class="inline-code">r</code> 标志。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_number">number</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          <p>字符串转化为数字格式。这个数字必须是 
+		  "计算机语言" 格式。也就是说，
+		  它必须是本地化独立的形式，小数的分隔符就是一个点，没有分组。</p>
+
+          <p>该内建函数识别FreeMarker模板语言使用的数字格式。此外，
+		  它也识别科学记数法(比如 <code class="inline-code">&quot;1.23E6&quot;</code>，<code class="inline-code">&quot;1.5e-8&quot;</code>)
+		  从 FreeMarker 2.3.21 版本开始，它也识别所有XML Schema数字格式，比如 
+		  <code class="inline-code">NaN</code>，<code class="inline-code">INF</code>，<code class="inline-code">-INF</code>，
+		  还有Java本地格式<code class="inline-code">Infinity</code> 和 <code class="inline-code">-Infinity</code>。</p>
+
+          <p>如果字符串不是适当的格式，当尝试访问该内建函数时就会发生错误，
+		  并中止模板执行。</p>
+
+          <p><span class="marked-for-programmers">实际上，字符串是由当前
+		  <code class="inline-code">arithmetic_engine</code> 的 <code class="inline-code">toNumber</code> 
+		  方法解析的，这是可以配置的设置项。不过该方法应该和上面描述的行为相似。
+		  </span></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_replace">replace</h2>
+
+
+          
+
+          <p>在源字符串中，用另外一个字符串来替换原字符串中出现它的部分。
+		  它不处理词的边界。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;this is a car acarus&quot;?replace(&quot;car&quot;, &quot;bulldozer&quot;)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">this is a bulldozer abulldozerus</pre></div>
+
+          <p>替换是从左向右执行的。这就意味着：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;aaaaa&quot;?replace(&quot;aaa&quot;, &quot;X&quot;)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">Xaa</pre></div>
+
+          <p>如果第一个参数是空字符串，那么所有的空字符串将会被替换，
+		  比如 <code class="inline-code">&quot;foo&quot;?replace(&quot;&quot;,&quot;|&quot;)</code>，就会得到 
+		  <code class="inline-code">&quot;|f|o|o|&quot;</code>。</p>
+
+          <p><code class="inline-code">replace</code> 接受可选的 <a href="#ref_builtin_string_flags">标志位参数</a>，作为它的第三参数。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_right_pad">right_pad</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.1 版本开始可用。
+			在2.3版本中是没有的。</p>
+            </div>
+
+
+          <p>它和 <a href="#ref_builtin_left_pad"><code>left_pad</code></a> 相同，
+		  但是它从末尾开始插入字符而不是从开头。</p>
+
+          <p>比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">[${&quot;&quot;?right_pad(5)}]
+[${&quot;a&quot;?right_pad(5)}]
+[${&quot;ab&quot;?right_pad(5)}]
+[${&quot;abc&quot;?right_pad(5)}]
+[${&quot;abcd&quot;?right_pad(5)}]
+[${&quot;abcde&quot;?right_pad(5)}]
+[${&quot;abcdef&quot;?right_pad(5)}]
+[${&quot;abcdefg&quot;?right_pad(5)}]
+[${&quot;abcdefgh&quot;?right_pad(5)}]
+
+[${&quot;&quot;?right_pad(8, &quot;.oO&quot;)}]
+[${&quot;a&quot;?right_pad(8, &quot;.oO&quot;)}]
+[${&quot;ab&quot;?right_pad(8, &quot;.oO&quot;)}]
+[${&quot;abc&quot;?right_pad(8, &quot;.oO&quot;)}]
+[${&quot;abcd&quot;?right_pad(8, &quot;.oO&quot;)}]</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">[     ]
+[a    ]
+[ab   ]
+[abc  ]
+[abcd ]
+[abcde]
+[abcdef]
+[abcdefg]
+[abcdefgh]
+
+[.oO.oO.o]
+[aoO.oO.o]
+[abO.oO.o]
+[abc.oO.o]
+[abcdoO.o]</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_remove_beginning">remove_beginning</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用。</p>
+            </div>
+
+
+          <p>从字符串的开头移除参数中的子串，如果它不以参数中的子串开头，
+		  那么就或者返回原字符串。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;abcdef&quot;?remove_beginning(&quot;abc&quot;)}
+${&quot;foobar&quot;?remove_beginning(&quot;abc&quot;)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">def
+foobar</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_remove_ending">remove_ending</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用。</p>
+            </div>
+
+
+          <p>从字符串的结尾移除参数中的子串，如果它不以参数中的子串结尾，
+		  那么就或者返回原字符串。比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${&quot;abcdef&quot;?remove_ending(&quot;def&quot;)}
+${&quot;foobar&quot;?remove_ending(&quot;def&quot;)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">abc
+foobar</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_rtf">rtf</h2>
+
+
+          
+
+          
+
+          <p>字符串作为富文本(RTF 文本)，也就是说，下列字符串：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">\</code> 替换为 
+              <code class="inline-code">\\</code></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">{</code> 替换为 
+              <code class="inline-code">\{</code></p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">}</code> 替换为 
+              <code class="inline-code">\}</code></p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_split">split</h2>
+
+
+          
+
+          <p>它被用来根据另外一个字符串的出现将原字符串分割成字符串序列。
+		  比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list &quot;someMOOtestMOOtext&quot;?split(&quot;MOO&quot;) as x&gt;
+- ${x}
+&lt;/#list&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">- some
+- test
+- text</pre></div>
+
+          <p>请注意，假设所有的分隔符都在新项之前出现
+		  (除了使用 <code class="inline-code">&quot;r&quot;</code> 标志 - 后面详细介绍)
+		  因此：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list &quot;some,,test,text,&quot;?split(&quot;,&quot;) as x&gt;
+- &quot;${x}&quot;
+&lt;/#list&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">- &quot;some&quot;
+- &quot;&quot;
+- &quot;test&quot;
+- &quot;text&quot;
+- &quot;&quot;</pre></div>
+
+          <p><code class="inline-code">split</code> 接受可选的 <a href="#ref_builtin_string_flags">标志位参数</a>，
+		  作为它的第二个参数。由于历史使用 <code class="inline-code">r</code> 
+		  (正则表达式)标志的差错；它会从结果列表中移除空元素，
+		  所以在最后示例中使用 <code class="inline-code">?split(&quot;,&quot;, &quot;r&quot;)</code>，
+		  <code class="inline-code">&quot;&quot;</code> 会从输出中消失。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要检查一个字符串是否以...结尾或者要附加它，
+			使用 <a href="#ref_builtin_ensure_ends_with"> 
+            <code>ensure_ends_with</code> 内建函数</a>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_starts_with">starts_with</h2>
+
+
+          
+
+          <p>如果字符串以指定的子字符串开头，那么返回<code class="inline-code">true</code>。
+		  比如 <code class="inline-code">&quot;redirect&quot;?starts_with(&quot;red&quot;)</code> 返回布尔值 
+		  <code class="inline-code">true</code>，而且 <code class="inline-code">&quot;red&quot;?starts_with(&quot;red&quot;)</code> 
+		  也返回 <code class="inline-code">true</code>。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要检查一个字符串是否以...开头或者要在前面附加它，
+            使用 <a href="#ref_builtin_ensure_starts_with"> 
+            <code>ensure_starts_with</code> 内建函数</a>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_string_for_string">string (当被用作是字符串值时)</h2>
+
+
+          <p>什么也不做，仅仅返回和其内容一致的字符串。例外的是，
+		  如果值是一个多类型的值(比如同时有字符串和序列两种)，
+		  那么结果就只是一个简单的字符串，而不是多类型的值。
+		  这可以被用来防止人为多输入。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_substring">substring (已废弃)</h2>
+
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>从 FreeMarker 2.3.21 版本开始，该内建函数被废弃，由 <a href="dgui_template_exp.html#dgui_template_exp_stringop_slice">字符串切分 </a> 替代，比如
+            <code class="inline-code"><em class="code-color">str</em>[<em class="code-color">from</em>..&lt;<em class="code-color">toExclusive</em>]</code>，
+            <code class="inline-code"><em class="code-color">str</em>[<em class="code-color">from</em>..]</code>,
+            和
+            <code class="inline-code"><em class="code-color">str</em>[<em class="code-color">from</em>..*<em class="code-color">maxLength</em>]</code>。</p>
+
+            <p>如果处理XML那么有一点警示：因为分割表达式作用于序列和字符串，
+			而且XML结点通常既是序列又是字符串，那么相等的表达式是
+            <code class="inline-code"><em class="code-color">someXmlNode</em>?string[<em class="code-color">from</em>..&lt;<em class="code-color">toExclusive</em>]</code>
+            和
+            <code class="inline-code"><em class="code-color">exp</em>?string[<em class="code-color">from</em>..]</code>，
+            因为没有 <code class="inline-code">?string</code> 它会分割结点序列而不是结点的字符串值。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>一些典型的字符串分割的用例已经由一些内建函数方便地实现： <a href="#ref_builtin_remove_beginning"><code>remove_beginning</code></a>，
+            <a href="#ref_builtin_remove_ending"><code>remove_ending</code></a>，
+            <a href="#ref_builtin_keep_before"><code>keep_before</code></a>，
+            <a href="#ref_builtin_keep_after"><code>keep_after</code></a>，
+            <a href="#ref_builtin_keep_before_last"><code>keep_before_last</code></a>，
+            <a href="#ref_builtin_keep_after_last"><code>keep_after_last</code></a></p>
+            </div>
+
+
+          <p>概要：
+          <code class="inline-code"><em class="code-color">exp</em>?substring(<em class="code-color">from</em>,
+          <em class="code-color">toExclusive</em>)</code>，也可以使用 
+          <code class="inline-code"><em class="code-color">exp</em>?substring(<em class="code-color">from</em>)</code>
+		  调用。</p>
+
+          <p>字符串的子串
+          <code class="inline-code"><em class="code-color">from</em></code> 是第一个字符的索引。
+		  它必须是数字，最小是0并且小于或等于
+          <code class="inline-code"><em class="code-color">toExclusive</em></code>，
+		  否则就会发生错误并且中止模板处理。
+          <code class="inline-code"><em class="code-color">toExclusive</em></code> 
+		  是子串最后一个字符之后的字符位置索引，换句话说，它比最后一个字符的索引大1。
+		  它必须是一个数字，最小是0并且小于或等于字符串的长度，
+		  否则就会发生错误并且中止模板处理。如果
+          <code class="inline-code"><em class="code-color">toExclusive</em></code> 被忽略了，
+		  那么默认就是字符串的长度。如果参数是数字但不是整数，
+		  那么只有数字中的整数部分会被使用。</p>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">- ${&#39;abc&#39;?substring(0)}
+- ${&#39;abc&#39;?substring(1)}
+- ${&#39;abc&#39;?substring(2)}
+- ${&#39;abc&#39;?substring(3)}
+
+- ${&#39;abc&#39;?substring(0, 0)}
+- ${&#39;abc&#39;?substring(0, 1)}
+- ${&#39;abc&#39;?substring(0, 2)}
+- ${&#39;abc&#39;?substring(0, 3)}
+
+- ${&#39;abc&#39;?substring(0, 1)}
+- ${&#39;abc&#39;?substring(1, 2)}
+- ${&#39;abc&#39;?substring(2, 3)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">- abc
+- bc
+- c
+-
+
+-
+- a
+- ab
+- abc
+
+- a
+- b
+- c</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_trim">trim</h2>
+
+
+          
+
+          <p>去掉字符串首尾的空格。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">(${&quot;  green mouse  &quot;?trim})</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">(green mouse)</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_uncap_first">uncap_first</h2>
+
+
+          
+
+          <p>和 <a href="#ref_builtin_cap_first"><code>cap_first</code></a> 相反。
+		  字符串中所有单词的首字母小写。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_upper_case">upper_case</h2>
+
+
+          
+
+          <p>字符串的大写形式。比如
+          <code class="inline-code">&quot;GrEeN MoUsE&quot;</code> 将会是 <code class="inline-code">&quot;GREEN
+          MOUSE&quot;</code>.</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_url">url</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.1 版本开始可用。
+			在2.3版本中是没有的。</p>
+            </div>
+
+
+          <p>在URL之后的字符串进行转义。这意味着，
+		  所有非US-ASCII的字符和保留的URL字符将会被 
+		  <code class="inline-code">%<em class="code-color">XX</em></code> 形式转义。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x = &#39;a/b c&#39;&gt;
+${x?url}</pre></div>
+
+          <p>将会输出(假设用来转义的字符集是US-ASCII兼容的字符集)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">a%2Fb%20c</pre></div>
+
+          <p>请注意，它会转义 <em>所有</em> 保留的URL字符
+		  (<code class="inline-code">/</code>， <code class="inline-code">=</code>，
+          <code class="inline-code">&amp;</code>，等...)，
+		  所以编码可以被用来对查询参数的值进行，比如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;a href=&quot;foo.cgi?x=${x?url}&amp;y=${y?url}&quot;&gt;Click here...&lt;/a&gt;</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>上面的没有HTML编码(<code class="inline-code">?html</code>)是需要的，
+			因为URL转义所有保留的HTML编码。但是要小心：通常引用的属性值，
+			用普通引号(<code class="inline-code">&quot;</code>)包括，而不是单引号
+			(<code class="inline-code">&#39;</code>)，因为单引号是不被URL转义的。</p>
+            </div>
+
+
+          <p>为了进行URL转义，必须要选择 <a href="gloss.html#gloss.charset">字符集</a>，它被用来计算被转义的部分
+		  (<code class="inline-code">%<em class="code-color">XX</em></code>)。
+		  如果你是HTML页面设计者，而且你不懂这个，不要担心：
+		  程序员应该配置 FreeMarker，则它默认使用恰当的字符集
+		  (<span class="marked-for-programmers">程序员应该多看看下面的内容...</span>)。
+		  如果你是一个比较热衷于技术的人，那么你也许想知道被 
+		  <code class="inline-code">url_escaping_charset</code> 设置的指定字符集，
+		  它可以在模板的执行时间设置(或者，更好的是，由程序员之前设置好)。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#--
+  This will use the charset specified by the programmers
+  before the template execution has started.
+--&gt;
+&lt;a href=&quot;foo.cgi?x=${x?url}&quot;&gt;foo&lt;/a&gt;
+
+&lt;#-- Use UTF-8 charset for URL escaping from now: --&gt;
+<strong>&lt;#setting url_escaping_charset=&quot;UTF-8&quot;&gt;</strong>
+
+&lt;#-- This will surely use UTF-8 charset --&gt;
+&lt;a href=&quot;bar.cgi?x=${x?url}&quot;&gt;bar&lt;/a&gt;</pre></div>
+
+          <p>此外，你可以明确地指定一个为单独URL转义的字符集，作为内建函数的参数：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;a href=&quot;foo.cgi?x=${x?url<strong>(&#39;ISO-8895-2&#39;)</strong>}&quot;&gt;foo&lt;/a&gt;</pre></div>
+
+          <p><span class="marked-for-programmers">如果内建函数 <code class="inline-code">url</code> 没有参数，
+			那么它会使用由 <code class="inline-code">url_escaping_charset</code> 设置的字符集。
+			这个设置应该被软件设置，包括 FreeMarker(比如Web应用框架)，
+			因为它默认不会被设置(<code class="inline-code">null</code>)。
+			如果它没有被设置，那么 FreeMarker 退回使用 <code class="inline-code">output_encoding</code> 
+			的设置，这个也会被默认设置，所以它也是又软件设置的。
+			如果 <code class="inline-code">output_encoding</code> 也没有被设置，
+			那么没有参数的内建函数 <code class="inline-code">url</code> 将不会被执行，
+			而且它会引起运行时错误。当然，有参数的 <code class="inline-code">url</code> 函数将会执行。</span></p>
+
+          <p><span class="marked-for-programmers">用 <code class="inline-code">setting</code> 
+		  指令在模板中设置 <code class="inline-code">url_escaping_charset</code> 是可能的。
+		  至少在真实的MVC应用中，这是一个不好的实践行为。<code class="inline-code">output_encoding</code> 
+		  不能由 <code class="inline-code">setting</code> 指令来设置，所以它应该是软件的工作。
+		  你可以阅读 <a href="pgui_misc_charset.html">这里...</a> 来获取更多信息。</span></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_url_path">url_path</h2>
+
+
+          
+
+          
+
+          
+
+          
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.21 版本开始可用。</p>
+            </div>
+
+
+          <p>它和 <a href="#ref_builtin_url">
+          <code>url</code> 内建函数</a> 相同，只是它不转义斜杠
+          (<code class="inline-code">/</code>)字符。这就是意味着用来转义使用了斜杠(不是反斜杠！)的路径
+		  (比如操作系统或一些内容仓库的路径)，转义之后它们可以插入到URL中。
+		  需要该转义的常用原因是文件夹名称或文件名称可能含有非US-ASCII字母
+		  ("国家" 标准符号)。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>和 <a href="#ref_builtin_url">the
+            <code>url</code> 内建函数</a> 相似，希望的URL转义字符
+			(或者后退，输出编码)必须要在 FreeMarker的配置设置项中设置，
+			否则内建函数就会报错。或者可以指定字符集，比如 
+			<code class="inline-code">somePath?url_path(&#39;utf-8&#39;)</code>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_word_list">word_list</h2>
+
+
+          
+
+          <p>包含字符串中所有单词的序列，顺序为出现在字符串中的顺序。
+		  单词是不间断的字符序列，包含了任意字符，但是没有 <a href="gloss.html#gloss.whiteSpace">空白</a>。例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign words = &quot;   a bcd, .   1-2-3&quot;?word_list&gt;
+&lt;#list words as word&gt;[${word}]&lt;/#list&gt;</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">[a][bcd,][.][1-2-3]</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_xhtml">xhtml</h2>
+
+
+          
+
+          
+
+          <p>字符串作为XHTML格式文本，下面这些：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code">&lt;</code> 替换为 
+              <code class="inline-code">&amp;lt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&gt;</code> 替换为 
+              <code class="inline-code">&amp;gt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&amp;</code> 替换为 
+              <code class="inline-code">&amp;amp;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&quot;</code> 替换为 
+              <code class="inline-code">&amp;quot;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&#39;</code> 替换为 
+              <code class="inline-code">&amp;#39;</code>
+            </li>
+          </ul>
+
+          <p>该内建函数和 <code class="inline-code">xml</code> 内建函数的唯一不同是 
+		  <code class="inline-code">xhtml</code>内建函数转义 <code class="inline-code">&#39;</code> 
+		  为 <code class="inline-code">&amp;#39;</code>，而不是 <code class="inline-code">&amp;apos;</code>，
+		  因为一些老版本的浏览器不能正确解释 <code class="inline-code">&amp;apos;</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_xml">xml</h2>
+
+
+          
+
+          
+
+          <p>字符串作为XML格式文本，下面这些：</p>
+
+          <ul>
+            <li>
+              <code class="inline-code">&lt;</code> 替换为 
+              <code class="inline-code">&amp;lt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&gt;</code> 替换为 
+              <code class="inline-code">&amp;gt;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&amp;</code> 替换为 
+              <code class="inline-code">&amp;amp;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&quot;</code> 替换为 
+              <code class="inline-code">&amp;quot;</code>
+            </li>
+
+            <li>
+              <code class="inline-code">&#39;</code> 替换为 
+              <code class="inline-code">&amp;apos;</code>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_string_flags">通用标志</h2>
+
+
+          <p>很多字符串内建函数接受可选的字符串参数，
+		  它们被称为&quot;标志&quot;。在这个字符串中，每个字母影响内建函数一个特定方面的行为。
+		  比如，字母 <code class="inline-code">i</code> 说明内建函数不应该区别相同字母的小写和大写变化。
+		  标志字符串中的字母顺序是不重要的。</p>
+
+          <p>下面是字母(标志)的完整列表：</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">i</code>：大小写敏感：
+			  不区别相同字母的小写和大写变化。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">f</code>：只是第一个。也就是说，
+			  替换/查找/等...，只是第一个出现的地方。</p>
+            </li>
+
+            <li>
+              <p> <code class="inline-code">r</code>：查找的子串是
+              <a href="gloss.html#gloss.regularExpression">正则表达式</a>。
+			  FreeMarker 使用的正则表达式变量可以在 <a href="http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</a>
+			  中找到(请注意，一些模式规则特性的出现基于所使用的Java版本)。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">m</code>：正则表达式的多行模式。在多行正则表达式 
+              <code class="inline-code">^</code> 和 <code class="inline-code">$</code> 仅仅匹配之后或之前，
+			  各自匹配行终止符或字符串结尾。默认情况下，这些表达式仅仅匹配完整字符串的开头和结尾。
+			  请注意，<code class="inline-code">^</code> 和 <code class="inline-code">$</code> 不匹配换行符字符本身。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">s</code>：开启正则表达式的dot-all模式
+			  (和Perl的单行模式相同)。在dot-all模式下，表达式 
+			  <code class="inline-code">.</code> 匹配任意字符串，包含行终止符。
+			  默认情况下，该表达式不匹配行终止符。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">c</code>： 允许正则表达式中的空白和注释。</p>
+            </li>
+          </ul>
+
+          <p>例如：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign s = &#39;foo bAr baar&#39;&gt;
+${s?replace(&#39;ba&#39;, &#39;XY&#39;)}
+i: ${s?replace(&#39;ba&#39;, &#39;XY&#39;, &#39;i&#39;)}
+if: ${s?replace(&#39;ba&#39;, &#39;XY&#39;, &#39;if&#39;)}
+r: ${s?replace(&#39;ba*&#39;, &#39;XY&#39;, &#39;r&#39;)}
+ri: ${s?replace(&#39;ba*&#39;, &#39;XY&#39;, &#39;ri&#39;)}
+rif: ${s?replace(&#39;ba*&#39;, &#39;XY&#39;, &#39;rif&#39;)}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">foo bAr XYar
+i: foo XYr XYar
+if: foo XYr baar
+r: foo XYAr XYr
+ri: foo XYr XYr
+rif: foo XYr baar</pre></div>
+
+          <p>下表是支持使用这些通用标志的内建函数：</p>
+
+            <div class="table-responsive">
+    <table class="table">
+
+            <thead>
+              <tr>
+                <th>内建函数</th>
+
+
+                <th><code class="inline-code">i</code> (忽略大小写)</th>
+
+
+                <th><code class="inline-code">r</code> (正则表达式)</th>
+
+
+                <th><code class="inline-code">m</code> (多行模式)</th>
+
+
+                <th><code class="inline-code">s</code> (dot-all模式)</th>
+
+
+                <th><code class="inline-code">c</code> (空白和注释)</th>
+
+
+                <th><code class="inline-code">f</code> (仅第一个)</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+              <tr>
+                <td><code class="inline-code">replace</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>是</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">split</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>仅 <code class="inline-code">r</code></td>
+
+
+                <td>否</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">matches</code></td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>否</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">keep_after</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">keep_after_last</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">keep_before</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">keep_before_last</code></td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+              </tr>
+
+
+              <tr>
+                <td><code class="inline-code">ensure_starts_with</code></td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>是</td>
+
+
+                <td>忽略</td>
+
+              </tr>
+
+            </tbody>
+
+              </table>
+  </div>
+
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_alphaidx.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_number.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

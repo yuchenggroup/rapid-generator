@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>创建数据模型 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="创建数据模型">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_quickstart_createdatamodel.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_quickstart_createdatamodel.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_quickstart.html"><span itemprop="name">入门</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_quickstart_createdatamodel.html"><span itemprop="name">创建数据模型</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","入门","创建数据模型"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_quickstart_createconfiguration.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_quickstart_gettemplate.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_quickstart_createdatamodel" itemprop="headline">创建数据模型</h1>
+</div></div><p>在简单的示例中你可以使用 <code class="inline-code">java.lang</code> 和 
+		<code class="inline-code">java.util</code> 包中的类，
+		还有用户自定义的Java Bean来构建数据对象：</p><ul>
+          <li>
+            <p>使用 <code class="inline-code">java.lang.String</code> 来构建字符串。</p>
+          </li>
+
+          <li>
+            <p>使用 <code class="inline-code">java.lang.Number</code> 来派生数字类型。</p>
+          </li>
+
+          <li>
+            <p>使用 <code class="inline-code">java.lang.Boolean</code> 来构建布尔值。</p>
+          </li>
+
+          <li>
+            <p>使用 <code class="inline-code">java.util.List</code> 或Java数组来构建序列。</p>
+          </li>
+
+          <li>
+            <p>使用 <code class="inline-code">java.util.Map</code> 来构建哈希表。</p>
+          </li>
+
+          <li>
+            <p>使用自定义的bean类来构建哈希表，bean中的项和bean的属性对应。比如， 
+            <code class="inline-code">product</code> 的 <code class="inline-code">price</code> 属性
+			(<code class="inline-code">getProperty()</code>)可以通过 <code class="inline-code">product.price</code> 
+			获取。(bean的action也可以通过这种方式拿到；
+			要了解更多可以参看 <a href="pgui_misc_beanwrapper.html">这里</a>)</p>
+          </li>
+        </ul><p>我们为 <a href="dgui_quickstart_basics.html#example.first">模板开发指南部分演示的第一个例子</a>
+		来构建数据模型。为了方便说明，这里再展示一次示例：</p>
+
+<div class="code-wrapper"><pre class="code-block code-data-model">(root)
+  |
+  +- user = &quot;Big Joe&quot;
+  |
+  +- latestProduct
+      |
+      +- url = &quot;products/greenmouse.html&quot;
+      |
+      +- name = &quot;green mouse&quot;</pre></div><p>下面是构建这个数据模型的Java代码片段：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">// Create the root hash
+Map&lt;String, Object&gt; root = new HashMap&lt;&gt;();
+// Put string ``user&#39;&#39; into the root
+root.put(&quot;user&quot;, &quot;Big Joe&quot;);
+// Create the hash for ``latestProduct&#39;&#39;
+Map&lt;String, Object&gt; latest = new HashMap&lt;&gt;();
+// and put it into the root
+root.put(&quot;latestProduct&quot;, latest);
+// put ``url&#39;&#39; and ``name&#39;&#39; into latest
+latest.put(&quot;url&quot;, &quot;products/greenmouse.html&quot;);
+latest.put(&quot;name&quot;, &quot;green mouse&quot;);</pre></div><p>在真实应用系统中，通常会使用应用程序指定的类来代替 <code class="inline-code">Map</code>，
+		它会有JavaBean规范规定的
+		<code class="inline-code">get<em class="code-color">Xxx</em></code>/<code class="inline-code">is<em class="code-color">Xxx</em></code>
+		方法。比如有一个和下面类似的类：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">public class Product {
+
+    private String url;
+    private String name;
+    ...
+    
+    // As per the JavaBeans spec., this defines the &quot;url&quot; bean property
+    public String getUrl() {
+        return url;
+    }
+    
+    // As per the JavaBean spec., this defines the &quot;name&quot; bean property
+    public String getName() {
+        return name;
+    }
+    
+    ...
+    
+}</pre></div><p>将它的实例放入数据模型中，就像下面这样：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">Product latestProducts = getLatestProductFromDatabaseOrSomething();
+root.put(&quot;latestProduct&quot;, latestProduct);</pre></div><p>如果<code class="inline-code">latestProduct</code> 是 <code class="inline-code">Map</code>类型，
+		模板就可以是相同的，比如 <code class="inline-code">${latestProduct.name}</code> 
+		在两种情况下都好用。</p><p>根root本身也无需是 <code class="inline-code">Map</code>，只要是有
+		<code class="inline-code">getUser()</code> 和 <code class="inline-code">getLastestProduct()</code>
+		方法的对象即可。</p>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+          <p>如果配置设置项 <code class="inline-code">object_wrapper</code> 的值是用于所有真实步骤，
+		  这里描述的行为才好用。任何由 <code class="inline-code">ObjectWrapper</code> 包装成的哈希表
+		  可以用作根root，也可以在模板中和点、 <code class="inline-code">[]</code> 操作符使用。
+		  如果不是包装成哈希表的对象不能作为根root，也不能像那样在模板中使用。</p>
+          </div>
+<div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_quickstart_createconfiguration.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_quickstart_gettemplate.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

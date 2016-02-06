@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>插值 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="插值">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_template_valueinsertion.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_template_valueinsertion.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_template.html"><span itemprop="name">模板</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_template_valueinsertion.html"><span itemprop="name">插值</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","模板","插值"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_template_exp.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_template_valueinsertion" itemprop="headline">插值</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_14" data-menu-target="autoid_14">概览</a></li><li><a class="page-menu-link" href="#autoid_15" data-menu-target="autoid_15">字符串插入指南：不要忘了转义！</a></li><li><a class="page-menu-link" href="#autoid_16" data-menu-target="autoid_16">数字插入指南</a></li><li><a class="page-menu-link" href="#dgui_template_valueinserion_universal_date" data-menu-target="dgui_template_valueinserion_universal_date">日期/时间插入指南</a></li><li><a class="page-menu-link" href="#autoid_17" data-menu-target="autoid_17">布尔值插入指南</a></li><li><a class="page-menu-link" href="#autoid_18" data-menu-target="autoid_18">精确的转换规则</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_14">概览</h2>
+
+
+          <p>插值的使用格式是：
+		  <code class="inline-code">${<em class="code-color">expression</em>}</code>，这里的
+          <code class="inline-code"><em class="code-color">expression</em></code> 
+		  可以是所有种类的表达式(比如 <code class="inline-code">${100 + x}</code>)。</p>
+
+          <p>插值是用来给 <code class="inline-code"><em class="code-color">表达式</em></code> 
+		  插入具体值然后转换为文本(字符串)。插值仅仅可以在两种位置使用：在 <a href="dgui_template_overallstructure.html"><span class="marked-text">文本</span> 区</a> (比如
+          <code class="inline-code">&lt;h1&gt;Hello ${name}!&lt;/h1&gt;</code>) 和 <a href="dgui_template_exp.html#dgui_template_exp_stringop_interpolation">字符串表达式</a> 
+		  (比如 <code class="inline-code">&lt;#include &quot;/footer/${company}.html&quot;&gt;</code>)中。</p>
+
+          <p>表达式的结果必须是字符串，数字或者日期/时间/日期-时间值，
+		  因为(默认是这样)仅仅这些值可以被插值自动转换为字符串。其它类型的值
+		  (比如布尔值，序列)必须 "手动地" 转换成字符串(后续会有一些建议)，
+		  否则就会发生错误，中止模板执行。</p>
+
+            <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+            <p>一个常犯的错误是在不能使用插值的地方使用了它。
+			插值  <em>仅仅</em> 在 <a href="dgui_template_overallstructure.html"><span class="marked-text">文本</span> 区</a> (比如
+          <code class="inline-code">&lt;h1&gt;Hello ${name}!&lt;/h1&gt;</code>) 和 <a href="dgui_template_exp.html#dgui_template_exp_direct_string">字符串</a>
+          (比如 <code class="inline-code">&lt;#include &quot;/footer/${company}.html&quot;&gt;</code>)中起作用。
+		  典型的 <em>错误</em> 使用是 <code class="inline-code">&lt;#if
+          ${big}&gt;...&lt;/#if&gt;</code>，这是语法上的错误。
+		  只要简单写为 <code class="inline-code">&lt;#if big&gt;...&lt;/#if&gt;</code>即可。
+		  而且 <code class="inline-code">&lt;#if &quot;${big}&quot;&gt;...&lt;/#if&gt;</code> 也是 
+		  <em>错误</em>的，因为这样参数就是字符串类型了，
+		  但是 <code class="inline-code">if</code> 指令的参数要求是布尔值，所以就会发生运行时错误。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_15">字符串插入指南：不要忘了转义！</h2>
+
+
+          <p>如果插值在 <a href="dgui_template_overallstructure.html"><span class="marked-text">文本</span> 区</a> (也就是说，不在 <a href="dgui_template_exp.html#dgui_template_exp_stringop_interpolation">字符串表达式</a> 中)，如果 <a href="ref_directive_escape.html#ref.directive.escape"><code>escape</code>
+          指令</a> 起作用了，那么将被插入的字符串会被自动转义。如果要生成HTML，
+		  那么强烈建议你利用它来阻止跨站脚本攻击和非格式良好的HTML页面。这里有一个示例：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template"><strong>&lt;#escape x as x?html&gt;</strong>
+  ...
+  &lt;p&gt;Title: <strong>${</strong>book.title<strong>}</strong>&lt;/p&gt;
+  &lt;p&gt;Description: <strong>&lt;#noescape&gt;${</strong>book.description<strong>}&lt;/#noescape&gt;</strong>&lt;/p&gt;
+  &lt;h2&gt;Comments:&lt;/h2&gt;
+  &lt;#list comments as comment&gt;
+    &lt;div class=&quot;comment&quot;&gt;
+      <strong>${</strong>comment<strong>}</strong>
+    &lt;/div&gt;
+  &lt;/#list&gt;
+  ...
+<strong>&lt;/#escape&gt;</strong></pre></div>
+
+          <p>这个示例展示了当生成HTML时，最好将完整的模板放入到 
+		  <code class="inline-code">escape</code> 指令中。那么，如果 
+		  <code class="inline-code">book.title</code> 包含 <code class="inline-code">&amp;</code>，
+		  在输出中它就会被替换成 <code class="inline-code">&amp;amp;</code>， 
+		  而页面还会保持为格式良好的HTML。如果用户注释包含如 
+		  <code class="inline-code">&lt;iframe&gt;</code>(或其它元素)的标记，那么就会被转义成
+          <code class="inline-code">&amp;lt;iframe&amp;gt;</code> 的样子，使他们没有任何有害点。
+          但有时在数据模型中真的需要HTML，我们假设上面的 
+		  <code class="inline-code">book.description</code> 在数据库中的存储是HTML格式的，
+		  那么此时不得不使用 <code class="inline-code">noescape</code> 来抵消
+          <code class="inline-code">escape</code> 的转义，不包含 <code class="inline-code">escape</code>，
+		  模板就会像这样了：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">  ...
+  &lt;p&gt;Title: ${book.title?html}&lt;/p&gt;
+  &lt;p&gt;Description: ${book.description}&lt;/p&gt;
+  &lt;h2&gt;Comments:&lt;/h2&gt;
+  &lt;#list comments as comment&gt;
+    &lt;div class=&quot;comment&quot;&gt;
+      ${comment?html}
+    &lt;/div&gt;
+  &lt;/#list&gt;
+  ...</pre></div>
+
+          <p>这和之前示例的效果是一样的， 但是这里可能会忘记 
+		  <code class="inline-code">?html</code> 等内建函数，那么这就会有安全上的问题了。
+		  在之前的示例中，你可能忘记 <code class="inline-code">noescape</code> 等内建函数，
+		  也会造成不良的输出，但是起码是没有安全隐患的。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_16">数字插入指南</h2>
+
+
+          <p>如果表达式是数字类型，那么根据数字的默认格式，
+		  数值将会转换成字符串。这也许会包含最大的小数，
+		  数字分组和相似处理的问题。通常程序员应该设置默认的数字格式；
+		  而模板设计者不需要处理它(但是可以使用 <code class="inline-code">number_format</code> 
+		  来设置；详情请参考 <a href="ref_directive_setting.html"> 
+		  <code>setting</code> 指令部分的文档</a>)。
+		  可以使用<a href="ref_builtins_number.html#ref_builtin_string_for_number"> 
+		  内建函数 <code>string</code> </a>
+		  为一个插值来重写默认数值格式。</p>
+
+          <p>小数的分隔符通常(其他类似的符号也是这样，如分组符号)
+		  是根据所在地的标准(语言，国家)来确定的，这也需要程序员来设置。例如这个模板：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">${1.5}</pre></div>
+
+          <p>如果当前本地化设置为英语时，将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">1.5</pre></div>
+
+          <p>而当前地区为德国时，将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">1,5</pre></div>
+
+          <p>这是因为德国人使用逗号作为小数点。</p>
+
+            <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+            <p>可以看出，插值的打印都是给用户看的(至少是这样的)，
+			而不是给&#39;&#39;计算机&#39;&#39;的。有时候这样并不好，比如要打印数据库记录的主键，
+			用来作为URL中的一部分或HTML表单的隐藏域来作为提交内容，
+			或者要打印CSS/JavaScript中的数字，因为这些值都是给计算机程序去识别的而不是给用户看的。
+			很多程序对数字格式的要求非常严格，它们只能理解一部分简单的美式数字格式。那样的话，
+			可以使用内建函数<a href="ref_builtins_number.html#ref_builtin_c"><code>c</code></a> 
+			（代表&#39;&#39;计算机&#39;&#39;）来解决这个问题，比如：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;a href=&quot;/shop/productdetails?id=${product.id?c}&quot;&gt;Details...&lt;/a&gt;</pre></div>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_template_valueinserion_universal_date">日期/时间插入指南</h2>
+
+
+          <p>如果表达式的值是时间日期类型，那么日期中的数字将会按照默认格式来转换成文本。
+		  通常程序员应该设置默认格式，而页面设计者无需处理这一点。(如果需要的话，
+		  <a href="ref_directive_setting.html#topic.dateTimeFormatSettings">可以参考
+          <code>date_format</code>， <code>time_format</code> 和
+          <code>datetime_format</code> 的 </a> 
+		  <a href="ref_directive_setting.html#ref.directive.setting"><code>setting</code>
+          指令</a>设置)。当然，也可以使用
+		  <a href="ref_builtins_date.html#ref_builtin_string_for_date">内建函数<code>string</code></a>
+		  来覆盖单独插值的默认格式。</p>
+
+            <div class="callout warning">
+    <strong class="callout-label">Warning!</strong>
+
+            <p>为了将日期显示成文本，FreeMarker 必须知道日期中的哪一部分在使用，也就是说，
+			如果仅仅日期部分(年，月，日)使用或仅仅时间部分(时，分，秒，毫秒)使用或两部分都用。
+			不幸的是，由于Java平台技术的限制，自动探测一些变量是不现实的。
+			这时可以找程序员对数据模型中可能出问题的变量进行处理。
+			如果找出时间日期变量的哪部分在使用是不太可能的话，就必须帮助 FreeMarker 使用内建函数
+			<a href="ref_builtins_date.html#ref_builtin_date_datetype"><code>date</code>，
+            <code>time</code> 和 <code>datetime</code></a> 来识别
+			(比如 <code class="inline-code">${lastUpdated?datetime}</code> )，否则就会出现错误停止执行。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_17">布尔值插入指南</h2>
+
+
+          <p>若要使用插值方式来打印布尔值会引起错误，中止模板的执行。
+		  例如： <code class="inline-code">${a == 2}</code> 就会引起错误，
+		  它不会打印&#39;&#39;true&#39;&#39;或其他内容。这是因为没有全局来表示布尔值的好方法
+		  (有时想输出yes/no，但有时是想要enabled/disabled,on/off等等)。</p>
+
+          <p>我们可以使用内建函数 <a href="ref_builtins_boolean.html#ref_builtin_string_for_boolean"><code>?string</code></a>
+		  来将布尔值转换为字符串形式。比如输出变量&quot;married&quot;的值(假设它是一个布尔值)，
+		  那么可以这么来写: <code class="inline-code">${married?string(&quot;yes&quot;, &quot;no&quot;)}</code>。</p>
+
+          <p>可以使用设置参数 <code class="inline-code">boolean_format</code> 
+		  来为 FreeMarker 配置默认的布尔值格式。那么，直接编写 
+		  <code class="inline-code">${married}</code> 这样的代码就不会有问题了。但在很多应用程序中，
+		  这样的做法是不推荐使用的，因为布尔值在不同的地方就应该呈现出不同的格式，
+		  同时将格式留作默认值也可以认为是疏忽，因为这可能导致错误产生。</p>
+
+          <p>当想生成JavaScript或其它计算机语言代码部分时，那么可以考虑使用 
+		  <code class="inline-code">${someBoolean?c}</code>("c" 代表计算机)来输出布尔值true/false。
+		  (请记住 <code class="inline-code">?c</code> 也可以用来输出给计算机看的数字。)</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_18">精确的转换规则</h2>
+
+
+          <p>对于有兴趣研究的人，表达式的值转换为字符串(仍受限于转义)
+		  精确的规则就是下面这些，以这个顺序进行：</p>
+
+          <div class="orderedlist"><ol type="1">
+            <li>
+              <p>如果这个值是数字，那么它会按照指定的 <code class="inline-code">number_format</code> 
+			  设置规则来转换为字符串。所以这些转换通常是对用户进行的，而不是对计算机。</p>
+            </li>
+
+            <li>
+              <p>如果这个值是日期，时间或时间日期类型的一种，那么它们会按照指定的
+              <code class="inline-code">date_format</code>， <code class="inline-code">time_format</code>
+              或者 <code class="inline-code">datetime_format</code> 设置规则来转换为字符串。
+			  如果它不能被探测出来是哪种日期类型(日期或时间或日期时间)时，就会发生错误了。</p>
+            </li>
+
+            <li>
+              <p>如果值本来就是字符串类型的，不需要转换。</p>
+            </li>
+
+            <li>
+              <p>如果 FreeMarker 引擎在传统兼容模式下：</p>
+
+              <div class="orderedlist"><ol type="1">
+                <li>
+                  <p>如果值是布尔类型，true值就转换成&quot;true&quot;，false值将会转换为空字符串。</p>
+                </li>
+
+                <li>
+                  <p>如果表达式未被定义(<code class="inline-code">null</code> 或者变量未定义)，
+				  那么就转换为空字符串。</p>
+                </li>
+
+                <li>
+                  <p>否则就会发生错误中止模板执行。</p>
+                </li>
+              </ol></div>
+            </li>
+
+            <li>
+              <p>否则就会发生错误中止模板执行。</p>
+            </li>
+          </ol></div>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_template_exp.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

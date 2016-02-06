@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>命名空间 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="命名空间">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_misc_namespace.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_misc_namespace.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc_namespace.html"><span itemprop="name">命名空间</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","其它","命名空间"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_whitespace.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_misc_namespace" itemprop="headline">命名空间</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_23" data-menu-target="autoid_23">创建一个库</a></li><li><a class="page-menu-link" href="#autoid_24" data-menu-target="autoid_24">在引入的命名空间中编写变量</a></li><li><a class="page-menu-link" href="#autoid_25" data-menu-target="autoid_25">命名空间和数据模型</a></li><li><a class="page-menu-link" href="#autoid_26" data-menu-target="autoid_26">命名空间的生命周期</a></li><li><a class="page-menu-link" href="#autoid_27" data-menu-target="autoid_27">为他人编写库</a></li></ul> </div><p>当运行FTL模板时，就会有使用 <code class="inline-code">assign</code> 
+		和 <code class="inline-code">macro</code> 指令创建的变量的集合(可能是空的)，
+		可以从 <a href="dgui_misc_var.html">前一章</a> 来看如何使用它们。
+		像这样的变量集合被称为  <strong>命名空间</strong>。
+		简单的情况下可以只使用一个命名空间，称之为 
+		<strong>主命名空间</strong>。因为通常只使用该命名空间，
+		所以就没有意识到这点。</p><p>如果想创建可以重复使用的宏，函数和其他变量的集合，
+		通常用术语来说就是引用 <strong>库</strong>。
+		使用多个命名空间是必然的。只要考虑你在一些项目中，
+		或者想和他人共享使用的时候，你是否有一个很大的宏的集合。
+		但要确保库中没有宏（或其他变量）名和数据模型中变量同名，
+		而且也不能和模板中引用其他库中的变量同名是不可能的。
+		通常来说，变量因为名称冲突时也会相互冲突。
+		所以要为每个库中的变量使用不同的命名空间。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_23">创建一个库</h2>
+
+
+          <p>我们来建立一个简单的库。假设你需要通用的变量 
+		  <code class="inline-code">copyright</code> 和 <code class="inline-code">mail</code>
+		  (在你有疑问之前，宏 <em>当作是</em> 变量)：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} Julia Smith. All rights reserved.&lt;/p&gt;
+&lt;/#macro&gt;
+
+&lt;#assign mail = &quot;jsmith@acme.com&quot;&gt;</pre></div>
+
+          <p>把上面的这些定义存储在文件 <code class="inline-code">lib/my_test.ftl</code> 中
+		  (目录是存放模板的位置)。假设想在 <code class="inline-code">aWebPage.ftl</code> 
+		  中使用这个模板。如果在 <code class="inline-code">aWebPage.ftl</code> 中使用 
+		  <code class="inline-code">&lt;#include &quot;/lib/my_test.ftl&quot;&gt;</code>，
+		  那么就会在主命名空间中创建两个变量，这样就不是很好，
+		  因为想让它们只在同一个命名空间&#39;&#39;My Test Library&#39;&#39;中。所以就不得不使用 <a href="ref_directive_import.html#ref.directive.import"><code>import</code>指令</a>
+		  来代替 <code class="inline-code">include</code> 了。乍一看，这个指令和 
+		  <code class="inline-code">include</code> 很相似，但是它会为 <code class="inline-code">lib/my_test.ftl</code> 
+		  创建一个空的命名空间，然后在那里执行。<code class="inline-code">lib/my_test.ftl</code> 
+		  会发现它自己在一个新的环境中，那里只有数据模型的变量可以找到
+		  (因为它们在哪儿都是可见的)，然后会在这个环境中创建两个变量。现在来看这很不错，
+		  但是如果想访问 <code class="inline-code">aWebPage.ftl</code> 中的两个变量，
+		  而它们使用的是主命名空间，就不能看到其他命名空间中的变量。
+		  解决方法是 <code class="inline-code">import</code> 指令不仅仅创建命名空间，而且要通过 
+		  <code class="inline-code">import</code> 的调用者(本例中的主命名空间)创建一个新的哈希表变量，
+		  这就成为进入新的命名空间的大门。那么 
+		  <code class="inline-code">aWebPage.ftl</code> 就像下面这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as <strong>my</strong>&gt; &lt;#-- the hash called &quot;my&quot; will be the &quot;gate&quot; --&gt;
+&lt;@<strong>my</strong>.copyright date=&quot;1999-2002&quot;/&gt;
+${<strong>my</strong>.mail}</pre></div>
+
+          <p>要注意它是怎么访问为 <code class="inline-code">/lib/my_test.ftl</code> 
+		  创建的命名空间中的变量的，使用新创建的命名空间访问哈希表，
+		  <code class="inline-code">my</code>。将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Julia Smith. All rights reserved.&lt;/p&gt;
+jsmith@acme.com</pre></div>
+
+          <p>如果在主命名空间中有一个变量，名为 <code class="inline-code">mail</code> 
+		  或 <code class="inline-code">copyright</code>，那么就不会引起混乱了，
+		  因为两个模板使用了不同的命名空间。例如，在 <code class="inline-code">lib/my_test.ftl</code> 
+		  中修改 <code class="inline-code">copyright</code> 成如下这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} Julia Smith. All rights reserved.
+  &lt;br&gt;Email: <strong>${mail}</strong>&lt;/p&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p>然后替换 <code class="inline-code">aWebPage.ftl</code> 中的内容：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+<strong>&lt;#assign mail=&quot;fred@acme.com&quot;&gt;</strong>
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt;
+${my.mail}
+${mail}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Julia Smith. All rights reserved.
+  &lt;br&gt;Email: <strong>jsmith@acme.com</strong>&lt;/p&gt;
+jsmith@acme.com
+fred@acme.com</pre></div>
+
+          <p>当调用了 <code class="inline-code">copyright</code> 宏之后，输出和上面的是相似的，
+		  因为 FreeMarker 已经暂时转向由 <code class="inline-code">import</code> 指令为 
+		  <code class="inline-code">/lib/my_test.ftl</code> 生成的命名空间了。因此，
+		  <code class="inline-code">copyright</code> 宏看到这里存在的变量 <code class="inline-code">mail</code>，
+		  而不是主命名空间中存在的其它 <code class="inline-code">mail</code></p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_24">在引入的命名空间中编写变量</h2>
+
+
+          <p>偶尔想要在一个被包含的命名空间上创建或替换一个变量。
+		  那么可以使用 <code class="inline-code">assign</code> 指令，
+		  如果用到了它的 <code class="inline-code">namespace</code> 变量，例如下面这样：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+${my.mail}
+&lt;#assign mail=&quot;jsmith@other.com&quot; <strong>in my</strong>&gt;
+${my.mail}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">jsmith@acme.com
+jsmith@other.com</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_25">命名空间和数据模型</h2>
+
+
+          <p>数据模型中的变量在任何位置都是可见的。例如，
+		  如果在数据模型中有一个名为 <code class="inline-code">user</code> 
+		  的变量，那么 <code class="inline-code">lib/my_test.ftl</code> 也能访问它，
+		  <code class="inline-code">aWebPage.ftl</code> 当然也能：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} <strong>${user}</strong>. All rights reserved.&lt;/p&gt;
+&lt;/#macro&gt;
+
+&lt;#assign mail = &quot;<strong>${user}</strong>@acme.com&quot;&gt;</pre></div>
+
+          <p>如果 <code class="inline-code">user</code> 是 &#39;&#39;Fred&#39;&#39;的话，下面这个例子：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt;
+${my.mail}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Fred. All rights reserved.&lt;/p&gt;
+Fred@acme.com</pre></div>
+
+          <p>不要忘了在模板的命名空间（可以使用 <code class="inline-code">assign</code> 
+		  或 <code class="inline-code">macro</code> 指令来创建的变量）
+		  中的变量有着比数据模型中的变量更高的优先级。因此，
+		  数据模型的内容不会干涉到由库创建的变量。</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>在一些不寻常的应用中，也许想在模板中创建所有命名空间都可见的变量，
+			就像数据模型中的变量一样。但是你不能在模板中改变数据模型，
+			却可以通过 <code class="inline-code">global</code> 指令来达到相似的效果，
+			可以阅读 <a href="ref_directive_global.html#ref.directive.global">参考手册</a> 来获得更多信息。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_26">命名空间的生命周期</h2>
+
+
+          <p>命名空间由使用 <code class="inline-code">import</code> 指令中所写的路径来识别。
+		  如果想多次 <code class="inline-code">import</code> 这个路径，那么只会为第一次 
+		  <code class="inline-code">import</code> 引用创建命名空间并执行模板。后面相同路径的 
+		  <code class="inline-code">import</code> 只是创建一个哈希表当作访问相同命名空间的“门”。
+		  例如，在 <code class="inline-code">aWebPage.ftl</code> 中：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+&lt;#import &quot;/lib/my_test.ftl&quot; as foo&gt;
+&lt;#import &quot;/lib/my_test.ftl&quot; as bar&gt;
+${my.mail}, ${foo.mail}, ${bar.mail}
+&lt;#assign mail=&quot;jsmith@other.com&quot; in my&gt;
+${my.mail}, ${foo.mail}, ${bar.mail}</pre></div>
+
+          <p>将会输出：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">jsmith@acme.com, jsmith@acme.com, jsmith@acme.com
+jsmith@other.com, jsmith@other.com, jsmith@other.com</pre></div>
+
+          <p>这里可以看到通过 <code class="inline-code">my</code>， <code class="inline-code">foo</code> 
+		  和 <code class="inline-code">bar</code> 访问相同的命名空间。</p>
+
+          <p>请注意，命名空间是不分层次的，它们相互之间是独立存在的。
+		  那么，如果在命名空间N1中 <code class="inline-code">import</code> 命名空间N2，
+		  那N2也不在N1中，N1只是可以通过哈希表来访问N2。这和在主命名空间中 
+		  <code class="inline-code">import</code> N2，然后直接访问命名空间N2是一样的过程。</p>
+
+          <p>每一次 <a href="gloss.html#gloss.templateProcessingJob">模板的执行过程</a>，
+		  它都有一个私有的命名空间的集合。每一次模板执行工作都是一个分离且有序的过程，
+		  它们仅仅存在一段很短的时间，同时页面用以渲染内容，
+		  然后就和所有填充过的命名空间一起消失了。因此，无论何时我们说第一次调用 
+		  <code class="inline-code">import</code>，一个单一模板执行工作的内容都是这样。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_27">为他人编写库</h2>
+
+
+          
+
+          <p>如果你已经为其他人员编写一个有用的，高质量的库，你也许想把它放在网络上
+          (就像 <a href="http://freemarker.org/libraries.html">http://freemarker.org/libraries.html</a>)。
+		  为了防止和其他作者使用库的命名相冲突，而且引入其他库时要书写简单，
+		  这有一个事实上的标准，那就是指定库路径的格式。这个标准是：
+		  库的路径必须对模板和其他库可用(可引用)，就像这样：</p>
+
+          <p><code class="inline-code">/lib/<em class="code-color">yourcompany.com</em>/<em class="code-color">your_library</em>.ftl</code></p>
+
+          <p>如果你为Example公司工作，它们拥有www.example.com网的主页，
+		  你的工作是开发一个部件库，那么要引入你所写的FTL的路径应该是：</p>
+
+          <p><code class="inline-code">/lib/example.com/widget.ftl</code></p>
+
+          <p>请注意，www已经被省略了。第三次路径分割后的部分可以包含子目录，可以像下面这样写：</p>
+
+          <p><code class="inline-code">/lib/example.com/commons/string.ftl</code></p>
+
+          <p>一个重要的规则就是路径不应该包含大写字母，为了分隔词语，
+		  使用下划线 <code class="inline-code">_</code>，就像 <code class="inline-code">wml_form</code>
+		  (而不是 <code class="inline-code">wmlForm</code> )。</p>
+
+          <p>请注意，如果你的工作不是为公司或组织开发库，你应该使用项目主页的URL，比如
+		  <code class="inline-code">/lib/example.sourceforge.net/example.ftl</code>，或
+          <code class="inline-code">/lib/geocities.com/jsmith/example.ftl</code>。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_whitespace.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

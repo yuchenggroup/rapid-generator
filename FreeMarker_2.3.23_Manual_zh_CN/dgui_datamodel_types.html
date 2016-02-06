@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>类型 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="类型">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_datamodel_types.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_datamodel_types.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_datamodel.html"><span itemprop="name">数值，类型</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_datamodel_types.html"><span itemprop="name">类型</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","数值，类型","类型"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_datamodel_basics.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_template.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_datamodel_types" itemprop="headline">类型</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#dgui_datamodel_scalar" data-menu-target="dgui_datamodel_scalar">标量</a></li><li><a class="page-menu-link" href="#dgui_datamodel_container" data-menu-target="dgui_datamodel_container">容器</a></li><li><a class="page-menu-link" href="#autoid_11" data-menu-target="autoid_11">子程序</a><ul><li><a class="page-menu-link" href="#dgui_datamodel_method" data-menu-target="dgui_datamodel_method">方法和函数</a></li><li><a class="page-menu-link" href="#dgui_datamodel_userdefdir" data-menu-target="dgui_datamodel_userdefdir">用户自定义指令</a></li><li><a class="page-menu-link" href="#autoid_12" data-menu-target="autoid_12">函数/方法和用户自定义指令的比较</a></li></ul></li><li><a class="page-menu-link" href="#autoid_13" data-menu-target="autoid_13">其它</a><ul><li><a class="page-menu-link" href="#dgui_datamodel_node" data-menu-target="dgui_datamodel_node">结点</a></li></ul></li></ul> </div><p>支持的类型有：</p><ul>
+          <li>
+            <a href="#dgui_datamodel_scalar">标量：</a>
+
+            <ul>
+              <li>
+                字符串
+              </li>
+
+              <li>
+                数字
+              </li>
+
+              <li>
+                布尔值
+              </li>
+
+              <li>
+                日期/时间 (日期，时间或日期时间)
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#dgui_datamodel_container">容器：</a>
+
+            <ul>
+              <li>
+                哈希表
+              </li>
+
+              <li>
+                序列
+              </li>
+
+              <li>
+                集合
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            子程序：
+
+            <ul>
+              <li>
+                <a href="#dgui_datamodel_method">方法和函数</a>
+              </li>
+
+              <li>
+                <a href="#dgui_datamodel_userdefdir">用户自定义指令</a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            其它/很少使用：
+
+            <ul>
+              <li>
+                <a href="#dgui_datamodel_node">结点</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_datamodel_scalar">标量</h2>
+
+
+          <a name="topic.designer.scalarVariable"></a>
+
+          <p>标量是最基本，最简单的数值类型，它们可以是：</p>
+
+          <ul>
+            <li>
+              <p>字符串：表示简单的文本，例如：产品的名称。</p>
+
+              <p>如果想在模板中直接给出字符串值，而不是使用数据模型中的变量，
+			  那么将文本内容写在引号内即可，比如 <code class="inline-code">&quot;green mouse&quot;</code> 
+			  或 <code class="inline-code">&#39;green mouse&#39;</code>。(关于语法的更多细节可以在 
+			  <a href="dgui_template_exp.html#dgui_template_exp_direct_string">后续章节</a>中找到。)</p>
+            </li>
+
+            <li>
+              <p>数值：比如说，产品的价格。
+              <span class="marked-for-programmers">整数和非整数是不区分的；只有单一的数字类型。比如使用了计算器，
+			  计算3/2的结果是1.5而不是1。</span></p>
+
+              <p>如果要在模板中直接给出数字的值，那么可以这么来写：
+			  <code class="inline-code">150</code> 或 <code class="inline-code">-90.05</code> 
+			  或 <code class="inline-code">0.001</code>。(关于语法的更多细节可以在 <a href="dgui_template_exp.html#dgui_template_exp_direct_number">后续章节</a>中找到。)</p>
+            </li>
+
+            <li>
+              <p>布尔值：布尔值代表了逻辑上的对或错(是或否)。比如：用户是否登录了。
+				典型的应用是使用布尔值作为  <code class="inline-code">if</code> 指令的条件，
+				比如 <code class="inline-code">&lt;#if loggedIn &gt;<em class="code-color">...</em>&lt;/#if&gt;</code> 或者
+              <code class="inline-code">&lt;#if price == 0&gt;<em class="code-color">...</em>&lt;/#if&gt;</code>；
+			  后面这个 <code class="inline-code">price == 0</code> 部分的结果就是布尔值。</p>
+
+              <p>在模板中可以使用保留字 <code class="inline-code">true</code> 
+			  和 <code class="inline-code">false</code> 来指定布尔值。</p>
+            </li>
+
+            <li>
+              <p>日期：日期变量可以存储和日期/时间相关的数据。
+				一共有三种变化：</p>
+
+              <ul>
+                <li>
+                  <p>日期：精确到天的日期，没有时间部分。比如April 4, 2003。</p>
+                </li>
+
+                <li>
+                  <p>时间:精确到毫秒，没有日期部分。比如10:19:18 PM。</p>
+                </li>
+
+                <li>
+                  <p>日期-时间(有时也被称为&quot;时间戳&quot;)，比如April 4,2003 10:19:18 PM。
+				  有日期和时间两部分，时间部分的存储精确到毫秒。</p>
+                </li>
+              </ul>
+
+              <p>不幸的是，受到Java平台的限制，FreeMarker 有时是不能决定日期的部哪分被使用
+			  (也就是说，是日期-时间格式，日期格式还是时间格式)。
+			  这个问题的解决方法是一个的高级话题，将会在 
+			  <a href="ref_builtins_date.html#ref_builtin_date_datetype">后续章节</a>讨论。</p>
+
+              <p>模板中直接定义日期数值是可以的，但这也是高级话题，将会在
+              <a href="ref_builtins_string.html#ref_builtin_string_date">后续章节</a> 中进行解释。</p>
+            </li>
+          </ul>
+
+          <p>要记住，FreeMarker区别字符串，数字，布尔值和日期类型的值。比如，
+          字符串 <code class="inline-code">&quot;150&quot;</code> 看起来很像数字 <code class="inline-code">150</code>，
+		  字符串只是字符的任意序列，不能将它用于计算目的，也不能和其它数字进行比较等等。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="dgui_datamodel_container">容器</h2>
+
+
+          
+
+          <p>这些值存在的目的是为了包含其他变量；它们只是容器。
+		  它们包含的变量通常视为  <em>subvariables</em>
+		  (子变量，译者注)。容器的类型有：</p>
+
+          <ul>
+            <li>
+              <p>哈希表：每个子变量都可以通过一个唯一的名称来查找。
+				这个名称是不受限制的字符串。哈希表 <em>并不确定其中子变量的顺序</em>。
+				也就是说没有第一个子变量，第二个子变量这样的说法等；变量仅仅是通过名称来访问的。
+				(就像Java语言中的HashMap一样，是实现了Hash算法的Map，不记录内部元素的顺序，
+				仅仅通过名称来访问。译者注)</p>
+            </li>
+
+            <li>
+              <p>序列：每个子变量通过一个整数来标识。第一个子变量的标识符是0，
+				第二个是1，第三个是2，这样来类推，而且子变量是有顺序的。这些数次通常被称为 
+				<em>indexes</em>(索引，译者注)。序列通常比较密集，也就是所有的索引，
+				包括最后一个子变量的，它们和子变量都是相关联的，但不是绝对必要的。
+				子变量的类型也并不需要完全一致。</p>
+            </li>
+
+            <li>
+              <p>集合：从模板设计者角度来看，集合是有限制的序列。不能获取集合的大小，
+				也不能通过索引取出集合中的子变量，但是它们仍然可以通过 
+				<a href="ref_directive_list.html#ref.directive.list"><code>list</code> 指令</a>来遍历。</p>
+            </li>
+          </ul>
+
+          <p>请注意，一个值也可有多种类型 
+		  <a href="dgui_datamodel_basics.html#topic.multitype">一个值也可有多种类型</a>，
+		  对于一个值可能同时存在哈希表和序列这两种类型，这时，
+		  该变量就支持索引和名称两种访问方式。
+		  不过容器基本是当作哈希表或者序列来使用的，而不是两者同时使用。</p>
+
+          <p>尽管存储在哈希表，序列(集合)中的变量可以是任意类型的，
+		  这些变量也可以是哈希表，序列(或集合)。这样就可以构建任意深度的数据结构。</p>
+
+          <p>数据模型本身(最好说成是它的根root)也是哈希表。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_11">子程序</h2>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_datamodel_method">方法和函数</h3>
+
+
+            <a name="topic.designer.methodVariable"></a>
+
+            
+
+            <p>当一个值是方法或函数的时候，那么它就可以计算其他值，结果取决于传递给它的参数。</p>
+
+            <p><span class="marked-for-programmers">这部分是对程序员来说的：方法/函数是一等类型值，
+			就像函数化的编程语言。也就是说函数/方法也可以是其他函数/方法的参数或者返回值，
+			并可以把它们定义成变量等。</span></p>
+
+            <p>假设程序员在数据模型中放置了一个方法变量 <code class="inline-code">avg</code>，
+			该变量用来计算数字的平均值。如果给定3和5作为参数，访问 
+			<code class="inline-code">avg</code> 时就能得到结果4。</p>
+
+            <p>方法的使用将会在 <a href="dgui_template_exp.html#dgui_template_exp_methodcall">后续章节</a> 中进行解释，
+			下面这个示例会帮助我们理解方法的使用：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">The average of 3 and 5 is: ${avg(3, 5)}
+The average of 6 and 10 and 20 is: ${avg(6, 10, 20)}
+The average of the price of a python and an elephant is:
+${avg(animals.python.price, animals.elephant.price)}</pre></div>
+
+            <p>将会输出：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">The average of 3 and 5 is: 4
+The average of 6 and 10 and 20 is: 12
+The average of the price of a python and an elephant is:
+4999.5</pre></div>
+
+            <p>那么方法和函数有什么区别呢？这是模板作者所关心的，
+			它们没有关系，但也不是一点关系都没有。
+			方法是来自于数据模型 (<span class="marked-for-programmers">它们反射了Java对象的方法</span>)
+			而函数是定义在模板内的 (使用 <a href="ref_directive_function.html#ref.directive.function"><code>function</code> 
+			指令</a> -- 也是高级话题)，但二者可以用同一种方式来使用。</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_datamodel_userdefdir">用户自定义指令</h3>
+
+
+            
+
+            
+
+            
+
+            <p>这种类型的值可以作为用户自定义指令(换句话说，就是FreeMarker的标签)
+			用户自定义指令是一种子程序，一种可以复用的模板代码段。但这也是一个高级话题，
+			将会在 <a href="dgui_misc_userdefdir.html">后续章节</a> 中进行解释。</p>
+
+            <p><span class="marked-for-programmers">这部分是对程序员来说的：
+			用户自定义指令(比如宏)也是一等值类型，就像函数/方法一样。</span></p>
+
+            <p>这里仅仅对用户自定义指令有一个认识即可(如果现在还不能理解可以先忽略它)。
+			假设现在有一个变量 <code class="inline-code">box</code>，它的值是用户自定义的指令，
+			用来打印一些特定的HTML信息，包含标题和一条信息。那么，
+			<code class="inline-code">box</code> 变量就可以在模板中使用(示例如下)：</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;@<strong>box</strong> title=&quot;Attention!&quot;&gt;
+  Too much copy-pasting may leads to
+  maintenance headaches.
+&lt;/@<strong>box</strong>&gt;</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_12">函数/方法和用户自定义指令的比较</h3>
+
+
+            <p>这部分内容也是对高级用户来说的(如果还不能理解可以先忽略它)。
+			如果要使用函数/方法或自定义指令去实现一些东西的时候，
+			二者之间的选择是两难的。按经验来说，如果能够实现需求，
+			请先用自定义指令而不要用函数/方法。如果：</p>
+
+            <ul>
+              <li>
+                <p>... 输出(返回值)的是标记(HTML,XML等)。
+				主要原因是函数的返回结果可以自动进行XML转义(这是因为
+                <code class="inline-code">${<em class="code-color">...</em>}</code> 的特性)，
+				而用户自定义指令的输出则不是
+				(这是因为 <code class="inline-code">&lt;@<em class="code-color">...</em>&gt;</code> 的特性所致;
+				它的输出假定是标记，因此已经转义过了)。</p>
+              </li>
+
+              <li>
+                <p>... 副作用也是很重要的一点，它没有返回值。
+				例如一个指令的目的是往服务器日志中添加一条。
+				(事实上不能得到自定义指令的返回值，
+				但有些反馈的类型是有可能设置非本地变量的。)</p>
+              </li>
+
+              <li>
+                <p>... 会进行流程的控制(就像 <code class="inline-code">list</code> 
+				或 <code class="inline-code">if</code> 指令那样)。但是不能在函数/方法上这么做。</p>
+              </li>
+            </ul>
+
+            <p>在模板中，FreeMarker不知道的Java对象的方法通常是可以作为方法来使用的，
+			而不用考虑Java对象方法本身的特性，因为在这里没有其他的选择。</p>
+          
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_13">其它</h2>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="dgui_datamodel_node">结点</h3>
+
+
+            
+
+            <p>结点变量代表了树状结构中的一个结点，而且通常是配合 
+			<a href="xgui.html">XML 处理</a>的，这是专业而且更高级的话题。</p>
+
+            <p>这里我们仅对 <em>高级用户</em> 进行一个概要说明：
+			结点和存储在其他结点中的序列很相似，通常也被当作为子结点。结点存储它所在的容器结点的引用，
+			也就是父结点。结点的主要作用是拓扑信息；其它数据必须通过使用多类型的值来存储。
+			就像一个值可以同时是一个结点和一个数字，这样它存储的数字可以作为如支付额来使用。
+			除了拓扑信息，结点也可以存储一些元信息(即metadata，译者注)：如结点名称，它的类型(字符串), 
+			命名空间(字符串)。若一个结点象征XHTML文档中的 <code class="inline-code">h1</code> 元素，
+			那么它的名字可以是 <code class="inline-code">&quot;h1&quot;</code>，类型可以是 <code class="inline-code">&quot;element&quot;</code>，
+			命名空间可以是 <code class="inline-code">&quot;http://www.w3.org/1999/xhtml&quot;</code>。但对于数据模型设计者来说，
+			这些元信息，还有如何来使用它们又有什么意义呢。检索拓扑信息和元信息的方法将会在 
+			<a href="ref_builtins_node.html">后续章节</a> 中来说明(这里可以先不用理解它们)。</p>
+          
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_datamodel_basics.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_template.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

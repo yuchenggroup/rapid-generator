@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>结点树 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="结点树">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/xgui_expose_dom.html">
+<link rel="canoical" href="http://freemarker.org/docs/xgui_expose_dom.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui.html"><span itemprop="name">XML处理指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui_expose.html"><span itemprop="name">揭示XML文档</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="xgui_expose_dom.html"><span itemprop="name">结点树</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","XML处理指南","揭示XML文档","结点树"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="xgui_expose.html"><span>Previous</span></a><a class="paging-arrow next" href="xgui_expose_put.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="xgui_expose_dom" itemprop="headline">结点树</h1>
+</div></div><p>我们使用如下示例的XML文档：</p><a name="misc.example.bookXml"></a>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;book&gt;
+  &lt;title&gt;Test Book&lt;/title&gt;
+  &lt;chapter&gt;
+    &lt;title&gt;Ch1&lt;/title&gt;
+    &lt;para&gt;p1.1&lt;/para&gt;
+    &lt;para&gt;p1.2&lt;/para&gt;
+    &lt;para&gt;p1.3&lt;/para&gt;
+  &lt;/chapter&gt;
+  &lt;chapter&gt;
+    &lt;title&gt;Ch2&lt;/title&gt;
+    &lt;para&gt;p2.1&lt;/para&gt;
+    &lt;para&gt;p2.2&lt;/para&gt;
+  &lt;/chapter&gt;
+&lt;/book&gt;</pre></div><p>W3C 的 DOM 定义XML文档模型为结点树。上面XML的结点树可以被视为：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">document
+ |
+ +- element book
+     |
+     +- text &quot;\n  &quot;
+     |
+     +- element title
+     |   |
+     |   +- text &quot;Test Book&quot;
+     |
+     +- text &quot;\n  &quot;
+     |
+     +- element chapter
+     |   |
+     |   +- text &quot;\n    &quot;
+     |   |
+     |   +- element title
+     |   |   |
+     |   |   +- text &quot;Ch1&quot;
+     |   |
+     |   +- text &quot;\n    &quot;
+     |   |
+     |   +- element para     
+     |   |   |
+     |   |   +- text &quot;p1.1&quot;
+     |   |
+     |   +- text &quot;\n    &quot;
+     |   |
+     |   +- element para     
+     |   |   |
+     |   |   +- text &quot;p1.2&quot;
+     |   |
+     |   +- text &quot;\n    &quot;
+     |   |
+     |   +- element para     
+     |      |
+     |      +- text &quot;p1.3&quot;
+     |
+     +- element
+         |
+         +- text &quot;\n    &quot;
+         |
+         +- element title
+         |   |
+         |   +- text &quot;Ch2&quot;
+         |
+         +- text &quot;\n    &quot;
+         |
+         +- element para     
+         |   |
+         |   +- text &quot;p2.1&quot;
+         |
+         +- text &quot;\n    &quot;
+         |
+         +- element para     
+             |
+             +- text &quot;p2.2&quot;</pre></div><p>请注意，烦扰的 <code class="inline-code">&quot;\n  &quot;</code> 是行的中断
+		(这里用 <code class="inline-code">\n</code> 指示，在FTL字符串中使用转义序列)
+		和标记直接的缩进空格。</p><p>请注意和DOM相关的术语：</p><ul>
+          <li>
+            <p>一棵树最上面的结点称为根 <strong>root</strong>，在XML文档中，它通常是&quot;文档&quot;结点，
+			而不是最顶层元素(本例中的 <code class="inline-code">book</code>)。</p>
+          </li>
+
+          <li>
+            <p>如果B是A的 <em>直接</em> 后继，
+			我们说B结点是A结点的子结点 <strong>child</strong>。比如，
+			两个 <code class="inline-code">chapter</code> 元素是 <code class="inline-code">book</code> 元素的子结点，
+			但是 <code class="inline-code">para</code> 元素就不是。</p>
+          </li>
+
+          <li>
+            <p>如果A是B的 <em>直接</em> 前驱，也就是说，
+			如果B是A的子结点，我们说结点A是结点B的父结点 <strong>parent</strong>。比如，<code class="inline-code">book</code> 
+			元素是两个 <code class="inline-code">chapter</code> 元素的父结点，
+			但是它不是 <code class="inline-code">para</code> 元素的父结点。</p>
+          </li>
+
+          <li>
+            <p>XML文档中可以出现几种成分，比如元素，文本，注释，处理指令等。
+			所有这些成分都是DOM树的结点，所以就有元素结点，文本结点，注释结点等。
+			原则上，元素的属性也是树的结点--它们是元素的子结点--，
+			但是，通常我们(还有其他XML相关的技术)不包含元素的子结点。
+			所以基本上它们不被记为子结点。</p>
+          </li>
+        </ul><p>程序员将DOM树的文档结点放到 FreeMarker 的数据模型中，
+		那么模板开发人员可以以变量为出发点来使用DOM树。</p><p>FTL中的DOM结点和 <strong>node variables</strong> 
+		结点变量对应。这是变量类型，和字符串，数字，哈希表等类型相似。
+		结点变量类型使得 FreeMarker 来获取一个结点的父结点和子结点成为可能。
+		这是技术上需要允许模板开发人员在结点间操作，也就是，使用<a href="ref_builtins_node.html">node 内建函数</a> 或者 <a href="ref_directive_visit.html#ref.directive.visit"><code>visit</code></a> 和
+        <a href="ref_directive_visit.html#ref.directive.recurse"><code>recurse</code></a>
+        指令;我们会在后续章节中展示它们的使用。</p><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="xgui_expose.html"><span>Previous</span></a><a class="paging-arrow next" href="xgui_expose_put.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

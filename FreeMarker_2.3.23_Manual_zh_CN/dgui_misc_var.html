@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>在模板中定义变量 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="在模板中定义变量">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_misc_var.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_misc_var.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui.html"><span itemprop="name">模板开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="dgui_misc_var.html"><span itemprop="name">在模板中定义变量</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板开发指南","其它","在模板中定义变量"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_misc_userdefdir.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_namespace.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_misc_var" itemprop="headline">在模板中定义变量</h1>
+</div></div><p>正如我们已经描述过的，模板可以使用在数据模型中定义的变量。
+		在数据模型之外，模板本身也可以定义变量来使用。
+		这些临时变量可以使用FTL指令来创建和替换。请注意每一次的 <a href="gloss.html#gloss.templateProcessingJob">模板执行</a> 工作都维护它自己的私有变量，
+		同时来渲染页面。变量的初始值是空，当模板执行工作结束这些变量便被销毁了。</p><p>可以访问一个在模板里定义的变量，就像是访问数据模型根root上的变量一样。
+		这个变量比定义在数据模型中的同名参数有更高的优先级，也就是说，
+		如果恰巧定义了一个名为&#39;&#39;foo&#39;&#39;的变量，而在数据模型中也有一个名为&#39;&#39;foo&#39;&#39;的变量，
+		那么模板中的变量就会将数据模型根上的变量隐藏(而不是覆盖！)。
+		例如，<code class="inline-code">${foo}</code> 将会输出在模板中定义的变量。</p><p>在模板中可以定义三种类型的变量：</p><ul>
+          <li>
+            <p><strong>&#39;&#39;简单&#39;&#39;变量</strong>：
+			它能从模板中的任何位置来访问，或者从使用 <code class="inline-code">include</code> 
+			指令引入的模板访问。可以使用 <a href="ref_directive_assign.html#ref.directive.assign"><code>assign</code></a> 
+			指令来创建或替换这些变量。因为宏和方法只是变量，那么 <a href="ref_directive_macro.html#ref.directive.macro"><code>macro</code> 指令 </a> 
+			和 <a href="ref_directive_function.html#ref.directive.function"><code>function</code> 指令</a> 
+			也可以用来设置变量，就像 <code class="inline-code">assign</code> 那样。</p>
+          </li>
+
+          <li>
+            <p><strong>局部变量</strong>：它们只能被设置在
+            <a href="gloss.html#gloss.macroDefinitionBody">宏定义体</a>内，
+			而且只在宏内可见。一个局部变量的生命周期只是宏的调用过程。可以使用
+			<a href="ref_directive_local.html#ref.directive.local"><code>local</code>指令</a>
+			在宏定义体内创建或替换局部变量。</p>
+          </li>
+
+          <li>
+            <p><strong>循环变量</strong>：循环变量是由如
+			<a href="ref_directive_list.html#ref.directive.list"><code>list</code></a>
+			指令自动创建的，而且它们只在指令的开始和结束标记内有效。<a href="ref_directive_macro.html#ref.directive.macro">宏</a> 的参数是局部变量而不是循环变量。</p>
+          </li>
+
+          <li>
+            <p><strong>全局变量</strong>：这是一个高级话题了，
+			并且这种变量最好别用。即便它们属于不同的命名空间，
+			全局变量也被所有模板共享，因为它们是被 <a href="ref_directive_import.html#ref.directive.import"><code>import</code>进来的</a>，
+			不同于 <code class="inline-code">include</code> 进来的。那么它们的可见度就像数据模型那样。
+			全局变量通过 <a href="ref_directive_global.html#ref.directive.global"><code>global</code>指令</a>来定义。</p>
+          </li>
+        </ul><p>示例：使用 <code class="inline-code">assign</code> 创建和替换变量：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x = 1&gt;  &lt;#-- create variable x --&gt;
+${x}
+&lt;#assign x = x + 3&gt; &lt;#-- replace variable x --&gt;
+${x}</pre></div><p>输出为：</p>
+
+<div class="code-wrapper"><pre class="code-block code-output">1
+4</pre></div><p>局部变量也会隐藏(不是覆盖)同名的&#39;&#39;简单&#39;&#39;变量。
+		循环变量也会隐藏(不是覆盖)同名的&#39;&#39;简单&#39;&#39;变量。例如：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign x = &quot;plain&quot;&gt;
+1. ${x}  &lt;#-- we see the plain var. here --&gt;
+&lt;@test/&gt;
+6. ${x}  &lt;#-- the value of plain var. was not changed --&gt;
+&lt;#list [&quot;loop&quot;] as x&gt;
+    7. ${x}  &lt;#-- now the loop var. hides the plain var. --&gt;
+    &lt;#assign x = &quot;plain2&quot;&gt; &lt;#-- replace the plain var, hiding does not mater here --&gt;
+    8. ${x}  &lt;#-- it still hides the plain var. --&gt;
+&lt;/#list&gt;
+9. ${x}  &lt;#-- the new value of plain var. --&gt;
+
+&lt;#macro test&gt;
+  2. ${x}  &lt;#-- we still see the plain var. here --&gt;
+  &lt;#local x = &quot;local&quot;&gt;
+  3. ${x}  &lt;#-- now the local var. hides it --&gt;
+  &lt;#list [&quot;loop&quot;] as x&gt;
+    4. ${x}  &lt;#-- now the loop var. hides the local var. --&gt;
+  &lt;/#list&gt;
+  5. ${x}  &lt;#-- now we see the local var. again --&gt;
+&lt;/#macro&gt;</pre></div><p>输出为：</p>
+
+<div class="code-wrapper"><pre class="code-block code-output">1. plain
+  2. plain
+  3. local
+    4. loop
+  5. local
+6. plain
+    7. loop
+    8. loop
+9. plain2
+ </pre></div><p>内部循环变量可以隐藏外部循环变量：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&quot;loop 1&quot;] as x&gt;
+  ${x}
+  &lt;#list [&quot;loop 2&quot;] as x&gt;
+    ${x}
+    &lt;#list [&quot;loop 3&quot;] as x&gt;
+      ${x}
+    &lt;/#list&gt;
+    ${x}
+  &lt;/#list&gt;
+  ${x}
+&lt;/#list&gt;</pre></div><p>输出为：</p>
+
+<div class="code-wrapper"><pre class="code-block code-output">  loop 1
+    loop 2
+      loop 3
+    loop 2
+  loop 1</pre></div><p>请注意，循环变量的设置是通过指令调用时创建的(本例中的
+		<code class="inline-code">&lt;list <em class="code-color">...</em>&gt;</code> 标签)。
+		没有其他的方式去改变循环变量的值(也就是说，不能使用定义指令来改变它的值)。
+		从上面的示例来看，也可以使用一个循环变量来暂时隐藏另外一个。</p><p>有时会发生一个变量隐藏数据模型中的同名变量，
+		但是如果想访问数据模型中的变量，此时就可以使用 <a href="dgui_template_exp.html#dgui_template_exp_var_special">特殊变量</a> 
+		<code class="inline-code">globals</code>。例如，假设我们在数据模型中有一个名为 
+		<code class="inline-code">user</code> 的变量，值为&#39;&#39;Big Joe&#39;&#39;：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#assign user = &quot;Joe Hider&quot;&gt;
+${user}          &lt;#-- prints: Joe Hider --&gt;
+${.globals.user} &lt;#-- prints: Big Joe --&gt;</pre></div><p>通过 <a href="ref_directive_global.html#ref.directive.global"><code>global</code>指令</a> 
+		设置的变量可以隐藏数据模型中的同名变量。通常，全局变量的设置会有精确的目的。
+		但仍然可以使用如下方式来访问数据模型变量：<code class="inline-code">.data_model.user</code>。</p><p>想了解更多的变量使用语法，请阅读： <a href="dgui_template_exp.html">模板/表达式</a></p><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_misc_userdefdir.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_namespace.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

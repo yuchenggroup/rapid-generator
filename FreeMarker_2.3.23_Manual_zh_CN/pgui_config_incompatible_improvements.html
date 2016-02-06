@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>&quot;不兼容改进&quot;设置 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="&quot;不兼容改进&quot;设置">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_config_incompatible_improvements.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_config_incompatible_improvements.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config.html"><span itemprop="name">配置(Configuration)</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_config_incompatible_improvements.html"><span itemprop="name">&quot;不兼容改进&quot;设置</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","配置(Configuration)","\"不兼容改进\"设置"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_config_errorhandling.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_config_incompatible_improvements" itemprop="headline">&quot;不兼容改进&quot;设置</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_44" data-menu-target="autoid_44">它要做什么</a></li><li><a class="page-menu-link" href="#pgui_config_incompatible_improvements_how_to_set" data-menu-target="pgui_config_incompatible_improvements_how_to_set">如何设置</a></li></ul> </div>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_44">它要做什么</h2>
+
+
+          <p>该设置指定了 FreeMarker 的版本号，那么就不会100%向后兼容bug修复和改进 
+		  <em>你想要启用</em> 已经实现的内容。
+		  通常来说，默认把它留在2.3.0(最大向后兼容版本)是一个坏主意。</p>
+
+          <p>在新项目中，应该将它设置为实际使用的FreeMarker版本号。
+		  而在老项目中，那么最好也将它设置的高一些，最好检查一下哪些修改是激活状态(可以在 <a href="http://freemarker.org/docs/api/freemarker/template/Configuration.html#Configuration-freemarker.template.Version-"><code>Configuration(Version)</code>
+          构造方法的API JavaDoc文档</a> 中找到它们)，至少不仅仅是 
+		  "不兼容改进" 第三版本号(小版本)设置提高。通常来讲，
+		  只要为该设置增加最后的版本号，那么这些修改的风险就会小很多。</p>
+
+          <p>Bug修复和改进是完全向后兼容的，同样，它们也是重要的安全更新，
+		  不管 "不兼容改进" 如何设置都是启用的。</p>
+
+          <p>该设置的一个重要结果是应用程序可以检查声明的 FreeMarker 最小版本需求是否达到。
+		  比如你设置了2.3.22，但是应用程序却意外部署到了 FreeMarker 2.3.21，
+		  那么FreeMarker就会出问题，告诉你需要一个更高的版本。
+		  最后，请求的修复/改进不会作用于低版本。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="pgui_config_incompatible_improvements_how_to_set">如何设置</h2>
+
+
+          <p>这个不兼容改进的设置在 <code class="inline-code">Configuration</code> 级别。
+		  它可以在多种方式下设置(假设我们想将它设置为2.3.22)：</p>
+
+          <ul>
+            <li>
+              <p>创建
+              <code class="inline-code">freemarker.template.Configuration</code> 对象，比如：</p>
+
+              
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">... = new Configuration(Configuration.VERSION_2_3_22)</pre></div>
+            </li>
+
+            <li>
+              <p>或者，使用初始化设置来更改 <code class="inline-code">Configuration</code> 单例，比如：</p>
+
+              
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">cfg.setIncompatibleImprovements(Configuration.VERSION_2_3_22)</pre></div>
+            </li>
+
+            <li>
+              <p>或者，如果使用properties文件来配置FreeMarker
+              (<code class="inline-code">*.properties</code> 文件或者
+              <code class="inline-code">java.util.Properties</code> 对象)，添加：</p>
+
+              
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">incompatible_improvements=2.3.22</pre></div>
+            </li>
+
+            <li>
+              <p>或者，如果通过 <code class="inline-code">FreemarkerServlet</code> 
+			  来配置FreeMarker，那么将 <code class="inline-code">init-param</code> 
+			  添加到 <code class="inline-code">web.xml</code> 中：</p>
+
+              
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">&lt;init-param&gt;
+    &lt;param-name&gt;incompatible_improvements&lt;/param-name&gt;
+    &lt;param-value&gt;2.3.22&lt;/param-value&gt;
+&lt;/init-param&gt;</pre></div>
+            </li>
+          </ul>
+
+          <p>但是， 在应用程序中 <em>如果设置了 
+		  <code class="inline-code">object_wrapper</code></em> 
+		  (也就是 <code class="inline-code">Configuration.setObjectWrapper(ObjectWrapper)</code>)，
+          那么要知道很重要的一点，<code class="inline-code">BeansWrapper</code> 和它的子类(最重要的是，
+          <code class="inline-code">DefaultObjectWrapper</code>) 有它们自己独立的
+          <code class="inline-code">incompatibleImprovements</code> 属性，还有一些修复/改进会被它激活，
+		  而不是通过 <code class="inline-code">Configuration</code> 的相似设置。
+		  如果你没有在任何地方设置过 <code class="inline-code">object_wrapper</code>，那么不需要知道这点，
+		  因为，和 <code class="inline-code">Configuration</code> 一样， 
+		  默认的 <code class="inline-code">object_wrapper</code> 也有相同的 "不兼容改进"。
+		  但是，如果设置了 <code class="inline-code">object_wrapper</code>，
+		  那么就不要忘了设置 <code class="inline-code">ObjectWrapper</code> 自己的
+		  <code class="inline-code">incompatibleImprovements</code> 属性，此外还有
+		  <code class="inline-code">Configuration</code>。(请注意，对于 <code class="inline-code">Configuration</code> 来说，
+		  有不同的 "不兼容改进" 也是可以的，而对于 <code class="inline-code">ObjectWrapper</code>，
+		  则有它自己的选择。) 至于 <code class="inline-code">DefaultObjectWrapper</code>
+		  (对于 <code class="inline-code">BeansWrapper</code> 也是一样的，只是不同的类名而已) <a href="pgui_datamodel_objectWrapper.html#topic.setDefaultObjectWrapperIcIIndividually">参看这里如何来设置它</a>。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_config_errorhandling.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

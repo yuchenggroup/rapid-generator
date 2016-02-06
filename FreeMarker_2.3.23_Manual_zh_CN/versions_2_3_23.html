@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>2.3.23 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="2.3.23">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/versions_2_3_23.html">
+<link rel="canoical" href="http://freemarker.org/docs/versions_2_3_23.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="app.html"><span itemprop="name">附录</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="app_versions.html"><span itemprop="name">版本历史</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="versions_2_3_23.html"><span itemprop="name">2.3.23</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","附录","版本历史","2.3.23"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="versions_2_3_24.html"><span>Previous</span></a><a class="paging-arrow next" href="versions_2_3_22.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="versions_2_3_23" itemprop="headline">2.3.23</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_144" data-menu-target="autoid_144">FTL 部分的修改</a></li><li><a class="page-menu-link" href="#autoid_145" data-menu-target="autoid_145">Java 部分的修改</a></li><li><a class="page-menu-link" href="#autoid_146" data-menu-target="autoid_146">Other changes</a></li><li><a class="page-menu-link" href="#autoid_147" data-menu-target="autoid_147">Notes</a></li></ul> </div><p>发布日期： 2015-07-05</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_144">FTL 部分的修改</h2>
+
+
+          <ul>
+            <li>
+              <p>列表显示 (<code class="inline-code">#list</code>) 
+			  已经得到了一些专业的方便特性，
+			  目标是人们在模板中一遍又一遍做的经典任务。</p>
+
+              <ul>
+                <li>
+                  <p>新的 <code class="inline-code">list</code> 指令的子指令。
+                  它们是 <code class="inline-code">else</code> 和
+                  <code class="inline-code">items</code>，来处理0长度列表的特殊情况，
+				  <code class="inline-code">sep</code> 来在迭代项之前插入分隔符。
+				  更多细节，请参考 <a href="ref_directive_list.html"><code>list</code>
+                  指令</a>。</p>
+                </li>
+
+                <li>
+                  <p><a href="ref_builtins_loop_var.html">作用于循环变量的新内建函数</a>：
+                  <code class="inline-code"><em class="code-color">var</em>?index</code>
+                  (废弃
+                  <code class="inline-code"><em class="code-color">var</em>_index</code>)，
+                  <code class="inline-code"><em class="code-color">var</em>?counter</code>
+                  (基于1的索引),
+                  <code class="inline-code"><em class="code-color">var</em>?has_next</code>
+                  (废弃
+                  <code class="inline-code"><em class="code-color">var</em>_has_next</code>)，
+                  <code class="inline-code"><em class="code-color">var</em>?is_first</code>，
+                  <code class="inline-code"><em class="code-color">var</em>?is_last</code>，
+                  <code class="inline-code"><em class="code-color">var</em>?item_parity</code>
+                  (返回 <code class="inline-code">&quot;odd&quot;</code> 或
+                  <code class="inline-code">&quot;even&quot;</code>)，
+                  <code class="inline-code"><em class="code-color">var</em>?item_parity_cap</code>，
+                  <code class="inline-code"><em class="code-color">var</em>?item_cycle</code><code class="inline-code">(<em class="code-color">...</em>)</code>，等等。</p>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <p>添加方便的赋值操作符，仅可以用于赋值指令 which can be used
+              (当前是 <code class="inline-code">#assign</code>，
+              <code class="inline-code">#global</code> 和 <code class="inline-code">#local</code>)：</p>
+
+              <ul>
+                <li>
+                  <p><code class="inline-code">++</code> 和 <code class="inline-code">--</code>:
+                  <code class="inline-code">&lt;#assign counter++&gt;</code> 和 
+                  <code class="inline-code">&lt;#assign counter = counter +
+                  1&gt;</code> 是相等的。</p>
+                </li>
+
+                <li>
+                  <p><code class="inline-code">+=</code>， <code class="inline-code">-=</code>,
+                  <code class="inline-code">*=</code>， <code class="inline-code">/=</code> 和
+                  <code class="inline-code">%=</code>： <code class="inline-code">&lt;#assign counter +=
+                  2&gt;</code> 和 <code class="inline-code">&lt;#assign
+                  counter = counter + 2&gt;</code> 是相等的。</p>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <p>添加 <code class="inline-code">then</code> 内建函数，可以像三元操作符来使用：
+              <code class="inline-code"><em class="code-color">someBoolean</em>?then(<em class="code-color">whenTrue</em>,
+              <em class="code-color">whenFalse</em>)</code>。
+			  和很多其它语言的三元操作符相似，只有一个参数表达式会被评估。<a href="ref_builtins_boolean.html#ref_builtin_then">更多细节...</a></p>
+            </li>
+
+            <li>
+              <p>添加 <code class="inline-code">switch</code> 内建函数，
+			  可以像内联(表达式) switch-case-default 语句来使用：
+              <code class="inline-code"><em class="code-color">someValue</em>?switch(<em class="code-color">case1</em>,
+              <em class="code-color">result1</em>,
+              <em class="code-color">case2</em>,
+              <em class="code-color">result2</em>, ...
+              <em class="code-color">caseN</em>,
+              <em class="code-color">resultN</em>,
+              <em class="code-color">defaultResult</em>)</code>，这里 
+              <code class="inline-code"><em class="code-color">defaultResult</em></code> 可以被忽略
+              (如果没有任何一个情形匹配上，那么就会有错误)。
+              <a href="ref_builtins_type_independent.html#ref_builtin_switch">更多细节...</a></p>
+            </li>
+
+            <li>
+              <p>对模板语言部分标识符添加驼峰格式个支持(自定义名称不受影响)。
+			  例如，现在 
+              <code class="inline-code">&lt;#noEscape&gt;${x?upperCase}&lt;/#noEscape&gt;</code>
+              或 <code class="inline-code">&lt;#setting numberFormat=&quot;0.0&quot;&gt;</code> 或
+              <code class="inline-code">&lt;#ftl stripText=true&gt;</code> 都是合法的。
+			  但在同一个模板中，FreeMarker 会需要你对所有模板语言部分的标识符一直使用相同的命名约定。
+              也可以对所有模板强制使用相同的命名约定，在Java中通过 
+              <code class="inline-code">Configuration.setNamingConvention(int)</code> 来实现。
+			  从后期的一些版本中，驼峰格式是推荐的约定，因为Java API用户从模板中调用也会用到它。</p>
+            </li>
+
+            <li>
+              <p>添加新的 <a href="ref_specvar.html">特殊变量</a>，
+			  <code class="inline-code">.current_template_name</code> 和
+              <code class="inline-code">.main_template_name</code>。它们废弃了 
+              <code class="inline-code">.template_name</code>，因为当在宏调用时，经常会崩溃。
+			  新的 <code class="inline-code">.current_template_name</code> 
+			  通常返回包含引用特殊变量的模板名称，而 <code class="inline-code">.main_template_name</code> 
+			  通常返回最高模板的名称。</p>
+            </li>
+
+            <li>
+              <p>很小的错误信息改进。比如，当 
+              <code class="inline-code"><em class="code-color">someMap</em>[<em class="code-color">someNumber</em>]</code>
+              抱怨
+              <code class="inline-code"><em class="code-color">someMap</em></code> 不是序列或强迫为字符串时，
+			  在常见问题的错误消息中添加提示。</p>
+            </li>
+
+            <li>
+              <p>Bug 修复，激活设置 
+              <code class="inline-code">incompatible_improvements</code> 为 2.3.23：
+			  有一个长期存在的解析时间规则称为 
+              <code class="inline-code">#break</code>，在FTL源代码中，
+			  必须在嵌套的可以打断的指令中出现，比如 
+              <code class="inline-code">#list</code> 或 <code class="inline-code">#switch</code>。
+			  该检查可以绕过 <code class="inline-code">#macro</code> 或
+              <code class="inline-code">#function</code>，比如： <code class="inline-code">&lt;#list 1..1
+              as x&gt;&lt;#macro
+              callMeLater&gt;&lt;#break&gt;&lt;/#macro&gt;&lt;/#list&gt;&lt;@callMeLater
+              /&gt;</code>。激活这个修改之后，它会作为解析时间错误被捕获。</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_145">Java 部分的修改</h2>
+
+
+          <ul>
+            <li>
+              <p>添加 
+              <code class="inline-code">Configuration.setNamingConvention(int)</code>。
+			  默认情况下，FreeMarker 会自动检测用于模板语言部分的标识符的命名规则
+			  (遗留的 和 驼峰格式)，每个模板都是独立地进行。
+			  该设置允许你强制使用一个命名规则。</p>
+            </li>
+
+            <li>
+              <p><code class="inline-code">Configuration</code> (事实上，任意的 
+              <code class="inline-code">Configurable</code>) 设置名称现在可以写作驼峰格式了。
+			  例如，如果你从属性文件中配置 FreeMarker，你可以使用 
+              <code class="inline-code">defaultEncoding=utf-8</code> 来代替 
+              <code class="inline-code">default_encoding=utf-8</code>。你也可以混合使用两种命名规则
+			  (驼峰格式，和传统的蛇形格式)，而且 
+              <code class="inline-code">Configuration.setNamingConvention(int)</code> 不影响这个行为。</p>
+            </li>
+
+            <li>
+              <p>添加 
+              <code class="inline-code">Configuration.setTemplateUpdateDelayMilliseconds(long)</code> 
+              和 
+              <code class="inline-code">Configuration.getTemplateUpdateDelayMilliseconds()</code>。
+              它们废弃了 <code class="inline-code">setTemplateUpdateDelay(int)</code>，使用第二种方案，
+			  会基于Java习惯会导致误解。(而且那也没有成对的 getter 方法)</p>
+            </li>
+
+            <li>
+              <p>当指定字符串时(在 <code class="inline-code">java.util.Properties</code>)，
+			  <code class="inline-code">template_update_delay</code> 设置支持时间单元，比如 
+			  <code class="inline-code">template_update_delay=500 ms</code>。</p>
+            </li>
+
+            <li>
+              <p>添加 <code class="inline-code">Environment.getCurrentTemplate()</code> 
+              方法，它会返回当前执行的模板(相对于主模板)。</p>
+            </li>
+
+            <li>
+              <p>添加 
+              <code class="inline-code">WebappTemplateLoader.setAttemptFileAccess(boolean)</code>，
+			  可以用于禁用遗留的尝试通过直接文件访问加载模板的技巧，那么模板更新就无需重启。
+			  禁用URL连接缓存
+			  (<code class="inline-code">someURLBasedTemplateLoader.setURLConnectionUsesCaches(false)</code>，
+			  从 <code class="inline-code">incompatible_improvements</code> 2.3.21 开始，这是默认的) 
+			  可能会在现代的Servlet容器中解决这个问题。</p>
+            </li>
+
+            <li>
+              <p>In the <code class="inline-code">FreemarkerServlet</code>
+              <code class="inline-code">TemplatePath</code> init-param, paths (like
+              <code class="inline-code">/templates</code>) can have a
+              <code class="inline-code">?settings(<em class="code-color">...</em>)</code>
+              postfix, with which you can set the JavaBean properties of the
+              resulting <code class="inline-code">TemplateLoader</code>. For example:
+              <code class="inline-code">&lt;param-value&gt;/templates?settings(attemptFileAccess=false,
+              URLConnectionUsesCaches=false)&lt;/param-value&gt;</code></p>
+            </li>
+
+            <li>
+              <p>Added
+              <code class="inline-code">FileTemplateLoader.setEmulateCaseSensitiveFileSystem(boolean)</code>.
+              This is handy when you are developing on Windows but will deploy
+              to a platform with case sensitive file system. The default is
+              <code class="inline-code">false</code>, and <code class="inline-code">true</code> is only
+              meant for development, not for production installations. The
+              default can be overridden by setting the
+              <code class="inline-code">org.freemarker.emulateCaseSensitiveFileSystem</code>
+              system property to <code class="inline-code">true</code>.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed [<a href="https://sourceforge.net/p/freemarker/bugs/424">424</a>]:
+              <code class="inline-code">WebappTemplateLoader</code> didn&#39;t find templates
+              that are stored in
+              <code class="inline-code">WEB-INF/lib/*.jar/META-INF/resources</code>. Files
+              under that directory are visible as
+              <code class="inline-code">ServletContext</code> resources since Servlet 3.0,
+              yet <code class="inline-code">WebappTemplateLoader</code> has usually failed
+              to see them because of some internal tricks.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed: If a template "file" was
+              successfully opened for reading, but then there was an
+              <code class="inline-code">IOException</code> during reading its content, the
+              parser (JavaCC) acted like if the template "file"
+              was ended there, and the exception was suppressed. It&#39;s actually
+              a JavaCC quirk that affects many other JavaCC-based languages
+              too, but now FreeMarker has added a workaround in the
+              <code class="inline-code">Template</code> constructor, and so now an exception
+              will be thrown as expected.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed:
+              <code class="inline-code">InvalidReferenceException.FAST_INSTANCE</code> could
+              accidentally store reference to an
+              <code class="inline-code">Environment</code> instance, which hence was never
+              garbage collected.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed [<a href="https://sourceforge.net/p/freemarker/bugs/426/">426</a>]:
+              When setting <code class="inline-code">incompatible_improvements</code> to
+              2.3.22, the special variable reference
+              <code class="inline-code">.template_name</code> in templates always returns
+              the name of the main (topmost) template, due to an oversight in
+              2.3.22. Setting <code class="inline-code">incompatible_improvements</code> to
+              2.3.23 restores the old, backward compatible behavior. (Note
+              that the old behavior that we emulate is itself broken, as it
+              doesn&#39;t work well with macro calls; you should use
+              <code class="inline-code">.current_template_name</code> or
+              <code class="inline-code">.main_template_name</code> instead.)</p>
+            </li>
+
+            <li>
+              <p>Bug fixed [<a href="https://sourceforge.net/p/freemarker/bugs/53/">53</a>]:
+              Template parsing was abnormally slow for templates with very
+              high number AST (abstract syntax tree) nodes on the same
+              hierarchy level.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed: When the template was concurrently replaced on
+              the backing store during its first loading was still ongoing,
+              the older version of the template could get into the cache with
+              the time stamp of the new version, hence it wasn&#39;t reloaded
+              after the configured update delay.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed: The <code class="inline-code">log_template_exceptions</code>
+              setting (added in 2.3.22) couldn&#39;t be set through the
+              <code class="inline-code">Configurable.setSetting(String, String)</code>
+              API.</p>
+            </li>
+
+            <li>
+              <p>Bug fixed:
+              <code class="inline-code">StringUtil.FTLStringLiteralEnc</code> has escaped
+              <code class="inline-code">$</code> (hence generating an illegal escape) and
+              haven&#39;t escaped <code class="inline-code">{</code> after <code class="inline-code">$</code>
+              and <code class="inline-code">#</code>. While this function is only used for
+              generating error messages by FreeMarker, it&#39;s a public methods
+              so anyone could use it.</p>
+            </li>
+
+            <li>
+              <p>Bugs fixed: Various canonical form glitches (they only
+              affect error messages as far as FreeMarker is concerned).</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_146">Other changes</h2>
+
+
+          <ul>
+            <li>
+              <p>Modernized Manual and site design with improved
+              functionality (always visible navigation tree, search inside the
+              Manual, etc.), thanks to Evangelia Dendramis. (Also now the Site
+              uses the same format and HTML generator as the Manual.)</p>
+            </li>
+
+            <li>
+              <p>Many smaller Manual and site content
+              updates/improvements.</p>
+            </li>
+          </ul>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_147">Notes</h2>
+
+
+          <p>Changes compared to 2.3.23 RC1:</p>
+
+          <ul>
+            <li>
+              <p><code class="inline-code">.current_name_name</code> and
+              <code class="inline-code">.main_template_name</code> is now missing
+              (<code class="inline-code">null</code>) instead of <code class="inline-code">&quot;&quot;</code> if
+              the template has no name</p>
+            </li>
+
+            <li>
+              <p>Some minor error message improvements</p>
+            </li>
+
+            <li>
+              <p>Documentation refinements</p>
+            </li>
+          </ul>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="versions_2_3_24.html"><span>Previous</span></a><a class="paging-arrow next" href="versions_2_3_22.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>Jython包装器 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="Jython包装器">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_misc_jythonwrapper.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_misc_jythonwrapper.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui.html"><span itemprop="name">程序开发指南</span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc.html"><span itemprop="name">其它</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="pgui_misc_jythonwrapper.html"><span itemprop="name">Jython包装器</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","程序开发指南","其它","Jython包装器"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_misc_ant.html"><span>Previous</span></a><a class="paging-arrow next" href="ref.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_misc_jythonwrapper" itemprop="headline">Jython包装器</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_64" data-menu-target="autoid_64">模板哈希表模型功能(TemplateHashModel functionality)</a></li><li><a class="page-menu-link" href="#autoid_65" data-menu-target="autoid_65">模板标量模型功能(TemplateScalarModel functionality)</a></li><li><a class="page-menu-link" href="#autoid_66" data-menu-target="autoid_66">模板布尔值模型功能(TemplateBooleanModel functionality)</a></li><li><a class="page-menu-link" href="#autoid_67" data-menu-target="autoid_67">模板数字模型功能(TemplateNumberModel functionality)</a></li><li><a class="page-menu-link" href="#autoid_68" data-menu-target="autoid_68">模板序列模型功能(TemplateSequenceModel functionality)</a></li></ul> </div><p><code class="inline-code">freemarker.ext.jython</code> 
+		包包含了启用任意Jython对象的模型，
+		并被用作是<code class="inline-code">TemplateModel</code>。在一个基础的示例中，
+		你可以使用如下调用：</p>
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">public TemplateModel wrap(Object obj);</pre></div><p><code class="inline-code">freemarker.ext.jython.JythonWrapper</code> 类的方法。
+		这个方法会包装传递的对象，包装成合适的 <code class="inline-code">TemplateModel</code>。
+		下面是一个对返回对象包装器的属性的总结。为了下面的讨论，
+		我们假设在模板模型根中，对对象 <code class="inline-code">obj</code> 调用 
+		<code class="inline-code">JythonWrapper</code> 后模型名为 <code class="inline-code">model</code>。</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_64">模板哈希表模型功能(TemplateHashModel functionality)</h2>
+
+
+          <p><code class="inline-code">PyDictionary</code> 和
+          <code class="inline-code">PyStringMap</code> 将会被包装成一个哈希表模型。
+		  键的查找映射到 <code class="inline-code">__finditem__</code> 
+		  方法；如果一个项没有被找到，
+		  那么就返回一个为 <code class="inline-code">None</code> 的模型。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_65">模板标量模型功能(TemplateScalarModel functionality)</h2>
+
+
+          <p>每一个python对象会实现 
+		  <code class="inline-code">TemplateScalarModel</code> 接口，
+		  其中的 <code class="inline-code">getAsString()</code> 
+		  方法会委派给 <code class="inline-code">toString()</code> 方法。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_66">模板布尔值模型功能(TemplateBooleanModel functionality)</h2>
+
+
+          <p>每一个python对象会实现 
+		  <code class="inline-code">TemplateBooleanModel</code> 接口，
+		  其中的 <code class="inline-code">getAsBoolean()</code> 方法会指派给 
+		  <code class="inline-code">__nonzero__()</code> 方法，
+		  符合Python语义的true/false。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_67">模板数字模型功能(TemplateNumberModel functionality)</h2>
+
+
+          <p>对<code class="inline-code">PyInteger</code>，<code class="inline-code">PyLong</code> 和 
+		  <code class="inline-code">PyFloat</code> 对象的模型包装器实现了 
+		  <code class="inline-code">TemplateNumberModel</code> 接口，其中的 
+		  <code class="inline-code">getAsNumber()</code> 方法返回 
+		  <code class="inline-code">__tojava__(java.lang.Number.class)</code>。</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_68">模板序列模型功能(TemplateSequenceModel functionality)</h2>
+
+
+          <p>对所有扩展了 <code class="inline-code">PySequence</code> 的类的模型包装器会实现 
+		  <code class="inline-code">TemplateSequenceModel</code> 接口，
+		  因此它们中的元素可以通过使用 <code class="inline-code">model[i]</code> 语法形式的序列来访问，
+		  这会指派给<code class="inline-code">__finditem__(i)</code>。你也可以使用内建函数 
+		  <code class="inline-code">model?size</code> 查询数组的长度或者list的大小，
+		  它会指派给 <code class="inline-code">__len__()</code>。</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_misc_ant.html"><span>Previous</span></a><a class="paging-arrow next" href="ref.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

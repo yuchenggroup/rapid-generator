@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="FreeMarker 手册">
+  
+<topic
+      label="什么是 FreeMarker?"
+      href="preface.html"
+  ></topic>  
+<topic
+      label="I: 模板开发指南"
+      href="dgui.html"
+  >  
+<topic
+      label="1: 入门"
+      href="dgui_quickstart.html"
+  >  
+<topic
+      label="模板 + 数据模型 = 输出"
+      href="dgui_quickstart_basics.html"
+  ></topic>  
+<topic
+      label="数据模型一览"
+      href="dgui_quickstart_datamodel.html"
+  ></topic>  
+<topic
+      label="模板一览"
+      href="dgui_quickstart_template.html"
+  ></topic></topic>  
+<topic
+      label="2: 数值，类型"
+      href="dgui_datamodel.html"
+  >  
+<topic
+      label="基本内容"
+      href="dgui_datamodel_basics.html"
+  ></topic>  
+<topic
+      label="类型"
+      href="dgui_datamodel_types.html"
+  ></topic></topic>  
+<topic
+      label="3: 模板"
+      href="dgui_template.html"
+  >  
+<topic
+      label="总体结构"
+      href="dgui_template_overallstructure.html"
+  ></topic>  
+<topic
+      label="指令"
+      href="dgui_template_directives.html"
+  ></topic>  
+<topic
+      label="表达式"
+      href="dgui_template_exp.html"
+  ></topic>  
+<topic
+      label="插值"
+      href="dgui_template_valueinsertion.html"
+  ></topic></topic>  
+<topic
+      label="4: 其它"
+      href="dgui_misc.html"
+  >  
+<topic
+      label="自定义指令"
+      href="dgui_misc_userdefdir.html"
+  ></topic>  
+<topic
+      label="在模板中定义变量"
+      href="dgui_misc_var.html"
+  ></topic>  
+<topic
+      label="命名空间"
+      href="dgui_misc_namespace.html"
+  ></topic>  
+<topic
+      label="空白处理"
+      href="dgui_misc_whitespace.html"
+  ></topic>  
+<topic
+      label="替换(方括号)语法"
+      href="dgui_misc_alternativesyntax.html"
+  ></topic></topic></topic>  
+<topic
+      label="II: 程序开发指南"
+      href="pgui.html"
+  >  
+<topic
+      label="1: 入门"
+      href="pgui_quickstart.html"
+  >  
+<topic
+      label="创建 Configuration 实例"
+      href="pgui_quickstart_createconfiguration.html"
+  ></topic>  
+<topic
+      label="创建数据模型"
+      href="pgui_quickstart_createdatamodel.html"
+  ></topic>  
+<topic
+      label="获取模板"
+      href="pgui_quickstart_gettemplate.html"
+  ></topic>  
+<topic
+      label="合并模板和数据模型"
+      href="pgui_quickstart_merge.html"
+  ></topic>  
+<topic
+      label="将代码放在一起"
+      href="pgui_quickstart_all.html"
+  ></topic></topic>  
+<topic
+      label="2: 数据模型"
+      href="pgui_datamodel.html"
+  >  
+<topic
+      label="基本内容"
+      href="pgui_datamodel_basics.html"
+  ></topic>  
+<topic
+      label="标量"
+      href="pgui_datamodel_scalar.html"
+  ></topic>  
+<topic
+      label="容器"
+      href="pgui_datamodel_parent.html"
+  ></topic>  
+<topic
+      label="方法"
+      href="pgui_datamodel_method.html"
+  ></topic>  
+<topic
+      label="指令"
+      href="pgui_datamodel_directive.html"
+  ></topic>  
+<topic
+      label="结点变量"
+      href="pgui_datamodel_node.html"
+  ></topic>  
+<topic
+      label="对象包装"
+      href="pgui_datamodel_objectWrapper.html"
+  ></topic></topic>  
+<topic
+      label="3: 配置(Configuration)"
+      href="pgui_config.html"
+  >  
+<topic
+      label="基本内容"
+      href="pgui_config_basics.html"
+  ></topic>  
+<topic
+      label="共享变量"
+      href="pgui_config_sharedvariables.html"
+  ></topic>  
+<topic
+      label="配置设置"
+      href="pgui_config_settings.html"
+  ></topic>  
+<topic
+      label="模板加载"
+      href="pgui_config_templateloading.html"
+  ></topic>  
+<topic
+      label="错误控制"
+      href="pgui_config_errorhandling.html"
+  ></topic>  
+<topic
+      label="&quot;不兼容改进&quot;设置"
+      href="pgui_config_incompatible_improvements.html"
+  ></topic></topic>  
+<topic
+      label="4: 其它"
+      href="pgui_misc.html"
+  >  
+<topic
+      label="变量，范围"
+      href="pgui_misc_var.html"
+  ></topic>  
+<topic
+      label="字符集问题"
+      href="pgui_misc_charset.html"
+  ></topic>  
+<topic
+      label="多线程"
+      href="pgui_misc_multithreading.html"
+  ></topic>  
+<topic
+      label="Bean的包装"
+      href="pgui_misc_beanwrapper.html"
+  ></topic>  
+<topic
+      label="日志"
+      href="pgui_misc_logging.html"
+  ></topic>  
+<topic
+      label="在Servlet中使用FreeMarker"
+      href="pgui_misc_servlet.html"
+  ></topic>  
+<topic
+      label="为FreeMarker配置安全策略"
+      href="pgui_misc_secureenv.html"
+  ></topic>  
+<topic
+      label="遗留的XML包装实现"
+      href="pgui_misc_xml_legacy.html"
+  ></topic>  
+<topic
+      label="和Ant一起使用FreeMarker"
+      href="pgui_misc_ant.html"
+  ></topic>  
+<topic
+      label="Jython包装器"
+      href="pgui_misc_jythonwrapper.html"
+  ></topic></topic></topic>  
+<topic
+      label="III: 模板语言参考 "
+      href="ref.html"
+  >  
+<topic
+      label="1: 内建函数参考"
+      href="ref_builtins.html"
+  >  
+<topic
+      label="字母顺序索引"
+      href="ref_builtins_alphaidx.html"
+  ></topic>  
+<topic
+      label="字符串内建函数"
+      href="ref_builtins_string.html"
+  ></topic>  
+<topic
+      label="数字内建函数"
+      href="ref_builtins_number.html"
+  ></topic>  
+<topic
+      label="日期内建函数"
+      href="ref_builtins_date.html"
+  ></topic>  
+<topic
+      label="布尔值内建函数"
+      href="ref_builtins_boolean.html"
+  ></topic>  
+<topic
+      label="序列内建函数"
+      href="ref_builtins_sequence.html"
+  ></topic>  
+<topic
+      label="哈希表内建函数"
+      href="ref_builtins_hash.html"
+  ></topic>  
+<topic
+      label="结点(对于XML)内建函数"
+      href="ref_builtins_node.html"
+  ></topic>  
+<topic
+      label="循环变量内建函数"
+      href="ref_builtins_loop_var.html"
+  ></topic>  
+<topic
+      label="独立类型内建函数"
+      href="ref_builtins_type_independent.html"
+  ></topic>  
+<topic
+      label="很少使用的和专家级的内建函数"
+      href="ref_builtins_expert.html"
+  ></topic></topic>  
+<topic
+      label="2: 指令参考"
+      href="ref_directives.html"
+  >  
+<topic
+      label="Alphabetical index"
+      href="ref_directive_alphaidx.html"
+  ></topic>  
+<topic
+      label="assign"
+      href="ref_directive_assign.html"
+  ></topic>  
+<topic
+      label="attempt, recover"
+      href="ref_directive_attempt.html"
+  ></topic>  
+<topic
+      label="compress"
+      href="ref_directive_compress.html"
+  ></topic>  
+<topic
+      label="escape, noescape"
+      href="ref_directive_escape.html"
+  ></topic>  
+<topic
+      label="flush"
+      href="ref_directive_flush.html"
+  ></topic>  
+<topic
+      label="ftl"
+      href="ref_directive_ftl.html"
+  ></topic>  
+<topic
+      label="function, return"
+      href="ref_directive_function.html"
+  ></topic>  
+<topic
+      label="global"
+      href="ref_directive_global.html"
+  ></topic>  
+<topic
+      label="if, else, elseif"
+      href="ref_directive_if.html"
+  ></topic>  
+<topic
+      label="import"
+      href="ref_directive_import.html"
+  ></topic>  
+<topic
+      label="include"
+      href="ref_directive_include.html"
+  ></topic>  
+<topic
+      label="list, else, items, sep, break"
+      href="ref_directive_list.html"
+  ></topic>  
+<topic
+      label="local"
+      href="ref_directive_local.html"
+  ></topic>  
+<topic
+      label="macro, nested, return"
+      href="ref_directive_macro.html"
+  ></topic>  
+<topic
+      label="noparse"
+      href="ref_directive_noparse.html"
+  ></topic>  
+<topic
+      label="nt"
+      href="ref_directive_nt.html"
+  ></topic>  
+<topic
+      label="setting"
+      href="ref_directive_setting.html"
+  ></topic>  
+<topic
+      label="stop"
+      href="ref_directive_stop.html"
+  ></topic>  
+<topic
+      label="switch, case, default, break"
+      href="ref_directive_switch.html"
+  ></topic>  
+<topic
+      label="t, lt, rt"
+      href="ref_directive_t.html"
+  ></topic>  
+<topic
+      label="User-defined directive (&lt;@...&gt;)"
+      href="ref_directive_userDefined.html"
+  ></topic>  
+<topic
+      label="visit, recurse, fallback"
+      href="ref_directive_visit.html"
+  ></topic></topic>  
+<topic
+      label="3: 特殊变量参考"
+      href="ref_specvar.html"
+  ></topic>  
+<topic
+      label="4: FTL 中的保留名称"
+      href="ref_reservednames.html"
+  ></topic>  
+<topic
+      label="5: 废弃的 FTL 结构"
+      href="ref_deprecated.html"
+  >  
+<topic
+      label="废弃的指令列表"
+      href="ref_depr_directive.html"
+  ></topic>  
+<topic
+      label="废弃的内建函数列表"
+      href="ref_depr_builtin.html"
+  ></topic>  
+<topic
+      label="老式的 macro 和 call 指令"
+      href="ref_depr_oldmacro.html"
+  ></topic>  
+<topic
+      label="转换指令"
+      href="ref_depr_transform.html"
+  ></topic>  
+<topic
+      label="老式 FTL 语法"
+      href="ref_depr_oldsyntax.html"
+  ></topic>  
+<topic
+      label="#{...}: 数字插值"
+      href="ref_depr_numerical_interpolation.html"
+  ></topic></topic></topic>  
+<topic
+      label="IV: XML处理指南"
+      href="xgui.html"
+  >  
+<topic
+      label="前言"
+      href="xgui_preface.html"
+  ></topic>  
+<topic
+      label="1: 揭示XML文档"
+      href="xgui_expose.html"
+  >  
+<topic
+      label="结点树"
+      href="xgui_expose_dom.html"
+  ></topic>  
+<topic
+      label="将XML放到数据模型中"
+      href="xgui_expose_put.html"
+  ></topic></topic>  
+<topic
+      label="2: 必要的XML处理"
+      href="xgui_imperative.html"
+  >  
+<topic
+      label="基本内容"
+      href="xgui_imperative_learn.html"
+  ></topic>  
+<topic
+      label="具体细节"
+      href="xgui_imperative_formal.html"
+  ></topic></topic>  
+<topic
+      label="3: 声明的XML处理"
+      href="xgui_declarative.html"
+  >  
+<topic
+      label="基本内容"
+      href="xgui_declarative_basics.html"
+  ></topic>  
+<topic
+      label="具体细节"
+      href="xgui_declarative_details.html"
+  ></topic></topic></topic>  
+<topic
+      label="V: 附录"
+      href="app.html"
+  >  
+<topic
+      label="A: FAQ"
+      href="app_faq.html"
+  ></topic>  
+<topic
+      label="B: 版本历史"
+      href="app_versions.html"
+  >  
+<topic
+      label="2.3.24"
+      href="versions_2_3_24.html"
+  ></topic>  
+<topic
+      label="2.3.23"
+      href="versions_2_3_23.html"
+  ></topic>  
+<topic
+      label="2.3.22"
+      href="versions_2_3_22.html"
+  ></topic>  
+<topic
+      label="2.3.21"
+      href="versions_2_3_21.html"
+  ></topic>  
+<topic
+      label="2.3.20"
+      href="versions_2_3_20.html"
+  ></topic>  
+<topic
+      label="2.3.19"
+      href="versions_2_3_19.html"
+  ></topic>  
+<topic
+      label="2.3.18"
+      href="versions_2_3_18.html"
+  ></topic>  
+<topic
+      label="2.3.17"
+      href="versions_2_3_17.html"
+  ></topic>  
+<topic
+      label="2.3.16"
+      href="versions_2_3_16.html"
+  ></topic>  
+<topic
+      label="2.3.15"
+      href="versions_2_3_15.html"
+  ></topic>  
+<topic
+      label="2.3.14"
+      href="versions_2_3_14.html"
+  ></topic>  
+<topic
+      label="2.3.13"
+      href="versions_2_3_13.html"
+  ></topic>  
+<topic
+      label="2.3.12"
+      href="versions_2_3_12.html"
+  ></topic>  
+<topic
+      label="2.3.11"
+      href="versions_2_3_11.html"
+  ></topic>  
+<topic
+      label="2.3.10"
+      href="versions_2_3_10.html"
+  ></topic>  
+<topic
+      label="2.3.9"
+      href="versions_2_3_9.html"
+  ></topic>  
+<topic
+      label="2.3.8"
+      href="versions_2_3_8.html"
+  ></topic>  
+<topic
+      label="2.3.7"
+      href="versions_2_3_7.html"
+  ></topic>  
+<topic
+      label="2.3.7 RC1"
+      href="versions_2_3_7rc1.html"
+  ></topic>  
+<topic
+      label="2.3.6"
+      href="versions_2_3_6.html"
+  ></topic>  
+<topic
+      label="2.3.5"
+      href="versions_2_3_5.html"
+  ></topic>  
+<topic
+      label="2.3.4"
+      href="versions_2_3_4.html"
+  ></topic>  
+<topic
+      label="2.3.3"
+      href="versions_2_3_3.html"
+  ></topic>  
+<topic
+      label="2.3.2"
+      href="versions_2_3_2.html"
+  ></topic>  
+<topic
+      label="2.3.1"
+      href="versions_2_3_1.html"
+  ></topic>  
+<topic
+      label="2.3"
+      href="versions_2_3.html"
+  ></topic>  
+<topic
+      label="2.2.8"
+      href="versions_2_2_8.html"
+  ></topic>  
+<topic
+      label="2.2.7"
+      href="versions_2_2_7.html"
+  ></topic>  
+<topic
+      label="2.2.6"
+      href="versions_2_2_6.html"
+  ></topic>  
+<topic
+      label="2.2.5"
+      href="versions_2_2_5.html"
+  ></topic>  
+<topic
+      label="2.2.4"
+      href="versions_2_2_4.html"
+  ></topic>  
+<topic
+      label="2.2.3"
+      href="versions_2_2_3.html"
+  ></topic>  
+<topic
+      label="2.2.2"
+      href="versions_2_2_2.html"
+  ></topic>  
+<topic
+      label="2.2.1"
+      href="versions_2_2_1.html"
+  ></topic>  
+<topic
+      label="2.2"
+      href="versions_2_2.html"
+  ></topic>  
+<topic
+      label="2.1.5"
+      href="versions_2_1_5.html"
+  ></topic>  
+<topic
+      label="2.1.4"
+      href="versions_2_1_4.html"
+  ></topic>  
+<topic
+      label="2.1.3"
+      href="versions_2_1_3.html"
+  ></topic>  
+<topic
+      label="2.1.2"
+      href="versions_2_1_2.html"
+  ></topic>  
+<topic
+      label="2.1.1"
+      href="versions_2_1_1.html"
+  ></topic>  
+<topic
+      label="2.1"
+      href="versions_2_1.html"
+  ></topic>  
+<topic
+      label="2.01"
+      href="versions_2_01.html"
+  ></topic>  
+<topic
+      label="2.0"
+      href="versions_2_0.html"
+  ></topic>  
+<topic
+      label="2.0 RC3"
+      href="versions_2_0RC3.html"
+  ></topic>  
+<topic
+      label="2.0 RC2"
+      href="versions_2_0RC2.html"
+  ></topic>  
+<topic
+      label="2.0 RC1"
+      href="versions_2_0RC1.html"
+  ></topic></topic>  
+<topic
+      label="C: Installing FreeMarker"
+      href="app_install.html"
+  ></topic>  
+<topic
+      label="D: Legal"
+      href="app_legal.html"
+  >  
+<topic
+      label="License"
+      href="app_license.html"
+  ></topic>  
+<topic
+      label="Export Control"
+      href="app_eccn.html"
+  ></topic></topic></topic>  
+<topic
+      label="Glossary"
+      href="gloss.html"
+  ></topic>  
+<topic
+      label="字母顺序索引"
+      href="alphaidx.html"
+  ></topic></toc>
+

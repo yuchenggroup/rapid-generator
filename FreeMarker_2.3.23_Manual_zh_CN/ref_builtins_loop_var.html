@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>循环变量内建函数 - FreeMarker 手册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker 手册">
+<meta property="og:title" content="循环变量内建函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_builtins_loop_var.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_builtins_loop_var.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="https://schema.org/Code">
+    <meta itemprop="url" content="http://freemarker.org/docs/">
+    <meta itemprop="name" content="FreeMarker 手册">
+
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img itemprop="image" src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="http://freemarker.org/docs/api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigation-header">Manual</a><div class="navigation-header"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="step-0" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="toc.html"><span itemprop="name">FreeMarker 手册</span></a></li><li class="step-1" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref.html"><span itemprop="name">模板语言参考 </span></a></li><li class="step-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins.html"><span itemprop="name">内建函数参考</span></a></li><li class="step-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="label" itemprop="item" href="ref_builtins_loop_var.html"><span itemprop="name">循环变量内建函数</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker 手册","模板语言参考 ","内建函数参考","循环变量内建函数"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_builtins_node.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_type_independent.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_builtins_loop_var" itemprop="headline">循环变量内建函数</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#ref_builtin_counter" data-menu-target="ref_builtin_counter">counter</a></li><li><a class="page-menu-link" href="#ref_builtin_has_next" data-menu-target="ref_builtin_has_next">has_next</a></li><li><a class="page-menu-link" href="#ref_builtin_index" data-menu-target="ref_builtin_index">index</a></li><li><a class="page-menu-link" href="#ref_builtin_is_even_item" data-menu-target="ref_builtin_is_even_item">is_even_item</a></li><li><a class="page-menu-link" href="#ref_builtin_is_first" data-menu-target="ref_builtin_is_first">is_first</a></li><li><a class="page-menu-link" href="#ref_builtin_is_last" data-menu-target="ref_builtin_is_last">is_last</a></li><li><a class="page-menu-link" href="#ref_builtin_is_odd_item" data-menu-target="ref_builtin_is_odd_item">is_odd_item</a></li><li><a class="page-menu-link" href="#ref_builtin_item_cycle" data-menu-target="ref_builtin_item_cycle">item_cycle</a></li><li><a class="page-menu-link" href="#ref_builtin_item_parity" data-menu-target="ref_builtin_item_parity">item_parity</a></li><li><a class="page-menu-link" href="#ref_builtin_item_parity_cap" data-menu-target="ref_builtin_item_parity_cap">item_parity_cap</a></li></ul> </div>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+          <p>循环变量内建函数从 FreeMarker 2.3.23 版本开始存在。</p>
+          </div>
+<p>这些内建函数只能用于<a href="ref_directive_list.html"><code>list</code> 和
+        <code>items</code> 指令</a> 的循环变量
+        (也可以用于已经废弃的 <code class="inline-code">foreach</code> 指令)。
+		下面是一些说明(<code class="inline-code"><em class="code-color">loopVar</em>?index</code>
+        在可以列表的值中进行迭代，返回从0开始的索引)：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#-- Note: x is a loop variable --&gt;
+&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as x&gt;
+  ${x?index}
+&lt;/#list&gt;</pre></div>
+
+<div class="code-wrapper"><pre class="code-block code-output">0
+1
+2</pre></div><p>当 <code class="inline-code">list</code> 指令不指定循环变量时，
+		这些内建函数就作用于 <code class="inline-code">items</code> 指令的循环变量：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]&gt;
+  &lt;ul&gt;
+   &lt;#items as x&gt;
+     &lt;li&gt;${x?index}&lt;/li&gt;
+   &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;/#list&gt;</pre></div><p>循环变量内建函数仅仅用于循环变量的 <em>名字</em>，
+		所以它们可以识别相关进行的迭代。它们不读取循环变量的
+		<em>值</em>。因此，这就会有解析错误：</p>
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as x&gt;
+  &lt;#assign y = x&gt;
+  ${y?index} &lt;#-- ERROR: y isn&#39;t a loop variable --&gt;
+&lt;/#list&gt;</pre></div>
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_counter">counter</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>返回当前迭代(由循环变量名称识别)从1开始的索引。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as i&gt;
+  ${i?counter}: ${i}
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  1: a
+  2: b
+  3: c</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要从0开始的索引，请使用 <a href="#ref_builtin_index"><code>index</code>
+            内建函数</a>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_has_next">has_next</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>辨别循环项是否是当前迭代(由循环变量名称识别)的最后一项。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as i&gt;${i?has_next?c} &lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">true true false </pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>使用逗号等隔开循环项，请使用
+            <code class="inline-code">&lt;#sep&gt;<em class="code-color">separator</em>&lt;/#sep&gt;</code>
+            来代替 <code class="inline-code">&lt;#if
+            <em class="code-color">var</em>?has_next&gt;<em class="code-color">separator</em>&lt;/#if&gt;</code>，这样可读性更强。(此外
+            <code class="inline-code">&lt;/#sep&gt;</code> 经常被忽略，比如在
+            <code class="inline-code">&lt;#list <em class="code-color">...</em> as
+            <em class="code-color">var</em>&gt;<em class="code-color">...</em>${<em class="code-color">var</em>}<em class="code-color">...</em>&lt;#sep&gt;<em class="code-color">separator</em>&lt;/#list&gt;</code> 
+			中)</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要对该内建函数取反，请使用
+            <code class="inline-code"><em class="code-color">var</em>?is_last</code> 来代替 
+            <code class="inline-code">!<em class="code-color">var</em>?has_next</code>，
+			因为它的可读性更强。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_index">index</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>返回当前迭代(由循环变量名称识别)从0开始的索引。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as i&gt;
+  ${i?index}: ${i}
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  0: a
+  1: b
+  2: c</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要从1开始的索引，请使用 <a href="#ref_builtin_counter"><code>counter</code>
+            内建函数</a>。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_is_even_item">is_even_item</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>辨别循环项是否是当前迭代(由循环变量名称识别)间隔1的奇数项。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;] as i&gt;${i?is_even_item?c} &lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">false true false true</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要将表格进行行间变色等操作，请使用 
+            <a href="#ref_builtin_item_parity"><code><em>var</em>?item_parity</code></a>
+            或 <a href="#ref_builtin_item_cycle"><code><em>var</em>?item_cycle(...)</code></a> 
+            来代替。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_is_first">is_first</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>辨别循环项是否是当前迭代(由循环变量名称识别)的第一项。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as i&gt;${i?is_first?c} &lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">true false false </pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_is_last">is_last</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>辨别循环项是否是当前迭代(由循环变量名称识别)的最后一项。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] as i&gt;${i?is_last?c} &lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">false false true</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要对该内建函数取反，请使用
+            <code class="inline-code"><em class="code-color">var</em>?has_next</code> 来代替 
+            <code class="inline-code">!<em class="code-color">var</em>?is_last</code>，
+            因为它的可读性更强。</p>
+            </div>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>使用逗号等隔开循环项，请使用
+            <code class="inline-code">&lt;#sep&gt;<em class="code-color">separator</em>&lt;/#sep&gt;</code>
+            来代替 <code class="inline-code">&lt;#if
+            <em class="code-color">var</em>?has_next&gt;<em class="code-color">separator</em>&lt;/#if&gt;</code>，因为它的可读性更强。(此外
+            <code class="inline-code">&lt;/#sep&gt;</code> 经常被忽略，比如在
+            <code class="inline-code">&lt;#list <em class="code-color">...</em> as
+            <em class="code-color">var</em>&gt;<em class="code-color">...</em>${<em class="code-color">var</em>}<em class="code-color">...</em>&lt;#sep&gt;<em class="code-color">separator</em>&lt;/#list&gt;</code> 
+			中)</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_is_odd_item">is_odd_item</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>辨别循环项是否是当前迭代(由循环变量名称识别)间隔1的偶数项。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;] as i&gt;${i?is_odd_item?c} &lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">true false true false </pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>要将表格进行行间变色等操作，请使用 
+            <a href="#ref_builtin_item_parity"><code><em>var</em>?item_parity</code></a>
+            或 <a href="#ref_builtin_item_cycle"><code><em>var</em>?item_cycle(...)</code></a> 
+            来代替。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_item_cycle">item_cycle</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>这是 <a href="#ref_builtin_item_parity"><code>item_parity</code>
+          内建函数</a> 更为通用的版本，这里可以指定何值来代替
+          <code class="inline-code">&quot;odd&quot;</code> 和 <code class="inline-code">&quot;even&quot;</code>。
+		  它也允许多余两个值来循环。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;] as i&gt;
+  &lt;tr class=&quot;${i?item_cycle(&#39;row1&#39;, &#39;row2&#39;, &#39;row3&#39;)}&quot;&gt;${i}&lt;/tr&gt;
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;tr class=&quot;row1&quot;&gt;a&lt;/tr&gt;
+  &lt;tr class=&quot;row2&quot;&gt;b&lt;/tr&gt;
+  &lt;tr class=&quot;row3&quot;&gt;c&lt;/tr&gt;
+  &lt;tr class=&quot;row1&quot;&gt;d&lt;/tr&gt;
+  &lt;tr class=&quot;row2&quot;&gt;e&lt;/tr&gt;
+  &lt;tr class=&quot;row3&quot;&gt;f&lt;/tr&gt;
+  &lt;tr class=&quot;row1&quot;&gt;g&lt;/tr&gt;</pre></div>
+
+          <p>一些细节：</p>
+
+          <ul>
+            <li>
+              <p>参数的个数至少是1个，没有上限。</p>
+            </li>
+
+            <li>
+              <p>参数的类型是任意的，无需只是字符串。</p>
+            </li>
+          </ul>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>如果需要<code class="inline-code">&quot;odd&quot;</code> 
+			和 <code class="inline-code">&quot;even&quot;</code>，请使用 <a href="#ref_builtin_item_parity"><code>item_parity</code>
+            内建函数</a> 来代替。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_item_parity">item_parity</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>基于当前迭代(由循环变量名称识别)间隔为1的索引的奇偶性，
+		  返回字符串值 <code class="inline-code">&quot;odd&quot;</code> 或 <code class="inline-code">&quot;even&quot;</code>。
+		  这通常用于表格中行间的颜色变换：</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;] as i&gt;
+  &lt;tr class=&quot;${i?item_parity}Row&quot;&gt;${i}&lt;/tr&gt;
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;tr class=&quot;oddRow&quot;&gt;a&lt;/tr&gt;
+  &lt;tr class=&quot;evenRow&quot;&gt;b&lt;/tr&gt;
+  &lt;tr class=&quot;oddRow&quot;&gt;c&lt;/tr&gt;
+  &lt;tr class=&quot;evenRow&quot;&gt;d&lt;/tr&gt;</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>请使用 <a href="#ref_builtin_item_parity"><code>item_parity_cap</code>
+            内建函数</a> 来大写 <code class="inline-code">&quot;Odd&quot;</code> 和
+            <code class="inline-code">&quot;Even&quot;</code>。请使用 <a href="#ref_builtin_item_cycle"><code>item_cycle</code>
+            内建函数</a> 来指定自定义值，或多于两个值。</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="ref_builtin_item_parity_cap">item_parity_cap</h2>
+
+
+          
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>该内建函数从 FreeMarker 2.3.23 版本开始可用。</p>
+            </div>
+
+
+          <p>基于当前迭代(由循环变量名称识别)间隔为1的索引的奇偶性，
+		  返回字符串值 <code class="inline-code">&quot;Odd&quot;</code> 或 <code class="inline-code">&quot;Even&quot;</code>
+		  (请注意大写)。</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;] as i&gt;
+  &lt;tr class=&quot;row${i?item_parity_cap}&quot;&gt;${i}&lt;/tr&gt;
+&lt;/#list&gt;</pre></div>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;tr class=&quot;rowOdd&quot;&gt;a&lt;/tr&gt;
+  &lt;tr class=&quot;rowEven&quot;&gt;b&lt;/tr&gt;
+  &lt;tr class=&quot;rowOdd&quot;&gt;c&lt;/tr&gt;
+  &lt;tr class=&quot;rowEven&quot;&gt;d&lt;/tr&gt;</pre></div>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>请使用 <a href="#ref_builtin_item_parity"><code>item_parity</code>
+            内建函数</a> 来小写 <code class="inline-code">&quot;odd&quot;</code> 和
+            <code class="inline-code">&quot;even&quot;</code>。</p>
+            </div>
+
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_builtins_node.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_builtins_type_independent.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a itemprop="license" href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/nanlei/freemarker/tree/manual-zh-2.3-gae/src/manual">Chinese Manual on Github</a></li><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-09-18T14:38:51Z" title="Friday, September 18, 2015 2:38:51 PM GMT">2015-09-18 14:38:51 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Organization" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>
