@@ -46,7 +46,7 @@
 
 		
 	<!-- Mysql连接,useInformationSchema 取出表名注释 -->
-	<entry key="jdbc.url">jdbc:mysql://localhost:3306/WJS_PLAT?useUnicode=true&amp;characterEncoding=utf8&amp;useInformationSchema=true</entry>
+	<entry key="jdbc.url">jdbc:mysql://localhost:3306/cncounter?useUnicode=true&amp;characterEncoding=utf8&amp;useInformationSchema=true</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
 	
 	

@@ -15,106 +15,96 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.tq.management.base.controller.BaseController;
+import ${basepackage}.controller.base.BaseController;
 import ${basepackage}.entity.${className};
 import ${basepackage}.service.${className}Service;
-import com.tq.management.base.utils.WebDto;
 
 /**
  * @version 1.0
- * @author tangqian
+ * @author 
  */
 @Controller
 @RequestMapping("/${classNameLower}")
 public class ${className}Controller extends BaseController {
     
-    private static final String LIST = "system/${classNameLower}/${classNameLower}_list";
-    
-    private static final String ADD = "system/${classNameLower}/${classNameLower}_add";
-    
-    private static final String EDIT = "system/${classNameLower}/${classNameLower}_edit";
-    
-    private static final String VIEW = "system/${classNameLower}/${classNameLower}_view";
-    
     @Resource
-    private ${className}Service ${classNameLower}Service;
+    private ${className}Service ${shortName}Service;
     
-	@RequestMapping
-	public ModelAndView page() {
-		${shortName}
-		return new ModelAndView(LIST);
-	}
-	
-	@RequestMapping(value = "/list")
+	@RequestMapping(value = "/list.json")
 	@ResponseBody
-	public Map<String, Object> list() {
-		WebDto dto = new WebDto(getRequest());
-		return ${classNameLower}Service.list(dto);
-	}
-    
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView add() {
-		return new ModelAndView(ADD);
+	public JSONMessage list(HttpServletRequest request) {
+		// get params
+		Map<String, Object> params = WebUtils.parseParam(request);
+		//
+		Integer count = ${shortName}Service.countBy(params);
+		List<${className}> ${shortName}List = ${shortName}Service.listBy(params);
+		//
+		JSONMessage jsonMessage = JSONMessage.successMessage();
+		jsonMessage.setCount(count);
+		jsonMessage.setData(${shortName}List);
+
+		return jsonMessage;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/add.json", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doAdd() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		${classNameLower}Service.add(dto);
-		map.put("status", 1);
-		return map;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam(required = true) Integer id) {
-		ModelAndView mv = new ModelAndView(EDIT);
-		${className} ${classNameLower} = ${classNameLower}Service.get(id);
-		mv.addObject("entity", ${classNameLower});
-		return mv;
-	}
+	public JSONMessage doAdd(HttpServletRequest request) {
+		// get params
+		Map<String, Object> params = WebUtils.parseParam(request);
+		//
+		${className} ${shortName} = new ${className}();
+		//
+		BeanUtils.map2Bean(params, ${shortName});
+		//
+		Integer rows = ${shortName}Service.add(${shortName});
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> doEdit() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		${classNameLower}Service.update(dto);
-		map.put("status", 1);
-		return map;
-	}
-	
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public ModelAndView view(@RequestParam(required = true) Integer id) {
-		ModelAndView mv = new ModelAndView(VIEW);
-		${className} ${classNameLower} = ${classNameLower}Service.get(id);
-		mv.addObject("entity", ${classNameLower});
-		return mv;
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> delete(@RequestParam(required = true) Integer id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		${classNameLower}Service.delete(id);
-		map.put("status", 1);
-		return map;
-	}
-
-	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> batchDelete(@RequestParam(required = true) String ids) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		boolean result = ${classNameLower}Service.batchDelete(ids);
-		if (result) {
-			map.put("status", 1);
-		} else {
-			map.put("status", 0);
-			map.put("msg", "参数为空或者参数值非法");
+		//
+		JSONMessage jsonMessage = JSONMessage.successMessage();
+		if(rows < 1){
+			jsonMessage = JSONMessage.failureMessage();
 		}
-		return map;
+		return jsonMessage;
 	}
+	
+
+	@RequestMapping(value = "/edit.json", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONMessage doEdit(HttpServletRequest request) {
+		// get params
+		Map<String, Object> params = WebUtils.parseParam(request);
+		//
+		${className} ${shortName} = new ${className}();
+		//
+		BeanUtils.map2Bean(params, ${shortName});
+		//
+		Integer rows = ${shortName}Service.update(${shortName});
+
+		//
+		JSONMessage jsonMessage = JSONMessage.successMessage();
+		if(rows < 1){
+			jsonMessage = JSONMessage.failureMessage();
+		}
+		return jsonMessage;
+	}
+	
+
+	@RequestMapping(value = "/delete.json", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(HttpServletRequest request) {
+		// get params
+		Map<String, Object> params = WebUtils.parseParam(request);
+		//
+		Integer id = params.get("id");
+		//
+		Integer rows = ${shortName}Service.delete(id);
+
+		//
+		JSONMessage jsonMessage = JSONMessage.successMessage();
+		if(rows < 1){
+			jsonMessage = JSONMessage.failureMessage();
+		}
+		return jsonMessage;
+	}
+
 }
