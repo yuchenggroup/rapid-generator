@@ -45,9 +45,7 @@
 	<update id="update" parameterType="${basepackage}.dao.${className}">
 		update ${table.sqlName} set
 			<#list table.notPkColumns as column>
-			<@generateBycondition column.sqlName>
 			${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
-	        </@generateBycondition>
 	        </#list>
 			last_updated_by = <@mapperEl "lastUpdatedBy"/>,
 			last_updated_date = <@mapperEl "lastUpdatedDate"/>

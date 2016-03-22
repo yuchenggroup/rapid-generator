@@ -5,20 +5,27 @@
 package ${basepackage}.entity;
 
 import java.io.Serializable;
-import com.tq.management.base.entity.SuperEntity;
 
 /**
  * @version 1.0
  * @author tangqian
  */
-public class ${className} extends SuperEntity implements Serializable {
+public class ${className} implements Serializable {
 
-<@generateJavaColumns/>
 	<#list table.columns as column>
-	<@generateBycondition column.sqlName>
 	
 	private ${column.simpleJavaType} ${column.columnNameLower};
-	</@generateBycondition>
+	</#list>
+		
+	<#list table.columns as column>
+	public void set${column.columnName}(${column.simpleJavaType} value) {
+		this.${column.columnNameLower} = value;
+	}
+	
+	public ${column.simpleJavaType} get${column.columnName}() {
+		return this.${column.columnNameLower};
+	}
+	
 	</#list>
 }
 <#macro generateJavaColumns>

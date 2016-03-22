@@ -31,9 +31,7 @@
 	<update id="update" parameterType="map">
 		update ${table.sqlName} set
 			<#list table.notPkColumns as column>
-			<@generateBycondition column.sqlName>
 			${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
-	        </@generateBycondition>
 	        </#list>
 	        modifier = <@mapperEl "modifier"/>,
 			modify_time = <@mapperEl "modifyTime"/>
