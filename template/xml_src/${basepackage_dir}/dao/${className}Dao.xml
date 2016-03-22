@@ -4,9 +4,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
-<mapper namespace="${basepackage}.dao.${className}Dao">
+<mapper namespace="${basepackage}.dao.api.${className}Dao">
 
-	<resultMap id="${className}" type="${basepackage}.dao.${className}">
+	<resultMap id="${className}" type="${basepackage}.model.${subpackage}.${className}">
         <#list table.columns as column>
 		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#list>
