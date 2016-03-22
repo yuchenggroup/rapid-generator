@@ -6,15 +6,15 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.dao;
+package ${basepackage}.dao.api.${subpackage};
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import com.gv.app.epg.util.page.Pageable;
-import com.tq.home.common.dto.BaseSearchDto;
+
+import ${basepackage}.model.${subpackage};
 
 @Repository
 public interface ${className}Dao {

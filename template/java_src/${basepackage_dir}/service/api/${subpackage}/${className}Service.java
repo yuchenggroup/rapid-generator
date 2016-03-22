@@ -2,16 +2,13 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.service;
+package ${basepackage}.service.api.${subpackage};
 
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 
-import org.springframework.stereotype.Service;
-
-import ${basepackage}.entity.${className};
+import ${basepackage}.model.${className};
 
 /**
  * @version 1.0

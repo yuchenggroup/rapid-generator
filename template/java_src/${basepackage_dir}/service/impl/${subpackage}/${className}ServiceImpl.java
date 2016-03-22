@@ -6,17 +6,17 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.service;
+package ${basepackage}.service.impl.${subpackage};
 
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
 
-import ${basepackage}.entity.${className};
-import ${basepackage}.dao.${className}Dao;
+import ${basepackage}.service.api.${subpackage}.${className}Service;
+import ${basepackage}.model.${subpackage}.${className};
+import ${basepackage}.dao.api.${subpackage}.${className}Dao;
 
 /**
  * <一句话功能简述>

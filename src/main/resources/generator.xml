@@ -7,7 +7,7 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">com.cnc</entry>
+	<entry key="basepackage">com.cncounter.cncounter</entry>
 
 	<!-- 子包,只支持单个词 -->
 	<entry key="subpackage">common</entry>
@@ -28,9 +28,6 @@
     <entry key="skipTablePrefixes">ACT_</entry>
 
     <entry key="gg.isOverride">true</entry>
-
-	<entry key="jdbc.username">root</entry>
-	<entry key="jdbc.password">root</entry>
 	
 	<!-- 数据库类型映射  -->
 	<entry key="java_typemapping.java.sql.Timestamp">Date</entry>
@@ -48,6 +45,8 @@
 	<!-- Mysql连接,useInformationSchema 取出表名注释 -->
 	<entry key="jdbc.url">jdbc:mysql://localhost:3306/cncounter?useUnicode=true&amp;characterEncoding=utf8&amp;useInformationSchema=true</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+	<entry key="jdbc.username">root</entry>
+	<entry key="jdbc.password">root</entry>
 	
 	
 

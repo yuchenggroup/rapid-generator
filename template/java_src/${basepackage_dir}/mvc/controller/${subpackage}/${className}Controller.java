@@ -2,7 +2,7 @@
 <#assign className = table.className>
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.controller;
+package ${basepackage}.mvc.controller.${subpackage};
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ${basepackage}.controller.base.BaseController;
-import ${basepackage}.entity.${className};
-import ${basepackage}.service.${className}Service;
+import ${basepackage}.mvc.controller.base.BaseController;
+import ${basepackage}.model.${subpackage}.${className};
+import ${basepackage}.service.${subpackage}.${className}Service;
 
 /**
  * @version 1.0
