@@ -7,6 +7,7 @@ package ${basepackage}.mvc.controller.${subpackage};
 import java.util.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cncounter.cncounter.mvc.msg.JSONMessage;
 import com.cncounter.cncounter.mvc.controller.base.ControllerBase;
-import ${basepackage}.model.${subpackage}.${className};
+import ${basepackage}.model.${className};
 import ${basepackage}.service.api.${subpackage}.${className}Service;
 
 /**

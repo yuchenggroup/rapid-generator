@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ${basepackage}.service.api.${subpackage}.${className}Service;
-import ${basepackage}.model.${subpackage}.${className};
+import ${basepackage}.model.${className};
 import ${basepackage}.dao.mysql.${className}Mapper;
 
 /**
