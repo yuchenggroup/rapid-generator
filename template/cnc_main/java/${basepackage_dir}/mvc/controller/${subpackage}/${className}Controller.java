@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cncounter.util.string.StringNumberUtil;
 import com.cncounter.cncounter.mvc.msg.JSONMessage;
 import com.cncounter.cncounter.mvc.controller.base.ControllerBase;
 import ${basepackage}.model.${className};
@@ -38,7 +39,7 @@ public class ${className}Controller extends ControllerBase {
 		Map<String, Object> params = parseParamMapObject(request);
 		//
 		Integer count = ${classNameLower}Service.countBy(params);
-		List<${className}> ${classNameLower}List = ${classNameLower}Service.listBy(params);
+		List<${className}> ${classNameLower}List = ${classNameLower}Service.listPage(params);
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();
 		jsonMessage.setTotal(count);
