@@ -90,6 +90,12 @@ Linux 系统(**未验证!!**):
 
 ### 2.3 其他
 
+默认的模板是为项目 cncounter-web 生成的, 项目地址为:
+
+[https://github.com/cncounter/cncounter](https://github.com/cncounter/cncounter)
+
+Controller层需要依赖的文件存放于 `template/cnc_main/other_java_file`目录下,请根据需要进行使用。
+
 
 - 高级用法请自己摸索。
 - template 下可以自己进行修改,可以参考源码,以及 Freemarker的官方文档(见上方)。
