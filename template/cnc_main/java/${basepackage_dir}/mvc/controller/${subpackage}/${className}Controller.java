@@ -9,6 +9,7 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +55,7 @@ public class ${className}Controller extends ControllerBase {
 		//
 		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.map2Bean(params, ${classNameLower});
+		BeanUtils.copyProperties(params, ${classNameLower});
 		//
 		Integer rows = ${classNameLower}Service.add(${classNameLower});
 
@@ -75,7 +76,7 @@ public class ${className}Controller extends ControllerBase {
 		//
 		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.map2Bean(params, ${classNameLower});
+		BeanUtils.copyProperties(params, ${classNameLower});
 		//
 		Integer rows = ${classNameLower}Service.update(${classNameLower});
 
@@ -90,11 +91,15 @@ public class ${className}Controller extends ControllerBase {
 
 	@RequestMapping(value = "/delete.json", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete(HttpServletRequest request) {
+	public JSONMessage delete(HttpServletRequest request) {
 		// get params
 		Map<String, Object> params = parseParamMapObject(request);
 		//
-		Integer id = params.get("id");
+		Integer id = 0;
+		Object _id = params.get("id");
+		if(null != _id && StringNumberUtil.isLong(_id.toString())){
+			id = StringNumberUtil.parseInt(_id.toString(), 0);
+		}
 		//
 		Integer rows = ${classNameLower}Service.delete(id);
 

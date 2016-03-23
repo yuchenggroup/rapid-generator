@@ -46,7 +46,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     
     
     public ${className} getById(Integer id) {
-		${className} ${classNameLower} = ${classNameLower}Mapper.get(id);
+		${className} ${classNameLower} = ${classNameLower}Mapper.getById(id);
 		//
         return ${classNameLower};
     }
@@ -59,7 +59,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 	
 	public List<${className}> listPage(Map<String, Object> params){
 		processPageParams(params);
-		List<${className}> lists = ${classNameLower}Mapper.listBy(params);
+		List<${className}> lists = ${classNameLower}Mapper.listPage(params);
 		
 		return lists;
 	}
