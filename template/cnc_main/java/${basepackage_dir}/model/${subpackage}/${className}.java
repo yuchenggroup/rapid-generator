@@ -7,13 +7,14 @@ package ${basepackage}.model.${subpackage};
 import java.io.Serializable;
 
 /**
+ * ${table.tableAlias}
  * @version 1.0
- * @author tangqian
+ * @author
  */
 public class ${className} implements Serializable {
 
 	<#list table.columns as column>
-	
+	// ${column.columnAlias}
 	private ${column.simpleJavaType} ${column.columnNameLower};
 	</#list>
 		

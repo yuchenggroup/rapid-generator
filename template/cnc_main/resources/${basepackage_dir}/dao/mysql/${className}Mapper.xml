@@ -8,7 +8,12 @@
 
 	<resultMap id="BaseResultMap" type="${basepackage}.model.${subpackage}.${className}">
         <#list table.columns as column>
-		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
+		<#if column.pk>
+			<id property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+		</#if>
+		<#if !column.pk>
+			<result property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+		</#if>
 		</#list>
 	</resultMap>
 	
@@ -27,31 +32,32 @@
 	</select>
 	
 	<select id="countBy" resultMap="BaseResultMap">
-		select
-			count(*)
-		from
-			${table.sqlName}
-		where
-			1=1
+		select count(*)
+		from ${table.sqlName}
+		where 1=1
 		<#list table.columns as column>
-			<if test="${column.columnNameFirstLower} != null">
-			  and ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
-			</if>
+		  <if test="_bean.${column.columnNameFirstLower} != null">
+			and ${column.sqlName} = ${r'#{ _bean.'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
+		  </if>
 		</#list>
 	</select>
 	
 	<select id="getPageList" resultMap="BaseResultMap">
 		select
 			<include refid="columns" />
-		from
-			${table.sqlName}
-		where
-			1=1
+		from ${table.sqlName}
+		where 1=1
 		<#list table.columns as column>
-			<if test="${column.columnNameFirstLower} != null">
-			  and ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+			<if test="_bean.${column.columnNameFirstLower} != null">
+			  and ${column.sqlName} = ${r'#{'} _bean.${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
 			</if>
 		</#list>
+		<if test="_orderby != null">
+			order by ${r'${_orderby} ${_orderdir}'}
+		</if>
+		<if test="_start != null && _pageSize != null">
+			limit ${r'${_start}, ${_pageSize}'}
+		</if>
 	</select>
 	
 	<update id="update" parameterType="${basepackage}.dao.${className}">
@@ -59,7 +65,7 @@
 		<set>
 			<#list table.notPkColumns as column>
 			<if test="${column.columnNameFirstLower} != null">
-			  ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>,
+			  ${column.sqlName} = ${r'#{'} _bean.${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
 			</if>
 	        </#list>
 		</set>
@@ -67,7 +73,7 @@
 			id = <@mapperEl "id"/>
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="deleteById" parameterType="int">
 		delete from ${table.sqlName} 
 		where
 			id = <@mapperEl "id"/>
@@ -75,19 +81,22 @@
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
 		parameterType="${basepackage}.dao.${className}">
-		insert into ${table.sqlName} (
+		insert into ${table.sqlName}
+		<trim prefix="(" suffix=")" suffixOverrides=",">
 		<#list table.columns as column>
-			<#if !column.pk>
-			${column.sqlName}<#if column_has_next>,</#if>
-        	</#if>
+			<if test="${column.columnNameFirstLower} != null">
+				${column.sqlName},
+			</if>
         </#list>
-		)values (
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
 	    <#list table.columns as column>
-	    	<#if !column.pk>
-			<@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
-	    	</#if>
+			<if test="${column.columnNameFirstLower} != null">
+				${r'#{'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName}${r'},'}
+			</if>
         </#list>
 		)
+		</trim>
 	</insert>
 	
 </mapper>

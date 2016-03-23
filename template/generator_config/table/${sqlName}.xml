@@ -22,7 +22,7 @@
 <table sqlName="${table.sqlName}" className="${className}" tableAlias="${table.tableAlias}" >
 <#list table.columns as c>
 
-	<column sqlName="${c.sqlName}" columnAlias="${c.columnAlias}" javaType="${c.simpleJavaType}" 
+	<column sqlName="${c.sqlName}" jdbcSqlType="${c.jdbcSqlTypeName}" columnAlias="${c.columnAlias}" javaType="${c.simpleJavaType}"
 		unique="${c.unique?string}" nullable="${c.nullable?string}" pk="${c.pk?string}"
 		updatable="${c.updatable?string}" insertable="${c.insertable?string}"
 		enumString="${c.enumString}" enumClassName="${c.enumClassName}"

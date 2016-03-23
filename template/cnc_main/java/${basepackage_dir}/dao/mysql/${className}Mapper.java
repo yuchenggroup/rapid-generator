@@ -29,5 +29,5 @@ public interface ${className}Mapper {
     
     int update(${className} ${shortName});
     
-    int delete(Integer id);
+    int deleteById(Integer id);
 }
