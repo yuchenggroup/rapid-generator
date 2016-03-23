@@ -39,7 +39,7 @@ public class ${className}Controller extends ControllerBase {
 		List<${className}> ${classNameLower}List = ${classNameLower}Service.listBy(params);
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();
-		jsonMessage.setCount(count);
+		jsonMessage.setTotal(count);
 		jsonMessage.setData(${classNameLower}List);
 
 		return jsonMessage;
