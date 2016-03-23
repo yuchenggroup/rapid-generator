@@ -1,5 +1,5 @@
 /*
- * 文 件 名:  ${table.className}Dao.java
+ * 文 件 名:  ${table.className}Mapper.java
  * 创 建 人:  tangqian
  * 创建时间:  <#if now??>${now?string('yyyy-MM-dd')}</#if>
  */
@@ -21,11 +21,13 @@ public interface ${className}Mapper {
     
     ${className} getById(Integer id);
     
-    List<${className}> getPageList(@Param("page") Pageable<${className}> page, @Param("dto") BaseSearchDto dto);
+    int countBy(Map<String, Object> params);
+
+    List<${className}> getPageList(Map<String, Object> params);
     
-    void insert(${className} ${shortName});
+    int insert(${className} ${shortName});
     
-    void update(${className} ${shortName});
+    int update(${className} ${shortName});
     
-    void delete(Map<String, Object> map);
+    int delete(Integer id);
 }
