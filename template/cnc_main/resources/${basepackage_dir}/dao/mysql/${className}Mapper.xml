@@ -4,16 +4,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
-<mapper namespace="${basepackage}.dao.api.${className}Dao">
+<mapper namespace="${basepackage}.dao.mysql.${className}Mapper">
 
-	<resultMap id="${className}" type="${basepackage}.model.${subpackage}.${className}">
+	<resultMap id="BaseResultMap" type="${basepackage}.model.${subpackage}.${className}">
         <#list table.columns as column>
 		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#list>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
-	<sql id="columns">
+	<sql id="Base_Column_List">
 		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
 	</sql>
 	

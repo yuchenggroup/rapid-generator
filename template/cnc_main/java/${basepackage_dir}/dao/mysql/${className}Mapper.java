@@ -6,7 +6,7 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.dao.api.${subpackage};
+package ${basepackage}.dao.mysql;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import ${basepackage}.model.${subpackage};
 
 @Repository
-public interface ${className}Dao {
+public interface ${className}Mapper {
     
     ${className} getById(Integer id);
     
