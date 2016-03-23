@@ -4,21 +4,19 @@
 <#assign shortName = table.shortName>
 package ${basepackage}.mvc.controller.${subpackage};
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ${basepackage}.mvc.controller.base.BaseController;
+import com.cncounter.cncounter.mvc.msg.JSONMessage;
+import com.cncounter.cncounter.mvc.controller.base.ControllerBase;
 import ${basepackage}.model.${subpackage}.${className};
-import ${basepackage}.service.${subpackage}.${className}Service;
+import ${basepackage}.service.api.${subpackage}.${className}Service;
 
 /**
  * @version 1.0
@@ -26,23 +24,23 @@ import ${basepackage}.service.${subpackage}.${className}Service;
  */
 @Controller
 @RequestMapping("/${classNameLower}")
-public class ${className}Controller extends BaseController {
+public class ${className}Controller extends ControllerBase {
     
     @Resource
-    private ${className}Service ${shortName}Service;
+    private ${className}Service ${classNameLower}Service;
     
 	@RequestMapping(value = "/list.json")
 	@ResponseBody
 	public JSONMessage list(HttpServletRequest request) {
 		// get params
-		Map<String, Object> params = WebUtils.parseParam(request);
+		Map<String, Object> params = parseParamMapObject(request);
 		//
-		Integer count = ${shortName}Service.countBy(params);
-		List<${className}> ${shortName}List = ${shortName}Service.listBy(params);
+		Integer count = ${classNameLower}Service.countBy(params);
+		List<${className}> ${classNameLower}List = ${classNameLower}Service.listBy(params);
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();
 		jsonMessage.setCount(count);
-		jsonMessage.setData(${shortName}List);
+		jsonMessage.setData(${classNameLower}List);
 
 		return jsonMessage;
 	}
@@ -51,13 +49,13 @@ public class ${className}Controller extends BaseController {
 	@ResponseBody
 	public JSONMessage doAdd(HttpServletRequest request) {
 		// get params
-		Map<String, Object> params = WebUtils.parseParam(request);
+		Map<String, Object> params = parseParamMapObject(request);
 		//
-		${className} ${shortName} = new ${className}();
+		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.map2Bean(params, ${shortName});
+		BeanUtils.map2Bean(params, ${classNameLower});
 		//
-		Integer rows = ${shortName}Service.add(${shortName});
+		Integer rows = ${classNameLower}Service.add(${classNameLower});
 
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();
@@ -72,13 +70,13 @@ public class ${className}Controller extends BaseController {
 	@ResponseBody
 	public JSONMessage doEdit(HttpServletRequest request) {
 		// get params
-		Map<String, Object> params = WebUtils.parseParam(request);
+		Map<String, Object> params = parseParamMapObject(request);
 		//
-		${className} ${shortName} = new ${className}();
+		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.map2Bean(params, ${shortName});
+		BeanUtils.map2Bean(params, ${classNameLower});
 		//
-		Integer rows = ${shortName}Service.update(${shortName});
+		Integer rows = ${classNameLower}Service.update(${classNameLower});
 
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();
@@ -93,11 +91,11 @@ public class ${className}Controller extends BaseController {
 	@ResponseBody
 	public Map<String, Object> delete(HttpServletRequest request) {
 		// get params
-		Map<String, Object> params = WebUtils.parseParam(request);
+		Map<String, Object> params = parseParamMapObject(request);
 		//
 		Integer id = params.get("id");
 		//
-		Integer rows = ${shortName}Service.delete(id);
+		Integer rows = ${classNameLower}Service.delete(id);
 
 		//
 		JSONMessage jsonMessage = JSONMessage.successMessage();

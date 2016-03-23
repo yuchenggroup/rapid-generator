@@ -14,7 +14,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import ${basepackage}.model.${subpackage};
+import ${basepackage}.model.${className};
 
 @Repository
 public interface ${className}Mapper {
@@ -23,11 +23,11 @@ public interface ${className}Mapper {
     
     int countBy(Map<String, Object> params);
 
-    List<${className}> getPageList(Map<String, Object> params);
+    List<${className}> listPage(Map<String, Object> params);
     
-    int insert(${className} ${shortName});
+    int insert(${className} ${classNameLower});
     
-    int update(${className} ${shortName});
+    int update(${className} ${classNameLower});
     
     int deleteById(Integer id);
 }

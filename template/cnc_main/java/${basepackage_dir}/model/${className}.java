@@ -2,9 +2,10 @@
 <#include "/java_copyright.include">
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
-package ${basepackage}.model.${subpackage};
+package ${basepackage}.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * ${table.tableAlias}

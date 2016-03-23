@@ -16,9 +16,9 @@ import ${basepackage}.model.${className};
  */
 public interface ${className}Service {
 	
-	public int add(${className} ${shortName});
+	public int add(${className} ${classNameLower});
 
-	public int update(${className} ${shortName});
+	public int update(${className} ${classNameLower});
     
 	public int delete(Integer id);
 
@@ -26,6 +26,6 @@ public interface ${className}Service {
 
 	public Integer countBy(Map<String, Object> params);
 
-	public List<${className}> listBy(Map<String, Object> params);
+	public List<${className}> listPage(Map<String, Object> params);
 
 }

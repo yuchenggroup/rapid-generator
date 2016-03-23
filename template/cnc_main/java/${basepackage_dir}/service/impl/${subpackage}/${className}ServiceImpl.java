@@ -25,41 +25,41 @@ import ${basepackage}.dao.mysql.${className}Mapper;
 public class ${className}ServiceImpl implements ${className}Service {
 	
     @Resource
-    private ${className}Mapper ${shortName}Mapper;
+    private ${className}Mapper ${classNameLower}Mapper;
     
-	public int add(${className} ${shortName}) {
-        int rows = ${shortName}Mapper.insert(${shortName});
+	public int add(${className} ${classNameLower}) {
+        int rows = ${classNameLower}Mapper.insert(${classNameLower});
         return rows;
 	}
 
     
-    public int update(${className} ${shortName}) {
-        int rows = ${shortName}Mapper.update(${shortName});
+    public int update(${className} ${classNameLower}) {
+        int rows = ${classNameLower}Mapper.update(${classNameLower});
         return rows;
     }
     
     
     public int delete(Integer id) {
-        int rows = ${shortName}Mapper.delete(id);
+        int rows = ${classNameLower}Mapper.deleteById(id);
         return rows;
     }
     
     
     public ${className} getById(Integer id) {
-		${className} ${shortName} = ${shortName}Mapper.get(id);
+		${className} ${classNameLower} = ${classNameLower}Mapper.get(id);
 		//
-        return ${shortName};
+        return ${classNameLower};
     }
 	
 	public Integer countBy(Map<String, Object> params){
 		processPageParams(params);
-		Integer rows = ${shortName}Mapper.countBy(params);
+		Integer rows = ${classNameLower}Mapper.countBy(params);
 		return rows;
 	}
 	
-	public List<${className}> list(Map<String, Object> params){
+	public List<${className}> listPage(Map<String, Object> params){
 		processPageParams(params);
-		List<${className}> lists = ${shortName}Mapper.listBy(params);
+		List<${className}> lists = ${classNameLower}Mapper.listBy(params);
 		
 		return lists;
 	}

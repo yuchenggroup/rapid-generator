@@ -42,7 +42,7 @@
 		</#list>
 	</select>
 	
-	<select id="getPageList" resultMap="BaseResultMap">
+	<select id="listPage" resultMap="BaseResultMap">
 		select
 			<include refid="columns" />
 		from ${table.sqlName}
