@@ -21,7 +21,7 @@
 
 	mvn clean package -DskipTests
 
-编译后的文件在 `target/all-in-one` 目录下。 目录结构为:
+编译后的文件在 `target/bin` 目录下。 目录结构为:
 
 	|--lib\				: 依赖库
 	|--template\		: 模板文件
@@ -33,7 +33,7 @@
 
 ### 2.1 启动生成器
 
-将`all-in-one`目录拷贝到需要的地方, 这就是生成文件需要的东西。
+将`bin`目录拷贝到需要的地方, 这就是生成文件需要的东西。
 
 拷贝好之后, 修改`generator.xml`,需要修改的 **entry** 包括:
 
@@ -66,7 +66,7 @@ Linux 系统(**未验证!!**):
 
 启动之后如果不报错,则提示信息为:
 
-	templateRootDir:E:\00_GIT_ALL\rapid-generator\target\all-in-one\template
+	templateRootDir:E:\00_GIT_ALL\rapid-generator\target\bin\template
 	Usage:
 	        gen table_name [include_path]: generate files by table_name
 	        del table_name [include_path]: delete files by table_name

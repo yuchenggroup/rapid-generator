@@ -71,7 +71,7 @@
                         </goals>
                         <configuration>
                             <includeScope>runtime</includeScope>
-                            <outputDirectory>${project.build.directory}/all-in-one/lib/</outputDirectory>
+                            <outputDirectory>${project.build.directory}/bin/lib/</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -85,7 +85,7 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <copy todir="${project.build.directory}/all-in-one/lib/">
+                                <copy todir="${project.build.directory}/bin/lib/">
                                     <fileset dir="${project.build.directory}">
                                         <include name="*.jar" />
                                     </fileset>
@@ -110,7 +110,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/all-in-one/</outputDirectory>
+                            <outputDirectory>${project.build.directory}/bin/</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
@@ -130,7 +130,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/all-in-one/template/</outputDirectory>
+                            <outputDirectory>${project.build.directory}/bin/template/</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>template</directory>
