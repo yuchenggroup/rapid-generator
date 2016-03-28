@@ -55,7 +55,7 @@
 		<if test="_orderby != null">
 			order by ${r'${_orderby} ${_orderdir}'}
 		</if>
-		<if test="_start != null && _pageSize != null">
+		<if test="_start != null and _pageSize != null">
 			limit ${r'${_start}, ${_pageSize}'}
 		</if>
 	</select>
