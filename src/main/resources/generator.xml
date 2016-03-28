@@ -7,7 +7,7 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">com.cncounter.website</entry>
+	<entry key="basepackage">com.cncounter.manager</entry>
 
 	<!-- 子包,只支持单个词 -->
 	<entry key="subpackage">common</entry>
