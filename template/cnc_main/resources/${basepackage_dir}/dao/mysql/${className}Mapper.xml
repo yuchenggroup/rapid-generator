@@ -24,7 +24,7 @@
 	
 	<select id="getById" parameterType="int" resultMap="BaseResultMap">
 		select
-			<include refid="columns" />
+			<include refid="Base_Column_List" />
 		from
 			${table.sqlName}
 		where
@@ -44,7 +44,7 @@
 	
 	<select id="listPage" resultMap="BaseResultMap">
 		select
-			<include refid="columns" />
+			<include refid="Base_Column_List" />
 		from ${table.sqlName}
 		where 1=1
 		<#list table.columns as column>
