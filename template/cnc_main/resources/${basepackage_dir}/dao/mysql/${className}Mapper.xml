@@ -6,7 +6,7 @@
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
 <mapper namespace="${basepackage}.dao.mysql.${className}Mapper">
 
-	<resultMap id="BaseResultMap" type="${basepackage}.model.${subpackage}.${className}">
+	<resultMap id="BaseResultMap" type="${basepackage}.model.${className}">
         <#list table.columns as column>
 		<#if column.pk>
 			<id property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
@@ -60,7 +60,7 @@
 		</if>
 	</select>
 	
-	<update id="update" parameterType="${basepackage}.dao.${className}">
+	<update id="update" parameterType="${basepackage}.model.${className}">
 		update ${table.sqlName}
 		<set>
 			<#list table.notPkColumns as column>
@@ -80,7 +80,7 @@
 	</delete>
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
-		parameterType="${basepackage}.dao.${className}">
+		parameterType="${basepackage}.model.${className}">
 		insert into ${table.sqlName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		<#list table.columns as column>
