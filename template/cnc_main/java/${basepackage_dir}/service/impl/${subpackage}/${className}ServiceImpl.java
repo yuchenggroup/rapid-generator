@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ${basepackage}.service.api.${subpackage}.${className}Service;
 import ${basepackage}.model.${className};
@@ -24,7 +25,7 @@ import ${basepackage}.dao.mysql.${className}Mapper;
 @Service
 public class ${className}ServiceImpl implements ${className}Service {
 	
-    @Resource
+    @Autowired
     private ${className}Mapper ${classNameLower}Mapper;
     
 	public int add(${className} ${classNameLower}) {

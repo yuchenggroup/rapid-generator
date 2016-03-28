@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import ${basepackage}.model.${className};
 
-@Repository
+//@Repository
 public interface ${className}Mapper {
     
     ${className} getById(Integer id);
