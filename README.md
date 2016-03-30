@@ -102,6 +102,17 @@ Controller层需要依赖的文件存放于 `template/cnc_main/other_java_file`�
 - 配置文件信息,请参考`generator.xml`里面的注释。
 
 
+#### freemarker中key有特殊字符，如(.-等)
+
+	root key 使用：
+	.vars["aaaa.bbb"]
+	.vars["aaaa-bbb"]
+
+	非root key 使用：
+	ccc["ddd.eee"]
+	ccc["ddd-eee"]
+
+
 联系方式: `renfufei@qq.com`
 
 
