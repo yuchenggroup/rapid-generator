@@ -21,7 +21,7 @@ public class Main {
         freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
         //
         GeneratorFacade facade = new GeneratorFacade();
-        String[] args = {"T_CL_DICT_COMMON"};
+        String[] args = {"dict_common"};
         if(args.length == 0) return;
         facade.g.setIncludes(getIncludes(args,1));
         facade.generateByTable(args[0],getTemplateRootDir());
