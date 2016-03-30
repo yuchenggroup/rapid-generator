@@ -1,4 +1,4 @@
 
-export CLASSPATH=$CLASSPATH:.:./lib/*
+#export CLASSPATH=.:./lib/*
 
-java -Xms128m -Xmx384m cn.org.rapid_framework.generator.ext.CommandLine -DtemplateRootDir=template
+java -classpath '.:./lib/*' -Xms128m -Xmx384m cn.org.rapid_framework.generator.ext.CommandLine -DtemplateRootDir=template
