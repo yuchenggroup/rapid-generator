@@ -47,7 +47,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     
     
     public int delete(Integer id) {
-		if(null == ${classNameLower}){
+		if(null == id{
 			return 0;
 		}
         int rows = ${classNameLower}Mapper.deleteById(id);
@@ -56,6 +56,9 @@ public class ${className}ServiceImpl implements ${className}Service {
     
     
     public ${className} getById(Integer id) {
+		if(null == id{
+			return null;
+		}
 		${className} ${classNameLower} = ${classNameLower}Mapper.getById(id);
 		//
         return ${classNameLower};
