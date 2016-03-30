@@ -28,6 +28,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     @Autowired
     private ${className}Mapper ${classNameLower}Mapper;
     
+    @Transactional
 	public int add(${className} ${classNameLower}) {
 		if(null == ${classNameLower}){
 			return 0;
@@ -36,7 +37,7 @@ public class ${className}ServiceImpl implements ${className}Service {
         return rows;
 	}
 
-    
+    @Transactional
     public int update(${className} ${classNameLower}) {
 		if(null == ${classNameLower}){
 			return 0;
@@ -45,7 +46,7 @@ public class ${className}ServiceImpl implements ${className}Service {
         return rows;
     }
     
-    
+    @Transactional
     public int delete(Integer id) {
 		if(null == id{
 			return 0;
@@ -77,7 +78,6 @@ public class ${className}ServiceImpl implements ${className}Service {
 		return lists;
 	}
 
-	
 	private static void processPageParams(Map<String, Object> params){
 		// 此段代码可以迁移到工具类之中
 		if(null == params){
@@ -99,5 +99,4 @@ public class ${className}ServiceImpl implements ${className}Service {
 		params.put("_start", start);
 		params.put("_pageSize", pageSize);
 	}
-    
 }
