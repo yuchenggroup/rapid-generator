@@ -36,7 +36,7 @@
 		from ${table.sqlName}
 		where 1=1
 		<#list table.columns as column>
-		  <if test="_bean.${column.columnNameFirstLower} != null">
+		  <if test="_bean != null and _bean.${column.columnNameFirstLower} != null">
 			and ${column.sqlName} = ${r'#{ _bean.'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
 		  </if>
 		</#list>
@@ -48,7 +48,7 @@
 		from ${table.sqlName}
 		where 1=1
 		<#list table.columns as column>
-			<if test="_bean.${column.columnNameFirstLower} != null">
+			<if test="_bean != null and _bean.${column.columnNameFirstLower} != null">
 			  and ${column.sqlName} = ${r'#{'} _bean.${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
 			</if>
 		</#list>
