@@ -29,18 +29,27 @@ public class ${className}ServiceImpl implements ${className}Service {
     private ${className}Mapper ${classNameLower}Mapper;
     
 	public int add(${className} ${classNameLower}) {
+		if(null == ${classNameLower}){
+			return 0;
+		}
         int rows = ${classNameLower}Mapper.insert(${classNameLower});
         return rows;
 	}
 
     
     public int update(${className} ${classNameLower}) {
+		if(null == ${classNameLower}){
+			return 0;
+		}
         int rows = ${classNameLower}Mapper.update(${classNameLower});
         return rows;
     }
     
     
     public int delete(Integer id) {
+		if(null == ${classNameLower}){
+			return 0;
+		}
         int rows = ${classNameLower}Mapper.deleteById(id);
         return rows;
     }

@@ -31,7 +31,7 @@
 			id = <@mapperEl "id"/>
 	</select>
 	
-	<select id="countBy" resultMap="BaseResultMap">
+	<select id="countBy" resultType="int">
 		select count(*)
 		from ${table.sqlName}
 		where 1=1
@@ -95,7 +95,6 @@
 				${r'#{'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName}${r'},'}
 			</if>
         </#list>
-		)
 		</trim>
 	</insert>
 	
