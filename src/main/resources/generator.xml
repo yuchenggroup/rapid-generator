@@ -16,7 +16,7 @@
 	<entry key="namespace">pages</entry>
 	
 	<!-- 输出目录,相对 cd 路径 -->
-	<entry key="outRoot">generator-output</entry>
+	<entry key="outRoot">generated-sources</entry>
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
 	<entry key="tableRemovePrefixes">T_AR,T_BD,T_CD,T_PD,T_CL,T_IP,T_LO,T_RI,T_EV</entry>
@@ -25,7 +25,7 @@
 	<entry key="rowRemovePrefixes">S_,B_,I_,DT_,TS_,M_,F_,PK_I_N,PK_I_S</entry>
 
 	<!-- 需要忽略的表,逗号分隔,示例: ACT_,BATCH_ -->
-    <entry key="skipTablePrefixes">ACT_</entry>
+    <entry key="skipTablePrefixes">ACT_,tmp_</entry>
 
     <entry key="gg.isOverride">true</entry>
 	
