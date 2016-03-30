@@ -32,7 +32,8 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>generator.xml</exclude>
-                    <exclude>rapid-gen.bat</exclude>
+                    <exclude>*.bat</exclude>
+                    <exclude>*.sh</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -117,6 +118,7 @@
                                     <includes>
                                         <include>**/*.xml</include>
                                         <include>**/*.bat</include>
+                                        <include>**/*.sh</include>
                                     </includes>
                                 </resource>
                             </resources>
