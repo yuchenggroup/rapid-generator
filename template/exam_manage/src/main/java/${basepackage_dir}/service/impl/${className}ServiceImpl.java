@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import ${basepackage}.common.utils.StringNumberUtil;
 import ${basepackage}.service.${className}Service;
 import ${basepackage}.entity.po.${className};
 import ${basepackage}.dao.${className}Dao;
@@ -91,11 +92,15 @@ public class ${className}ServiceImpl implements ${className}Service {
 		Integer page = 0;
 		Object _pageSize = params.get("pageSize");
 		Object _page = params.get("page");
-		if(null != _pageSize){
-			pageSize = (Integer)_pageSize;
-		}
-		if(null != _page){
-			page = (Integer)_page;
+        if(_pageSize instanceof Integer){
+            pageSize = (Integer)_pageSize;
+        } else if(_pageSize instanceof String){
+            pageSize = StringNumberUtil.parseInt(_pageSize.toString(), pageSize);
+        }
+        if(_page instanceof Integer){
+            page = (Integer)_page;
+        } else if(_page instanceof String){
+            page = StringNumberUtil.parseInt(_page.toString(), page);
 		}
 		//
 		Integer start = page * pageSize;

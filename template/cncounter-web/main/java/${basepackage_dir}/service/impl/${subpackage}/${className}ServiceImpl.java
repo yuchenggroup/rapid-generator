@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ${basepackage}.service.api.${subpackage}.${className}Service;
 import ${basepackage}.model.${className};
 import ${basepackage}.dao.mysql.${className}Mapper;
+import com.cncounter.util.string.StringNumberUtil;
 
 /**
  * <一句话功能简述>
@@ -87,11 +88,15 @@ public class ${className}ServiceImpl implements ${className}Service {
 		Integer page = 0;
 		Object _pageSize = params.get("pageSize");
 		Object _page = params.get("page");
-		if(null != _pageSize){
-			pageSize = (Integer)_pageSize;
-		}
-		if(null != _page){
-			page = (Integer)_page;
+        if(_pageSize instanceof Integer){
+            pageSize = (Integer)_pageSize;
+        } else if(_pageSize instanceof String){
+            pageSize = StringNumberUtil.parseInt(_pageSize.toString(), pageSize);
+        }
+        if(_page instanceof Integer){
+            page = (Integer)_page;
+        } else if(_page instanceof String){
+            page = StringNumberUtil.parseInt(_page.toString(), page);
 		}
 		//
 		Integer start = page * pageSize;
