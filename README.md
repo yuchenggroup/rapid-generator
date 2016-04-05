@@ -8,6 +8,16 @@
 
 增加一些定制和扩展, 修改为基于MAVEN的格式。 整体架构保持不变。
 
+增加的特性为:
+
+1. 支持**表名前缀**去除,参考配置文件中的 `tableRemovePrefixes`
+2. 支持**列名前缀**去除,参考配置文件中的 `rowRemovePrefixes`
+3. 支持需要**忽略**的表,参考配置文件中的 `skipTablePrefixes`
+4. 支持子包,参考配置文件中的  `subpackage`,其实原版就支持, 目录为属性KEY加上 `_dir` 即可,例如 "`${xxxKEY_dir}`"
+5. 其他一些模板使用上的修正,参考 template 目录
+
+
+
 需要一个依赖: FreeMarker, 手册地址: [http://yuchenggroup.github.io/rapid-generator/FreeMarker_2.3.23_Manual_zh_CN/index.html](http://yuchenggroup.github.io/rapid-generator/FreeMarker_2.3.23_Manual_zh_CN/index.html)
 
 开始日期: 2016年1月21日
