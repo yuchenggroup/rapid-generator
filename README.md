@@ -78,12 +78,12 @@ Linux 系统(**未验证!!**):
 
 	templateRootDir:E:\00_GIT_ALL\rapid-generator\target\bin\template
 	Usage:
-	        gen table_name [include_path]: generate files by table_name
-	        del table_name [include_path]: delete files by table_name
-	        gen * [include_path]: search database all tables and generate files
-	        del * [include_path]: search database all tables and delete files
-	        quit : quit
-	        [include_path] subdir of templateRootDir,example: 1. dao  2. dao/**,service/**
+	        gen table_name [include_path]: 根据 table_name 生成
+	        del table_name [include_path]: 根据 table_name 删除
+	        gen * [include_path]: 生成所有
+	        del * [include_path]: 删除对应数据库中所有表的文件
+	        quit : 退出
+	        [include_path] 可为空,指templateRootDir的子目录,例如: 1. dao  2. dao/**,service/**
 	please input command:_
 
 根据提示, 输入 `gen *` 回车,则对所有表进行生成。
