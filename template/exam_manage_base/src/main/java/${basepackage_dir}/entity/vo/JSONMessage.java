@@ -12,13 +12,13 @@ import java.util.Map;
  */
 public class JSONMessage {
 	/**
-	 * 成功状态，值为1
+	 * 成功状态
 	 */
-	public static final int STATUS_SUCCESS = 1;
+	public static final int STATUS_SUCCESS = 0;
 	/**
-	 * 失败状态, 代表有错误发生, 值为0
+	 * 失败状态, 代表有错误发生
 	 */
-	public static final int STATUS_FAILURE = 0;
+	public static final int STATUS_FAILURE = 1;
 
 	/**
 	 * 为了兼容表格的记录总数, 需要用户手动设置
@@ -46,7 +46,7 @@ public class JSONMessage {
 	/**
 	 * 提示信息,如果需要则提供
 	 */
-	private String info = "";
+	private String message = "";
 	/**
 	 * 特殊字段,如果需要通知客户端执行某些操作,可以设置此字段,如要求重新登录,重定向URL地址等<br/>
 	 * 大多数情况下,客户端应该先检查 status再决定是否解析此字段.
@@ -97,41 +97,41 @@ public class JSONMessage {
 	public int getTotal() {
 		return total;
 	}
-	public void setTotal(int total) {
+	public JSONMessage setTotal(int total) {
 		this.total = total;
+        return this;
 	}
 
 	public List<?> getData() {
 		return data;
 	}
 
-	public void setData(List<?> data) {
-		if(null == data){
-			return;
-		}
+	public JSONMessage setData(List<?> data) {
 		this.data = data;
+        return this;
 	}
 
 	public Map<String, Object> getMeta() {
 		return meta;
 	}
 
-	public void setMeta(Map<String, Object> meta) {
-		if(null == meta){
-			return;
+	public JSONMessage setMeta(Map<String, Object> meta) {
+		if(null != meta){
+            this.meta = meta;
 		}
-		this.meta = meta;
+        return this;
 	}
 	/**
 	 * 添加 meta信息,
 	 */
-	public void addMeta( String key, Object value) {
+	public JSONMessage addMeta( String key, Object value) {
 		if(null == meta){
 			// 非线程安全, 不考虑使用多线程操作 
 			this.meta = new HashMap<String, Object>();
 		}
 		//
 		this.meta.put(key, value);
+        return this;
 	}
 
 	public int getStatus() {
@@ -141,46 +141,55 @@ public class JSONMessage {
 	/**
 	 * 设置执行成功
 	 */
-	public void setSuccess(){
-		this.setStatus(STATUS_SUCCESS);
+	public JSONMessage setSuccess(){
+		return this.setStatus(STATUS_SUCCESS);
 	}
-	public void setFailure(){
-		this.setStatus(STATUS_FAILURE);
+	public JSONMessage setFailure(){
+		return this.setStatus(STATUS_FAILURE);
 	}
-	public void setStatus(int status) {
+	public JSONMessage setStatus(int status) {
 		this.status = status;
+        return this;
 	}
 
 	public String getErrorcode() {
 		return errorcode;
 	}
 
-	public void setErrorcode(String errorcode) {
+	public JSONMessage setErrorcode(String errorcode) {
 		this.errorcode = errorcode;
+        return this;
 	}
 
-	public String getInfo() {
-		return info;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
+    public JSONMessage setMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public JSONMessage setInfo(String info) {
+		return this.setMessage(info);
 	}
 
 	public String getClientaction() {
 		return clientaction;
 	}
 
-	public void setClientaction(String clientaction) {
+	public JSONMessage setClientaction(String clientaction) {
 		this.clientaction = clientaction;
+        return this;
 	}
 
 	public String getActionvalue() {
 		return actionvalue;
 	}
 
-	public void setActionvalue(String actionvalue) {
+	public JSONMessage setActionvalue(String actionvalue) {
 		this.actionvalue = actionvalue;
+        return this;
 	}
 	
 }

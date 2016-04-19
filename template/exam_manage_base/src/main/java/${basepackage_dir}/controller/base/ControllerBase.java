@@ -2,13 +2,18 @@ package ${basepackage}.controller.base;
 
 
 import ${basepackage}.common.utils.StringNumberUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.util.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -199,6 +204,99 @@ public abstract class ControllerBase {
 		return StringNumberUtil.parseInt(value, defValue);
 	}
 
+
+    public static void processPageParams(Map<String, Object> params){
+        // 此段代码可以迁移到工具类之中
+        if(null == params){
+            return;
+        }
+        Integer pageSize = 20;
+        Integer page = 0;
+        Object _pageSize = params.get("pageSize");
+        Object _page = params.get("page");
+        if(_pageSize instanceof Integer){
+            pageSize = (Integer)_pageSize;
+        } else if(_pageSize instanceof String){
+            pageSize = StringNumberUtil.parseInt(_pageSize.toString(), pageSize);
+        }
+        if(_page instanceof Integer){
+            page = (Integer)_page;
+        } else if(_page instanceof String){
+            page = StringNumberUtil.parseInt(_page.toString(), page);
+        }
+        //
+        Integer start = page * pageSize;
+        //
+        params.put("_start", start);
+        params.put("_pageSize", pageSize);
+    }
+
+
+
+    /**
+     * 将 Map 的值设置给Bean
+     * @param map
+     * @param clazz
+     * @return
+     */
+    public static Object map2Bean(Map<String, ? extends Object> map, Class<?> clazz){
+        if(null == clazz || clazz.isArray()){
+            return null;
+        }
+        Object bean = null;
+        try {
+            bean = clazz.newInstance();
+            map2Bean(map, bean);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return bean;
+    }
+    /**
+     * 将Map封装为bean
+     * @param paramMap
+     * @param target
+     * @return
+     */
+    public static void map2Bean(Map<String, ? extends Object> paramMap, Object target){
+        if(null == paramMap || null == target || paramMap.isEmpty()){
+            return;
+        }
+        if(target instanceof Map<?,?> || target instanceof List<?>){
+            return; // 不处理 Map,List 以及。。。
+        }
+        Class<?> targetClazz = target.getClass();
+        // 依赖 Spring 的 BeanUtils
+        PropertyDescriptor[] targetPds = org.springframework.beans.BeanUtils.getPropertyDescriptors(targetClazz);
+        //
+        for (PropertyDescriptor targetPd : targetPds) {
+            Method writeMethod = targetPd.getWriteMethod();
+            if (null == writeMethod) { continue; }
+            //
+            Class<?>[] pClazz = writeMethod.getParameterTypes();
+            if(null == pClazz || pClazz.length != 1){
+                // 如果不是只有1个参数
+                continue;
+            }
+            // 获取KEY和Value
+            String keyName = targetPd.getName();
+            Object value = paramMap.get(keyName);
+            // 对比类型,如果类型不同,则进行解析转换, 主要是String转换
+            value = tran2TargetType(value, pClazz[0]);
+            if(null == value){ continue;}
+
+            try {
+                if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
+                    writeMethod.setAccessible(true);
+                }
+                // 执行 set 方法
+                writeMethod.invoke(target, value);
+            } catch (Throwable e) {
+                throw  new RuntimeException(e);
+            }
+
+        }
+    }
 
 	/**
 	 * 解析request中的参数Map

@@ -9,7 +9,6 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +37,7 @@ public class ${className}Controller extends ControllerBase {
 	public JSONMessage list(HttpServletRequest request) {
 		// get params
 		Map<String, Object> params = parseParamMapObject(request);
+        processPageParams(params);
 		//
 		Integer count = ${classNameLower}Service.countBy(params);
 		List<${className}> ${classNameLower}List = ${classNameLower}Service.listPage(params);
@@ -57,7 +57,7 @@ public class ${className}Controller extends ControllerBase {
 		//
 		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.copyProperties(params, ${classNameLower});
+		map2Bean(params, ${classNameLower});
 		//
 		Integer rows = ${classNameLower}Service.add(${classNameLower});
 
@@ -78,7 +78,7 @@ public class ${className}Controller extends ControllerBase {
 		//
 		${className} ${classNameLower} = new ${className}();
 		//
-		BeanUtils.copyProperties(params, ${classNameLower});
+		map2Bean(params, ${classNameLower});
 		//
 		Integer rows = ${classNameLower}Service.update(${classNameLower});
 

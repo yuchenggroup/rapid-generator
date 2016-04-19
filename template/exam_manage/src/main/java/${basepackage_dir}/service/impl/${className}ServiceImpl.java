@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ${basepackage}.common.utils.StringNumberUtil;
 import ${basepackage}.service.${className}Service;
 import ${basepackage}.entity.po.${className};
-import ${basepackage}.dao.${className}Dao;
+import ${basepackage}.dao.${className}Mapper;
 
 /**
  * <一句话功能简述>
@@ -28,7 +28,7 @@ import ${basepackage}.dao.${className}Dao;
 public class ${className}ServiceImpl implements ${className}Service {
 	
     @Autowired
-    private ${className}Dao ${classNameLower}Mapper;
+    private ${className}Mapper ${classNameLower}Mapper;
     
     @Transactional
 	public int add(${className} ${classNameLower}) {
@@ -70,43 +70,13 @@ public class ${className}ServiceImpl implements ${className}Service {
     }
 	
 	public Integer countBy(Map<String, Object> params){
-		processPageParams(params);
 		Integer rows = ${classNameLower}Mapper.countBy(params);
 		return rows;
 	}
 	
 	public List<${className}> listPage(Map<String, Object> params){
-		processPageParams(params);
 		List<${className}> lists = ${classNameLower}Mapper.listPage(params);
 		
 		return lists;
 	}
-
-	
-	private static void processPageParams(Map<String, Object> params){
-		// 此段代码可以迁移到工具类之中
-		if(null == params){
-			return;
-		}
-		Integer pageSize = 20;
-		Integer page = 0;
-		Object _pageSize = params.get("pageSize");
-		Object _page = params.get("page");
-        if(_pageSize instanceof Integer){
-            pageSize = (Integer)_pageSize;
-        } else if(_pageSize instanceof String){
-            pageSize = StringNumberUtil.parseInt(_pageSize.toString(), pageSize);
-        }
-        if(_page instanceof Integer){
-            page = (Integer)_page;
-        } else if(_page instanceof String){
-            page = StringNumberUtil.parseInt(_page.toString(), page);
-		}
-		//
-		Integer start = page * pageSize;
-		//
-		params.put("_start", start);
-		params.put("_pageSize", pageSize);
-	}
-    
 }

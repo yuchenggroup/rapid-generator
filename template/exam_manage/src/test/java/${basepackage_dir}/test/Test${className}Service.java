@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 
@@ -29,6 +30,7 @@ import ${basepackage}.service.${className}Service;
  */
 @ContextConfiguration("classpath:generated/spring.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional // 事务必须要Junit看得见才能回滚
 public class Test${className}Service {
     
     private Log logger = LogFactory.getLog(this.getClass());

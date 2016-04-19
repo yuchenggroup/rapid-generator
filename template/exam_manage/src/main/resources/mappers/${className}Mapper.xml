@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
-<mapper namespace="${basepackage}.dao.${className}Dao">
+<mapper namespace="${basepackage}.dao.${className}Mapper">
 
 	<resultMap id="BaseResultMap" type="${basepackage}.entity.po.${className}">
         <#list table.columns as column>
@@ -65,7 +65,7 @@
 		<set>
 			<#list table.notPkColumns as column>
 			<if test="${column.columnNameFirstLower} != null">
-			  ${column.sqlName} = ${r'#{'} _bean.${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
+			  ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
 			</if>
 	        </#list>
 		</set>

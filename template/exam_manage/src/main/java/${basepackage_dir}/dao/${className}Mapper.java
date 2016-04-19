@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import ${basepackage}.entity.po.${className};
 
 @Repository
-public interface ${className}Dao {
+public interface ${className}Mapper {
     
     ${className} getById(Integer id);
     
