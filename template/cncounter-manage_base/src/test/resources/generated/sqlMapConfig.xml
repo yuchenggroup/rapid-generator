@@ -11,14 +11,6 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.ybs.exam.entity.po.QuestionCategory" alias="QuestionCategory" />
-		<typeAlias type="com.ybs.exam.entity.po.MedicalSubject" alias="MedicalSubject" />
-		<typeAlias type="com.ybs.exam.entity.po.TrainingCourse" alias="TrainingCourse" />
-		<typeAlias type="com.ybs.exam.entity.po.SourceQuestion" alias="SourceQuestion" />
-		<typeAlias type="com.ybs.exam.entity.po.OrgQuestion" alias="OrgQuestion" />
-		<typeAlias type="com.ybs.exam.entity.po.QuestionOption" alias="QuestionOption" />
-		<typeAlias type="com.ybs.exam.entity.po.ProjectQuestion" alias="ProjectQuestion" />
-		<typeAlias type="com.ybs.exam.entity.po.CourseCategory2QuestionCategoryMapping" alias="CourseCategory2QuestionCategoryMapping" />
 	</typeAliases>
 	
 </configuration>
