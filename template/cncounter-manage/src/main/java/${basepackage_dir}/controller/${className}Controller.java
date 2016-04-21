@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ${basepackage}.controller.base.ControllerBase;
-import ${basepackage}.common.utils.StringNumberUtil;
+import ${basepackage}.mvc.controller.base.ControllerBase;
+import ${basepackage}.util.common.StringNumberUtil;
 import ${basepackage}.mvc.msg.JSONMessage;
 import ${basepackage}.model.${className};
 import ${basepackage}.service.${className}Service;

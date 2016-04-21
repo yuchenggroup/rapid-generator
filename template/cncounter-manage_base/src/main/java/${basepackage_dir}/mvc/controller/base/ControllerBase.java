@@ -1,7 +1,7 @@
-package ${basepackage}.controller.base;
+package ${basepackage}.mvc.controller.base;
 
 
-import ${basepackage}.common.utils.StringNumberUtil;
+import ${basepackage}.util.common.StringNumberUtil;
 
 
 import javax.servlet.http.Cookie;

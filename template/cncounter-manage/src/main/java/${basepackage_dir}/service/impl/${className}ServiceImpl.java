@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import ${basepackage}.common.utils.StringNumberUtil;
+import ${basepackage}.util.common.StringNumberUtil;
 import ${basepackage}.service.${className}Service;
 import ${basepackage}.model.${className};
 import ${basepackage}.dao.mysql.${className}Mapper;
