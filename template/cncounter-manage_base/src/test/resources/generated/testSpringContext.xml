@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- Activates annotation-based bean configuration -->
+	<context:annotation-config />
+	<!-- Scans for application @Components to deploy -->
+	<context:component-scan base-package="${basepackage}">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+	<!-- 引入属性文件 -->
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath:generated/*.properties" />
+	<!-- 配置Druid数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${r'${mysql.jdbc.url}'}" />
+        <property name="username" value="${r'${mysql.jdbc.username}'}" />
+        <property name="password" value="${r'${mysql.jdbc.password}'}" />
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${r'${initialSize}'}" />
+        <property name="maxActive" value="${r'${maxActive}'}" />
+        <property name="minIdle" value="${r'${minIdle}'}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="10000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="30000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="60000" />
+		<!-- 连接有效性测试 -->
+		<property name="validationQuery" value="${r'${validationQuery}'}" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+		<!-- 强行关闭长时间不归还的连接,防止泄露,单位秒 -->
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+		<property name="filters" value="config,mergeStat" />
+		<!-- 提示Druid数据源需要对数据库密码进行解密 -->
+		<property name="connectionProperties" value="config.decrypt=${r'${config.decrypt}'}" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 
+			Oracle，则把poolPreparedStatements配置为true;
+			mysql可以配置为false,分库分表较多的数据库，建议配置为false
+			参考:https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter
+		-->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+		<!-- 如果有特殊SQL被拦截,可以将SQL防火墙wall去掉 -->
+		<!-- 
+		<property name="filters" value="wall"/>
+		 -->
+		<property name="proxyFilters">
+			<list>
+				<!-- 挂载监控统计拦截的filters -->
+				<ref bean="stat-filter" />
+				<ref bean="log-filter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- myBatis sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:generated/MybatisMapConfig.xml"></property>
+		<!-- 表示在包或所有子目录中，以 *Mapper.xml结尾所有文件 -->
+		<property name="mapperLocations">
+			<value>classpath*:${basepackage?replace('.', '/')}/**/*Mapper.xml
+            </value>
+		</property>
+	</bean>
+	<!-- 自动扫描下面的组件, 接口上需要注解 @Component("bean的id") -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="${basepackage}.${subpackage}.dao.mysql" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 使用annotation注解方式配置事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 配置事务管理器,使用JDBC事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 配置druid监控spring jdbc -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="3000" />
+		<!-- 统计慢SQL的开关 -->
+		<property name="logSlowSql" value="true" />
+		<!-- 在统计中合并同类SQL的开关 -->
+		<property name="mergeSql" value="true" />
+	</bean>
+	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+		<!-- 日志输出,输出可执行语句 -->
+		<property name="statementExecutableSqlLogEnable" value="false" />
+	</bean>
+	<bean id="druid-stat-interceptor"
+		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+	</bean>
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+		scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>${basepackage}.${subpackage}.service.impl.*</value>
+			</list>
+		</property>
+	</bean>
+	<aop:config>
+		<aop:advisor advice-ref="druid-stat-interceptor"
+			pointcut-ref="druid-stat-pointcut" />
+	</aop:config>
+
+	<!-- redis 配置 -->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${r'${redis.maxIdle}'}" />
+		<property name="maxTotal" value="${r'${redis.maxTotal}'}" />
+		<property name="maxWaitMillis" value="${r'${redis.maxWaitMillis}'}" />
+		<property name="testOnBorrow" value="${r'${redis.testOnBorrow}'}" />
+	</bean>
+	<bean id="jedisConnFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${r'${redis.host}'}"></property>	
+		<property name="port" value="${r'${redis.port}'}"></property>	
+		<property name="password" value="${r'${redis.pass}'}"></property>	
+		<property name="poolConfig" ref="poolConfig"></property>
+	</bean>
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnFactory" />
+    </bean>
+    
+    <!-- 持有Spring上下文环境的类 -->
+    <bean id="springContextHolder" class="${basepackage}.util.spring.SpringContextHolder" />  
+</beans>
