@@ -2,7 +2,7 @@
 <#assign className = table.className>
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
-package ${basepackage}.test;
+package ${basepackage}.test.service;
 
 import java.util.*;
 
@@ -21,63 +21,63 @@ import org.springframework.util.Assert;
 
 
 import ${basepackage}.model.${className};
-import ${basepackage}.service.${className}Service;
+import ${basepackage}.service.${className}Mapper;
 
 /**
  * @version 1.0
  * @author 
- * 单元测试 ${table.tableAlias}: ${className}Service
+ * 单元测试 ${table.tableAlias}: ${className}Mapper
  */
 @ContextConfiguration("classpath:generated/spring.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional // 事务必须要Junit看得见才能回滚
-public class Test${className}Service {
+public class Test${className}Mapper {
     
     private Log logger = LogFactory.getLog(this.getClass());
     
     @Autowired
-    private ${className}Service ${classNameLower}Service;
+    private ${className}Mapper ${classNameLower}Mapper;
     
     @Before
     public void setUp(){
-        Assert.notNull(${classNameLower}Service, "${classNameLower}Service 不能为 null");
+        Assert.notNull(${classNameLower}Mapper, "${classNameLower}Mapper 不能为 null");
         // 此处可以做一些初始化操作
     }
     @After
     public void tearDown(){
-    	${classNameLower}Service = null;
+    	${classNameLower}Mapper = null;
         // 此处可以做一些清理操作
     }
     
     @Test
     public  void testListBy(){
-        logger.debug("开始测试 ${classNameLower}Service.listPage(params)");
+        logger.debug("开始测试 ${classNameLower}Mapper.listPage(params)");
         Map<String, Object> params = new HashMap<String, Object>();
-        List<${className}> resultList =  ${classNameLower}Service.listPage(params);
+        List<${className}> resultList =  ${classNameLower}Mapper.listPage(params);
         //
         Assert.notNull(resultList, "resultList 不能为 null");
-        logger.debug("${classNameLower}Service.listPage(params)测试结束. resultList.size()=" + resultList.size());
+        logger.debug("${classNameLower}Mapper.listPage(params)测试结束. resultList.size()=" + resultList.size());
     }
 
     @Test
     public  void testCountBy(){
-        logger.debug("开始测试 ${classNameLower}Service.countBy(params)");
+        logger.debug("开始测试 ${classNameLower}Mapper.countBy(params)");
         Map<String, Object> params = new HashMap<String, Object>();
-        int result =  ${classNameLower}Service.countBy(params);
+        int result =  ${classNameLower}Mapper.countBy(params);
         //
         Assert.isTrue(result >= 0, "result 不能为 负数");
-        logger.debug("${classNameLower}Service.countBy(params)测试结束. result=" + result);
+        logger.debug("${classNameLower}Mapper.countBy(params)测试结束. result=" + result);
     }
 
     @Test
     @Rollback(true)
     public  void testSave(){
-        logger.debug("开始测试 ${classNameLower}Service.add(null)");
+        logger.debug("开始测试 ${classNameLower}Mapper.add(null)");
         //${className} condition = new ${className}();
-        int result =  ${classNameLower}Service.add(null);
+        int result =  ${classNameLower}Mapper.add(null);
         //
         Assert.isTrue(result >= 0, "result 不能为 负数");
-        logger.debug("${classNameLower}Service.add(condition)测试结束. result=" + result);
+        logger.debug("${classNameLower}Mapper.add(condition)测试结束. result=" + result);
     }
 
 }

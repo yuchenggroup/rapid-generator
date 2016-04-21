@@ -1,4 +1,4 @@
-package ${basepackage}.entity.vo;
+package ${basepackage}.mvc.manage;
 
 
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ public class JSONMessage {
 	/**
 	 * 成功状态
 	 */
-	public static final int STATUS_SUCCESS = 0;
+	public static final int STATUS_SUCCESS = 1;
 	/**
 	 * 失败状态, 代表有错误发生
 	 */
-	public static final int STATUS_FAILURE = 1;
+	public static final int STATUS_FAILURE = 0;
 
 	/**
 	 * 为了兼容表格的记录总数, 需要用户手动设置
@@ -164,6 +164,9 @@ public class JSONMessage {
     public String getMessage() {
         return message;
     }
+	public String getInfo() {
+		return info;
+	}
 
     public JSONMessage setMessage(String message) {
         this.message = message;

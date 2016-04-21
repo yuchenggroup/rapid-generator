@@ -1,8 +1,8 @@
 package ${basepackage}.mvc.controller.base;
 
 
-import ${basepackage}.util.common.StringNumberUtil;
-
+import ${basepackage}.dao.redis.api.RedisBaseDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +11,7 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -21,9 +19,49 @@ import java.util.Map;
  * 子类应该使用基类提供的方法,以方便今后的集群部署[届时只需要修改此类中的实现即可]。
  */
 public abstract class ControllerBase {
-	
+	/**
+	 * 会话中存储user信息的KEY
+	 */
+	public static final String SESSION_USER_KEY = "session_user_key";
 	public static final String UTF_8 = "UTF-8";
 
+	@Autowired
+	private RedisBaseDAO redisBaseDAO;
+
+	/**
+	 * 获取基于sessionid的key
+	 * @param request
+	 * @param oKey
+	 * @return
+	 */
+	public static String getSessionKey(HttpServletRequest request, String oKey){
+		// 获取会话?
+		HttpSession session = request.getSession(true);
+		// 获取会话ID
+		String sessionid = session.getId();
+		//
+		String nKey = "sessionid:"+ sessionid +":"+oKey;
+		//
+		return nKey;
+	}
+	/**
+	 * 获取UUID的key
+	 * @param uuid
+	 * @return
+	 */
+	public static String getUUIDKey(String uuid){
+		String nKey = "uuid:"+uuid;
+		return nKey;
+	}
+	/**
+	 * 获取UUID
+	 * @return
+	 */
+	public static String getUUID(){
+		String uuid = UUID.randomUUID().toString();
+		return uuid;
+	}
+	
 	/**
 	 * 设置session属性
 	 * @param request HttpServletRequest 请求对象
@@ -37,6 +75,7 @@ public abstract class ControllerBase {
 		//
 	}
 
+
 	/**
 	 * 设置Session存活时间
 	 * @param request
@@ -47,7 +86,6 @@ public abstract class ControllerBase {
 		HttpSession session = request.getSession(true);
 		session.setMaxInactiveInterval(aliveTimeSeconds);
 	}
-	
 	/**
 	 * 根据 request取得Session属性值
 	 * @param request HttpServletRequest 请求对象
@@ -61,6 +99,46 @@ public abstract class ControllerBase {
 	}
 	
 
+	/**
+	 * 保存到缓存. 使用Redis实现
+	 * @param request 使用是为了使用app缓存的方式
+	 * @param name
+	 * @param value
+	 */
+	public void saveToCache(HttpServletRequest request, String name, Serializable value) {
+		// 基于单容器的实现
+		// ServletContext application = request.getSession().getServletContext();
+		// application.setAttribute(name, value);
+		// 基于Redis的实现
+		saveToCache(name, value);
+	}
+	public void saveToCache(String name, Serializable value) {
+		// 基于单容器的实现
+		// ServletContext application = request.getSession().getServletContext();
+		// application.setAttribute(name, value);
+		// 基于Redis的实现
+		redisBaseDAO.saveObject(name, value);
+	}
+	/**
+	 * 从Cache获取对象
+	 * @param request 使用是为了使用app缓存的方式
+	 * @param name
+	 * @return
+	 */
+	public  Object getFromCache(HttpServletRequest request, String name) {
+		// 基于单容器的实现
+		// ServletContext application = request.getSession().getServletContext();
+		// return application.getAttribute(name);
+		// 基于Redis的实现
+		return getFromCache(name);
+	}
+	public  Object getFromCache(String name) {
+		// 基于单容器的实现
+		// ServletContext application = request.getSession().getServletContext();
+		// return application.getAttribute(name);
+		// 基于Redis的实现
+		return redisBaseDAO.getObject(name);
+	}
 	/**
 	 * 获取 上下文 path, 返回如 "/cncounter"
 	 * @param request
@@ -99,27 +177,29 @@ public abstract class ControllerBase {
 	protected String getStringValue(HttpServletRequest request, String name){
 		// 1. 获取直接参数
 		String value = getParameter(request, name);
-		if(StringNumberUtil.notEmpty(value)){
+		if(notEmpty(value)){
 			return value;
 		}
 		// 2. 获取 cookie
 		value = getCookie(request, name);
-		if(StringNumberUtil.notEmpty(value)){
+		if(notEmpty(value)){
 			return value;
 		}
-		// 3. 获取session
-//		Object v = getSessionValue(request, name);
-//		if(StringNumberUtil.notEmpty(v)){
-//			return String.valueOf(v);
-//		}
-		// 4. 获取缓存
-//		v = getFromCache(name);
-//		if(StringNumberUtil.notEmpty(v)){
-//			return String.valueOf(v);
-//		}
 		//
 		return value;
 	}
+    /**
+     * 不为empty(空)
+     * @param str
+     * @return
+     */
+    public static boolean notEmpty(Object str){
+        boolean result = false;
+        if(null != str && !str.toString().trim().isEmpty()){
+            result = true;
+        }
+        return result;
+    }
 
 	public static String getCookie(HttpServletRequest request, String name){
 		Map<String, String> cookieMap = getCookies(request);
@@ -201,7 +281,7 @@ public abstract class ControllerBase {
 	protected static int getParameterInt(HttpServletRequest request, String name, int defValue){
 		String value = request.getParameter(name);
 		//
-		return StringNumberUtil.parseInt(value, defValue);
+		return parseInt(value, defValue);
 	}
 
 
@@ -217,12 +297,12 @@ public abstract class ControllerBase {
         if(_pageSize instanceof Integer){
             pageSize = (Integer)_pageSize;
         } else if(_pageSize instanceof String){
-            pageSize = StringNumberUtil.parseInt(_pageSize.toString(), pageSize);
+            pageSize = parseInt(_pageSize.toString(), pageSize);
         }
         if(_page instanceof Integer){
             page = (Integer)_page;
         } else if(_page instanceof String){
-            page = StringNumberUtil.parseInt(_page.toString(), page);
+            page = parseInt(_page.toString(), page);
         }
         //
         Integer start = page * pageSize;
@@ -231,6 +311,14 @@ public abstract class ControllerBase {
         params.put("_pageSize", pageSize);
     }
 
+    public static int parseInt(String str, int defValue){
+        int result = defValue;
+        if(null != str && str.matches("^[\\+\\-]?\\d+$")){
+            str = str.replaceAll("^\\+", "");
+            result = Integer.parseInt(str);
+        }
+        return result;
+    }
 
 
     /**
@@ -297,6 +385,49 @@ public abstract class ControllerBase {
 
         }
     }
+    public static Object tran2TargetType(Object value, Class<?> pClazz) {
+        Object result = null;
+        // 为 null
+        if(null == value || null == pClazz){
+            return  result;
+        }
+        // 同一类型,不需要转换
+        if(pClazz.isInstance(value)){
+            result = value;
+            return result;
+        }
+        // 如果值不是为 String
+        if(String.class != value.getClass()){
+            // 暂时没有转换器, 留 null
+            return  result;
+        }
+        //
+        String str = value.toString();
+        if (pClazz == int.class || pClazz == Integer.class) {
+            result = Integer.parseInt(str);
+        } else if (pClazz == Double.class || pClazz == double.class) {
+            result = Double.parseDouble(str);
+        } else if (pClazz == Float.class  || pClazz == float.class) {
+            result = Float.parseFloat(str);
+        } else if (pClazz == Long.class || pClazz == long.class) {
+            result = Long.parseLong(str);
+        } else if (pClazz == Boolean.class  || pClazz == boolean.class) {
+            result = Boolean.parseBoolean(str);
+        } else if (pClazz == Short.class || pClazz == short.class) {
+            result = Short.parseShort(str);
+        } else if (pClazz == Date.class) {
+            result = parseStrToDate(str);
+        } else if (pClazz == String.class) {
+            result = str;
+        }
+        //
+        return  result;
+    }
+
+    private static Date parseStrToDate(String str) {
+        // 需要解析各种格式,或者统一规范
+        return null;
+    }
 
 	/**
 	 * 解析request中的参数Map
@@ -316,7 +447,7 @@ public abstract class ControllerBase {
 		Map<String, String> map = new HashMap<String, String>();
 		//
 		if(null != request){
-			Enumeration<String> enumeration = request.getParameterNames();
+			Enumeration enumeration = request.getParameterNames();
 			// 遍历参数,其实有request的request.getParameterMap();但没泛型
 			while (enumeration.hasMoreElements()) {
 				String paraName = (String) enumeration.nextElement();
@@ -329,7 +460,7 @@ public abstract class ControllerBase {
 				if("".equals(paraValue) || "null".equals(paraValue) || "undefined".equals(paraValue)){
 					paraValue = "";
 				}
-				if(empty2null && StringNumberUtil.isEmpty(paraValue)){
+				if(empty2null && !notEmpty(paraValue)){
 					// 不设置值
 				} else {
 					map.put(paraName, paraValue);
