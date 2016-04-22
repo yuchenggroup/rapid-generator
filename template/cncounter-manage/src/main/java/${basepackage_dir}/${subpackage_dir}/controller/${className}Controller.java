@@ -26,7 +26,7 @@ import ${basepackage}.${subpackage}.service.${className}Service;
  * @author 
  */
 @Controller
-@RequestMapping("/${classNameLower}")
+@RequestMapping("/${subpackage}/${classNameLower}")
 public class ${className}Controller extends ControllerBase {
     
     @Autowired
