@@ -7,7 +7,7 @@
  */
 Ext.define('ESSM.store.${subpackage}.${className}Store',{
 	extend: 'Ext.data.Store',
-	autoLoad : true,
+	// autoLoad : true,
 	model : 'ESSM.model.${subpackage}.${className}',
 	remoteSort : true,
 	pageSize : 20,
@@ -15,9 +15,9 @@ Ext.define('ESSM.store.${subpackage}.${className}Store',{
 		type: 'ajax',
 		api : {
 			read:'rest/${subpackage}/${classNameLower}/list.json',
-			add:'rest/${subpackage}/${classNameLower}/add.json',
+			create:'rest/${subpackage}/${classNameLower}/add.json',
 			update:'rest/${subpackage}/${classNameLower}/update.json',
-			remove:'rest/${subpackage}/${classNameLower}/delete.json',
+			destroy:'rest/${subpackage}/${classNameLower}/delete.json',
 		},
         actionMethods: {
             read   : 'POST' // by default GET

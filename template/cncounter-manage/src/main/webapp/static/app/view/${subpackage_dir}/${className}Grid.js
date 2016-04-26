@@ -34,7 +34,7 @@ Ext.define("ESSM.view.${subpackage}.${className}Grid", {
 			xtype : 'authcbutton',
 			action :'delete',
 			iconCls : 'delete',
-			disabled : false,
+			disabled : true,
 			text : '删除'
 		}
 	],
@@ -45,7 +45,7 @@ Ext.define("ESSM.view.${subpackage}.${className}Grid", {
 					header: '${column.columnAlias}', 
 					dataIndex: '${column.columnNameLower}', 
 					width: 120,
-					align:'center',
+					align:'left',
 					// hidden: true,
 					renderer : function(value, row, record) {
 						if(value) {

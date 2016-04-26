@@ -8,6 +8,11 @@
 Ext.define("ESSM.view.${subpackage}.${className}View",{
 	extend: "Ext.panel.Panel",
 	alias : "widget.${classNameLower}View",
+    requires : [
+        'ESSM.store.${subpackage}.${className}Store',
+        "ESSM.view.${subpackage}.${className}Grid",
+        "ESSM.view.${subpackage}.${className}Form"
+    ],
 	tbar : [
 		{
 			xtype : 'authcbutton',
