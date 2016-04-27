@@ -65,7 +65,7 @@
 		<set>
 			<#list table.notPkColumns as column>
 			<if test="${column.columnNameFirstLower} != null">
-			  ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'}
+			  ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}, jdbcType=${column.jdbcSqlTypeName} ${r'}'},
 			</if>
 	        </#list>
 		</set>
