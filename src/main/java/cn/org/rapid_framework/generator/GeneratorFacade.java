@@ -177,7 +177,7 @@ public class GeneratorFacade {
             String sqlName = table.getSqlName();
             String prefixs = GeneratorProperties.getProperty("skipTablePrefixes", "");
             for(String prefix : prefixs.split(",")) {
-                if(sqlName.startsWith(prefix)) {
+                if(null != prefix && !prefix.trim().isEmpty() && sqlName.startsWith(prefix)) {
                     GLogger.println("[skip]		matches prefix: " + prefix + "; skipTable: " + sqlName);
                     return ;
                 }
