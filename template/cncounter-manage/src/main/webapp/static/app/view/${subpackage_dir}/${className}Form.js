@@ -30,5 +30,38 @@ Ext.define("ESSM.view.${subpackage}.${className}Form",{
 			</#list>
 		],
 		this.callParent();
-	}
+	},
+    bbar : [
+        {
+            xtype: 'button',
+            width: 60,
+            margin: '0 0 0 30',
+            name: 'save',
+            allowBlank: false,
+            action:'save',
+            iconCls : 'edit',
+            text: '保存',
+            handler : function(btn, e){
+                var editForm = this.up("form") || {};
+                var saveFn = editForm.saveFn;
+                var saveFnContext = editForm.saveFnContext || editForm;
+                saveFn && saveFn.call(saveFnContext, editForm);
+            }
+        },
+        {
+            xtype: 'button',
+            width: 60,
+            margin: '0 0 0 30',
+            name: 'cancel',
+            allowBlank: false,
+            action:'query',
+            iconCls : 'cancel',
+            text: '取消',
+            listeners : {
+                'click' : function(){
+                    this.up("window").close();
+                }
+            }
+        }
+    ]
 });

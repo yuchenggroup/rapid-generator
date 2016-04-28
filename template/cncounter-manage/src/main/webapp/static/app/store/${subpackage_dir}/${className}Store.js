@@ -16,7 +16,7 @@ Ext.define('ESSM.store.${subpackage}.${className}Store',{
 		api : {
 			read:'rest/${subpackage}/${classNameLower}/list.json',
 			create:'rest/${subpackage}/${classNameLower}/add.json',
-			update:'rest/${subpackage}/${classNameLower}/update.json',
+			update:'rest/${subpackage}/${classNameLower}/edit.json',
 			destroy:'rest/${subpackage}/${classNameLower}/delete.json',
 		},
         actionMethods: {
