@@ -59,13 +59,17 @@ public class ${className}Controller extends ControllerBase {
 		//
 		map2Bean(params, ${classNameLower});
 		//
-		Integer rows = ${classNameLower}Service.add(${classNameLower});
-
+		
 		//
-		JSONMessage jsonMessage = JSONMessage.successMessage();
-		if(rows < 1){
-			jsonMessage = JSONMessage.failureMessage();
-		}
+		JSONMessage jsonMessage = JSONMessage.failureMessage();
+        try{
+			Integer rows = ${classNameLower}Service.add(${classNameLower});
+            if(rows > 0){
+                jsonMessage = JSONMessage.successMessage();
+            }
+        } catch(Exception ex){
+            logger.error("操作失败",ex);
+        }
 		return jsonMessage;
 	}
 	
@@ -80,13 +84,17 @@ public class ${className}Controller extends ControllerBase {
 		//
 		map2Bean(params, ${classNameLower});
 		//
-		Integer rows = ${classNameLower}Service.update(${classNameLower});
 
 		//
-		JSONMessage jsonMessage = JSONMessage.successMessage();
-		if(rows < 1){
-			jsonMessage = JSONMessage.failureMessage();
-		}
+		JSONMessage jsonMessage = JSONMessage.failureMessage();
+        try{
+			Integer rows = ${classNameLower}Service.update(${classNameLower});
+            if(rows > 0){
+                jsonMessage = JSONMessage.successMessage();
+            }
+        } catch(Exception ex){
+            logger.error("操作失败",ex);
+        }
 		return jsonMessage;
 	}
 	
@@ -103,13 +111,15 @@ public class ${className}Controller extends ControllerBase {
 			id = StringNumberUtil.parseInt(_id.toString(), 0);
 		}
 		//
-		Integer rows = ${classNameLower}Service.delete(id);
-
-		//
-		JSONMessage jsonMessage = JSONMessage.successMessage();
-		if(rows < 1){
-			jsonMessage = JSONMessage.failureMessage();
-		}
+		JSONMessage jsonMessage = JSONMessage.failureMessage();
+        try{
+			Integer rows = ${classNameLower}Service.delete(id);
+            if(rows > 0){
+                jsonMessage = JSONMessage.successMessage();
+            }
+        } catch(Exception ex){
+            logger.error("操作失败",ex);
+        }
 		return jsonMessage;
 	}
 

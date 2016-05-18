@@ -3,6 +3,8 @@ package ${basepackage}.${subpackage}.mvc.controller.base;
 
 import ${basepackage}.${subpackage}.dao.redis.api.RedisBaseDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,8 @@ public abstract class ControllerBase {
 	 */
 	public static final String SESSION_USER_KEY = "session_user_key";
 	public static final String UTF_8 = "UTF-8";
+
+    protected Log logger = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private RedisBaseDAO redisBaseDAO;
