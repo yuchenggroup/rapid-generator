@@ -382,6 +382,7 @@ public abstract class ControllerBase {
                 value = tran2TargetType(value, pClazz[0]);
             } catch (Exception ex){
                 // 吃掉异常
+                value = null;
             }
 
             if(null == value){ continue;}
