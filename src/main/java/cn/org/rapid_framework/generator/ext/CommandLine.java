@@ -62,7 +62,7 @@ public class CommandLine {
 			if(args.length == 0) return;
 			facade.g.setIncludes(getIncludes(args,1));
 			facade.deleteByTable(args[0], getTemplateRootDir());
-		}else if("quit".equals(cmd)) {
+		}else if("quit".equals(cmd) || "exit".equals(cmd)) {
 		    System.exit(0);
 		}else {
 			System.err.println(" [ERROR] unknow command:"+cmd);

@@ -13,6 +13,9 @@ import cn.org.rapid_framework.generator.util.typemapping.DatabaseTypeUtils;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 
  * @author badqiu
@@ -43,6 +46,10 @@ public class GeneratorFacade {
 	public void generateByAllTable(String templateRootDir) throws Exception {
 		new ProcessUtils().processByAllTable(templateRootDir,false);
 	}
+
+    public void generateByAllTable(String templateRootDir, String wildcard) throws Exception {
+        new ProcessUtils().processByAllTable(templateRootDir,false, wildcard);
+    }
 	
 	public void deleteByAllTable(String templateRootDir) throws Exception {
 		new ProcessUtils().processByAllTable(templateRootDir,true);		
@@ -146,7 +153,10 @@ public class GeneratorFacade {
         	if("*".equals(tableName)) {
         		generateByAllTable(templateRootDir);
         		return;
-        	}
+        	} else if(null != tableName && tableName.contains("*")) {
+                generateByAllTable(templateRootDir, tableName);
+                return;
+            }
     		Generator g = getGenerator(templateRootDir);
     		Table table = TableFactory.getInstance().getTable(tableName);
     		try {
@@ -168,6 +178,39 @@ public class GeneratorFacade {
 			}
 			PrintUtils.printExceptionsSumary("",getGenerator(templateRootDir).getOutRootDir(),exceptions);
 		}
+        //
+        public void processByAllTable(String templateRootDir,boolean isDelete, String wildcard) throws Exception {
+            List<Table> tables = TableFactory.getInstance().getAllTables();
+            List exceptions = new ArrayList();
+            for(int i = 0; i < tables.size(); i++ ) {
+                try {
+                    Table table = tables.get(i);
+                    String sqlName = table.getSqlName();
+                    if(null != sqlName && matchWildCard(sqlName, wildcard)){
+                        processByTable(getGenerator(templateRootDir),table,isDelete);
+                    } else {
+                        GLogger.println("wildcard[" + wildcard + "] Not match: " + sqlName);
+                    }
+                }catch(GeneratorException ge) {
+                    exceptions.addAll(ge.getExceptions());
+                }
+            }
+            PrintUtils.printExceptionsSumary("",getGenerator(templateRootDir).getOutRootDir(),exceptions);
+        }
+        // 是否匹配通配符
+        private boolean matchWildCard(String sqlName, String wildcard){
+            Pattern regex = Pattern.compile("[^*]+|(\\*)");
+            Matcher m = regex.matcher(wildcard);
+            StringBuffer b= new StringBuffer();
+            while (m.find()) {
+                if(m.group(1) != null) m.appendReplacement(b, ".*");
+                else m.appendReplacement(b, "\\\\Q" + m.group(0) + "\\\\E");
+            }
+            m.appendTail(b);
+            String targetRegexStr = b.toString();
+            // 使用 replaced
+            return sqlName.matches(targetRegexStr);
+        }
 		
 		public void processByTable(Generator g, Table table,boolean isDelete) throws Exception {
             // renfufei
