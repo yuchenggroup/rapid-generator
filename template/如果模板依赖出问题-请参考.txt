@@ -1,0 +1,10 @@
+如果模板依赖出问题-请参考
+
+请参考此项目:
+
+https://github.com/cncounter/cncounter/tree/v0.0.3/cncounter-manage
+
+如果版本变化: 请访问:
+
+https://github.com/cncounter/cncounter
+
