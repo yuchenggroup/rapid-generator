@@ -67,9 +67,10 @@ Linux 系统使用 **export** 设置环境变量。
 
 Linux 系统(**未验证!!**):
 
-	export CLASSPATH=$CLASSPATH:.:./lib/*
 
-	java -Xms128m -Xmx384m cn.org.rapid_framework.generator.ext.CommandLine -DtemplateRootDir=template
+以及MacOSX系统:
+
+	java -classpath '.:./lib/*'  -Xms128m -Xmx384m cn.org.rapid_framework.generator.ext.CommandLine -DtemplateRootDir=template
 
 
 ### 2.2 使用生成器
