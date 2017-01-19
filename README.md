@@ -127,4 +127,8 @@ Controller层需要依赖的文件存放于 `template/cnc_main/other_java_file`�
 联系方式: `renfufei@qq.com`
 
 
+如果你对整套的代码生成方案感兴趣，也可以参考:
 
+- JEECG 微云快速开发平台:[https://github.com/yuchenggroup/jeecg](https://github.com/yuchenggroup/jeecg)
+
+- JeeSite 企业信息化快速开发平台:[https://github.com/yuchenggroup/jeesite](https://github.com/yuchenggroup/jeesite)
