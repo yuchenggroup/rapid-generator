@@ -20,6 +20,7 @@ public class Table {
 	String sqlName;
 	String remarks;
 	String className;
+	String classNameLower;
 	/** the name of the owner of the synonym if this table is a synonym */
 	private String ownerSynonymName = null;
 	LinkedHashSet<Column> columns = new LinkedHashSet<Column>();
@@ -31,6 +32,7 @@ public class Table {
 		setSqlName(t.getSqlName());
 		this.remarks = t.getRemarks();
 		this.className = t.getSqlName();
+		this.classNameLower = firstLower(className);
 		this.ownerSynonymName = t.getOwnerSynonymName();
 		this.columns = t.getColumns();
 		this.primaryKeyColumns = t.getPrimaryKeyColumns();
@@ -38,8 +40,17 @@ public class Table {
 		this.exportedKeys = t.exportedKeys;
 		this.importedKeys = t.importedKeys;
 	}
-	
-	public LinkedHashSet<Column> getColumns() {
+
+    private static String firstLower(String str) {
+        if(null == str){return null;}
+        str = str.trim();
+        if(str.isEmpty()){return "";}
+        String lower = str.substring(0,1).toLowerCase() + str.substring(1);
+        //
+        return lower;
+    }
+
+    public LinkedHashSet<Column> getColumns() {
 		return columns;
 	}
 	public void setColumns(LinkedHashSet<Column> columns) {
@@ -94,6 +105,7 @@ public class Table {
 	
 	public void setClassName(String customClassName) {
 		this.className = customClassName;
+        setClassNameLower(className);
 	}
 	/**
 	 * 根据sqlName得到的类名称，示例值: UserInfo
@@ -106,7 +118,17 @@ public class Table {
 	    }
 		return className;
 	}
-	/** 数据库中表的别名，等价于:  getRemarks().isEmpty() ? getClassName() : getRemarks() */
+
+
+    public String getClassNameLower() {
+        return firstLower(getClassName());
+    }
+
+    public void setClassNameLower(String classNameLower) {
+        this.classNameLower = classNameLower;
+    }
+
+    /** 数据库中表的别名，等价于:  getRemarks().isEmpty() ? getClassName() : getRemarks() */
 	public String getTableAlias() {
 		if(StringHelper.isNotBlank(tableAlias)) return tableAlias;
 		return StringHelper.removeCrlf(StringHelper.defaultIfEmpty(getRemarks(), getClassName()));
