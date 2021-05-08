@@ -134,6 +134,9 @@ public class TableFactory {
 			if(remarks == null && dbHelper.isOracleDataBase()) {
 				remarks = getOracleTableComments(realTableName);
 			}
+			if ((null == remarks || "".equals(remarks)) && dbHelper.isMysqlDataBase()) {
+				remarks = getMysqlTableComments(getCatalog(), realTableName);
+			}
 			
 			Table table = new Table();
 			table.setSqlName(realTableName);
@@ -378,6 +381,11 @@ public class TableFactory {
 		return primaryKeys;
 	}
 
+	private String getMysqlTableComments(String tableSchema, String table) {
+		String sql = "SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + tableSchema + "' AND TABLE_NAME = '" + table + "'";
+		return dbHelper.queryForString(sql);
+	}
+
 	private String getOracleTableComments(String table)  {
 		String sql = "SELECT comments FROM user_tab_comments WHERE table_name='"+table+"'";
 		return dbHelper.queryForString(sql);
@@ -448,8 +456,15 @@ public class TableFactory {
 		public boolean isOracleDataBase() {
 			boolean ret = false;
 			try {
-				ret = (getMetaData().getDatabaseProductName().toLowerCase()
-						.indexOf("oracle") != -1);
+				ret = (getMetaData().getDatabaseProductName().toLowerCase().contains("oracle"));
+			} catch (Exception ignore) {
+			}
+			return ret;
+		}
+		public boolean isMysqlDataBase() {
+			boolean ret = false;
+			try {
+				ret = (getMetaData().getDatabaseProductName().toLowerCase().contains("mysql"));
 			} catch (Exception ignore) {
 			}
 			return ret;
